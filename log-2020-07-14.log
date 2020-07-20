@@ -1,0 +1,211 @@
+[2m2020-07-14 15:14:41.896[0;39m [32m INFO[0;39m [35m4624[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.ssafy.trip.TripApplication          [0;39m [2m:[0;39m Starting TripApplication on DESKTOP-KVCQHCD with PID 4624 (C:\SSAFY\spring\trip\target\classes started by multicampus in C:\SSAFY\spring\trip)
+[2m2020-07-14 15:14:41.897[0;39m [32m INFO[0;39m [35m4624[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.ssafy.trip.TripApplication          [0;39m [2m:[0;39m No active profile set, falling back to default profiles: default
+[2m2020-07-14 15:14:41.924[0;39m [32m INFO[0;39m [35m4624[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2m2020-07-14 15:14:41.932[0;39m [32m INFO[0;39m [35m4624[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2m2020-07-14 15:14:42.015[0;39m [33m WARN[0;39m [35m4624[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.ssafy.trip.TripApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [Jsr310JpaConverters]
+[2m2020-07-14 15:14:42.025[0;39m [31mERROR[0;39m [35m4624[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.ssafy.trip.TripApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [Jsr310JpaConverters]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:319)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:236)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:280)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:96)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:707)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:533)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at com.ssafy.trip.TripApplication.main(TripApplication.java:10)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.lang.IllegalArgumentException: Could not find class [Jsr310JpaConverters]
+	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:334)
+	at org.springframework.core.annotation.TypeMappedAnnotation.adapt(TypeMappedAnnotation.java:446)
+	at org.springframework.core.annotation.TypeMappedAnnotation.getValue(TypeMappedAnnotation.java:369)
+	at org.springframework.core.annotation.TypeMappedAnnotation.asMap(TypeMappedAnnotation.java:284)
+	at org.springframework.core.annotation.AbstractMergedAnnotation.asAnnotationAttributes(AbstractMergedAnnotation.java:193)
+	at org.springframework.core.type.AnnotatedTypeMetadata.getAnnotationAttributes(AnnotatedTypeMetadata.java:106)
+	at org.springframework.context.annotation.AnnotationConfigUtils.attributesFor(AnnotationConfigUtils.java:285)
+	at org.springframework.context.annotation.AnnotationBeanNameGenerator.determineBeanNameFromAnnotation(AnnotationBeanNameGenerator.java:102)
+	at org.springframework.context.annotation.AnnotationBeanNameGenerator.generateBeanName(AnnotationBeanNameGenerator.java:81)
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:280)
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:132)
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:295)
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:249)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:206)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:174)
+	... 19 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Jsr310JpaConverters
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:144)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:284)
+	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:324)
+	... 33 common frames omitted
+
+[2m2020-07-14 15:15:38.018[0;39m [32m INFO[0;39m [35m4616[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.ssafy.trip.TripApplication          [0;39m [2m:[0;39m Starting TripApplication on DESKTOP-KVCQHCD with PID 4616 (C:\SSAFY\spring\trip\target\classes started by multicampus in C:\SSAFY\spring\trip)
+[2m2020-07-14 15:15:38.020[0;39m [32m INFO[0;39m [35m4616[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.ssafy.trip.TripApplication          [0;39m [2m:[0;39m No active profile set, falling back to default profiles: default
+[2m2020-07-14 15:15:38.048[0;39m [32m INFO[0;39m [35m4616[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2m2020-07-14 15:15:38.048[0;39m [32m INFO[0;39m [35m4616[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2m2020-07-14 15:15:38.124[0;39m [33m WARN[0;39m [35m4616[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mConfigServletWebServerApplicationContext[0;39m [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.ssafy.trip.TripApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [Jsr310JpaConverters]
+[2m2020-07-14 15:15:38.135[0;39m [31mERROR[0;39m [35m4616[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.boot.SpringApplication              [0;39m [2m:[0;39m Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.ssafy.trip.TripApplication]; nested exception is java.lang.IllegalArgumentException: Could not find class [Jsr310JpaConverters]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:319)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:236)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:280)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:96)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:707)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:533)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at com.ssafy.trip.TripApplication.main(TripApplication.java:10)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.lang.IllegalArgumentException: Could not find class [Jsr310JpaConverters]
+	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:334)
+	at org.springframework.core.annotation.TypeMappedAnnotation.adapt(TypeMappedAnnotation.java:446)
+	at org.springframework.core.annotation.TypeMappedAnnotation.getValue(TypeMappedAnnotation.java:369)
+	at org.springframework.core.annotation.TypeMappedAnnotation.asMap(TypeMappedAnnotation.java:284)
+	at org.springframework.core.annotation.AbstractMergedAnnotation.asAnnotationAttributes(AbstractMergedAnnotation.java:193)
+	at org.springframework.core.type.AnnotatedTypeMetadata.getAnnotationAttributes(AnnotatedTypeMetadata.java:106)
+	at org.springframework.context.annotation.AnnotationConfigUtils.attributesFor(AnnotationConfigUtils.java:285)
+	at org.springframework.context.annotation.AnnotationBeanNameGenerator.determineBeanNameFromAnnotation(AnnotationBeanNameGenerator.java:102)
+	at org.springframework.context.annotation.AnnotationBeanNameGenerator.generateBeanName(AnnotationBeanNameGenerator.java:81)
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:280)
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:132)
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:295)
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:249)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:206)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:174)
+	... 19 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Jsr310JpaConverters
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:144)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:284)
+	at org.springframework.util.ClassUtils.resolveClassName(ClassUtils.java:324)
+	... 33 common frames omitted
+
+[2m2020-07-14 15:34:49.056[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.ssafy.trip.TripApplication          [0;39m [2m:[0;39m Starting TripApplication on DESKTOP-KVCQHCD with PID 17352 (C:\SSAFY\spring\trip\target\classes started by multicampus in C:\SSAFY\spring\trip)
+[2m2020-07-14 15:34:49.058[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.ssafy.trip.TripApplication          [0;39m [2m:[0;39m No active profile set, falling back to default profiles: default
+[2m2020-07-14 15:34:49.087[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2m2020-07-14 15:34:49.087[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.e.DevToolsPropertyDefaultsPostProcessor[0;39m [2m:[0;39m For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2m2020-07-14 15:34:49.585[0;39m [33m WARN[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.m.s.mapper.ClassPathMapperScanner     [0;39m [2m:[0;39m No MyBatis mapper was found in '[com.ssafy.trip]' package. Please check your configuration.
+[2m2020-07-14 15:34:49.617[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+[2m2020-07-14 15:34:49.664[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 41ms. Found 2 JPA repository interfaces.
+[2m2020-07-14 15:34:49.869[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$579f9915] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2m2020-07-14 15:34:49.890[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.w.s.a.s.AnnotationActionEndpointMapping[0;39m [2m:[0;39m Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+[2m2020-07-14 15:34:49.920[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@2b7e6026' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2m2020-07-14 15:34:49.925[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2m2020-07-14 15:34:50.116[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port(s): 8397 (http)
+[2m2020-07-14 15:34:50.122[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.a.coyote.http11.Http11NioProtocol     [0;39m [2m:[0;39m Initializing ProtocolHandler ["http-nio-8397"]
+[2m2020-07-14 15:34:50.123[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.apache.catalina.core.StandardService  [0;39m [2m:[0;39m Starting service [Tomcat]
+[2m2020-07-14 15:34:50.123[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36morg.apache.catalina.core.StandardEngine [0;39m [2m:[0;39m Starting Servlet engine: [Apache Tomcat/9.0.36]
+[2m2020-07-14 15:34:50.204[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.a.c.c.C.[Tomcat].[localhost].[/]      [0;39m [2m:[0;39m Initializing Spring embedded WebApplicationContext
+[2m2020-07-14 15:34:50.204[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 1117 ms
+[2m2020-07-14 15:34:50.260[0;39m [33m WARN[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mJpaBaseConfiguration$JpaWebConfiguration[0;39m [2m:[0;39m spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2m2020-07-14 15:34:50.322[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.s.concurrent.ThreadPoolTaskExecutor [0;39m [2m:[0;39m Initializing ExecutorService 'applicationTaskExecutor'
+[2m2020-07-14 15:34:50.330[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Starting...
+[2m2020-07-14 15:34:50.538[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Start completed.
+[2m2020-07-14 15:34:50.573[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[         task-1][0;39m [36mo.hibernate.jpa.internal.util.LogHelper [0;39m [2m:[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+[2m2020-07-14 15:34:50.602[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[         task-1][0;39m [36morg.hibernate.Version                   [0;39m [2m:[0;39m HHH000412: Hibernate ORM core version 5.4.17.Final
+[2m2020-07-14 15:34:50.685[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[         task-1][0;39m [36mo.hibernate.annotations.common.Version  [0;39m [2m:[0;39m HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+[2m2020-07-14 15:34:50.754[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[         task-1][0;39m [36morg.hibernate.dialect.Dialect           [0;39m [2m:[0;39m HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+[2m2020-07-14 15:34:51.255[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[         task-1][0;39m [36mo.h.e.t.j.p.i.JtaPlatformInitiator      [0;39m [2m:[0;39m HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2m2020-07-14 15:34:51.261[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[         task-1][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2m2020-07-14 15:34:51.499[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.s.web.DefaultSecurityFilterChain    [0;39m [2m:[0;39m Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@afb5342, org.springframework.security.web.context.SecurityContextPersistenceFilter@3882942f, org.springframework.security.web.header.HeaderWriterFilter@69fc8fe3, org.springframework.web.filter.CorsFilter@4991df73, org.springframework.security.web.authentication.logout.LogoutFilter@26b02964, com.ssafy.trip.security.JwtAuthenticationFilter@4289507, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@468b9bd9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@743591be, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@743c075e, org.springframework.security.web.session.SessionManagementFilter@58c0505a, org.springframework.security.web.access.ExceptionTranslationFilter@34dcacc4, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3e63b25b]
+[2m2020-07-14 15:34:51.713[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.d.a.OptionalLiveReloadServer      [0;39m [2m:[0;39m LiveReload server is running on port 35729
+[2m2020-07-14 15:34:51.732[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.a.coyote.http11.Http11NioProtocol     [0;39m [2m:[0;39m Starting ProtocolHandler ["http-nio-8397"]
+[2m2020-07-14 15:34:51.761[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat started on port(s): 8397 (http) with context path ''
+[2m2020-07-14 15:34:51.762[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mDeferredRepositoryInitializationListener[0;39m [2m:[0;39m Triggering deferred initialization of Spring Data repositories…
+[2m2020-07-14 15:34:52.103[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mDeferredRepositoryInitializationListener[0;39m [2m:[0;39m Spring Data repositories initialized!
+[2m2020-07-14 15:34:52.110[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mcom.ssafy.trip.TripApplication          [0;39m [2m:[0;39m Started TripApplication in 3.244 seconds (JVM running for 3.991)
+[2m2020-07-14 15:37:13.071[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[     Thread-213][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
+[2m2020-07-14 15:37:13.072[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[     Thread-213][0;39m [36mo.s.s.concurrent.ThreadPoolTaskExecutor [0;39m [2m:[0;39m Shutting down ExecutorService 'applicationTaskExecutor'
+[2m2020-07-14 15:37:13.073[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[     Thread-213][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown initiated...
+[2m2020-07-14 15:37:13.076[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[     Thread-213][0;39m [36mcom.zaxxer.hikari.HikariDataSource      [0;39m [2m:[0;39m HikariPool-1 - Shutdown completed.
+[2m2020-07-14 06:37:13.498[0;39m [33m WARN[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.m.s.mapper.ClassPathMapperScanner     [0;39m [2m:[0;39m No MyBatis mapper was found in '[com.ssafy.trip]' package. Please check your configuration.
+[2m2020-07-14 06:37:13.507[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+[2m2020-07-14 06:37:13.524[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 16ms. Found 2 JPA repository interfaces.
+[2m2020-07-14 06:37:13.565[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$579f9915] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2m2020-07-14 06:37:13.566[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.w.s.a.s.AnnotationActionEndpointMapping[0;39m [2m:[0;39m Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+[2m2020-07-14 06:37:13.574[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@6644a4ca' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2m2020-07-14 06:37:13.575[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2m2020-07-14 06:37:13.669[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port(s): 8080 (http)
+[2m2020-07-14 06:37:13.684[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 392 ms
+[2m2020-07-14 06:37:13.716[0;39m [33m WARN[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mJpaBaseConfiguration$JpaWebConfiguration[0;39m [2m:[0;39m spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2m2020-07-14 06:37:13.745[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.s.concurrent.ThreadPoolTaskExecutor [0;39m [2m:[0;39m Initializing ExecutorService 'applicationTaskExecutor'
+[2m2020-07-14 06:37:13.833[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[         task-1][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2m2020-07-14 06:37:13.937[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.s.web.DefaultSecurityFilterChain    [0;39m [2m:[0;39m Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7d47893, org.springframework.security.web.context.SecurityContextPersistenceFilter@5ad9f5e4, org.springframework.security.web.header.HeaderWriterFilter@222b2272, org.springframework.web.filter.CorsFilter@6b47811a, org.springframework.security.web.authentication.logout.LogoutFilter@5869b84e, com.ssafy.trip.security.JwtAuthenticationFilter@1752ad5e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2e94df1e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@55d7400c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@47b9f69e, org.springframework.security.web.session.SessionManagementFilter@496a35f5, org.springframework.security.web.access.ExceptionTranslationFilter@163c40a9, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7576f24]
+[2m2020-07-14 06:37:14.028[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.d.a.OptionalLiveReloadServer      [0;39m [2m:[0;39m LiveReload server is running on port 35729
+[2m2020-07-14 06:37:14.039[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat started on port(s): 8080 (http) with context path ''
+[2m2020-07-14 06:37:14.040[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mDeferredRepositoryInitializationListener[0;39m [2m:[0;39m Triggering deferred initialization of Spring Data repositories…
+[2m2020-07-14 06:37:14.093[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mDeferredRepositoryInitializationListener[0;39m [2m:[0;39m Spring Data repositories initialized!
+[2m2020-07-14 06:37:14.097[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.ConditionEvaluationDeltaLoggingListener[0;39m [2m:[0;39m Condition evaluation unchanged
+[2m2020-07-14 06:37:29.288[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-1][0;39m [36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Initializing Servlet 'dispatcherServlet'
+[2m2020-07-14 06:37:29.296[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-1][0;39m [36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Completed initialization in 8 ms
+[2m2020-07-14 06:37:29.435[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-1][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m select memberuser0_.id as col_0_0_ from users memberuser0_ where memberuser0_.username=? limit ?
+[2m2020-07-14 06:37:42.548[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-2][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m select memberuser0_.id as col_0_0_ from users memberuser0_ where memberuser0_.username=? limit ?
+[2m2020-07-14 06:45:47.105[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-5][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m select memberuser0_.id as col_0_0_ from users memberuser0_ where memberuser0_.username=? limit ?
+[2m2020-07-14 06:46:59.901[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[     Thread-216][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Closing JPA EntityManagerFactory for persistence unit 'default'
+[2m2020-07-14 06:46:59.901[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[     Thread-216][0;39m [36mo.s.s.concurrent.ThreadPoolTaskExecutor [0;39m [2m:[0;39m Shutting down ExecutorService 'applicationTaskExecutor'
+[2m2020-07-14 06:47:00.287[0;39m [33m WARN[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.m.s.mapper.ClassPathMapperScanner     [0;39m [2m:[0;39m No MyBatis mapper was found in '[com.ssafy.trip]' package. Please check your configuration.
+[2m2020-07-14 06:47:00.297[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+[2m2020-07-14 06:47:00.314[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.s.d.r.c.RepositoryConfigurationDelegate[0;39m [2m:[0;39m Finished Spring Data repository scanning in 16ms. Found 2 JPA repository interfaces.
+[2m2020-07-14 06:47:00.355[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$579f9915] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2m2020-07-14 06:47:00.356[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.w.s.a.s.AnnotationActionEndpointMapping[0;39m [2m:[0;39m Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+[2m2020-07-14 06:47:00.364[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@2cbfe64c' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2m2020-07-14 06:47:00.365[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mtrationDelegate$BeanPostProcessorChecker[0;39m [2m:[0;39m Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[2m2020-07-14 06:47:00.455[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat initialized with port(s): 8080 (http)
+[2m2020-07-14 06:47:00.468[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mw.s.c.ServletWebServerApplicationContext[0;39m [2m:[0;39m Root WebApplicationContext: initialization completed in 381 ms
+[2m2020-07-14 06:47:00.500[0;39m [33m WARN[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mJpaBaseConfiguration$JpaWebConfiguration[0;39m [2m:[0;39m spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2m2020-07-14 06:47:00.528[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.s.concurrent.ThreadPoolTaskExecutor [0;39m [2m:[0;39m Initializing ExecutorService 'applicationTaskExecutor'
+[2m2020-07-14 06:47:00.601[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[         task-1][0;39m [36mj.LocalContainerEntityManagerFactoryBean[0;39m [2m:[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2m2020-07-14 06:47:00.709[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.s.web.DefaultSecurityFilterChain    [0;39m [2m:[0;39m Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@61671e7c, org.springframework.security.web.context.SecurityContextPersistenceFilter@5a076b6c, org.springframework.security.web.header.HeaderWriterFilter@22ffa2c5, org.springframework.web.filter.CorsFilter@2034b90d, org.springframework.security.web.authentication.logout.LogoutFilter@e730fb3, com.ssafy.trip.security.JwtAuthenticationFilter@743fdcf2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5064f1a1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@fd298e2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5ba17a18, org.springframework.security.web.session.SessionManagementFilter@43c9815, org.springframework.security.web.access.ExceptionTranslationFilter@58ea5075, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1ee2e81]
+[2m2020-07-14 06:47:00.807[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.d.a.OptionalLiveReloadServer      [0;39m [2m:[0;39m LiveReload server is running on port 35729
+[2m2020-07-14 06:47:00.824[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mo.s.b.w.embedded.tomcat.TomcatWebServer [0;39m [2m:[0;39m Tomcat started on port(s): 8080 (http) with context path ''
+[2m2020-07-14 06:47:00.827[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mDeferredRepositoryInitializationListener[0;39m [2m:[0;39m Triggering deferred initialization of Spring Data repositories…
+[2m2020-07-14 06:47:00.885[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36mDeferredRepositoryInitializationListener[0;39m [2m:[0;39m Spring Data repositories initialized!
+[2m2020-07-14 06:47:00.889[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[  restartedMain][0;39m [36m.ConditionEvaluationDeltaLoggingListener[0;39m [2m:[0;39m Condition evaluation unchanged
+[2m2020-07-14 06:47:12.871[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-1][0;39m [36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Initializing Servlet 'dispatcherServlet'
+[2m2020-07-14 06:47:12.873[0;39m [32m INFO[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-1][0;39m [36mo.s.web.servlet.DispatcherServlet       [0;39m [2m:[0;39m Completed initialization in 2 ms
+[2m2020-07-14 06:47:12.879[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-1][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m select memberuser0_.id as col_0_0_ from users memberuser0_ where memberuser0_.username=? limit ?
+[2m2020-07-14 06:47:12.884[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-1][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m select memberuser0_.id as col_0_0_ from users memberuser0_ where memberuser0_.email=? limit ?
+[2m2020-07-14 06:47:12.964[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-1][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m select role0_.id as id1_0_, role0_.name as name2_0_ from roles role0_ where role0_.name=?
+[2m2020-07-14 06:47:13.026[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-1][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m insert into users (created_at, updated_at, email, name, password, username) values (?, ?, ?, ?, ?, ?)
+[2m2020-07-14 06:47:13.040[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-1][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m insert into user_roles (user_id, role_id) values (?, ?)
+[2m2020-07-14 06:47:17.684[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-3][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m select memberuser0_.id as id1_2_, memberuser0_.created_at as created_2_2_, memberuser0_.updated_at as updated_3_2_, memberuser0_.email as email4_2_, memberuser0_.name as name5_2_, memberuser0_.password as password6_2_, memberuser0_.username as username7_2_ from users memberuser0_ where memberuser0_.username=? or memberuser0_.email=?
+[2m2020-07-14 06:47:17.689[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-3][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m select roles0_.user_id as user_id1_1_0_, roles0_.role_id as role_id2_1_0_, role1_.id as id1_0_1_, role1_.name as name2_0_1_ from user_roles roles0_ inner join roles role1_ on roles0_.role_id=role1_.id where roles0_.user_id=?
+[2m2020-07-14 06:47:17.812[0;39m [32mDEBUG[0;39m [35m17352[0;39m [2m---[0;39m [2m[nio-8080-exec-4][0;39m [36morg.hibernate.SQL                       [0;39m [2m:[0;39m select memberuser0_.id as id1_2_, memberuser0_.created_at as created_2_2_, memberuser0_.updated_at as updated_3_2_, memberuser0_.email as email4_2_, memberuser0_.name as name5_2_, memberuser0_.password as password6_2_, memberuser0_.username as username7_2_ from users memberuser0_ where memberuser0_.username=?
