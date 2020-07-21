@@ -2,15 +2,16 @@
   <v-app>
     <v-sheet class="overflow-hidden"
     >
+        <!-- shrink-on-scroll -->
       <v-app-bar
         absolute
         color="#6A76AB"
         dark
-        shrink-on-scroll
+        elevate-on-scroll
         prominent
         src="https://picsum.photos/1920/1080?random"
         fade-img-on-scroll
-        scroll-target="#scrolling-techniques-3"
+        scroll-target="#scrolling-techniques-7"
       >
         <template v-slot:img="{ props }">
           <v-img
@@ -19,21 +20,8 @@
           ></v-img>
         </template>
   
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-  
-        <v-toolbar-title>TEST</v-toolbar-title>
-  
-        <v-spacer></v-spacer>
-  
-        <v-btn icon @click="searchGoogle">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-  
-        <v-btn icon @click="gitPage">
-          <v-icon>mdi-github</v-icon>
-        </v-btn>
-
-        <v-btn @click="loginModalToggle = !loginModalToggle"
+        <v-app-bar-nav-icon>
+          <v-btn @click="loginModalToggle = !loginModalToggle"
           v-if="!(isAuthenticated && isProfileLoaded)"
           icon>
           <v-icon>mdi-account-arrow-right</v-icon>
@@ -46,12 +34,20 @@
             </v-avatar>
           </v-app-bar-nav-icon>
         </div>
+        </v-app-bar-nav-icon>
   
-        <template v-slot:extension>
-          <v-tabs align-with-title>
-            <v-tab to = "/">HOME</v-tab>
-          </v-tabs>
-        </template>
+  
+        <v-spacer></v-spacer>
+        <v-toolbar-title>TITLE</v-toolbar-title>
+  
+        <v-btn icon @click="searchGoogle">
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+  
+        <v-btn icon @click="gitPage">
+          <v-icon>mdi-github</v-icon>
+        </v-btn>
+
       </v-app-bar>
       
       <v-sheet
@@ -73,7 +69,7 @@
       v-model="drawer"
       absolute
       temporary
-      right
+      left
       src = 'https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg'
       dark
     >
@@ -97,29 +93,63 @@
           nav
           class="py-0"
         >
-          <v-list-item @click.stop="info">
+
+          <v-list-item to = "/">
             <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
+              <v-icon></v-icon>
             </v-list-item-icon>
-  
+
             <v-list-item-content>
-              <v-list-item-title>회원정보</v-list-item-title>
+              <v-list-item-title>HOME</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item @click.stop="logout">
+
+          <v-list-item>
             <v-list-item-icon>
-              <v-icon>mdi-account-arrow-left</v-icon>
+              <v-icon></v-icon>
             </v-list-item-icon>
-  
+
             <v-list-item-content>
-              <v-list-item-title>로그아웃</v-list-item-title>
+              <v-list-item-title>좋아요 목록</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon></v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>임시 저장 목록</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon></v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>방구석 여행</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon></v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>게시물 목록 보기</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
         </v-list>
 
         <template v-slot:append>
-          <div class="pa-2">
-            <v-btn block @click.stop="notice">NOTICE</v-btn>
+          <div class="pa-2" style="text-align: center;">
+            <v-btn inline-block @click.stop="info" style="margin-right:20px;">정보 수정</v-btn>
+            <v-btn inline-block @click.stop="logout">로그아웃</v-btn>
           </div>
         </template>
       </v-navigation-drawer>
