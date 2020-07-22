@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import error from "../components/error.vue";
+// import error from "../components/error.vue";
 
 import APIError from "../components/APIError.vue";
+import ArticleWrite from "../components/ArticleWrite.vue"
 // import store from "../store/modules/user.js";
 
 Vue.use(VueRouter);
@@ -36,10 +37,15 @@ const routes = [
     name: "APIError",
     component: APIError
   },
+  // {
+  //   path: "/*",
+  //   name: "error",
+  //   component: error
+  // },
   {
-    path: "/*",
-    name: "error",
-    component: error
+    path: "/write",
+    name: "write",
+    component: ArticleWrite
   },
 ];
 
