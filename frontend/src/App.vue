@@ -63,6 +63,15 @@
           </v-container>
         </v-main>
       </v-sheet>
+
+      <v-footer fixed color="white">
+        <v-row justify="center" no-gutters>
+          <v-btn rounded color="deep-purple lighten-4" class="my-2" @click="goWrite">
+            <v-icon>mdi-file-edit</v-icon>
+            <div>WRITE</div>
+          </v-btn>
+        </v-row>
+      </v-footer>
     </v-sheet>
 
     <v-navigation-drawer 
@@ -306,6 +315,9 @@ export default {
     },
     gitPage: function() {
       window.open("https://lab.ssafy.com/edonc700/happyhousefinal", "PopupGit", "width=1000,height=900");
+    },
+    goWrite: function() {
+      this.$router.push('write');
     },
     closeUserInfoModal: function(msg) {
       if(msg != null) {
