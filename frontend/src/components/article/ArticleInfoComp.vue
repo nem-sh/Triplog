@@ -37,7 +37,7 @@
     <br />
     <div class="text-center">
         <v-btn to="/noticeList" v-if="getProfile === blogMasterName">수정</v-btn>
-        <v-btn v-if="getProfile === blogMasterName" @click="delete">삭제</v-btn>
+        <v-btn @click="deleteArticle" v-if="getProfile === blogMasterName">삭제</v-btn>
         <v-btn to="/noticeList">목록</v-btn>
     </div>
   </div>
@@ -64,21 +64,21 @@ export default {
     getFormatDate(regtime) {
       return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
     },
-    delete: function() {
+    deleteArticle: function() {
         http
         .delete(`/article/${this.articleNum}`)
         .then(({ data }) => {
-            let msg = "삭제 처리시 문제가 발생했습니다.";
+            // let msg = "삭제 처리시 문제가 발생했습니다.";
             if (data === "success") {
-            msg = "삭제가 완료되었습니다.";
+            // msg = "삭제가 완료되었습니다.";
             }
-            this.alertMsg = msg;
-            this.alert = true;
-            this.$router.push("/qna");
+            // this.alertMsg = msg;
+            // this.alert = true;
+            // this.$router.push("/qna");
         })
         .catch(() => {
-            this.alertMsg = "삭제 처리시 에러가 발생했습니다.";
-            this.alert = true;
+            // this.alertMsg = "삭제 처리시 에러가 발생했습니다.";
+            // this.alert = true;
         });
     }
   },
