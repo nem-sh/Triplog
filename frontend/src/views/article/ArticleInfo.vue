@@ -6,7 +6,7 @@
             :articleDateStart = "item.date_start"
             :articleDateEnd = "item.date_end"
             :articleCreateAt = "item.create_at"
-            :articleContent = "content"
+            :articleContent = "item.content"
             v-if="item.articleTitle != null"
         />
     </div>
