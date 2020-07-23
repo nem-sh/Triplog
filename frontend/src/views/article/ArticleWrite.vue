@@ -29,14 +29,6 @@
               </td>
           </tr>
           
-          <!-- <tr>
-            <td colspan="2">
-            <div>
-              <v-btn @click="temp">임시 저장</v-btn>
-              <v-btn @click="regist">등록</v-btn>
-            </div>
-            </td>
-          </tr> -->
         </tbody>
         <v-row>
           <v-col>
@@ -52,12 +44,15 @@
 </template>
 
 <script>
+import http from "@/util/http-common";
 export default {
   name: "login",
   data() {
     return {
       articleContent: "",
       articleTitle: "",
+      alert : false,
+      alertMsg : "",
     };
   },
  methods: {
@@ -65,7 +60,51 @@ export default {
 
    },
    regist() {
+    let err = true;
+    let msg = "";
+    !this.articleContent &&
+      ((msg = "내용을 입력해주세요"),
+      (err = false),
+      this.$refs.content.focus());
+    !this.articleTitle &&
+      ((msg = "제목을 입력해주세요"),
+      (err = false),
+      this.$refs.title.focus());
 
+    if (!err) {
+      this.alertMsg = msg;
+      this.alert = true;
+    }
+    else this.registHandler();
+   },
+   registHandler() {
+     http
+      .put(`/users/${this.email}`, {
+        name: this.name,
+        nickname: this.nickName,
+        intro : this.intro,
+        imagesrc : this.imagesrc,
+      })
+      .then(({ data }) => {
+        let msg = "수정 처리시 문제가 발생했습니다.";
+        if (data === "success") {
+          msg = "수정이 완료되었습니다.";
+        }
+        this.alertMsg = msg;
+        this.alert = true;
+        this.$emit("closeUserInfoModal", this.alertMsg);
+      }).catch((e) => {
+        if (e.request.status === 404){
+          this.alertMsg = "탈퇴 처리시 에러가 발생했습니다.";
+          this.alert = true;
+        } else{
+          this.$emit("closeLoginModal");
+          this.$router.push(`/apierror/${e.request.status}/`)
+        }
+        console.log(e.request.status)
+        
+
+      });
    },
  },
 };
