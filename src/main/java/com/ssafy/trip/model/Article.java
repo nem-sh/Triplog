@@ -15,6 +15,8 @@ public class Article {
 
 	@Id
 	private Long num;
+	private Long user_num;
+	private Long tripPackage_num;
 	private String title;
 	private String place;
 	private String content;
