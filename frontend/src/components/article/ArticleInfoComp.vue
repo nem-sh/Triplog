@@ -4,25 +4,29 @@
       <template v-slot:default borderless>
         <tbody>
             <tr>
-                <th class="text-left">번호</th>
-                <td class="text-left">{{articleno}}</td>
-            </tr>
-            <tr>
-                <th class="text-left">아이디</th>
-                <td class="text-left">{{id}}</td>
-            </tr>
-            <tr>
                 <th class="text-left">제목</th>
-                <td class="text-left">{{subject}}</td>
+                <td class="text-left">{{articleTitle}}</td>
             </tr>
             <tr>
-                <th class="text-left">날짜</th>
-                <td class="text-left">{{getFormatDate(regtime)}}</td>
+                <th class="text-left">장소</th>
+                <td class="text-left">{{articlePlace}}</td>
+            </tr>
+            <tr>
+                <th class="text-left">일정 시작 날짜</th>
+                <td class="text-left">{{getFormatDate(articleDateStart)}}</td>
+            </tr>
+            <tr>
+                <th class="text-left">일정 종료 날짜</th>
+                <td class="text-left">{{getFormatDate(articleDateEnd)}}</td>
+            </tr>
+            <tr>
+                <th class="text-left">작성일</th>
+                <td class="text-left">{{getFormatDate(articleCreateAt)}}</td>
             </tr>
             <tr>
                 <td colspan="2">
                     <v-p>
-                        {{content}}
+                        {{articleContent}}
                     </v-p>
                 </td>
             </tr>
@@ -32,6 +36,8 @@
     <br />
     <br />
     <div class="text-center">
+        <v-btn to="/noticeList">수정</v-btn>
+        <v-btn to="/noticeList">삭제</v-btn>
         <v-btn to="/noticeList">목록</v-btn>
     </div>
   </div>
@@ -40,13 +46,14 @@
 <script>
 import moment from "moment";
 export default {
-  name: "detail",
+  name: "articleInfoComp",
   props: {
-    articleno: { type: Number },
-    id: { type: String },
-    subject: { type: String },
-    content: { type: String },
-    regtime: { type: String }
+    articleTitle: { type: String },
+    articlePlace: { type: String },
+    articleDateStart: { type: String },
+    articleDateEnd: { type: String },
+    articleCreateAt: { type: String },
+    articleContent: {type: String}
   },
   methods: {
     getFormatDate(regtime) {

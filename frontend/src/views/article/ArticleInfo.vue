@@ -1,8 +1,13 @@
 <template>
     <div>
-        <ArticleInfoComp
-            :articleno = "item.articleno"
-            v-if="item.articleno != null"
+        <article-info-comp
+            :articleTitle = "item.articleno"
+            :articlePlace = "item.title"
+            :articleDateStart = "item.date_start"
+            :articleDateEnd = "item.date_end"
+            :articleCreateAt = "item.create_at"
+            :articleContent = "content"
+            v-if="item.articleTitle != null"
         />
     </div>
 </template>
