@@ -204,8 +204,8 @@
   </div>
 </template>
 <script>
-import { AUTH_REQUEST } from "../store/actions/auth";
-import http2 from "../util/http-common2.js";
+import { AUTH_REQUEST } from "@/store/actions/auth";
+import http2 from "@/util/http-common2.js";
 export default {
   name: "login",
   data() {

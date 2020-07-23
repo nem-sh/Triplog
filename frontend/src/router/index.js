@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 // import error from "../components/error.vue";
 
 import APIError from "../components/error/APIError.vue";
-import ArticleWrite from "../components/error/ArticleWrite.vue"
+import ArticleWrite from "../views/article/ArticleWrite.vue"
 // import store from "../store/modules/user.js";
 
 Vue.use(VueRouter);

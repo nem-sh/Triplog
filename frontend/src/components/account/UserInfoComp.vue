@@ -156,7 +156,7 @@
 <script>
 import http from "@/util/http-common";
 import moment from "moment";
-import { AUTH_LOGOUT } from "../store/actions/auth";
+import { AUTH_LOGOUT } from "@/store/actions/auth";
 
 export default {
   name: "userInfoComp",
