@@ -46,7 +46,7 @@ const routes = [
   //   component: error
   // },
   {
-    path: "/write",
+    path: "/article/write",
     name: "write",
     component: ArticleWrite
   },
