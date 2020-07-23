@@ -7,7 +7,7 @@
             :articleDateEnd = "item.date_end"
             :articleCreateAt = "item.create_at"
             :articleContent = "item.content"
-            v-if="item.articleTitle != null"
+            :blogMasterName = "blogMaster"
         />
     </div>
 </template>
@@ -23,7 +23,8 @@ export default {
   },
   data: function() {
     return {
-      item: {}
+      item: {},
+      blogMaster: "유성"
     };
   },
   created() {

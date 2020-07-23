@@ -36,15 +36,17 @@
     <br />
     <br />
     <div class="text-center">
-        <v-btn to="/noticeList">수정</v-btn>
-        <v-btn to="/noticeList">삭제</v-btn>
+        <v-btn to="/noticeList" v-if="getProfile === blogMasterName">수정</v-btn>
+        <v-btn to="/noticeList" v-if="getProfile === blogMasterName">삭제</v-btn>
         <v-btn to="/noticeList">목록</v-btn>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
 import moment from "moment";
+
 export default {
   name: "articleInfoComp",
   props: {
@@ -53,12 +55,24 @@ export default {
     articleDateStart: { type: String },
     articleDateEnd: { type: String },
     articleCreateAt: { type: String },
-    articleContent: {type: String}
+    articleContent: {type: String},
+    blogMasterName: {type: String}
   },
   methods: {
     getFormatDate(regtime) {
       return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
     }
-  }
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail']),
+    ...mapState({
+      authLoading: state => state.auth.status === 'loading'
+      ,uname: state => `${state.user.getProfile}`,
+      userEmail : state => `${state.user.getEmail}`,
+    }),
+    loading: function () {
+      return this.authStatus === 'loading' && !this.isAuthenticated
+    }
+  },
 };
 </script>
