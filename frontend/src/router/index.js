@@ -6,6 +6,7 @@ import Home from "../views/Home.vue";
 import APIError from "../components/error/APIError.vue";
 import ArticleWrite from "../views/article/ArticleWrite.vue"
 // import store from "../store/modules/user.js";
+import ArticleList from "../views/article/ArticleList.vue"
 
 Vue.use(VueRouter);
 
@@ -46,6 +47,11 @@ const routes = [
     path: "/write",
     name: "write",
     component: ArticleWrite
+  },
+  {
+    path: "/ArticleList",
+    name: "ArticleList",
+    component: ArticleList
   },
 ];
 
