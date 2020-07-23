@@ -251,8 +251,8 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 import {AUTH_LOGOUT} from './store/actions/auth'
-import Login from "@/components/Login.vue";
-import UserInfoComp from "@/components/UserInfoComp.vue";
+import Login from "@/components/account/Login.vue";
+import UserInfoComp from "@/components/account/UserInfoComp.vue";
 import http from "@/util/http-common";
 
 export default {

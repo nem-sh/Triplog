@@ -3,8 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 // import error from "../components/error.vue";
 
-import APIError from "../components/APIError.vue";
-import ArticleWrite from "../components/ArticleWrite.vue"
+import APIError from "../components/error/APIError.vue";
+import ArticleWrite from "../components/error/ArticleWrite.vue"
 // import store from "../store/modules/user.js";
 
 Vue.use(VueRouter);
