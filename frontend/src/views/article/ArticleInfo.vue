@@ -1,6 +1,7 @@
 <template>
     <div>
         <article-info-comp
+            :articleNum = "item.num"
             :articleTitle = "item.articleno"
             :articlePlace = "item.title"
             :articleDateStart = "item.date_start"
