@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,9 +51,17 @@ public class ArticleController {
 		return ResponseEntity.ok(SUCCESS);
     }
 	
+	@PostMapping("/post")
+	public ResponseEntity<String> registArticleByNum(@RequestBody Article article) {
+		articleRepository.save(article);
+		
+		return ResponseEntity.ok(SUCCESS);
+    }
+	
 	@GetMapping("/getList")
 	public List<Article> findAllArticles(){
 		List<Article> list = articleRepository.findAll();
+		System.out.println(list.get(0));
 		return list;
 	}
 	

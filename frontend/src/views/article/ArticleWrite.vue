@@ -17,7 +17,7 @@
               </td>
           </tr>
           <tr>
-              <th class="text-left">Content</th>
+              <th class="text-left">CONTENT</th>
               <td>
               <v-textarea
                label="내용을 입력하세요"
@@ -40,11 +40,32 @@
         </v-row>
       </template>
     </v-simple-table>
+
+    <v-snackbar
+        v-model="registSuccess"
+        timeout="3000"
+      >
+        <v-icon color="deep-orange darken-3">mdi-home</v-icon>
+         게시물이 등록되었습니다.
+        
+        <template v-slot:action="{ attrs }">
+          <v-btn
+            color="red"
+            text
+            v-bind="attrs"
+            @click="logoutSuccess = false"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
+
   </div>
 </template>
 
 <script>
 import http from "@/util/http-common";
+import { mapGetters, mapState } from 'vuex';
 export default {
   name: "login",
   data() {
@@ -53,6 +74,7 @@ export default {
       articleTitle: "",
       alert : false,
       alertMsg : "",
+      registSuccess: false,
     };
   },
  methods: {
@@ -79,33 +101,43 @@ export default {
    },
    registHandler() {
      http
-      .put(`/users/${this.email}`, {
-        name: this.name,
-        nickname: this.nickName,
-        intro : this.intro,
-        imagesrc : this.imagesrc,
+      .post(`/article/post`, {
+        user_num: 1,
+        title: this.articleTitle,
+        content: this.articleContent,
+        created_at: new Date(),
       })
       .then(({ data }) => {
-        let msg = "수정 처리시 문제가 발생했습니다.";
+        let msg = "등록 처리시 문제가 발생했습니다.";
         if (data === "success") {
-          msg = "수정이 완료되었습니다.";
+          msg = "등록이 완료되었습니다.";
         }
         this.alertMsg = msg;
         this.alert = true;
-        this.$emit("closeUserInfoModal", this.alertMsg);
+        this.registSuccess = true;
+        this.$router.push('/article/list');
       }).catch((e) => {
         if (e.request.status === 404){
-          this.alertMsg = "탈퇴 처리시 에러가 발생했습니다.";
+          this.alertMsg = "등록 처리시 에러가 발생했습니다.";
           this.alert = true;
         } else{
-          this.$emit("closeLoginModal");
           this.$router.push(`/apierror/${e.request.status}/`)
         }
         console.log(e.request.status)
         
-
       });
    },
  },
+ computed: {
+    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail']),
+    ...mapState({
+      authLoading: state => state.auth.status === 'loading'
+      ,uname: state => `${state.user.getProfile}`,
+      userEmail : state => `${state.user.getEmail}`,
+    }),
+    loading: function () {
+      return this.authStatus === 'loading' && !this.isAuthenticated
+    }
+  },
 };
 </script>
