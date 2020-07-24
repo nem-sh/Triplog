@@ -16,13 +16,13 @@ public class Article {
 	@Id
 	private Long num;
 	private Long user_num;
-	private Long tripPackage_num;
+	private Long trippackage_num;
 	private String title;
 	private String place;
 	private String content;
 	private String thumbnail;
 	private Boolean temp;
-	private Date create_at;
+	private Date created_at;
 	private Date date_start;
 	private Date date_end;
 }
