@@ -3,6 +3,8 @@ package com.ssafy.trip.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,7 +14,10 @@ import lombok.Data;
 @Table(name = "article")
 public class Article {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long num;
+	
 	public Long getNum() {
 		return num;
 	}
@@ -80,7 +85,6 @@ public class Article {
 		this.date_end = date_end;
 	}
 	
-	@Id
 	private Long user_num;
 	private Long trippackage_num;
 	private String title;
