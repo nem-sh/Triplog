@@ -5,7 +5,7 @@ import Home from "../views/Home.vue";
 import APIError from "../components/error/APIError.vue";
 import ArticleWrite from "../views/article/ArticleWrite.vue"
 // import store from "../store/modules/user.js";
-
+import ArticleSearch from "../views/article/ArticleSearch.vue";
 import ArticleInfo from "../views/article/ArticleInfo.vue"
 import ArticleList from "../views/article/ArticleList.vue"
 
@@ -33,6 +33,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path:"/article/searchArticle",
+    name:"ArticleSearch",
+    component: ArticleSearch
   },
   
   {
