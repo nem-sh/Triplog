@@ -1,12 +1,10 @@
 <template>
-  <tr>
-    <td>{{num}}</td>
-    <td>{{user_num}}</td>
-    <td>{{title}}</td>
-    <td>
-      <v-img :src="require(`@/assets/${thumbnail}`)" contain height="200" />
-    </td>
-  </tr>
+  <div class="item">
+    <router-link to="/article/detail">
+        <v-img :src="require(`@/assets/${thumbnail}`)" class="thumb" />
+    </router-link>
+    <p class="title">{{title}}</p>
+  </div>
 </template>
 
 <script>
@@ -16,11 +14,10 @@ export default {
     num: { type: Number },
     user_num: { type: Number },
     title: { type: String },
-    thumbnail: { type: String },
-  },
-}
+    thumbnail: { type: String }
+  }
+};
 </script>
 
 <style>
-
 </style>
