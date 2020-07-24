@@ -8,6 +8,7 @@ import ArticleWrite from "../views/article/ArticleWrite.vue"
 
 import ArticleInfo from "../views/article/ArticleInfo.vue"
 import ArticleList from "../views/article/ArticleList.vue"
+import ArticleModify from "../views/article/ArticleModify.vue"
 
 
 Vue.use(VueRouter);
@@ -46,19 +47,24 @@ const routes = [
   //   component: error
   // },
   {
-    path: "/write",
-    name: "write",
+    path: "/article/write",
+    name: "articleWrite",
     component: ArticleWrite
   },
   {
-    path: "/articleDetail",
+    path: "/article/detail",
     name: "articleDetail",
     component: ArticleInfo
   },
   {
-    path: "/ArticleList",
-    name: "ArticleList",
+    path: "/article/list",
+    name: "articleList",
     component: ArticleList
+  },
+  {
+    path: "/article/modify",
+    name: "ArticleModify",
+    component: ArticleModify
   },
 ];
 

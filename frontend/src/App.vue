@@ -2,11 +2,13 @@
   <v-app>
     <v-sheet class="overflow-hidden"
     >
-        <!-- shrink-on-scroll -->
       <v-app-bar
-        absolute
+        width="80%"
+        height="200px"
         color="#6A76AB"
         dark
+        absolute
+        shrink-on-scroll
         elevate-on-scroll
         prominent
         src="https://picsum.photos/1920/1080?random"
@@ -56,13 +58,42 @@
         :max-height="clientHeight"
         outliend = false
       >
-        <v-container style="height: 280px;"></v-container>
-        <v-main>
+        <v-container style="height: 210px;"></v-container>
+
+        <v-main style="padding: 10px; margin:0 auto;">
           <v-container>
             <router-view></router-view>
           </v-container>
         </v-main>
+        
+        <v-navigation-drawer permanent right fixed width="20%">
+          <v-card
+         class="mx-auto"
+         max-width="344"
+         >
+          <v-img
+            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+            height="200px"
+            ></v-img>
+
+            <v-card-title>
+              Top western road trips
+            </v-card-title>
+
+            <v-card-subtitle>
+              1,000 miles of wonder
+            </v-card-subtitle>
+
+            <v-card-actions>
+              <v-btn text>Shard</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-navigation-drawer>
+
+
+
       </v-sheet>
+
 
       <v-footer fixed color="white">
         <v-row justify="center" no-gutters>
@@ -317,7 +348,7 @@ export default {
       window.open("https://lab.ssafy.com/edonc700/happyhousefinal", "PopupGit", "width=1000,height=900");
     },
     goWrite: function() {
-      this.$router.push('write');
+      this.$router.push('/article/write');
     },
     closeUserInfoModal: function(msg) {
       if(msg != null) {
