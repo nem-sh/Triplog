@@ -61,6 +61,7 @@ public class ArticleController {
 	@GetMapping("/getList")
 	public List<Article> findAllArticles(){
 		List<Article> list = articleRepository.findAll();
+		System.out.println(list.get(0));
 		return list;
 	}
 }
