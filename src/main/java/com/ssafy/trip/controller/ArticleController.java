@@ -64,4 +64,16 @@ public class ArticleController {
 		System.out.println(list.get(0));
 		return list;
 	}
+	
+	@GetMapping("/searchArticle/{keyword}")
+	public List<Article> searchArticle(@PathVariable(value="keyword") String keyword) {
+		System.out.println("11");
+		List<Article> searchArticle = articleRepository.findByTitleContaining(keyword);
+		System.out.println(keyword);
+
+		
+		return searchArticle;
+	}
+	
+	
 }

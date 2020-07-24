@@ -38,7 +38,17 @@
         </div>
         </v-app-bar-nav-icon>
   
-  
+        <v-form action="/article/searchArticle"> 
+        <v-text-field
+          flat
+          solo-inverted
+          hide-details
+          prepend-inner-icon="mdi-magnify"
+          label="Search"
+          class="hidden-sm-and-down"
+          name="keyword"
+        ></v-text-field>
+        </v-form>
         <v-spacer></v-spacer>
         <v-toolbar-title>TITLE</v-toolbar-title>
   
@@ -285,6 +295,7 @@ import {AUTH_LOGOUT} from './store/actions/auth'
 import Login from "@/components/account/Login.vue";
 import UserInfoComp from "@/components/account/UserInfoComp.vue";
 import http from "@/util/http-common";
+
 
 export default {
   name: "App",

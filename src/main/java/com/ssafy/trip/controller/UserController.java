@@ -1,5 +1,7 @@
 package com.ssafy.trip.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.trip.exception.ResourceNotFoundException;
 import com.ssafy.trip.help.UserIdentityAvailability;
 import com.ssafy.trip.help.UserProfile;
+import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.repository.UserRepository;
 @CrossOrigin(origins = "*")
@@ -85,5 +88,9 @@ public class UserController {
       } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
       }
+    }
+    @GetMapping("/{user_num}/searchArticle/{keyword}")
+    public List<Article> searchArticle(@PathVariable(value="keyword") String keyword) {
+    	return null;
     }
 }
