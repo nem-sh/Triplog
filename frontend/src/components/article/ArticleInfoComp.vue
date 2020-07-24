@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th class="text-left">작성일</th>
-                <td class="text-left">{{getFormatDate(articleCreateAt)}}</td>
+                <td class="text-left">{{getFormatDate(articleCreatedAt)}}</td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -56,7 +56,7 @@ export default {
     articlePlace: { type: String },
     articleDateStart: { type: String },
     articleDateEnd: { type: String },
-    articleCreateAt: { type: String },
+    articleCreatedAt: { type: String },
     articleContent: {type: String},
     blogMasterName: {type: String}
   },

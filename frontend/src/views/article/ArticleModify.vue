@@ -2,25 +2,26 @@
     <div>
         <article-info-comp
             :articleNum = "item.num"
+            :articleUserNum = "item.user_num"
+            :articleTripPackageNum = "item.trippackage_num"
             :articleTitle = "item.articleno"
             :articlePlace = "item.title"
             :articleDateStart = "item.date_start"
             :articleDateEnd = "item.date_end"
             :articleCreatedAt = "item.created_at"
             :articleContent = "item.content"
-            :blogMasterName = "blogMaster"
         />
     </div>
 </template>
 
 <script>
-import ArticleInfoComp from "@/components/article/ArticleInfoComp.vue";
+import ArticleModifyComp from "@/components/article/ArticleModifyComp.vue";
 import http from "@/util/http-common";
 
 export default {
-  name: "ArticleInfo",
+  name: "ArticleModify",
   components: {
-    ArticleInfoComp
+    ArticleModify
   },
   data: function() {
     return {
