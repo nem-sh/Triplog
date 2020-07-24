@@ -184,7 +184,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item to = "/ArticleList">
+          <v-list-item to = "/article/list">
             <v-list-item-icon>
               <v-icon></v-icon>
             </v-list-item-icon>

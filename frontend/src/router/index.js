@@ -68,7 +68,7 @@ const routes = [
   },
   {
     path: "/article/modify",
-    name: "ArticleModify",
+    name: "articleModify",
     component: ArticleModify
   },
 ];

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <article-info-comp
+        <article-modify-comp
             :articleNum = "item.num"
             :articleUserNum = "item.user_num"
             :articleTripPackageNum = "item.trippackage_num"
@@ -21,7 +21,7 @@ import http from "@/util/http-common";
 export default {
   name: "ArticleModify",
   components: {
-    ArticleModify
+    ArticleModifyComp
   },
   data: function() {
     return {
