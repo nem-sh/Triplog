@@ -30,6 +30,15 @@
                     </v-p>
                 </td>
             </tr>
+            <tr>
+              <td>
+                <v-btn @click="likeBtnClick">
+                  <v-icon v-if="isLoginedUserLikeThisArticle">heart</v-icon>
+                  <v-icon v-else>heart-outline</v-icon>
+                </v-btn>
+                <v-content>{{articleLikeCount}}</v-content>
+              </td>
+            </tr>
         </tbody>
       </template>
     </v-simple-table>
@@ -52,13 +61,18 @@ export default {
   name: "articleInfoComp",
   props: {
     articleNum: {type: Number},
+    articleUserNum: {type: Number},
+    articleThumbnail: {type: String},
+    articleTemp: {type: Boolean},
     articleTitle: { type: String },
     articlePlace: { type: String },
     articleDateStart: { type: String },
     articleDateEnd: { type: String },
     articleCreatedAt: { type: String },
     articleContent: {type: String},
-    blogMasterName: {type: String}
+    blogMasterName: {type: String},
+    articleLikeCount: {type: Number},
+    isLoginedUserLikeThisArticle: {type: Boolean}
   },
   methods: {
     getFormatDate(regtime) {
@@ -80,6 +94,43 @@ export default {
             // this.alertMsg = "삭제 처리시 에러가 발생했습니다.";
             // this.alert = true;
         });
+    },
+    likeBtnClick: function() {
+      if(this.isLoginedUserLikeThisArticle) {
+        this.articleLikeCount--;
+      } else {
+        this.articleLikeCount++;
+      }
+      this.isLoginedUserLikeThisArticle = !this.isLoginedUserLikeThisArticle;
+
+      http
+        .put(`/article/${this.articleNum}/${this.getProfile}/${this.isLoginedUserLikeThisArticle}`, {
+          num: this.articleNum,
+          user_num: this.articleUserNum,
+          trippackage_num: this.articleTripPackageNum,
+          title: this.articleTitle,
+          place: this.articlePlace,
+          content: this.articleContent,
+          thumbnail: this.articleThumbnail,
+          temp: this.articleTemp,
+          created_at: this.articleCreatedAt,
+          date_start: this.articleDateStart,
+          date_end: this.articleDateEnd,
+          likeCount: this.articleLikeCount
+        })
+        .then(({ data }) => {
+          let msg = "수정 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "수정이 완료되었습니다.";
+          }
+          this.alertMsg = msg;
+          this.alert = true;
+        //   this.moveList();
+        })
+        .catch(() => {
+          this.alertMsg = "수정 처리시 에러가 발생했습니다.";
+          this.alert = true;
+          });
     }
   },
   computed: {

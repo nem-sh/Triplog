@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trip.exception.ResourceNotFoundException;
 import com.ssafy.trip.model.Article;
+import com.ssafy.trip.model.LikeArticle;
+import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.repository.ArticleRepository;
+import com.ssafy.trip.repository.LikeArticleRepository;
+import com.ssafy.trip.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -28,6 +32,12 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleRepository articleRepository;
+	
+	@Autowired
+	private LikeArticleRepository likeArticleRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@GetMapping("/{num}")
     public ResponseEntity<Article> getArticleByNum(@PathVariable(value = "num") Long num) {
@@ -71,9 +81,32 @@ public class ArticleController {
 		List<Article> searchArticle = articleRepository.findByTitleContaining(keyword);
 		System.out.println(keyword);
 
-		
 		return searchArticle;
 	}
 	
+	@GetMapping("/like/{articleNum}/{email}")
+	public ResponseEntity<Boolean> getIsLike(@PathVariable(value = "email") String email,
+			@PathVariable(value = "articleNum") Long articleNum) {
+		
+		Long userNum = userRepository.findByEmail(email).get().getNum();
+		Boolean isLike = likeArticleRepository.findByUserNumAndArticleNum(userNum, articleNum).isPresent();
+		return ResponseEntity.ok(isLike);
+	}
 	
+	@PutMapping("/like/{articleNum}/{email}/{flag}")
+	public ResponseEntity<String> modifyLikeInArticleDetail(@PathVariable(value = "email") String email,
+			@PathVariable(value = "articleNum") Long articleNum,@PathVariable(value = "flag") boolean flag, 
+			@RequestBody Article article) {
+		articleRepository.save(article);
+
+		Long userNum = userRepository.findByEmail(email).get().getNum();
+		
+		if(flag) {
+			likeArticleRepository.save(new LikeArticle(userNum, articleNum));
+		}else {
+			likeArticleRepository.delete(new LikeArticle(userNum, articleNum));
+		}
+		
+		return ResponseEntity.ok(SUCCESS);
+    }
 }

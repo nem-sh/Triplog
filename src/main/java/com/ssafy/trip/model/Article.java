@@ -25,14 +25,15 @@ public class Article {
 	private Date created_at;
 	private Date date_start;
 	private Date date_end;
-	
+	private int likeCount;
+
 	public Article() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
 	public Article(Long num, Long user_num, Long trippackage_num, String title, String place, String content,
-			String thumbnail, Boolean temp, Date created_at, Date date_start, Date date_end) {
+			String thumbnail, Boolean temp, Date created_at, Date date_start, Date date_end, int likeCount) {
 		super();
 		this.num = num;
 		this.user_num = user_num;
@@ -45,6 +46,7 @@ public class Article {
 		this.created_at = created_at;
 		this.date_start = date_start;
 		this.date_end = date_end;
+		this.likeCount = likeCount;
 	}
 	
 	public Long getNum() {
@@ -113,14 +115,20 @@ public class Article {
 	public void setDate_end(Date date_end) {
 		this.date_end = date_end;
 	}
-	
+	public int getLikeCount() {
+		return likeCount;
+	}
 
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
 
 	@Override
 	public String toString() {
 		return "Article [num=" + num + ", user_num=" + user_num + ", trippackage_num=" + trippackage_num + ", title="
 				+ title + ", place=" + place + ", content=" + content + ", thumbnail=" + thumbnail + ", temp=" + temp
-				+ ", created_at=" + created_at + ", date_start=" + date_start + ", date_end=" + date_end + "]";
+				+ ", created_at=" + created_at + ", date_start=" + date_start + ", date_end=" + date_end
+				+ ", likeCount=" + likeCount + "]";
 	}
 
 }
