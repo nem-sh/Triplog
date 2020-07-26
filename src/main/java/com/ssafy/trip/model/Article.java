@@ -2,6 +2,7 @@ package com.ssafy.trip.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +16,8 @@ public class Article {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long num;
-	private Long user_num;
+	@Column(name="user_num")
+	private Long usernum;
 	private Long trippackage_num;
 	private String title;
 	private String place;
@@ -35,7 +37,7 @@ public class Article {
 			String thumbnail, Boolean temp, Date created_at, Date date_start, Date date_end) {
 		super();
 		this.num = num;
-		this.user_num = user_num;
+		this.usernum = user_num;
 		this.trippackage_num = trippackage_num;
 		this.title = title;
 		this.place = place;
@@ -54,10 +56,10 @@ public class Article {
 		this.num = num;
 	}
 	public Long getUser_num() {
-		return user_num;
+		return usernum;
 	}
 	public void setUser_num(Long user_num) {
-		this.user_num = user_num;
+		this.usernum = user_num;
 	}
 	public Long getTrippackage_num() {
 		return trippackage_num;
@@ -118,7 +120,7 @@ public class Article {
 
 	@Override
 	public String toString() {
-		return "Article [num=" + num + ", user_num=" + user_num + ", trippackage_num=" + trippackage_num + ", title="
+		return "Article [num=" + num + ", user_num=" + usernum + ", trippackage_num=" + trippackage_num + ", title="
 				+ title + ", place=" + place + ", content=" + content + ", thumbnail=" + thumbnail + ", temp=" + temp
 				+ ", created_at=" + created_at + ", date_start=" + date_start + ", date_end=" + date_end + "]";
 	}

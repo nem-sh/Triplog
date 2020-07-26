@@ -15,11 +15,12 @@ public interface UserRepository extends JpaRepository<MemberUser, Long> {
     Optional<MemberUser> findByNicknameOrEmail(String username, String email);
     
     Optional<MemberUser> findByNum(Long num);
-
+    
     List<MemberUser> findByNumIn(List<Long> userIds);
 
     Optional<MemberUser> findByNickname(String username);
-
+    
+    List<MemberUser> findByNicknameContaining(String username);
     Boolean existsByNickname(String username);
 
     Boolean existsByEmail(String email);
