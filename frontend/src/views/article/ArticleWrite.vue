@@ -41,25 +41,6 @@
       </template>
     </v-simple-table>
 
-    <v-snackbar
-        v-model="registSuccess"
-        timeout="3000"
-      >
-        <v-icon color="deep-orange darken-3">mdi-home</v-icon>
-         게시물이 등록되었습니다.
-        
-        <template v-slot:action="{ attrs }">
-          <v-btn
-            color="red"
-            text
-            v-bind="attrs"
-            @click="logoutSuccess = false"
-          >
-            Close
-          </v-btn>
-        </template>
-      </v-snackbar>
-
   </div>
 </template>
 

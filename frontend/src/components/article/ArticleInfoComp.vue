@@ -33,8 +33,8 @@
             <tr>
               <td>
                 <v-btn @click="likeBtnClick">
-                  <v-icon v-if="isLoginedUserLikeThisArticle">heart</v-icon>
-                  <v-icon v-else>heart-outline</v-icon>
+                  <v-icon v-if="isLoginedUserLikeThisArticle">mdi-heart</v-icon>
+                  <v-icon v-else>mdi-heart-outline</v-icon>
                 </v-btn>
                 <v-content>{{articleLikeCount}}</v-content>
               </td>

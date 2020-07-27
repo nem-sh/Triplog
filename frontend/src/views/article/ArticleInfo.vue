@@ -6,8 +6,8 @@
             :articleTripPackageNum = "item.trippackage_num"
             :articleThumbnail = "item.thumbnail"
             :articleTemp = "item.temp"
-            :articleTitle = "item.articleno"
-            :articlePlace = "item.title"
+            :articleTitle = "item.title"
+            :articlePlace = "item.place"
             :articleDateStart = "item.date_start"
             :articleDateEnd = "item.date_end"
             :articleCreatedAt = "item.created_at"
@@ -45,7 +45,7 @@ export default {
         console.dir(data);
       });
     http
-      .get(`/article/like/${this.$route.query.articleno}/${this.getProfile}`)
+      .get(`/article/like/${this.$route.query.articleno}/${this.getEmail}`)
       .then(({ data }) => {
         this.isLike = data;
         console.dir(data);
