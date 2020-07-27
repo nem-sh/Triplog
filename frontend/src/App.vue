@@ -22,14 +22,9 @@
           ></v-img>
         </template>
   
-        <v-app-bar-nav-icon>
-          <v-btn @click="loginModalToggle = !loginModalToggle"
-          v-if="!(isAuthenticated && isProfileLoaded)"
-          icon>
-          <v-icon>mdi-account-arrow-right</v-icon>
-        </v-btn>
 
-        <div v-else>
+        <v-app-bar-nav-icon>
+        <div>
           <v-app-bar-nav-icon @click="drawer = true">
             <v-avatar :color="ranColor" size="36">
               <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
@@ -37,12 +32,9 @@
           </v-app-bar-nav-icon>
         </div>
         </v-app-bar-nav-icon>
-        
-        
-        <v-toolbar-title>TITLE</v-toolbar-title>
         <v-spacer></v-spacer>
-       <div class="container">
-         <v-form class="row justify-content-end float-right" action="/article/searchArticle">
+
+         <v-form class="row  float-right" action="/article/searchArticle">
             <v-select
             :items="items"
             label="항목"
@@ -65,7 +57,14 @@
         sub</v-btn>
          </v-form>
 
-       </div>
+          <v-btn @click="loginModalToggle = !loginModalToggle"
+          v-if="!(isAuthenticated && isProfileLoaded)"
+          icon>
+          <v-icon>mdi-account-arrow-right</v-icon>
+        </v-btn>
+        
+        <v-spacer></v-spacer>
+        <v-toolbar-title>TITLE</v-toolbar-title>
        
   
         <v-btn icon @click="gitPage">
@@ -166,7 +165,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to = "/like">
             <v-list-item-icon>
               <v-icon></v-icon>
             </v-list-item-icon>

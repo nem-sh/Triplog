@@ -64,14 +64,6 @@ public class Article {
 		this.likearticle = likearticle;
 	}
 
-	public List<MemberUser> getLikearticle() {
-		return likearticle;
-	}
-
-	public void setLikearticle(List<MemberUser> likearticle) {
-		this.likearticle = likearticle;
-	}
-
 	public Long getNum() {
 		return num;
 	}

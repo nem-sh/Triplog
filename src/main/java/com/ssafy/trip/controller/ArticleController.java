@@ -1,8 +1,6 @@
 package com.ssafy.trip.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -83,8 +81,6 @@ public class ArticleController {
 	}
 	
 	//좋아요 기능 -남시성
-	@Autowired
-    private UserRepository userRepository;
 	
 	@GetMapping("/likelist/{email}")
 	public List<Article> findArticleLikeList(@PathVariable(value = "email") String email){
