@@ -58,11 +58,11 @@ export default {
 
 <style>
 p.title {
-  text-shadow: 1px 1px 2px #666666;
+  text-shadow: 1px 1px 2px #383838;
   color: rgb(255, 255, 255);
   text-align: center;
   position: relative;
-  bottom: 60px;
+  top: 10px;
 }
 .grid {
   display: grid;

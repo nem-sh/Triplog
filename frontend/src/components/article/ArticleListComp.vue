@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <router-link to="/article/detail">
-        <v-img :src="require(`@/assets/${thumbnail}`)" class="thumb" />
+      <v-img :src="require(`@/assets/${thumbnail}`)" class="thumb" />
     </router-link>
     <p class="title">{{title}}</p>
   </div>
