@@ -9,8 +9,7 @@ import ArticleSearch from "../views/article/ArticleSearch.vue";
 import ArticleInfo from "../views/article/ArticleInfo.vue"
 import ArticleList from "../views/article/ArticleList.vue"
 import ArticleModify from "../views/article/ArticleModify.vue"
-
-
+import temp from "../views/temporaryArticle/temp.vue"
 Vue.use(VueRouter);
 
 // const requireAuth = () => (to, from, next) => {
@@ -71,6 +70,11 @@ const routes = [
     name: "articleModify",
     component: ArticleModify
   },
+  {
+    path: "/tempArticle",
+    name: "tempArticle",
+    component: temp
+  }
 ];
 
 const router = new VueRouter({

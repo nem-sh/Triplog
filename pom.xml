@@ -156,6 +156,13 @@
 		<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 		
+		<!-- 텔래그램 챗봇  -->
+		<dependency>
+			<groupId>org.telegram</groupId>
+			<artifactId>telegrambots</artifactId>
+			<version>4.5</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>
