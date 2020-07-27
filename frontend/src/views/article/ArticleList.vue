@@ -80,12 +80,14 @@ p.title {
   position: relative;
   border-radius: 10px;
 }
+.item:hover{
+  filter: drop-shadow(3px 3px 5px rgb(136, 136, 136));
+}
 .thumb {
   width: 100%;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  
 }
 </style>
