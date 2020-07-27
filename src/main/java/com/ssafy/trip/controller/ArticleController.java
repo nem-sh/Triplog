@@ -1,6 +1,7 @@
 package com.ssafy.trip.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trip.exception.ResourceNotFoundException;
 import com.ssafy.trip.model.Article;
+import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.repository.ArticleRepository;
+import com.ssafy.trip.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -74,6 +77,57 @@ public class ArticleController {
 		
 		return searchArticle;
 	}
+	
+	//좋아요 기능 -남시성
+	@Autowired
+    private UserRepository userRepository;
+	
+	@GetMapping("/likelist/{email}")
+	public List<Article> findArticleLikeList(@PathVariable(value = "email") String email){
+		
+		MemberUser user =  userRepository.findByEmail(email)
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+		
+	
+		
+		List<Article> articles = articleRepository.findByLikearticle(user);
+		return articles;
+	}
+	
+	@DeleteMapping("/likelist/{email}/{num}")
+	public ResponseEntity<String> DeleteArticleLikeList(@PathVariable(value = "email") String email,@PathVariable(value = "num") Long num){
+		MemberUser user =  userRepository.findByEmail(email)
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+		Article article =  articleRepository.findByNum(num)
+    			.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
+		
+		List<MemberUser> users = article.getLikearticle();
+		
+		users.remove(user);
+		
+		article.setLikearticle(users);
+		articleRepository.save(article);
+		
+		return ResponseEntity.ok(SUCCESS);
+	}
+	
+	@PutMapping("/likelist/{email}/{num}")
+	public ResponseEntity<String> UpdateArticleLikeList(@PathVariable(value = "email") String email,@PathVariable(value = "num") Long num){
+		MemberUser user =  userRepository.findByEmail(email)
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+		Article article =  articleRepository.findByNum(num)
+    			.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
+		
+		List<MemberUser> users = article.getLikearticle();
+		
+		users.add(user);
+		
+		article.setLikearticle(users);
+		articleRepository.save(article);
+		
+		return ResponseEntity.ok(SUCCESS);
+	}
+	//좋아요 기능 - 남시성
 	
 	
 }

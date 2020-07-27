@@ -1,6 +1,7 @@
 package com.ssafy.trip.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -69,7 +70,20 @@ public class MemberUser extends DateAudit {
     
     private boolean valid;
     
-    public MemberUser() {
+//    @ManyToMany(mappedBy = "likeArticle")
+//	private
+//    List<Article> likes;
+//    
+//    
+//    public List<Article> getLikes() {
+//		return likes;
+//	}
+//
+//	public void setLikes(List<Article> likes) {
+//		this.likes = likes;
+//	}
+
+	public MemberUser() {
 
     }
 

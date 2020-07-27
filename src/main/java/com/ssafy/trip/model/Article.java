@@ -1,11 +1,16 @@
 package com.ssafy.trip.model;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +30,13 @@ public class Article {
 	private Date created_at;
 	private Date date_start;
 	private Date date_end;
+	
+	@ManyToMany
+	@JoinTable(
+	  name = "like_Article", 
+	  joinColumns = @JoinColumn(name = "article_num"), 
+	  inverseJoinColumns = @JoinColumn(name = "user_num"))
+	List<MemberUser> likearticle;
 	
 	public Article() {
 		super();
@@ -115,6 +127,14 @@ public class Article {
 	}
 	
 
+
+	public List<MemberUser> getLikearticle() {
+		return likearticle;
+	}
+
+	public void setLikearticle(List<MemberUser> likearticle) {
+		this.likearticle = likearticle;
+	}
 
 	@Override
 	public String toString() {

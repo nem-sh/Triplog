@@ -9,6 +9,7 @@ import ArticleSearch from "../views/article/ArticleSearch.vue";
 import ArticleInfo from "../views/article/ArticleInfo.vue"
 import ArticleList from "../views/article/ArticleList.vue"
 import ArticleModify from "../views/article/ArticleModify.vue"
+import Like from "../views/likey/Like.vue"
 
 
 Vue.use(VueRouter);
@@ -25,6 +26,11 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/like",
+    name: "Like",
+    component: Like
   },
   {
     path: "/about",
