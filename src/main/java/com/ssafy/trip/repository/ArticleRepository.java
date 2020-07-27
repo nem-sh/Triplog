@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.trip.model.Article;
+import com.ssafy.trip.model.MemberUser;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
@@ -14,4 +15,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 //	블로그에서 검색기능
 	List<Article> findByTitleContaining(String keyword);
 	void deleteByNum(Long num);
+	List<Article> findByLikearticle(MemberUser user);
 }

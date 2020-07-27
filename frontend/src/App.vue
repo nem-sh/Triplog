@@ -373,11 +373,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail']),
+    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail', 'getUserNum']),
     ...mapState({
-      authLoading: state => state.auth.status === 'loading'
-      ,uname: state => `${state.user.getProfile}`,
+      authLoading: state => state.auth.status === 'loading',
+      uname: state => `${state.user.getProfile}`,
       userEmail : state => `${state.user.getEmail}`,
+      userNum : state => `${state.user.getUserNum}`
     }),
     loading: function () {
       return this.authStatus === 'loading' && !this.isAuthenticated

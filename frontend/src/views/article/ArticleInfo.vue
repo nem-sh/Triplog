@@ -15,6 +15,7 @@
             :blogMasterName = "blogMaster"
             :articleLikeCount = "item.likeCount"
             :isLoginedUserLikeThisArticle = "isLike"
+            v-if="isLike !== null"
         />
     </div>
 </template>
@@ -33,7 +34,7 @@ export default {
     return {
       item: {},
       blogMaster: "유성",
-      isLike: false,
+      isLike: null,
     };
   },
   created() {
@@ -51,11 +52,12 @@ export default {
       });
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail']),
+    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail', 'getUserNum']),
     ...mapState({
-      authLoading: state => state.auth.status === 'loading'
-      ,uname: state => `${state.user.getProfile}`,
+      authLoading: state => state.auth.status === 'loading',
+      uname: state => `${state.user.getProfile}`,
       userEmail : state => `${state.user.getEmail}`,
+      userNum : state => `${state.user.getUserNum}`
     }),
     loading: function () {
       return this.authStatus === 'loading' && !this.isAuthenticated
