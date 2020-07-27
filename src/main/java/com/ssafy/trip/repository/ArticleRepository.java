@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.trip.model.Article;
+import com.ssafy.trip.model.MemberUser;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
@@ -17,5 +18,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	List<Article> findByUsernum(Long user_num);
 	
 	void deleteByNum(Long num);
-	
+	List<Article> findByLikearticle(MemberUser user);
 }
