@@ -70,24 +70,6 @@ public class ArticleController {
 		return list;
 	}
 	
-	@GetMapping("/searchArticle/{keyword}")
-	public List<Article> searchArticle(@PathVariable(value="keyword") String keyword) {
-		
-		List<Article> searchArticle = articleRepository.findByTitleContaining(keyword);
-		System.out.println(keyword);
-		System.out.println(searchArticle);
-		
-		return searchArticle;
-	}
 	
-	@GetMapping("/searchUserArticle/{selected}")
-	public List<Article> searchArticleAuth(@PathVariable(value="selected") String selected) {
-		List<MemberUser> searchUsers = userRepository.findByNicknameContaining(selected);
-		List<Article> searchArticleAuth = new ArrayList<Article>();
-		for (MemberUser searchUser: searchUsers) {
-			searchArticleAuth.addAll( articleRepository.findByUsernum(searchUser.getNum()));
-			}
-		return searchArticleAuth;
-	}
 	
 }
