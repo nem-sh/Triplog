@@ -70,7 +70,7 @@ p.title {
   width: 80%;
   background: rgb(255, 255, 255);
   min-height: 400px;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-auto-rows: 20px;
   grid-gap: 10px;
 }
