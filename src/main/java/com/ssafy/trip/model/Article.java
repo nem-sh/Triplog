@@ -3,6 +3,7 @@ package com.ssafy.trip.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,8 @@ public class Article {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long num;
-	private Long user_num;
+	@Column(name="user_num")
+	private Long usernum;
 	private Long trippackage_num;
 	private String title;
 	private String place;
@@ -46,7 +48,7 @@ public class Article {
 			List<MemberUser> likearticle) {
 		super();
 		this.num = num;
-		this.user_num = user_num;
+		this.usernum = user_num;
 		this.trippackage_num = trippackage_num;
 		this.title = title;
 		this.place = place;
@@ -77,11 +79,11 @@ public class Article {
 	}
 
 	public Long getUser_num() {
-		return user_num;
+		return usernum;
 	}
 
 	public void setUser_num(Long user_num) {
-		this.user_num = user_num;
+		this.usernum = user_num;
 	}
 
 	public Long getTrippackage_num() {
@@ -166,7 +168,7 @@ public class Article {
 
 	@Override
 	public String toString() {
-		return "Article [num=" + num + ", user_num=" + user_num + ", trippackage_num=" + trippackage_num + ", title="
+		return "Article [num=" + num + ", user_num=" + usernum + ", trippackage_num=" + trippackage_num + ", title="
 				+ title + ", place=" + place + ", content=" + content + ", thumbnail=" + thumbnail + ", temp=" + temp
 				+ ", created_at=" + created_at + ", date_start=" + date_start + ", date_end=" + date_end
 				+ ", likeCount=" + likeCount + ", likearticle=" + likearticle + "]";
