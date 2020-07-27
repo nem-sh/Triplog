@@ -34,6 +34,7 @@ export default {
   },
   mounted() {
     window.addEventListener("load", this.SetGridItemHeight);
+    window.addEventListener("mousemove", this.SetGridItemHeight);
     window.addEventListener("resize", this.SetGridItemHeight);
   },
   methods: {
