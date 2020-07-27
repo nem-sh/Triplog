@@ -37,6 +37,7 @@ const actions = {
           localStorage.removeItem("profilename");
           localStorage.removeItem("realname");
           localStorage.removeItem("email");
+          localStorage.removeItem("userNum");
           reject(err);
         });
     });
@@ -48,6 +49,7 @@ const actions = {
       localStorage.removeItem("profilename");
       localStorage.removeItem("realname");
       localStorage.removeItem("email");
+      localStorage.removeItem("userNum");
       resolve();
     });
   }

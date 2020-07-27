@@ -14,6 +14,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	Optional<Article> findByNum(Long num);
 //	블로그에서 검색기능
 	List<Article> findByTitleContaining(String keyword);
+	List<Article> findByTitleContainingAndNum(String keyword, int user_num);
+	List<Article> findByUsernum(Long user_num);
+	
 	void deleteByNum(Long num);
 	List<Article> findByLikearticle(MemberUser user);
 }

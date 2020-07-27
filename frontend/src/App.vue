@@ -37,24 +37,36 @@
           </v-app-bar-nav-icon>
         </div>
         </v-app-bar-nav-icon>
-  
-        <v-form action="/article/searchArticle"> 
-        <v-text-field
+        
+        
+        <v-toolbar-title>TITLE</v-toolbar-title>
+        <v-spacer></v-spacer>
+       <div class="container">
+         <v-form class="row justify-content-end float-right" action="/article/searchArticle">
+            <v-select
+            :items="items"
+            label="항목"
+            v-model="defaultSelected"
+            name="selected"
+            class="mt-4 col-2"
+          ></v-select>
+          <v-text-field
           flat
           solo-inverted
           hide-details
           prepend-inner-icon="mdi-magnify"
           label="Search"
-          class="hidden-sm-and-down"
+          class="hidden-sm-and-down col-5"
           name="keyword"
         ></v-text-field>
-        </v-form>
-        <v-spacer></v-spacer>
-        <v-toolbar-title>TITLE</v-toolbar-title>
-  
-        <v-btn icon @click="searchGoogle">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
+         <v-btn type="submit"
+          small
+        >
+        sub</v-btn>
+         </v-form>
+
+       </div>
+       
   
         <v-btn icon @click="gitPage">
           <v-icon>mdi-github</v-icon>
@@ -311,6 +323,9 @@ export default {
     alert: false,
     alertMsg: "",
     userInfoCompKey: 0,
+    defaultSelected:"제목",
+    items: ["제목","작성자"],
+    titleSearch: "",
   }),
   components: {
     Login,
@@ -352,9 +367,7 @@ export default {
       this.loginModalToggle = false;
       this.$router.push('/');
     },
-    searchGoogle: function() {
-      window.open("https://www.google.com/", "PopupWin", "width=1000,height=900");
-    },
+    
     gitPage: function() {
       window.open("https://lab.ssafy.com/edonc700/happyhousefinal", "PopupGit", "width=1000,height=900");
     },
@@ -373,11 +386,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail']),
+    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail', 'getUserNum']),
     ...mapState({
-      authLoading: state => state.auth.status === 'loading'
-      ,uname: state => `${state.user.getProfile}`,
+      authLoading: state => state.auth.status === 'loading',
+      uname: state => `${state.user.getProfile}`,
       userEmail : state => `${state.user.getEmail}`,
+      userNum : state => `${state.user.getUserNum}`
     }),
     loading: function () {
       return this.authStatus === 'loading' && !this.isAuthenticated

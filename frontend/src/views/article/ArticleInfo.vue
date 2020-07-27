@@ -2,6 +2,10 @@
     <div>
         <article-info-comp
             :articleNum = "item.num"
+            :articleUserNum = "item.user_num"
+            :articleTripPackageNum = "item.trippackage_num"
+            :articleThumbnail = "item.thumbnail"
+            :articleTemp = "item.temp"
             :articleTitle = "item.articleno"
             :articlePlace = "item.title"
             :articleDateStart = "item.date_start"
@@ -9,11 +13,15 @@
             :articleCreatedAt = "item.created_at"
             :articleContent = "item.content"
             :blogMasterName = "blogMaster"
+            :articleLikeCount = "item.likeCount"
+            :isLoginedUserLikeThisArticle = "isLike"
+            v-if="isLike !== null"
         />
     </div>
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
 import ArticleInfoComp from "@/components/article/ArticleInfoComp.vue";
 import http from "@/util/http-common";
 
@@ -25,7 +33,8 @@ export default {
   data: function() {
     return {
       item: {},
-      blogMaster: "유성"
+      blogMaster: "유성",
+      isLike: null,
     };
   },
   created() {
@@ -35,6 +44,24 @@ export default {
         this.item = data;
         console.dir(data);
       });
-  }
+    http
+      .get(`/article/like/${this.$route.query.articleno}/${this.getProfile}`)
+      .then(({ data }) => {
+        this.isLike = data;
+        console.dir(data);
+      });
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail', 'getUserNum']),
+    ...mapState({
+      authLoading: state => state.auth.status === 'loading',
+      uname: state => `${state.user.getProfile}`,
+      userEmail : state => `${state.user.getEmail}`,
+      userNum : state => `${state.user.getUserNum}`
+    }),
+    loading: function () {
+      return this.authStatus === 'loading' && !this.isAuthenticated
+    }
+  },
 };
 </script>

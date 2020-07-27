@@ -1,10 +1,12 @@
 <template>
   <v-container>
       
-      <li :v-for="article in articles">
-          {{ article }}
+      <li v-for="article in articles" :key="article.num">
+          {{article.num}}
+          <br>
+          {{article.content}}
+          {{article.title}}
       </li>
-      아티클
       
   </v-container>
   
@@ -16,27 +18,41 @@ export default {
     name:"ArticleSearch",
     data () {
         return {
-            articles: Object,
-            keyword: null,
+            articles: [],
+            keyword: "",
+            selected:"",
         }
     } ,
    
    methods: {
        fetchData: function() {
-            axios.get(`http://localhost:8080/api/article/searchArticle/${this.keyword}`)
-            .then(function(response) {
-                this.articles = response
+           if (this.selected=="제목") {
+            axios.get(`http://localhost:8080/api/search/searchArticle/${this.keyword}`)
+            
+            .then((response) => {
+                console.log(response)
+                this.articles = response.data
+                
             })
             .catch((e) => {
                 console.log(e)
-                console.log("reefklsdanfkl;asdjfkl;asj")
+                
                 console.log(this.keyword);
             });
+           }else if (this.selected == "작성자"){
+               axios.get(`http://localhost:8080/api/search/searchUserArticle/${this.keyword}`)
+               .then((response) => {
+                   this.articles = response.data
+               }).catch((e) => {
+                   console.log(e)
+               });
+           }
      },
 
    },
    created(){
       this.keyword = this.$route.query.keyword
+      this.selected = this.$route.query.selected
        this.fetchData()
    }
    
