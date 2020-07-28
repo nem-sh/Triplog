@@ -1,9 +1,7 @@
 <template>
-  <div class="item">
-    <router-link to="/article/detail">
+  <div class="item" @click="showDetail">
       <v-img v-if="thumbnail" :src="require(`@/assets/${thumbnail}`)" class="thumb" />
       <v-img v-else :src="require(`@/assets/noimage.png`)" class="thumb" />
-    </router-link>
     <p class="title">{{title}}</p>
   </div>
 </template>
@@ -16,6 +14,11 @@ export default {
     user_num: { type: Number },
     title: { type: String },
     thumbnail: { type: String }
+  },
+  methods: {
+    showDetail() {
+      this.$router.push(`/article/detail?articleno=${this.num}`)
+    },
   }
 };
 </script>
