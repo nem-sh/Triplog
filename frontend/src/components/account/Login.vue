@@ -312,12 +312,11 @@ export default {
             this.submitted = true;
             this.newCustomer();
           } else {
-            this.alertMsg = "회원가입에 실패하였습니다.";
+            this.alertMsg = response.data.message;
             this.alert = true;
             this.visablelogin = false;
             this.submitted = false;
-            this.newCustomer();
-          }
+          } 
         }).catch((e) => {
           if (e.request.status === 404){
             this.alertMsg = "회원가입에 실패하였습니다.";
@@ -329,8 +328,6 @@ export default {
             this.$router.push(`/apierror/${e.request.status}/`)
           }
           console.log(e.request.status)
-          
- 
         });
         // .catch(() => {
         //   this.alertMsg = "회원가입에 실패하였습니다.";

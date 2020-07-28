@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,6 +38,7 @@ import com.ssafy.trip.model.RoleName;
 import com.ssafy.trip.repository.RoleRepository;
 import com.ssafy.trip.repository.UserRepository;
 import com.ssafy.trip.security.JwtTokenProvider;
+import com.ssafy.trip.service.EmailValidationService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -61,7 +61,7 @@ public class AuthController {
     JwtTokenProvider tokenProvider;
     
     @Autowired
-    JavaMailSender javaMailSender;
+    EmailValidationService emailValidationService;
     
     public static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 	
@@ -86,12 +86,12 @@ public class AuthController {
     	logger.info("1-------------registerUser-----------------------------"+signUpRequest);
     	if(userRepository.existsByNickname(signUpRequest.getNickname())) {
             return new ResponseEntity(new ApiResult(false, "사용자 별명이 이미 존재합니다!"),
-                    HttpStatus.BAD_REQUEST);
+                    HttpStatus.ACCEPTED);
         }
     	logger.info("2-------------registerUser-----------------------------"+signUpRequest);
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity(new ApiResult(false, "이메일이 이미 존재합니다!"),
-                    HttpStatus.BAD_REQUEST);
+                    HttpStatus.ACCEPTED);
         }
         logger.info("3-------------registerUser-----------------------------"+signUpRequest);
         // Creating user's account
@@ -111,21 +111,7 @@ public class AuthController {
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getNickname()).toUri();
 
-        MimeMessage simpleMessage = javaMailSender.createMimeMessage();
-        String memberMail = signUpRequest.getEmail();
-        try {
-			simpleMessage.addRecipient(RecipientType.TO, new InternetAddress(memberMail));
-			simpleMessage.setSubject("TRIP 회원가입 인증 메일");
-			simpleMessage.setText(new StringBuffer().append("<h1>회원가입 인증메일입니다.</h1>")
-					.append("<p>밑의 링크를 클릭하면 메일이 인증 됩니다.</p>")
-					.append("<a href='http://localhost:8080/emailValid/auth/"+memberMail)
-					.append("' target=blank>메일 인증 링크</a>")
-					.toString(), "UTF-8", "html");
-			javaMailSender.send(simpleMessage);
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        emailValidationService.sendEmail(signUpRequest.getEmail());
         
         return ResponseEntity.created(location).body(new ApiResult(true, "성공적으로 등록되었습니다."));
     }
