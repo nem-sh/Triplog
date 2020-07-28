@@ -1,5 +1,6 @@
 package com.ssafy.trip.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class ArticleController {
 	@GetMapping("/getList")
 	public List<Article> findAllArticles() {
 		List<Article> list = articleRepository.findAll();
-		System.out.println(list.get(0));
+		Collections.reverse(list);
 		return list;
 	}
 
