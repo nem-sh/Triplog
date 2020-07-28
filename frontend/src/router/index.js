@@ -9,6 +9,8 @@ import ArticleList from "../views/article/ArticleList.vue"
 import ArticleModify from "../views/article/ArticleModify.vue"
 import Like from "../views/likey/Like.vue"
 import temp from "../views/temporaryArticle/temp.vue"
+import PersonalMain from "../views/personal/MainPage.vue"
+// import { component } from "vue/types/umd";
 Vue.use(VueRouter);
 
 const routes = [
@@ -66,6 +68,11 @@ const routes = [
     path: "/tempArticle",
     name: "tempArticle",
     component: temp
+  },
+  {
+    path: "/:hostNum",
+    name: "PersonalMain",
+    component: PersonalMain
   },
 ];
 

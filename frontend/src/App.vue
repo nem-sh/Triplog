@@ -106,7 +106,7 @@
             </v-card-subtitle>
 
             <v-card-actions>
-              <v-btn text>Shard</v-btn>
+              <v-btn text @click="goToMyBlog">내 블로그 가기</v-btn>
             </v-card-actions>
           </v-card>
         </v-navigation-drawer>
@@ -331,6 +331,9 @@ export default {
     UserInfoComp,
   },
   methods: {
+    goToMyBlog: function() {
+      this.$router.push(`/${this.getUserNum}`);
+    },
     logout: function () {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
         this.drawer = false;
@@ -339,7 +342,7 @@ export default {
       })
     },
     info: function () {
-      http.get(`/users/${this.getEmail}`).then(({ data }) => {
+      http.get(`/users/${this.getUserNum}`).then(({ data }) => {
         this.userInfo = data;
         console.dir(data);
         this.userInfoCompKey += 1;

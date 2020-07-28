@@ -47,10 +47,20 @@ public class UserController {
 
     @GetMapping("/users/{email}")
     public UserProfile getUserProfile(@PathVariable(value = "email") String email) {
+    	System.out.println(email);
         MemberUser user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
 
         System.out.println(user);
+        UserProfile userProfile = new UserProfile(user.getNum(), user.getEmail(), user.getNickname(), user.getName(), user.getCreatedAt(), user.getImageSrc(), user.getIntro(), user.isValid());
+        return userProfile;
+    }
+    
+    @GetMapping("/users/get/{num}")
+    public UserProfile getUserProfileByNum(@PathVariable(value = "num") Long num) {
+        MemberUser user = userRepository.findByNum(num)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
+
         UserProfile userProfile = new UserProfile(user.getNum(), user.getEmail(), user.getNickname(), user.getName(), user.getCreatedAt(), user.getImageSrc(), user.getIntro(), user.isValid());
         return userProfile;
     }
