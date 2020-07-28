@@ -147,18 +147,25 @@ public class ArticleController {
 		return ResponseEntity.ok(isLike);
 	}
 
-	@PutMapping("/article/{num}/{email}/{flag}")
-	public ResponseEntity<String> modifyLikeInfoInArticle(@PathVariable(value = "email") String email,
-			@PathVariable(value = "num") Long num, @PathVariable(value = "flag") boolean flag,
-			@RequestBody Article article) {
-		MemberUser user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+	@PutMapping("/{num}/{nickname}/{flag}")
+	public ResponseEntity<String> modifyLikeInfoInArticle(@PathVariable(value = "nickname") String nickname,
+			@PathVariable(value = "num") Long num, @PathVariable(value = "flag") boolean flag) {
+		
+		Article article =  articleRepository.findByNum(num)
+    			.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
+		
+		MemberUser user = userRepository.findByNickname(nickname)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "nickname", nickname));
 
 		List<MemberUser> users = article.getLikearticle();
 
 		if(flag) users.add(user);
 		else users.remove(user);
-
+		if (flag) {
+			article.setLikeCount(article.getLikeCount()+1);
+		} else {
+			article.setLikeCount(article.getLikeCount()-1);
+		}
 		article.setLikearticle(users);
 		articleRepository.save(article);
 
