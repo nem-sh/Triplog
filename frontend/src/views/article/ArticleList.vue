@@ -1,14 +1,16 @@
 <template>
   <div>
-    <div class="grid">
-      <ArticleListComp
-        v-for="(item, index) in items"
-        :key="`${index}_items`"
-        :num="item.num"
-        :user_num="item.user_num"
-        :title="item.title"
-        :thumbnail="item.thumbnail"
-      />
+    <div v-if="items.length">
+      <div class="grid">
+        <ArticleListComp
+          v-for="(item, index) in items"
+          :key="`${index}_items`"
+          :num="item.num"
+          :user_num="item.user_num"
+          :title="item.title"
+          :thumbnail="item.thumbnail"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -81,7 +83,7 @@ p.title {
   position: relative;
   border-radius: 10px;
 }
-.item:hover{
+.item:hover {
   filter: drop-shadow(3px 3px 5px rgb(136, 136, 136));
 }
 .thumb {
