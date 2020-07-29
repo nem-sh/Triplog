@@ -108,22 +108,20 @@
             <v-card-actions>
               <v-btn text>Shard</v-btn>
             </v-card-actions>
-          </v-card>
+
+          </v-card>        
+
+          <v-footer fixed color="white">
+            <v-row justify="center" no-gutters>
+              <v-btn rounded color="deep-purple lighten-4" class="my-2" @click="goWrite">
+                <v-icon>mdi-file-edit</v-icon>
+                <div>WRITE</div>
+              </v-btn>
+            </v-row>
+          </v-footer>
         </v-navigation-drawer>
 
-
-
       </v-sheet>
-
-
-      <v-footer fixed color="white">
-        <v-row justify="center" no-gutters>
-          <v-btn rounded color="deep-purple lighten-4" class="my-2" @click="goWrite">
-            <v-icon>mdi-file-edit</v-icon>
-            <div>WRITE</div>
-          </v-btn>
-        </v-row>
-      </v-footer>
     </v-sheet>
 
     <v-navigation-drawer 
