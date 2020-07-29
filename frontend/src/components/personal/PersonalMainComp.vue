@@ -1,10 +1,17 @@
 <template>
-  <v-container></v-container>
+  <v-container>
+    <v-content>{{this.hostNum}}</v-content>
+    <v-content>{{this.hostNickName}}</v-content>
+  </v-container>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld"
+  name: "HelloWorld",
+  props: {
+    hostNum : {type : Number},
+    hostNickName : {type : String},
+  },
 };
 </script>
 

@@ -47,7 +47,7 @@
     <div class="text-center">
         <v-btn to="/noticeList" v-if="getProfile === blogMasterName">수정</v-btn>
         <v-btn @click="deleteArticle" v-if="getProfile === blogMasterName">삭제</v-btn>
-        <v-btn to="/article/list">목록</v-btn>
+        <v-btn :to="{ name: 'articleList', params: { hostNum: articleUserNum }}">목록</v-btn>
     </div>
   </div>
 </template>
@@ -104,7 +104,7 @@ export default {
       this.isLoginedUserLikeThisArticle = !this.isLoginedUserLikeThisArticle;
 
       http
-        .put(`/article/${this.articleNum}/${this.getProfile}/${this.isLoginedUserLikeThisArticle}`, {
+        .put(`/article/${this.articleNum}/${this.getUserNum}/${this.isLoginedUserLikeThisArticle}`, {
           num: this.articleNum,
           user_num: this.articleUserNum,
           trippackage_num: this.articleTripPackageNum,

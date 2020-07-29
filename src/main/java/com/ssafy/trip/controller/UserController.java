@@ -22,7 +22,9 @@ import com.ssafy.trip.help.UserIdentityAvailability;
 import com.ssafy.trip.help.UserProfile;
 import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.MemberUser;
+import com.ssafy.trip.repository.ArticleRepository;
 import com.ssafy.trip.repository.UserRepository;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
@@ -30,6 +32,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private ArticleRepository articleRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -47,6 +52,7 @@ public class UserController {
 
     @GetMapping("/users/{email}")
     public UserProfile getUserProfile(@PathVariable(value = "email") String email) {
+    	System.out.println(email);
         MemberUser user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
 
@@ -54,14 +60,23 @@ public class UserController {
         UserProfile userProfile = new UserProfile(user.getNum(), user.getEmail(), user.getNickname(), user.getName(), user.getCreatedAt(), user.getImageSrc(), user.getIntro(), user.isValid());
         return userProfile;
     }
+    
+    @GetMapping("/users/get/{num}")
+    public UserProfile getUserProfileByNum(@PathVariable(value = "num") Long num) {
+        MemberUser user = userRepository.findByNum(num)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
 
-    @PutMapping("/users/{email}")
-    public ResponseEntity<String> modifyUserProfile(@RequestBody UserProfile userProfile, @PathVariable(value = "email") String email) {
+        UserProfile userProfile = new UserProfile(user.getNum(), user.getEmail(), user.getNickname(), user.getName(), user.getCreatedAt(), user.getImageSrc(), user.getIntro(), user.isValid());
+        return userProfile;
+    }
+
+    @PutMapping("/users/{num}")
+    public ResponseEntity<String> modifyUserProfile(@RequestBody UserProfile userProfile, @PathVariable(value = "num") Long num) {
     	MemberUser user = null;
     	String SUCCESS = "success";
         try {
-        	user = userRepository.findByEmail(email)
-        			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+        	user = userRepository.findByNum(num)
+        			.orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
         	user.setName(userProfile.getName());
         	user.setNickname(userProfile.getNickname());
         	user.setIntro(userProfile.getIntro());
@@ -76,12 +91,13 @@ public class UserController {
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
     
-    @DeleteMapping("/users/delete/{email}")
-    public ResponseEntity<?> deleteUser(@PathVariable("email") String email) {
+    @DeleteMapping("/users/delete/{num}")
+    public ResponseEntity<?> deleteUser(@PathVariable("num") Long num) {
       try {
+    	  articleRepository.deleteAllByUsernum(num);
     	  MemberUser user = null;
-    	  user = userRepository.findByEmail(email)
-      			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+    	  user = userRepository.findByNum(num)
+      			.orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
     	 
     	  userRepository.delete(user);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -89,6 +105,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
       }
     }
+    
     @GetMapping("/{user_num}/searchArticle/{keyword}")
     public List<Article> searchArticle(@PathVariable(value="keyword") String keyword) {
     	return null;

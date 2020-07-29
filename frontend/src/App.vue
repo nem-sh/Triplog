@@ -106,7 +106,7 @@
             </v-card-subtitle>
 
             <v-card-actions>
-              <v-btn text>Shard</v-btn>
+              <v-btn text @click="goToMyBlog">내 블로그 가기</v-btn>
             </v-card-actions>
 
           </v-card>        
@@ -193,7 +193,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item to = "/article/list">
+          <v-list-item :to="{ name: 'articleList', params: { hostNum: this.getUserNum }}">
             <v-list-item-icon>
               <v-icon></v-icon>
             </v-list-item-icon>
@@ -329,6 +329,9 @@ export default {
     UserInfoComp,
   },
   methods: {
+    goToMyBlog: function() {
+      this.$router.push(`/${this.getUserNum}`);
+    },
     logout: function () {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
         this.drawer = false;
@@ -337,7 +340,7 @@ export default {
       })
     },
     info: function () {
-      http.get(`/users/${this.getEmail}`).then(({ data }) => {
+      http.get(`/users/get/${this.getUserNum}`).then(({ data }) => {
         this.userInfo = data;
         console.dir(data);
         this.userInfoCompKey += 1;
@@ -371,10 +374,11 @@ export default {
     goWrite: function() {
       this.$router.push('/article/write');
     },
-    closeUserInfoModal: function(msg) {
+    closeUserInfoModal: function(msg, afterNickName) {
       if(msg != null) {
         this.alertMsg = msg;
         this.alert = true;
+        this.$store.commit('modifyProfileName', afterNickName);
       }
       this.userInfoModalToggle = false;
     },

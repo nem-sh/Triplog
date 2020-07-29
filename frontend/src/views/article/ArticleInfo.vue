@@ -39,13 +39,13 @@ export default {
   },
   created() {
     http
-      .get(`/article/${this.$route.query.articleno}`)
+      .get(`/article/${this.$route.params.articleNum}`)
       .then(({ data }) => {
         this.item = data;
         console.dir(data);
       });
     http
-      .get(`/article/like/${this.$route.query.articleno}/${this.getEmail}`)
+      .get(`/article/like/${this.$route.params.articleNum}/${this.getUserNum}`)
       .then(({ data }) => {
         this.isLike = data;
         console.dir(data);

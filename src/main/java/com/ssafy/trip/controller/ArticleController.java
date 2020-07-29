@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.trip.exception.ResourceNotFoundException;
+import com.ssafy.trip.help.ArticleLikeListResponseObject;
 import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.repository.ArticleRepository;
@@ -69,10 +70,10 @@ public class ArticleController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 
-	@GetMapping("/getList")
-	public List<Article> findAllArticles() {
-		List<Article> list = articleRepository.findAll();
-		Collections.reverse(list);
+	@GetMapping("/getList/{hostNum}")
+	public List<Article> findArticlesByHostNum(@PathVariable(value = "hostNum") Long hostNum) {
+		List<Article> list = articleRepository.findByUsernum(hostNum);
+		System.out.println(list.get(0));
 		return list;
 	}
 
@@ -87,27 +88,36 @@ public class ArticleController {
 	
 	//좋아요 기능 -남시성
 	
-	@GetMapping("/likelist/{email}")
-	public List<Article> findArticleLikeList(@PathVariable(value = "email") String email){
+	@GetMapping("/likelist/{usernum}")
+	public List<ArticleLikeListResponseObject> findArticleLikeList(@PathVariable(value = "usernum") Long usernum){
 		
-		MemberUser user =  userRepository.findByEmail(email)
-    			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+		MemberUser user =  userRepository.findByNum(usernum)
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", usernum));
 		
-	
+		
 		
 		List<Article> articles = articleRepository.findByLikearticle(user);
-		return articles;
+		List<ArticleLikeListResponseObject> objs = new ArrayList<ArticleLikeListResponseObject>();
+		
+		MemberUser writer = null;
+		for(Article article : articles) {
+			writer =  userRepository.findByNum(article.getUser_num())
+	    			.orElseThrow(() -> new ResourceNotFoundException("User", "num", article.getUser_num()));
+			
+			objs.add(new ArticleLikeListResponseObject(article, writer));
+		}
+		return objs;
 	}
 	
-	@DeleteMapping("/likelist/{email}/{num}")
-	public ResponseEntity<String> DeleteArticleLikeList(@PathVariable(value = "email") String email,@PathVariable(value = "num") Long num){
-		MemberUser user =  userRepository.findByEmail(email)
-    			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+	@DeleteMapping("/likelist/{usernum}/{num}")
+	public ResponseEntity<String> DeleteArticleLikeList(@PathVariable(value = "usernum") Long usernum,@PathVariable(value = "num") Long num){
+		MemberUser user =  userRepository.findByNum(usernum)
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", usernum));
 		Article article =  articleRepository.findByNum(num)
     			.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
 		
 		List<MemberUser> users = article.getLikearticle();
-		
+		article.setLikeCount(article.getLikeCount()-1);
 		users.remove(user);
 		
 		article.setLikearticle(users);
@@ -116,15 +126,15 @@ public class ArticleController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 	
-	@PutMapping("/likelist/{email}/{num}")
-	public ResponseEntity<String> UpdateArticleLikeList(@PathVariable(value = "email") String email,@PathVariable(value = "num") Long num){
-		MemberUser user =  userRepository.findByEmail(email)
-    			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+	@PutMapping("/likelist/{usernum}/{num}")
+	public ResponseEntity<String> UpdateArticleLikeList(@PathVariable(value = "usernum") Long usernum,@PathVariable(value = "num") Long num){
+		MemberUser user =  userRepository.findByNum(usernum)
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", usernum));
 		Article article =  articleRepository.findByNum(num)
     			.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
 		
 		List<MemberUser> users = article.getLikearticle();
-		
+		article.setLikeCount(article.getLikeCount()+1);
 		users.add(user);
 		
 		article.setLikearticle(users);
@@ -135,11 +145,11 @@ public class ArticleController {
 	}
 	//좋아요 기능 - 남시성
 	
-	@GetMapping("/like/{articleNum}/{email}")
-	public ResponseEntity<Boolean> getIsLike(@PathVariable(value = "email") String email,
+	@GetMapping("/like/{articleNum}/{userNum}")
+	public ResponseEntity<Boolean> getIsLike(@PathVariable(value = "userNum") Long userNum,
 			@PathVariable(value = "articleNum") Long articleNum) {
-		MemberUser user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+		MemberUser user = userRepository.findByNum(userNum)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "num", userNum));
 
 		Boolean isLike = false;
 		List<Article> articles = articleRepository.findByLikearticle(user);
@@ -151,18 +161,25 @@ public class ArticleController {
 		return ResponseEntity.ok(isLike);
 	}
 
-	@PutMapping("/article/{num}/{email}/{flag}")
-	public ResponseEntity<String> modifyLikeInfoInArticle(@PathVariable(value = "email") String email,
-			@PathVariable(value = "num") Long num, @PathVariable(value = "flag") boolean flag,
-			@RequestBody Article article) {
-		MemberUser user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+	@PutMapping("/{num}/{userNum}/{flag}")
+	public ResponseEntity<String> modifyLikeInfoInArticle(@PathVariable(value = "userNum") Long userNum,
+			@PathVariable(value = "num") Long num, @PathVariable(value = "flag") boolean flag) {
+		
+		Article article =  articleRepository.findByNum(num)
+    			.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
+		
+		MemberUser user = userRepository.findByNum(userNum)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "num", userNum));
 
 		List<MemberUser> users = article.getLikearticle();
 
 		if(flag) users.add(user);
 		else users.remove(user);
-
+		if (flag) {
+			article.setLikeCount(article.getLikeCount()+1);
+		} else {
+			article.setLikeCount(article.getLikeCount()-1);
+		}
 		article.setLikearticle(users);
 		articleRepository.save(article);
 
