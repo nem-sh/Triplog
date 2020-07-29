@@ -47,7 +47,7 @@
     <div class="text-center">
         <v-btn to="/noticeList" v-if="getProfile === blogMasterName">수정</v-btn>
         <v-btn @click="deleteArticle" v-if="getProfile === blogMasterName">삭제</v-btn>
-        <v-btn to="/noticeList">목록</v-btn>
+        <v-btn :to="{ name: 'articleList', params: { hostNum: articleUserNum }}">목록</v-btn>
     </div>
   </div>
 </template>

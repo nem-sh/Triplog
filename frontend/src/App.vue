@@ -195,7 +195,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item to = "/article/list">
+          <v-list-item :to="{ name: 'articleList', params: { hostNum: this.getUserNum }}">
             <v-list-item-icon>
               <v-icon></v-icon>
             </v-list-item-icon>
