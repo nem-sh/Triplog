@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
 import http from "../../util/http-common";
 import Card from "../../components/likey/Card.vue";
 export default {
@@ -68,7 +69,7 @@ export default {
     getLikeList: function() {
       console.log();
       http
-        .get(`/article/likelist/${this.$store.state.user.userNum}`, null)
+        .get(`/article/likelist/${this.getUserNum}`, null)
         .then(response => {
           this.likeArticle = response.data;
         })
@@ -87,6 +88,16 @@ export default {
       const stop = this.page * 6;
 
       return this.likeArticle.slice(start, stop);
+    },
+    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail', 'getUserNum']),
+    ...mapState({
+      authLoading: state => state.auth.status === 'loading',
+      uname: state => `${state.user.getProfile}`,
+      userEmail : state => `${state.user.getEmail}`,
+      userNum : state => `${state.user.getUserNum}`
+    }),
+    loading: function () {
+      return this.authStatus === 'loading' && !this.isAuthenticated
     }
   },
   watch: {
