@@ -44,7 +44,7 @@ export default {
     });
     http
       .get(
-        `/article/like/${this.$route.query.articleno}/${this.$route.query.writeremail}`
+        `/article/like/${this.$route.query.articleno}/${this.$route.query.writerusernum}`
       )
       .then(({ data }) => {
         this.isLike = data;

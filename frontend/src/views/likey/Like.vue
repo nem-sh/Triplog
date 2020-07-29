@@ -68,7 +68,7 @@ export default {
     getLikeList: function() {
       console.log();
       http
-        .get(`/article/likelist/${this.$store.state.user.email}`, null)
+        .get(`/article/likelist/${this.$store.state.user.userNum}`, null)
         .then(response => {
           this.likeArticle = response.data;
         })

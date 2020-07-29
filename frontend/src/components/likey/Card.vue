@@ -133,7 +133,7 @@ export default {
       if (this.like === true) {
         http
           .delete(
-            `article/likelist/${this.$store.state.user.email}/${this.value.article.num}`,
+            `article/likelist/${this.$store.state.user.userNum}/${this.value.article.num}`,
             null
           )
           .then(response => {
@@ -148,7 +148,7 @@ export default {
       } else {
         http
           .put(
-            `article/likelist/${this.$store.state.user.email}/${this.value.article.num}`,
+            `article/likelist/${this.$store.state.user.userNum}/${this.value.article.num}`,
             null
           )
           .then(response => {
@@ -167,7 +167,7 @@ export default {
     showDetail: function() {
       this.dialog = false;
       this.$router.push(
-        `/like/detail?articleno=${this.value.article.num}&writeremail=${this.value.writer.email}`
+        `/like/detail?articleno=${this.value.article.num}&writerusernum=${this.value.writer.num}`
       );
     },
 

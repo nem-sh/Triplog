@@ -85,11 +85,11 @@ public class ArticleController {
 	
 	//좋아요 기능 -남시성
 	
-	@GetMapping("/likelist/{email}")
-	public List<ArticleLikeListResponseObject> findArticleLikeList(@PathVariable(value = "email") String email){
+	@GetMapping("/likelist/{usernum}")
+	public List<ArticleLikeListResponseObject> findArticleLikeList(@PathVariable(value = "usernum") Long usernum){
 		
-		MemberUser user =  userRepository.findByEmail(email)
-    			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+		MemberUser user =  userRepository.findByNum(usernum)
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", usernum));
 		
 		
 		
@@ -98,7 +98,6 @@ public class ArticleController {
 		
 		MemberUser writer = null;
 		for(Article article : articles) {
-
 			writer =  userRepository.findByNum(article.getUser_num())
 	    			.orElseThrow(() -> new ResourceNotFoundException("User", "num", article.getUser_num()));
 			
@@ -107,10 +106,10 @@ public class ArticleController {
 		return objs;
 	}
 	
-	@DeleteMapping("/likelist/{email}/{num}")
-	public ResponseEntity<String> DeleteArticleLikeList(@PathVariable(value = "email") String email,@PathVariable(value = "num") Long num){
-		MemberUser user =  userRepository.findByEmail(email)
-    			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+	@DeleteMapping("/likelist/{usernum}/{num}")
+	public ResponseEntity<String> DeleteArticleLikeList(@PathVariable(value = "usernum") Long usernum,@PathVariable(value = "num") Long num){
+		MemberUser user =  userRepository.findByNum(usernum)
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", usernum));
 		Article article =  articleRepository.findByNum(num)
     			.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
 		
@@ -124,10 +123,10 @@ public class ArticleController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 	
-	@PutMapping("/likelist/{email}/{num}")
-	public ResponseEntity<String> UpdateArticleLikeList(@PathVariable(value = "email") String email,@PathVariable(value = "num") Long num){
-		MemberUser user =  userRepository.findByEmail(email)
-    			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+	@PutMapping("/likelist/{usernum}/{num}")
+	public ResponseEntity<String> UpdateArticleLikeList(@PathVariable(value = "usernum") Long usernum,@PathVariable(value = "num") Long num){
+		MemberUser user =  userRepository.findByNum(usernum)
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", usernum));
 		Article article =  articleRepository.findByNum(num)
     			.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
 		
@@ -143,11 +142,11 @@ public class ArticleController {
 	}
 	//좋아요 기능 - 남시성
 	
-	@GetMapping("/like/{articleNum}/{email}")
-	public ResponseEntity<Boolean> getIsLike(@PathVariable(value = "email") String email,
+	@GetMapping("/like/{articleNum}/{usernum}")
+	public ResponseEntity<Boolean> getIsLike(@PathVariable(value = "usernum") Long usernum,
 			@PathVariable(value = "articleNum") Long articleNum) {
-		MemberUser user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+		MemberUser user = userRepository.findByNum(usernum)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", usernum));
 
 		Boolean isLike = false;
 		List<Article> articles = articleRepository.findByLikearticle(user);
