@@ -34,29 +34,6 @@
         </v-app-bar-nav-icon>
         <v-spacer></v-spacer>
 
-         <v-form class="row  float-right" action="/article/searchArticle">
-            <v-select
-            :items="items"
-            label="항목"
-            v-model="defaultSelected"
-            name="selected"
-            class="mt-4 col-2"
-          ></v-select>
-          <v-text-field
-          flat
-          solo-inverted
-          hide-details
-          prepend-inner-icon="mdi-magnify"
-          label="Search"
-          class="hidden-sm-and-down col-5"
-          name="keyword"
-        ></v-text-field>
-         <v-btn type="submit"
-          small
-        >
-        sub</v-btn>
-         </v-form>
-
           <v-btn @click="loginModalToggle = !loginModalToggle"
           v-if="!(isAuthenticated && isProfileLoaded)"
           icon>
@@ -64,7 +41,7 @@
         </v-btn>
         
         <v-spacer></v-spacer>
-        <v-toolbar-title>TITLE</v-toolbar-title>
+        <v-toolbar-title>{{title}}<v-icon>mdi-comment-edit</v-icon></v-toolbar-title>
        
   
         <v-btn icon @click="gitPage">
@@ -323,6 +300,7 @@ export default {
     defaultSelected:"제목",
     items: ["제목","작성자"],
     titleSearch: "",
+    title: "UnTitled",
   }),
   components: {
     Login,
