@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.trip.exception.ResourceNotFoundException;
 import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.MemberUser;
+import com.ssafy.trip.model.Paging;
 import com.ssafy.trip.repository.ArticleRepository;
 import com.ssafy.trip.repository.UserRepository;
 
@@ -65,10 +70,9 @@ public class ArticleController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 
-	@GetMapping("/getList/{hostNum}")
-	public List<Article> findArticlesByHostNum(@PathVariable(value = "hostNum") Long hostNum) {
-		List<Article> list = articleRepository.findByUsernum(hostNum);
-		System.out.println(list.get(0));
+	@PostMapping("/getList")
+	public List<Article> findArticlesByHostNum(@RequestBody Paging paging) {
+		List<Article> list = articleRepository.findByUsernumPaging(paging.getUsernum(), paging.getLimit());
 		return list;
 	}
 
