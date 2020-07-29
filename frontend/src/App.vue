@@ -3,8 +3,7 @@
     <v-sheet class="overflow-hidden"
     >
       <v-app-bar
-        width="80%"
-        height="200px"
+        height="75px"
         color="#6A76AB"
         dark
         absolute
@@ -23,30 +22,24 @@
         </template>
   
 
-        <v-app-bar-nav-icon>
+        <v-app-bar-nav-icon style="margin-top: 10px;">
         <div>
           <v-app-bar-nav-icon @click="drawer = true">
-            <v-avatar :color="ranColor" size="36">
+            <v-avatar :color="ranColor" size="40">
               <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
             </v-avatar>
           </v-app-bar-nav-icon>
         </div>
         </v-app-bar-nav-icon>
-        <v-spacer></v-spacer>
+        
+        <v-toolbar-title style="margin: 0 auto; font-size: 40px;">TRIPLOG<v-icon>mdi-compass-outline</v-icon></v-toolbar-title>
 
-          <v-btn @click="loginModalToggle = !loginModalToggle"
+        <v-btn @click="loginModalToggle = !loginModalToggle"
           v-if="!(isAuthenticated && isProfileLoaded)"
           icon>
           <v-icon>mdi-account-arrow-right</v-icon>
         </v-btn>
-        
-        <v-spacer></v-spacer>
-        <v-toolbar-title>{{title}}<v-icon>mdi-comment-edit</v-icon></v-toolbar-title>
-       
-  
-        <v-btn icon @click="gitPage">
-          <v-icon>mdi-github</v-icon>
-        </v-btn>
+
 
       </v-app-bar>
       
@@ -63,40 +56,15 @@
             <router-view></router-view>
           </v-container>
         </v-main>
-        
-        <v-navigation-drawer permanent right fixed width="20%">
-          <v-card
-         class="mx-auto"
-         max-width="344"
-         >
-          <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-            height="200px"
-            ></v-img>
 
-            <v-card-title>
-              Top western road trips
-            </v-card-title>
-
-            <v-card-subtitle>
-              1,000 miles of wonder
-            </v-card-subtitle>
-
-            <v-card-actions>
-              <v-btn text @click="goToMyBlog">내 블로그 가기</v-btn>
-            </v-card-actions>
-
-          </v-card>        
-
-          <v-footer fixed color="white">
-            <v-row justify="center" no-gutters>
-              <v-btn rounded color="deep-purple lighten-4" class="my-2" @click="goWrite">
-                <v-icon>mdi-file-edit</v-icon>
-                <div>WRITE</div>
-              </v-btn>
-            </v-row>
-          </v-footer>
-        </v-navigation-drawer>
+        <v-footer fixed color="white">
+          <v-row justify="center" no-gutters>
+            <v-btn rounded color="deep-purple lighten-4" class="my-2" @click="goWrite">
+              <v-icon>mdi-file-edit</v-icon>
+              <div>WRITE</div>
+            </v-btn>
+          </v-row>
+        </v-footer>
 
       </v-sheet>
     </v-sheet>
