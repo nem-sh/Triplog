@@ -1,5 +1,6 @@
 package com.ssafy.trip.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.trip.exception.ResourceNotFoundException;
+import com.ssafy.trip.help.ArticleLikeListResponseObject;
 import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.repository.ArticleRepository;
@@ -84,15 +86,25 @@ public class ArticleController {
 	//좋아요 기능 -남시성
 	
 	@GetMapping("/likelist/{email}")
-	public List<Article> findArticleLikeList(@PathVariable(value = "email") String email){
+	public List<ArticleLikeListResponseObject> findArticleLikeList(@PathVariable(value = "email") String email){
 		
 		MemberUser user =  userRepository.findByEmail(email)
     			.orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
 		
-	
+		
 		
 		List<Article> articles = articleRepository.findByLikearticle(user);
-		return articles;
+		List<ArticleLikeListResponseObject> objs = new ArrayList<ArticleLikeListResponseObject>();
+		
+		MemberUser writer = null;
+		for(Article article : articles) {
+
+			writer =  userRepository.findByNum(article.getUser_num())
+	    			.orElseThrow(() -> new ResourceNotFoundException("User", "num", article.getUser_num()));
+			
+			objs.add(new ArticleLikeListResponseObject(article, writer));
+		}
+		return objs;
 	}
 	
 	@DeleteMapping("/likelist/{email}/{num}")
@@ -103,7 +115,7 @@ public class ArticleController {
     			.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
 		
 		List<MemberUser> users = article.getLikearticle();
-		
+		article.setLikeCount(article.getLikeCount()-1);
 		users.remove(user);
 		
 		article.setLikearticle(users);
@@ -120,7 +132,7 @@ public class ArticleController {
     			.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
 		
 		List<MemberUser> users = article.getLikearticle();
-		
+		article.setLikeCount(article.getLikeCount()+1);
 		users.add(user);
 		
 		article.setLikearticle(users);
