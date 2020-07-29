@@ -104,7 +104,7 @@ export default {
       this.isLoginedUserLikeThisArticle = !this.isLoginedUserLikeThisArticle;
 
       http
-        .put(`/article/${this.articleNum}/${this.getProfile}/${this.isLoginedUserLikeThisArticle}`, {
+        .put(`/article/${this.articleNum}/${this.getUserNum}/${this.isLoginedUserLikeThisArticle}`, {
           num: this.articleNum,
           user_num: this.articleUserNum,
           trippackage_num: this.articleTripPackageNum,

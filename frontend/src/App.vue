@@ -108,22 +108,20 @@
             <v-card-actions>
               <v-btn text @click="goToMyBlog">내 블로그 가기</v-btn>
             </v-card-actions>
-          </v-card>
+
+          </v-card>        
+
+          <v-footer fixed color="white">
+            <v-row justify="center" no-gutters>
+              <v-btn rounded color="deep-purple lighten-4" class="my-2" @click="goWrite">
+                <v-icon>mdi-file-edit</v-icon>
+                <div>WRITE</div>
+              </v-btn>
+            </v-row>
+          </v-footer>
         </v-navigation-drawer>
 
-
-
       </v-sheet>
-
-
-      <v-footer fixed color="white">
-        <v-row justify="center" no-gutters>
-          <v-btn rounded color="deep-purple lighten-4" class="my-2" @click="goWrite">
-            <v-icon>mdi-file-edit</v-icon>
-            <div>WRITE</div>
-          </v-btn>
-        </v-row>
-      </v-footer>
     </v-sheet>
 
     <v-navigation-drawer 
@@ -342,7 +340,7 @@ export default {
       })
     },
     info: function () {
-      http.get(`/users/${this.getUserNum}`).then(({ data }) => {
+      http.get(`/users/get/${this.getUserNum}`).then(({ data }) => {
         this.userInfo = data;
         console.dir(data);
         this.userInfoCompKey += 1;
@@ -376,10 +374,11 @@ export default {
     goWrite: function() {
       this.$router.push('/article/write');
     },
-    closeUserInfoModal: function(msg) {
+    closeUserInfoModal: function(msg, afterNickName) {
       if(msg != null) {
         this.alertMsg = msg;
         this.alert = true;
+        this.$store.commit('modifyProfileName', afterNickName);
       }
       this.userInfoModalToggle = false;
     },
