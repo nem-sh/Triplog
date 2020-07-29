@@ -19,6 +19,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	List<Article> findByTitleContainingAndNum(String keyword, int user_num);
 	List<Article> findByUsernum(Long user_num);
 	
+	@Transactional
+    @Modifying
 	void deleteByNum(Long num);
 	
 	@Transactional

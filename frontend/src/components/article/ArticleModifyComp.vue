@@ -52,7 +52,7 @@
     <br />
     <div class="text-center">
         <v-btn @click="checkHandler">수정</v-btn>
-        <v-btn to="/noticeList">뒤로</v-btn>
+        <v-btn @click="goBack">뒤로</v-btn>
     </div>
   </div>
 </template>
@@ -85,6 +85,9 @@ export default {
     };
   },
   methods: {
+    goBack: function() {
+      this.$router.push(`/article/detail/${this.articleNum}`);
+    },
     getFormatDate(regtime) {
       return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
     },
@@ -134,7 +137,7 @@ export default {
           }
           this.alertMsg = msg;
           this.alert = true;
-        //   this.moveList();
+          this.goBack();
         })
         .catch(() => {
           this.alertMsg = "수정 처리시 에러가 발생했습니다.";

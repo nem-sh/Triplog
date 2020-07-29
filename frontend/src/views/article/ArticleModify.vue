@@ -4,8 +4,10 @@
             :articleNum = "item.num"
             :articleUserNum = "item.user_num"
             :articleTripPackageNum = "item.trippackage_num"
-            :articleTitle = "item.articleno"
-            :articlePlace = "item.title"
+            :articleThumbnail = "item.thumbnail"
+            :articleTemp = "item.temp"
+            :articleTitle = "item.title"
+            :articlePlace = "item.place"
             :articleDateStart = "item.date_start"
             :articleDateEnd = "item.date_end"
             :articleCreatedAt = "item.created_at"
@@ -31,7 +33,7 @@ export default {
   },
   created() {
     http
-      .get(`/article/${this.$route.query.articleno}`)
+      .get(`/article/${this.$route.params.articleNum}`)
       .then(({ data }) => {
         this.item = data;
         console.dir(data);

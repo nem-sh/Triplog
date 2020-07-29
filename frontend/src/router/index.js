@@ -68,7 +68,7 @@ const routes = [
     component: ArticleList
   },
   {
-    path: "/article/modify",
+    path: "/article/modify/:articleNum",
     name: "articleModify",
     component: ArticleModify
   },
