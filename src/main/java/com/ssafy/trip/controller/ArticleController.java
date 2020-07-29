@@ -1,6 +1,8 @@
 package com.ssafy.trip.controller;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.trip.exception.ResourceNotFoundException;
 import com.ssafy.trip.help.ArticleLikeListResponseObject;
@@ -181,5 +184,19 @@ public class ArticleController {
 		articleRepository.save(article);
 
 		return ResponseEntity.ok(SUCCESS);
+	}
+	
+	@PostMapping("/uploadWithFile")
+	public String registArticleByFile(@RequestBody MultipartFile img) throws IOException {
+		String imgName = img.getOriginalFilename();
+		Article article = new Article();
+		article.setThumbnail(imgName);
+		
+		File url = new File("images/"+imgName);
+		url.createNewFile();
+		FileOutputStream fout = new FileOutputStream(url);
+		fout.write(img.getBytes());
+		fout.close();
+		return "ok";
 	}
 }

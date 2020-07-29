@@ -17,6 +17,15 @@
               </td>
           </tr>
           <tr>
+            <td>
+              <!-- <input ref="imageInput" type="file" hidden @change="onChangeImages">
+              <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn> -->
+              <v-file-input ref="imageInput" @change="onChangeImages">
+              </v-file-input>
+            </td>
+          </tr>
+          
+          <tr>
               <th class="text-left">CONTENT</th>
               <td>
               <v-textarea
@@ -56,6 +65,8 @@ export default {
       alert : false,
       alertMsg : "",
       registSuccess: false,
+      imageUrl: null,
+      fileInfo: "",
     };
   },
  methods: {
@@ -78,7 +89,11 @@ export default {
       this.alertMsg = msg;
       this.alert = true;
     }
-    else this.registHandler();
+    else {
+      const formData = new FormData();
+      formData.append('file', this.fileInfo);
+      this.registHandler();
+    }
    },
    registHandler() {
      http
@@ -86,12 +101,16 @@ export default {
         user_num: this.getUserNum,
         title: this.articleTitle,
         content: this.articleContent,
+        // file: this.formData,
         created_at: new Date(),
       })
       .then(({ data }) => {
+        
         let msg = "등록 처리시 문제가 발생했습니다.";
         if (data === "success") {
+          this.registSuccess = true;
           msg = "등록이 완료되었습니다.";
+          this.$router.push('/article/list');
         }
         this.alertMsg = msg;
         this.alert = true;
@@ -108,6 +127,14 @@ export default {
         
       });
    },
+    onChangeImages(e) {
+      const file = e.target.files[0];
+      this.fileInfo = file;
+      this.imageUrl = URL.createObjectURL(file);
+    },
+    // onClickImageUpload() {
+    //   this.$refs.imageInput.click();
+    // },
  },
  computed: {
     ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail', 'getUserNum']),
