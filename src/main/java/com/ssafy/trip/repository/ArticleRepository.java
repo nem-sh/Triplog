@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	List<Article> findByTitleContaining(String keyword);
 	List<Article> findByTitleContainingAndNum(String keyword, int user_num);
 	List<Article> findByUsernum(Long user_num);
+	
+	@Query(nativeQuery = true, value = "select * from article where user_num = :user_num order by num desc limit :limit, 10")
+	List<Article> findByUsernumPaging(@Param("user_num") Long user_num, @Param("limit") int limit);
 	
 	@Transactional
     @Modifying
