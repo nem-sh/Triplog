@@ -30,12 +30,15 @@ export default {
   data: function() {
     return {
       items: [],
-      limit: 0,
+      limit: 0
     };
   },
   created() {
     http
-      .get(`/article/getList/${this.$route.params.hostNum}`)
+      .post("/article/getList/", {
+        usernum: this.$route.params.hostNum,
+        limit: this.limit
+      })
       .then(({ data }) => {
         this.items = data;
       });
@@ -62,15 +65,18 @@ export default {
       }
     },
     infiniteHandler($state) {
-      this.$http
-        .get("api" + (this.limit + 10))
+      http
+        .post("/article/getList/", {
+          usernum: this.$route.params.hostNum,
+          limit: this.limit + 10
+        })
         .then(response => {
           setTimeout(() => {
             if (response.data.length) {
-              this.users = this.users.concat(response.data);
+              this.items = this.items.concat(response.data);
               $state.loaded();
               this.limit += 10;
-              if (this.users.length / 10 == 0) {
+              if (this.items.length / 10 == 0) {
                 $state.complete();
               }
             } else {
