@@ -5,9 +5,12 @@ import APIError from "../components/error/APIError.vue";
 import ArticleWrite from "../views/article/ArticleWrite.vue"
 import ArticleSearch from "../views/article/ArticleSearch.vue";
 import ArticleInfo from "../views/article/ArticleInfo.vue"
+
 import ArticleList from "../views/article/ArticleList.vue"
 import ArticleModify from "../views/article/ArticleModify.vue"
 import Like from "../views/likey/Like.vue"
+
+import LikeArticleInfo from "../views/likey/LikeArticleInfo.vue"
 import temp from "../views/temporaryArticle/temp.vue"
 import PersonalMain from "../views/personal/MainPage.vue"
 // import { component } from "vue/types/umd";
@@ -25,6 +28,11 @@ const routes = [
     component: Like
   },
   {
+    path: "/like/detail",
+    name: "LikeArticleInfo",
+    component: LikeArticleInfo
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting
@@ -34,11 +42,11 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
-    path:"/article/searchArticle",
-    name:"ArticleSearch",
+    path: "/article/searchArticle",
+    name: "ArticleSearch",
     component: ArticleSearch
   },
-  
+
   {
     path: "/apierror/:errorCode",
     name: "APIError",
