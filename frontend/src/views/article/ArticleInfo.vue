@@ -15,6 +15,7 @@
             :blogMasterName = "blogMaster"
             :articleLikeCount = "item.likeCount"
             :isLoginedUserLikeThisArticle = "isLike"
+            v-on:userSnackBar="userSnackBar"
             v-if="isLike !== null"
         />
     </div>

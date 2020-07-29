@@ -45,10 +45,43 @@
     <br />
     <br />
     <div class="text-center">
-        <v-btn to="/noticeList" v-if="getProfile === blogMasterName">수정</v-btn>
-        <v-btn @click="deleteArticle" v-if="getProfile === blogMasterName">삭제</v-btn>
+        <v-btn :to="{ name: 'articleModify', params: { articleNum: articleNum }}" v-if="this.getUserNum === articleUserNum">수정</v-btn>
+        <v-btn @click="confirmDelete" v-if="this.getUserNum === articleUserNum">삭제</v-btn>
         <v-btn :to="{ name: 'articleList', params: { hostNum: articleUserNum }}">목록</v-btn>
     </div>
+
+    <v-dialog
+        v-model="dialog"
+        max-width="350"
+      >
+        <v-card>
+          <v-card-title class="headline">정말 삭제하시겠습니까?</v-card-title>
+  
+          <v-card-text>
+            삭제하면 게시글 복구가 불가능합니다.
+          </v-card-text>
+  
+          <v-card-actions>
+            <v-spacer></v-spacer>
+  
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="dialog = false"
+            >
+              취소
+            </v-btn>
+  
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="deleteArticle"
+            >
+              확인
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
   </div>
 </template>
 
@@ -74,7 +107,17 @@ export default {
     articleLikeCount: {type: Number},
     isLoginedUserLikeThisArticle: {type: Boolean}
   },
+  data: function() {
+    return {
+      alert : false,
+      alertMsg : "",
+      dialog: false,
+    };
+  },
   methods: {
+    confirmDelete() {
+      this.dialog = true;
+    },
     getFormatDate(regtime) {
       return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
     },
@@ -82,13 +125,15 @@ export default {
         http
         .delete(`/article/${this.articleNum}`)
         .then(({ data }) => {
-            // let msg = "삭제 처리시 문제가 발생했습니다.";
+            let msg = "삭제 처리시 문제가 발생했습니다.";
             if (data === "success") {
-            // msg = "삭제가 완료되었습니다.";
+            msg = "삭제가 완료되었습니다.";
             }
-            // this.alertMsg = msg;
+            this.alertMsg = msg;
             // this.alert = true;
-            // this.$router.push("/qna");
+            this.dialog = false;
+            this.$emit("useSnackBar", this.alertMsg);
+            this.$router.push(`/article/list/${this.getUserNum}`);
         })
         .catch(() => {
             // this.alertMsg = "삭제 처리시 에러가 발생했습니다.";

@@ -24,6 +24,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	@Query(nativeQuery = true, value = "select * from article where user_num = :user_num order by num desc limit :limit, 10")
 	List<Article> findByUsernumPaging(@Param("user_num") Long user_num, @Param("limit") int limit);
 	
+	@Transactional
+    @Modifying
 	void deleteByNum(Long num);
 	
 	@Transactional

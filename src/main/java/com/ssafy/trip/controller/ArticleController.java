@@ -75,8 +75,14 @@ public class ArticleController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 
+	@GetMapping("/getList/{hostNum}")
+	public List<Article> findArticlesByHostNum(@PathVariable(value = "hostNum") Long hostNum) {
+		List<Article> list = articleRepository.findByUsernum(hostNum);
+		return list;
+	}
+	
 	@PostMapping("/getList")
-	public List<Article> findArticlesByHostNum(@RequestBody Paging paging) {
+	public List<Article> findArticlesByPaging(@RequestBody Paging paging) {
 		List<Article> list = articleRepository.findByUsernumPaging(paging.getUsernum(), paging.getLimit());
 		return list;
 	}

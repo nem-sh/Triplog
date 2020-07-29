@@ -382,6 +382,12 @@ export default {
       }
       this.userInfoModalToggle = false;
     },
+    useSnackBar: function(msg) {
+      if(msg != null) {
+        this.alertMsg = msg;
+        this.alert = true;
+      }
+    },
     notice: function() {
       this.$router.push('noticeList');
     }
