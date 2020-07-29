@@ -1,59 +1,96 @@
 <template>
   <v-app>
-    <v-sheet class="overflow-hidden"
-    >
-      <v-app-bar
-        height="75px"
-        color="#6A76AB"
-        dark
-        absolute
-        shrink-on-scroll
-        elevate-on-scroll
-        prominent
-        src="https://picsum.photos/1920/1080?random"
-        fade-img-on-scroll
-        scroll-target="#scrolling-techniques-7"
-      >
-        <template v-slot:img="{ props }">
-          <v-img
-            v-bind="props"
-            gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
-          ></v-img>
-        </template>
-  
-
-        <v-app-bar-nav-icon style="margin-top: 10px;">
-        <div>
-          <v-app-bar-nav-icon @click="drawer = true">
-            <v-avatar :color="ranColor" size="40">
+    <div>
+      <v-navigation-drawer
+          :mini-variant.sync="mini"
+          clipped
+          app
+          permanent
+          :height="clientHeight"
+          v-if="this.getProfile"
+        >
+          <v-list-item class="px-2" style="padding: 10px;">
+            <v-list-item-avatar :color="ranColor" size="40">
               <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
-            </v-avatar>
-          </v-app-bar-nav-icon>
-        </div>
-        </v-app-bar-nav-icon>
-        
-        <v-toolbar-title style="margin: 0 auto; font-size: 40px;">TRIPLOG<v-icon>mdi-compass-outline</v-icon></v-toolbar-title>
+            </v-list-item-avatar>
 
-        <v-btn @click="loginModalToggle = !loginModalToggle"
-          v-if="!(isAuthenticated && isProfileLoaded)"
-          icon>
-          <v-icon>mdi-account-arrow-right</v-icon>
-        </v-btn>
+            <v-list-item-title>{{this.getProfile}}</v-list-item-title>
+          
+            <v-btn icon @click.stop="mini = !mini">
+              <v-icon>mdi-chevron-left</v-icon>
+            </v-btn>
+          </v-list-item>
 
+          <v-divider></v-divider>
 
-      </v-app-bar>
-      
-      <v-sheet
-        id="scrolling-techniques-3"
-        class="overflow-y-auto"
-        :max-height="clientHeight"
-        outliend = false
-      >
-        <v-container style="height: 210px;"></v-container>
+          <v-list>
+            <v-list-item to="/">
+              <v-list-item-icon>
+                <v-icon>mdi-home-city</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>Home</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item @click.stop="info">
+              <v-list-item-icon>
+                <v-icon>mdi-account</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>My Account</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item to="/like">
+              <v-list-item-icon>
+                <v-icon color="pink">mdi-charity</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>좋아요 목록</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item :to="{name: 'articleList', params: {hostNum: this.getUserNum}}">
+              <v-list-item-icon>
+                <v-icon>mdi-inbox-full</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>게시물 목록</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+
+          <div class="pa-2" style="text-align: center;">            
+            <v-btn inline-block @click.stop="logout">로그아웃</v-btn>
+          </div>
+        </v-navigation-drawer>
+
+        <v-app-bar
+          app
+          dense
+          color="#6A76AB"
+          dark
+          clipped-left
+        >
+          <v-toolbar-title style="margin: 0 auto; font-size: 40px;">TRIPLOG<v-icon>mdi-compass-outline</v-icon></v-toolbar-title>
+
+          <v-btn @click="loginModalToggle = !loginModalToggle"
+            v-if="!(isAuthenticated && isProfileLoaded)"
+            icon>
+            <v-icon>mdi-account-arrow-right</v-icon>
+          </v-btn>
+        </v-app-bar>
+      </div>
 
         <v-main style="padding: 10px; margin:0 auto;">
           <v-container>
-            <router-view></router-view>
+            <router-view>
+            </router-view>
           </v-container>
         </v-main>
 
@@ -65,100 +102,9 @@
             </v-btn>
           </v-row>
         </v-footer>
+    
 
-      </v-sheet>
-    </v-sheet>
-
-    <v-navigation-drawer 
-      v-model="drawer"
-      absolute
-      temporary
-      left
-      src = 'https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg'
-      dark
-    >
-        <v-list-item two-line :class="miniVariant && 'px-0'">
-          <v-list-item-avatar>
-            <v-avatar :color="ranColor">
-              <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
-            </v-avatar>
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title>{{this.getProfile}}</v-list-item-title>
-            <v-list-item-subtitle>일반 회원</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-  
-        <v-divider></v-divider>
-  
-        <v-list
-          dense
-          nav
-          class="py-0"
-        >
-
-          <v-list-item to = "/">
-            <v-list-item-icon>
-              <v-icon></v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>HOME</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item to = "/like">
-            <v-list-item-icon>
-              <v-icon></v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>좋아요 목록</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon></v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>임시 저장 목록</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon></v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>방구석 여행</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item :to="{ name: 'articleList', params: { hostNum: this.getUserNum }}">
-            <v-list-item-icon>
-              <v-icon></v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>게시물 목록 보기</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-        </v-list>
-
-        <template v-slot:append>
-          <div class="pa-2" style="text-align: center;">
-            <v-btn inline-block @click.stop="info" style="margin-right:20px;">정보 수정</v-btn>
-            <v-btn inline-block @click.stop="logout">로그아웃</v-btn>
-          </div>
-        </template>
-      </v-navigation-drawer>
-      
-      <v-snackbar
+    <v-snackbar
         v-model="loginSuccess"
         timeout="5000"
       >
@@ -269,6 +215,13 @@ export default {
     items: ["제목","작성자"],
     titleSearch: "",
     title: "UnTitled",
+    mini: true,
+    navitems: [
+      {title: 'Home', icon: 'mdi-home-city'},
+      {title: 'My Account', icon: 'mdi-account'},
+      {title: '좋아요 목록', icon: 'mdi-account-group-outline'},
+      {title: '게시물 목록', icon: 'mdi-account-group-outline'},
+    ],
   }),
   components: {
     Login,
