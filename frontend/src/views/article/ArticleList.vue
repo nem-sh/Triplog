@@ -12,27 +12,33 @@
         />
       </div>
     </div>
+    <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
   </div>
 </template>
 
 <script>
 import http from "@/util/http-common";
 import ArticleListComp from "@/components/article/ArticleListComp.vue";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
   name: "ArticleList",
   components: {
-    ArticleListComp
+    ArticleListComp,
+    InfiniteLoading
   },
   data: function() {
     return {
-      items: []
+      items: [],
+      limit: 0,
     };
   },
   created() {
-    http.get(`/article/getList/${this.$route.params.hostNum}`).then(({ data }) => {
-      this.items = data;
-    });
+    http
+      .get(`/article/getList/${this.$route.params.hostNum}`)
+      .then(({ data }) => {
+        this.items = data;
+      });
   },
   mounted() {
     window.addEventListener("load", this.SetGridItemHeight);
@@ -54,6 +60,27 @@ export default {
           item[i].children[0].children[0].offsetHeight / (rowHeight + rowGap)
         )}`;
       }
+    },
+    infiniteHandler($state) {
+      this.$http
+        .get("api" + (this.limit + 10))
+        .then(response => {
+          setTimeout(() => {
+            if (response.data.length) {
+              this.users = this.users.concat(response.data);
+              $state.loaded();
+              this.limit += 10;
+              if (this.users.length / 10 == 0) {
+                $state.complete();
+              }
+            } else {
+              $state.complete();
+            }
+          }, 1000);
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
   }
 };

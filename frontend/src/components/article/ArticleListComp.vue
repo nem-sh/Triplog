@@ -3,6 +3,7 @@
     <router-link :to="{ name: 'articleDetail', params: { articleNum: this.num }}">
       <v-img v-if="thumbnail" :src="require(`@/assets/${thumbnail}`)" class="thumb" />
       <v-img v-else :src="require(`@/assets/noimage.png`)" class="thumb" />
+    </router-link>
     <p class="title">{{title}}</p>
   </div>
 </template>
@@ -15,7 +16,7 @@ export default {
     user_num: { type: Number },
     title: { type: String },
     thumbnail: { type: String }
-  },
+  }
 };
 </script>
 
