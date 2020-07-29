@@ -83,7 +83,7 @@ export default {
    registHandler() {
      http
       .post(`/article/post`, {
-        user_num: 1,
+        user_num: this.getUserNum,
         title: this.articleTitle,
         content: this.articleContent,
         created_at: new Date(),
@@ -96,7 +96,7 @@ export default {
         this.alertMsg = msg;
         this.alert = true;
         this.registSuccess = true;
-        this.$router.push('/article/list');
+        this.$router.push(`/article/list/${this.getUserNum}`);
       }).catch((e) => {
         if (e.request.status === 404){
           this.alertMsg = "등록 처리시 에러가 발생했습니다.";
