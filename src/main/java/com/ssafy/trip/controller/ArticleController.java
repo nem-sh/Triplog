@@ -65,10 +65,10 @@ public class ArticleController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 
-	@GetMapping("/getList")
-	public List<Article> findAllArticles() {
-		List<Article> list = articleRepository.findAll();
-		Collections.reverse(list);
+	@GetMapping("/getList/{hostNum}")
+	public List<Article> findArticlesByHostNum(@PathVariable(value = "hostNum") Long hostNum) {
+		List<Article> list = articleRepository.findByUsernum(hostNum);
+		System.out.println(list.get(0));
 		return list;
 	}
 

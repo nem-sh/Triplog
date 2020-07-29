@@ -50,12 +50,12 @@ const routes = [
     component: ArticleWrite
   },
   {
-    path: "/article/detail",
+    path: "/article/detail/:articleNum",
     name: "articleDetail",
     component: ArticleInfo
   },
   {
-    path: "/article/list",
+    path: "/article/list/:hostNum",
     name: "articleList",
     component: ArticleList
   },

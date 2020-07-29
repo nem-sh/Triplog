@@ -30,7 +30,7 @@ export default {
     };
   },
   created() {
-    http.get(`/article/getList`).then(({ data }) => {
+    http.get(`/article/getList/${this.$route.params.hostNum}`).then(({ data }) => {
       this.items = data;
     });
   },
