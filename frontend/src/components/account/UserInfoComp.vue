@@ -230,7 +230,7 @@ export default {
     },
     modifyHandler() {
       http
-        .put(`/users/${this.email}`, {
+        .put(`/users/${this.$store.state.user.userNum}`, {
           name: this.name,
           nickname: this.nickName,
           intro : this.intro,
@@ -243,7 +243,7 @@ export default {
           }
           this.alertMsg = msg;
           this.alert = true;
-          this.$emit("closeUserInfoModal", this.alertMsg);
+          this.$emit("closeUserInfoModal", this.alertMsg, this.nickName);
         }).catch((e) => {
           if (e.request.status === 404){
             this.alertMsg = "탈퇴 처리시 에러가 발생했습니다.";
@@ -264,7 +264,7 @@ export default {
     },
     signOut() {
       http
-        .delete(`/users/delete/${this.email}`)
+        .delete(`/users/delete/${this.$store.state.user.userNum}`)
         .then(() => {
           // let msg = "탈퇴 처리시 문제가 발생했습니다.";
           // if (data === "success") {

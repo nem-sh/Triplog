@@ -342,7 +342,7 @@ export default {
       })
     },
     info: function () {
-      http.get(`/users/${this.getUserNum}`).then(({ data }) => {
+      http.get(`/users/get/${this.getUserNum}`).then(({ data }) => {
         this.userInfo = data;
         console.dir(data);
         this.userInfoCompKey += 1;
@@ -376,10 +376,11 @@ export default {
     goWrite: function() {
       this.$router.push('/article/write');
     },
-    closeUserInfoModal: function(msg) {
+    closeUserInfoModal: function(msg, afterNickName) {
       if(msg != null) {
         this.alertMsg = msg;
         this.alert = true;
+        this.$store.commit('modifyProfileName', afterNickName);
       }
       this.userInfoModalToggle = false;
     },

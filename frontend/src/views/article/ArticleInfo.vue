@@ -45,7 +45,7 @@ export default {
         console.dir(data);
       });
     http
-      .get(`/article/like/${this.$route.params.articleNum}/${this.getEmail}`)
+      .get(`/article/like/${this.$route.params.articleNum}/${this.getUserNum}`)
       .then(({ data }) => {
         this.isLike = data;
         console.dir(data);

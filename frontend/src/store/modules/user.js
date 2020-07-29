@@ -55,6 +55,9 @@ const mutations = {
     state.realname = "";
     state.email = "";
     state.userNum = "";
+  },
+  modifyProfileName: function(state, after) {
+    state.profilename = after;
   }
 };
 
