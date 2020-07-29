@@ -4,6 +4,7 @@
       <v-img v-if="thumbnail" :src="require(`@/assets/${thumbnail}`)" class="thumb" />
       <v-img v-else :src="require(`@/assets/noimage.png`)" class="thumb" />
     <p class="title">{{title}}</p>
+    </router-link>
   </div>
 </template>
 
