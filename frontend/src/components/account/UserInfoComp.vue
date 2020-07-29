@@ -154,6 +154,7 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
 import http from "@/util/http-common";
 import moment from "moment";
 import { AUTH_LOGOUT } from "@/store/actions/auth";
@@ -205,6 +206,16 @@ export default {
     computeImagesrc() {
         return this.propImage;
     },
+    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail', 'getUserNum']),
+    ...mapState({
+      authLoading: state => state.auth.status === 'loading',
+      uname: state => `${state.user.getProfile}`,
+      userEmail : state => `${state.user.getEmail}`,
+      userNum : state => `${state.user.getUserNum}`
+    }),
+    loading: function () {
+      return this.authStatus === 'loading' && !this.isAuthenticated
+    }
   },
   methods: {
     getFormatDate(joinedAt) {
@@ -230,7 +241,7 @@ export default {
     },
     modifyHandler() {
       http
-        .put(`/users/${this.$store.state.user.userNum}`, {
+        .put(`/users/${this.getUserNum}`, {
           name: this.name,
           nickname: this.nickName,
           intro : this.intro,
@@ -264,7 +275,7 @@ export default {
     },
     signOut() {
       http
-        .delete(`/users/delete/${this.$store.state.user.userNum}`)
+        .delete(`/users/delete/${this.getUserNum}`)
         .then(() => {
           // let msg = "탈퇴 처리시 문제가 발생했습니다.";
           // if (data === "success") {
