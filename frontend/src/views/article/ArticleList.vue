@@ -8,6 +8,7 @@
         :isMyBlog="isMyBlog"
       />
     </div>
+    <v-sheet height="50"></v-sheet>
       <div v-masonry="containerId" transition-duration="0.3s" item-selector=".item" class="masonry-container">
         <ArticleListComp 
           v-masonry-tile
