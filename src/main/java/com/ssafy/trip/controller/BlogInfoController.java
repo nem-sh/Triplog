@@ -27,7 +27,7 @@ public class BlogInfoController {
 	private BlogInfoRepository blogInfoRepository;
 	@PutMapping("/blog/img")
 	public ResponseEntity<String> uploadImgs(@RequestPart MultipartFile img) throws Exception {
-		String baseDir = System.getProperty("user.dir")+ "\\src\\main\\resources\\static\\image\\";
+		String baseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\blogImage\\";
 		String originalFileName = img.getOriginalFilename();
 		System.out.println(originalFileName);
 		File dest = new File(baseDir + originalFileName);
