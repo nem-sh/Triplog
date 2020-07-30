@@ -3,16 +3,15 @@
     <v-hover v-slot:default="{ hover }">
       <v-card
         :class="{ 'on-hover': hover }"
-        flat
-        tile
         v-bind="$attrs"
         v-on="$listeners"
         :height="value.prominent ? 450 : 350"
         color="grey lighten-1"
         dark
+        :elevation="hover ? 12 : 2"
         href="#!"
       >
-        <v-img :src="require(`@/assets/${value.article.thumbnail}`)"  height="100%" @click.stop="dialog = true">
+        <v-img :src="require(`@/assets/${value.article.thumbnail}`)" height="100%" @click.stop="dialog = true">
           <!-- modal str-->
           <!-- <v-dialog v-model="dialog" max-width="590"> -->
           <!-- <v-card @click="dialog = false" style="opacity: 1; height:300px;">
@@ -62,18 +61,18 @@
 
           <v-row v-if="!value.prominent" class="fill-height text-right ma-0">
             <v-col cols="12">
-              <v-chip
+              <!-- <v-chip
                 label
                 class="mx-0 mb-2 text-uppercase"
                 color="grey darken-3"
                 text-color="white"
                 small
                 @click.stop="movePackage"
-              >-패키지로 넘어가는 버튼-</v-chip>
+              >-패키지로 넘어가는 버튼-</v-chip> -->
 
-              <h3 class="title font-weight-bold mb-2">{{value.article.title}}</h3>
-              <div class="caption">{{value.writer.nickname}}</div>
-              <div class="caption">{{date}}</div>
+              <h3 class="title font-weight-bold mb-2" style="text-shadow: 1px 1px 2px #383838;">{{value.article.title}}</h3>
+              <div class="caption" style="text-shadow: 1px 1px 2px #383838;">{{value.writer.nickname}}</div>
+              <div class="caption" style="text-shadow: 1px 1px 2px #383838;">{{date}}</div>
             </v-col>
 
             <v-col align-self="end">
@@ -220,6 +219,9 @@ export default {
       this.value.article.created_at.slice(11, 19);
 
     this.date = this.setTime();
+    if(!(this.value.article.thumbnail)){
+      this.value.article.thumbnail = "noimage.png";
+    }
   }
 };
 </script>

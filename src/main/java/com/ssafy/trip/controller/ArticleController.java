@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ssafy.trip.exception.ResourceNotFoundException;
 import com.ssafy.trip.help.ArticleLikeListResponseObject;
+import com.ssafy.trip.help.ArticleRequestWithFile;
 import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.model.Paging;
@@ -67,12 +72,34 @@ public class ArticleController {
 
 		return ResponseEntity.ok(SUCCESS);
 	}
-
-	@PostMapping("/post")
-	public ResponseEntity<String> registArticleByNum(@RequestBody Article article) {
+	
+	@PostMapping
+	public ResponseEntity<String> postArticle(@RequestBody Article article) {
 		articleRepository.save(article);
-
+		
 		return ResponseEntity.ok(SUCCESS);
+	}
+
+	@PostMapping("/img")
+	public ResponseEntity<String> uploadImgs(@RequestPart MultipartFile img) throws Exception {
+		String baseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\";
+		String originalFileName = img.getOriginalFilename();
+		System.out.println(originalFileName);
+		File dest = new File(baseDir + originalFileName);
+		
+		String newName = originalFileName;
+		String realName = originalFileName.split("\\.")[0];
+		String extension = originalFileName.split("\\.")[1];
+		int index = 0;
+		while(dest.exists()) {
+			index++;
+			newName = realName + "(" + index + ")." + extension;
+			dest = new File(baseDir + newName);
+		}
+		
+		img.transferTo(dest);
+	
+		return ResponseEntity.ok(newName);
 	}
 
 	@GetMapping("/getList/{hostNum}")
@@ -100,7 +127,6 @@ public class ArticleController {
 	
 	@PostMapping("/likelist")
 	public List<ArticleLikeListResponseObject> findArticleLikeList(@RequestBody Paging paging){
-		
 		MemberUser user =  userRepository.findByNum(paging.getUsernum())
     			.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", paging.getUsernum()));
 		
@@ -116,7 +142,15 @@ public class ArticleController {
 			
 			objs.add(new ArticleLikeListResponseObject(article, writer));
 		}
-		return objs;
+		
+		if(paging.getLimit() > objs.size())
+			return null;
+		int max = paging.getLimit()+9;
+		if(max > objs.size())
+			max = objs.size();
+		List<ArticleLikeListResponseObject> list = objs.subList(paging.getLimit(), max);
+		
+		return list;
 	}
 	
 	@DeleteMapping("/likelist/{usernum}/{num}")

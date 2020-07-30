@@ -1,7 +1,8 @@
 package com.ssafy.trip.help;
 
-import java.io.File;
 import java.util.Date;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class ArticleRequestWithFile {
 	
@@ -17,11 +18,11 @@ public class ArticleRequestWithFile {
 	private Date date_start;
 	private Date date_end;
 	private int likeCount;
-	private File file;
+	private MultipartFile file;
 	
 	public ArticleRequestWithFile(Long num, Long usernum, Long trippackage_num, String title, String place,
 			String content, String thumbnail, Boolean temp, Date created_at, Date date_start, Date date_end,
-			int likeCount, File file) {
+			int likeCount, MultipartFile file) {
 		super();
 		this.num = num;
 		this.usernum = usernum;
@@ -114,10 +115,10 @@ public class ArticleRequestWithFile {
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
 	}
-	public File getFile() {
+	public MultipartFile getFile() {
 		return file;
 	}
-	public void setFile(File file) {
+	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
 	
