@@ -1,8 +1,8 @@
 <template>
   <div class="item">
     <router-link :to="{ name: 'articleDetail', params: { articleNum: this.num }}">
-      <v-img v-if="thumbnail" :src="require(`@/assets/${thumbnail}`)" class="thumb" />
-      <v-img v-else :src="require(`@/assets/noimage.png`)" class="thumb" />
+      <v-img v-if="thumbnail" :src="require(`@/assets/articleImage/${thumbnail}`)" class="thumb" />
+      <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="thumb" />
     </router-link>
     <p class="title">{{title}}</p>
   </div>
