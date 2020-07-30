@@ -3,8 +3,13 @@
     <br />
     <br />
     <br />
-    <div class="mx-auto bg" :style="styleObject">
-      <v-container style="height: 100%; opacity:1; ">
+    <div class="mx-auto bg">
+      <v-img
+        :src="require(`@/assets/blogImage/${titleimg}`)"
+        style="position: relative; z-index: 1; width: 900px;height: 375px; border-radius: 10px;"
+        alt
+      />
+      <v-container style="height: 100%; opacity:1; position: relative; z-index: 2;    top: -375px;">
         <v-row style="height: 100%; width: 100%;  margin :0;">
           <v-col
             cols="3"
@@ -14,7 +19,7 @@
               <div class="mx-auto" width="100%" height="100%">
                 <v-img
                   :aspect-ratio="10/10"
-                  src="@/assets/profile_init.png"
+                  src="@/assets/blogImage/profile_init.png"
                   style="align-items:flex-end; display : flex;"
                 >
                   <div
@@ -66,8 +71,8 @@ export default {
     return {
       title: "",
       visitcount: 0,
-      titleimg: "",
-      imgurl: "url('~@/assets/1.png')"
+      titleimg: "adventurealtitude.jpg",
+      basedir: ""
     };
   },
   props: {
@@ -91,6 +96,7 @@ export default {
           this.title = response.data.title;
           this.visitcount = response.data.visitcount;
           this.titleimg = response.data.titleimg;
+          console.log(this.titleimg);
           if (this.title == "") {
             this.title = this.hostNickName + "'s blog";
           }
@@ -99,23 +105,28 @@ export default {
         .catch(error => {
           console.log(error.data);
         });
+    },
+    getBaseDir() {
+      http
+        .get(`basedir/`)
+        .then(response => {
+          this.basedir = response.data;
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
     }
   },
   computed: {
-    styleObject() {
-      if (this.titleimg == null) {
-        return {
-          "--background-image": `url('http://localhost:8080/image/mountain.jpg')`
-        };
-      } else {
-        return {
-          "--background-image": `url('http://localhost:8080/image/${this.titleimg}')`
-        };
-      }
+    getImg: function() {
+      return `@/assets/blogImage/${this.titleimg}`;
     }
   },
   created: function() {
+    this.getBaseDir();
     this.getBlogInfo();
+    console.log(this.imgurl);
   }
 };
 </script>
@@ -132,7 +143,6 @@ export default {
   opacity: 0.6;
   background-size: cover;
   border-radius: 10px;
-  background-image: var(--background-image);
 }
 .bg {
   color: var(--c-olor);
