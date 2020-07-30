@@ -1,18 +1,25 @@
 <template>
   <div>
+    <v-container class="cyan darken-2">
+      <v-row>
+        <v-col class="white--text pa-2 ml-3">
+          Setting
+        </v-col>
+      </v-row>
+    </v-container>
     <v-simple-table>
       <template v-slot:default>
         <tbody>
           <tr>
-            <th class="text-left">블로그 이미지</th>
-            <td>
+            <th class="white text-center teal--text">블로그 이미지</th>
+            <td class="white">
               <input ref="imageInput" type="file" hidden @change="onChangeImages" />
               <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
             </td>
           </tr>
           <tr>
-            <th class="text-left">블로그 명</th>
-            <td>
+            <th class="teal lighten-5 text-center teal--text">블로그 명</th>
+            <td class="teal lighten-5">
               <v-text-field
                 type="text"
                 class="form-control"
@@ -24,13 +31,13 @@
             </td>
           </tr>
           <tr>
-            <th class="text-left">방문자 수</th>
-            <td>{{visitcount}}</td>
+            <th class="white text-center teal--text">방문자 수</th>
+            <td class="white">{{visitcount}} 명이 다녀갔습니다.</td>
           </tr>
-          <tr>
+          <tr class="cyan darken-2">
             <td colspan="2">
               <div class="text-right">
-                <v-btn @click="regist">수정</v-btn>
+                <v-btn class="cyan darken-3 white--text" @click="regist">수정</v-btn>
               </div>
             </td>
           </tr>

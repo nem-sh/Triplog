@@ -53,21 +53,21 @@
             :to="{name: 'articleList', params: {hostNum: this.getUserNum}}"
           >
             <v-list-item-icon>
-              <v-icon color="lime darken-3">mdi-inbox-full</v-icon>
+              <v-icon color="green darken-4">mdi-blogger</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title class="font-weight-bold teal--text">게시물 목록</v-list-item-title>
+              <v-list-item-title class="font-weight-bold teal--text">My Blog</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-list-item @click.stop="setBlog" class="mb-5">
             <v-list-item-icon>
-              <v-icon color="green darken-4">mdi-bootstrap</v-icon>
+              <v-icon color="gray">mdi-cogs</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title class="font-weight-bold teal--text">My Blog Setting</v-list-item-title>
+              <v-list-item-title class="font-weight-bold teal--text">Setting</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
