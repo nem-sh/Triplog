@@ -8,7 +8,6 @@
         :isMyBlog="isMyBlog"
       />
     </div>
-    <br/>
       <div v-masonry="containerId" transition-duration="0.3s" item-selector=".item" class="masonry-container">
         <ArticleListComp 
           v-masonry-tile
@@ -120,12 +119,15 @@ p.title {
   top: 8px;
   left: 15px;
 }
+.masonry-container {
+  margin-left: 4%;
+}
 .item {
   margin-bottom: 20px;
   margin-right: 20px;
   background: darkturquoise;
   border-radius: 10px;
-  max-width: 280px;
+  max-width: 350px;
 }
 .item:hover {
   filter: drop-shadow(3px 3px 5px rgb(136, 136, 136));
