@@ -1,14 +1,21 @@
 <template>
   <div>
+    <v-container class="cyan darken-2">
+      <v-row>
+        <v-col class="white--text pa-2 ml-3">
+          My Account
+        </v-col>
+      </v-row>
+    </v-container>
     <v-simple-table>
       <template v-slot:default>
         <tbody>
           <tr>
-              <th class="text-left">프로필 사진</th>
-              <td>
+              <th class="white text-center teal--text">Profile Image</th>
+              <td class="white">
                 <v-file-input
                   v-model="imagesrc"
-                  color="deep-purple accent-4"
+                  color="cyan darken-2"
                   counter
                   label="File input"
                   multiple
@@ -40,59 +47,71 @@
               </td>
           </tr>
           <tr>
-              <th class="text-left">이메일</th>
-              <td>{{email}}</td>
+              <th class="teal lighten-5 text-center teal--text">Email (ID)</th>
+              <td class="teal lighten-5">{{email}}</td>
           </tr>
           <tr>
-              <th class="text-left">이름</th>
-              <td>
+              <th class="white text-center teal--text">Name</th>
+              <td class="white">
                 <v-text-field
                   type="text"
                   class="form-control"
                   id="name"
                   ref="name"
                   label="이름을 입력하세요"
+                  color="cyan darken-2"
                   v-model="name"
                 />
               </td>
           </tr>
           <tr>
-              <th class="text-left">별명</th>
-              <td>
+              <th class="teal lighten-5 text-center teal--text">NickName</th>
+              <td class="teal lighten-5">
                 <v-text-field
                   type="text"
                   class="form-control"
                   id="nick"
                   ref="nick"
                   label="별명을 입력하세요"
+                  color="cyan darken-2"
                   v-model="nickName"
                 />
               </td>
           </tr>
           <tr>
-              <th class="text-left">자기소개 글</th>
-              <td>
+              <th class="white text-center teal--text">Self-introduction</th>
+              <td class="white text-center">
                 <v-textarea style="margin-top: 15px;"
+                color="cyan darken-2"
                 outlined
+                counter="50"
                 label="자신을 소개하세요."
+                height="100"
                 v-model="intro">
                 </v-textarea>
               </td>
           </tr>
           <tr>
-              <th class="text-left">권한</th>
-              <td>{{valid}}</td>
+              <th class="teal lighten-5 text-center teal--text">Authority</th>
+              <td class="teal lighten-5" v-if="!valid">권한이 없습니다.
+                이메일 인증을 통해 권한을 얻으세요!
+              </td>
+              <td class="teal lighten-5" v-else>인증된 사용자입니다.</td>
           </tr>
           <tr>
-              <th class="text-left">가입일</th>
-              <td>{{getFormatDate(joinedAt)}}</td>
+              <th class="white text-center teal--text">Joined At</th>
+              <td class="white">{{getFormatDate(joinedAt)}}</td>
           </tr>
-          <tr>
-            <td colspan="2">
-            <div class="text-right">
-              <v-btn @click="modify">수정</v-btn>
-              <v-btn @click="confirmSignOut">탈퇴</v-btn>
+          <tr class="cyan darken-2">
+            <td>
+            <div>
+              <v-btn inline-block @click="modify" class="cyan darken-3 white--text">수정</v-btn>
             </div>
+            </td>
+            <td class="text-right">
+              <div>
+                <v-btn inline-block @click="confirmSignOut" class="cyan darken-3 white--text">탈퇴</v-btn>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -267,20 +286,11 @@ export default {
           
  
         });
-        
-        // .catch(() => {
-        //   this.alertMsg = "수정 처리시 에러가 발생했습니다.";
-        //   this.alert = true;
-        // });
     },
     signOut() {
       http
         .delete(`/users/delete/${this.getUserNum}`)
         .then(() => {
-          // let msg = "탈퇴 처리시 문제가 발생했습니다.";
-          // if (data === "success") {
-          //   msg = "탈퇴가 완료되었습니다.";
-          // }
           let msg = "탈퇴가 완료되었습니다."
           this.alertMsg = msg;
           this.alert = true;
@@ -295,14 +305,7 @@ export default {
             this.$router.push(`/apierror/${e.request.status}/`)
           }
           console.log(e.request.status)
-          
- 
         });
-        
-        // .catch(() => {
-        //   this.alertMsg = "탈퇴 처리시 에러가 발생했습니다.";
-        //   this.alert = true;
-        // });
     },
     confirmSignOut() {
       this.dialog = true;

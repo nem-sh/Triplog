@@ -104,7 +104,7 @@
           dark
           clipped-left
         >
-          <v-toolbar-title style="margin: 0 auto; font-size: 40px;">TRIPLOG
+          <v-toolbar-title style="font-size: 40px;">TRIPLOG
             <v-icon color="teal lighten-4">mdi-compass-outline</v-icon></v-toolbar-title>
 
         <v-btn
