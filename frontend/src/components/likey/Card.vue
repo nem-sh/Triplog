@@ -166,7 +166,7 @@ export default {
     showDetail: function() {
       this.dialog = false;
       this.$router.push(
-        `/like/detail?articleno=${this.value.article.num}&writerusernum=${this.value.writer.num}`
+        `/article/detail/${this.value.article.num}`
       );
     },
 
