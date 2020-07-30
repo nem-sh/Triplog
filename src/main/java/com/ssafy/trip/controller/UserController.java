@@ -1,5 +1,6 @@
 package com.ssafy.trip.controller;
 
+import java.io.File;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,11 +12,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.trip.exception.ResourceNotFoundException;
 import com.ssafy.trip.help.UserIdentityAvailability;
@@ -136,4 +140,26 @@ public class UserController {
     public List<Article> searchArticle(@PathVariable(value="keyword") String keyword) {
     	return null;
     }
+    
+    @PostMapping("/user/img")
+	public ResponseEntity<String> uploadImgs(@RequestPart MultipartFile img) throws Exception {
+		String baseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\userImage\\";
+		String originalFileName = img.getOriginalFilename();
+		System.out.println(originalFileName);
+		File dest = new File(baseDir + originalFileName);
+		
+		String newName = originalFileName;
+		String realName = originalFileName.split("\\.")[0];
+		String extension = originalFileName.split("\\.")[1];
+		int index = 0;
+		while(dest.exists()) {
+			index++;
+			newName = realName + "(" + index + ")." + extension;
+			dest = new File(baseDir + newName);
+		}
+		
+		img.transferTo(dest);
+	
+		return ResponseEntity.ok(newName);
+	}
 }
