@@ -8,7 +8,7 @@
         :isMyBlog="isMyBlog"
       />
     </div>
-      <div v-masonry item-selector=".item" class="masonry-container">
+      <div v-masonry="containerId" transition-duration="0.3s" item-selector=".item" class="masonry-container">
         <ArticleListComp 
           v-masonry-tile
           v-for="(item, index) in items"
