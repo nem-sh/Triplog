@@ -60,7 +60,6 @@
         </v-row>
       </v-container>
     </div>
-  </v-app>
 </template>
 
 <script>
@@ -147,7 +146,6 @@ export default {
 .bg {
   color: var(--c-olor);
   width: 900px;
-  height: 375px;
   border-radius: 10px;
   position: relative;
   z-index: 1;
