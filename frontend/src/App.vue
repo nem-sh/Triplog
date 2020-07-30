@@ -112,7 +112,7 @@
       </v-container>
     </v-main>
 
-    <v-footer fixed color="white">
+    <v-footer fixed class="white">
       <v-row justify="center" no-gutters>
         <v-btn rounded color="cyan darken-1 white--text" class="my-2" @click="goWrite">
           <v-icon>mdi-file-edit</v-icon>
