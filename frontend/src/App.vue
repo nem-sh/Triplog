@@ -1,111 +1,99 @@
 <template>
   <v-app>
     <div>
-      <v-navigation-drawer
-          :mini-variant.sync="mini"
-          clipped
-          app
-          permanent
-          v-if="this.getProfile"
-        >
-          <v-list-item class="px-2" style="padding: 10px;">
-            <v-list-item-avatar :color="ranColor" size="40">
-              <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
-            </v-list-item-avatar>
+      <v-navigation-drawer :mini-variant.sync="mini" clipped app permanent v-if="this.getProfile">
+        <v-list-item class="px-2" style="padding: 10px;">
+          <v-list-item-avatar :color="ranColor" size="40">
+            <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
+          </v-list-item-avatar>
 
-            <v-list-item-title class="font-weight-bold">{{this.getProfile}}님</v-list-item-title>
-          
-            <v-btn icon @click.stop="mini = !mini">
-              <v-icon color="teal">mdi-arrow-left-drop-circle-outline</v-icon>
-            </v-btn>
+          <v-list-item-title class="font-weight-bold">{{this.getProfile}}님</v-list-item-title>
+
+          <v-btn icon @click.stop="mini = !mini">
+            <v-icon color="teal">mdi-arrow-left-drop-circle-outline</v-icon>
+          </v-btn>
+        </v-list-item>
+
+        <v-list-item></v-list-item>
+
+        <v-list>
+          <v-list-item to="/" @click.stop class="mb-5">
+            <v-list-item-icon>
+              <v-icon color="green">mdi-home-city</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-bold teal--text">Home</v-list-item-title>
+            </v-list-item-content>
           </v-list-item>
 
-          <v-list-item></v-list-item>
+          <v-list-item @click.stop="info" class="mb-5">
+            <v-list-item-icon>
+              <v-icon color="indigo">mdi-account</v-icon>
+            </v-list-item-icon>
 
-          <v-list>
-            <v-list-item to="/" @click.stop class="mb-5">
-              <v-list-item-icon>
-                <v-icon color="green">mdi-home-city</v-icon>
-              </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-bold teal--text">My Account</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-              <v-list-item-content>
-                <v-list-item-title class="font-weight-bold teal--text">Home</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+          <v-list-item to="/like" @click.stop class="mb-5">
+            <v-list-item-icon>
+              <v-icon color="pink">mdi-charity</v-icon>
+            </v-list-item-icon>
 
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-bold teal--text">좋아요 목록</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-            <v-list-item @click.stop="info" class="mb-5">
-              <v-list-item-icon>
-                <v-icon color="indigo">mdi-account</v-icon>
-              </v-list-item-icon>
+          <v-list-item
+            class="mb-5"
+            @click.stop
+            :to="{name: 'articleList', params: {hostNum: this.getUserNum}}"
+          >
+            <v-list-item-icon>
+              <v-icon color="lime darken-3">mdi-inbox-full</v-icon>
+            </v-list-item-icon>
 
-              <v-list-item-content>
-                <v-list-item-title class="font-weight-bold teal--text">My Account</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-bold teal--text">게시물 목록</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
+          <v-list-item @click.stop="setBlog" class="mb-5">
+            <v-list-item-icon>
+              <v-icon color="green darken-4">mdi-bootstrap</v-icon>
+            </v-list-item-icon>
 
-            <v-list-item to="/like" @click.stop class="mb-5">
-              <v-list-item-icon>
-                <v-icon color="pink">mdi-charity</v-icon>
-              </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-bold teal--text">My Blog Setting</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-              <v-list-item-content>
-                <v-list-item-title class="font-weight-bold teal--text">좋아요 목록</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+          <v-list-item class="mb-15">
+            <v-list-item-icon></v-list-item-icon>
 
+            <v-list-item-content>
+              <div class="pa-2">
+                <v-btn @click.stop="logout" class="teal lighten-1 white--text">LOGOUT</v-btn>
+              </div>
+            </v-list-item-content>
+          </v-list-item>
 
-            <v-list-item class="mb-5" @click.stop :to="{name: 'articleList', params: {hostNum: this.getUserNum}}">
-              <v-list-item-icon>
-                <v-icon color="lime darken-3">mdi-inbox-full</v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <v-list-item-title class="font-weight-bold teal--text">게시물 목록</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-
-
-            <v-list-item @click.stop :to="`/${this.getUserNum}`" class="mb-5">
-              <v-list-item-icon>
-                <v-icon color="green darken-4">mdi-bootstrap</v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <v-list-item-title class="font-weight-bold teal--text">My Blog</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item class="mb-15">
-              <v-list-item-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <div class="pa-2">            
-                  <v-btn @click.stop="logout" class="teal lighten-1 white--text">LOGOUT</v-btn>
-                </div>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item>
-              <v-btn icon v-if="mini">
+          <v-list-item>
+            <v-btn icon v-if="mini">
               <v-icon color="teal">mdi-arrow-right-drop-circle</v-icon>
             </v-btn>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
 
-            </v-list-item>
-          </v-list>
-        </v-navigation-drawer>
-
-        <v-app-bar
-          app
-          dense
-          color="cyan darken-2"
-          dark
-          clipped-left
-        >
-          <v-toolbar-title style="font-size: 40px;">TRIPLOG
-            <v-icon color="teal lighten-4">mdi-compass-outline</v-icon></v-toolbar-title>
+      <v-app-bar app dense color="cyan darken-2" dark clipped-left>
+        <v-toolbar-title style="font-size: 40px;">
+          TRIPLOG
+          <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
+        </v-toolbar-title>
 
         <v-btn
           @click="loginModalToggle = !loginModalToggle"
@@ -119,10 +107,10 @@
 
     <v-main style="padding: 10px; margin:0 auto;">
       <v-container>
-        <router-view></router-view>
+        <router-view @update-profile="info"></router-view>
       </v-container>
     </v-main>
-    
+
     <v-footer fixed color="white">
       <v-row justify="center" no-gutters>
         <v-btn rounded color="cyan darken-1 white--text" class="my-2" @click="goWrite">
@@ -172,6 +160,9 @@
         v-on:closeUserInfoModal="closeUserInfoModal"
       ></user-info-comp>
     </v-dialog>
+    <v-dialog v-model="setBlogModalToggle" max-width="800">
+      <set-blog-comp v-if="userInfo.email" v-on:closeSetBlogModal="closeSetBlogModal" />
+    </v-dialog>
   </v-app>
 </template>
 
@@ -180,6 +171,7 @@ import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
 import Login from "@/components/account/Login.vue";
 import UserInfoComp from "@/components/account/UserInfoComp.vue";
+import SetBlogComp from "@/components/personal/SetBlogComp.vue";
 import http from "@/util/http-common";
 
 export default {
@@ -192,6 +184,7 @@ export default {
     logoutSuccess: false,
     loginModalToggle: false,
     userInfoModalToggle: false,
+    setBlogModalToggle: false,
     userInfo: {},
     alert: false,
     alertMsg: "",
@@ -210,7 +203,8 @@ export default {
   }),
   components: {
     Login,
-    UserInfoComp
+    UserInfoComp,
+    SetBlogComp
   },
   methods: {
     goToMyBlog: function() {
@@ -229,6 +223,14 @@ export default {
         console.dir(data);
         this.userInfoCompKey += 1;
         this.userInfoModalToggle = true;
+      });
+    },
+    setBlog: function() {
+      http.get(`/users/get/${this.getUserNum}`).then(({ data }) => {
+        this.userInfo = data;
+        console.dir(data);
+        this.setBlogCompKey += 1;
+        this.setBlogModalToggle = true;
       });
     },
     avatarName: function(name) {
@@ -273,6 +275,9 @@ export default {
         this.$store.commit("modifyProfileName", afterNickName);
       }
       this.userInfoModalToggle = false;
+    },
+    closeSetBlogModal: function() {
+      this.setBlogModalToggle = false;
     },
     useSnackBar: function(msg) {
       if (msg != null) {

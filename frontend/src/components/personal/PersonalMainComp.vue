@@ -3,8 +3,7 @@
     <br />
     <br />
     <br />
-    <div class="mx-auto bg" style="width:1200px; height:500px;  
-   border-radius:10px;">
+    <div class="mx-auto bg" :style="styleObject">
       <v-container style="height: 100%; opacity:1; ">
         <v-row style="height: 100%; width: 100%;  margin :0;">
           <v-col
@@ -21,26 +20,27 @@
                   <div
                     v-if="hover & isMyBlog"
                     class="black white--text"
-                    style="height : 50px; opacity: 0.5; text-align: center; line-height: 50px;"
-                  >프로필수정</div>
+                    style="height : 50px; opacity: 0.5; text-align: center; line-height: 50px; cursor:pointer;"
+                    @click="updateProfile"
+                  >프로필 수정</div>
                 </v-img>
                 <v-card-text class="pt-6" style="position: relative;">
-                  <h3 class="display-1 orange--text mb-2">{{hostNickName}}</h3>
-                  <div class="font-weight-light grey--text title mb-2">{{hostEmail}}</div>
-                  <div class="font-weight-light title mb-2">안녕하세요 방가루^_^</div>
+                  <h3 class="orange--text mb-2">{{hostNickName}}</h3>
+                  <div class="font-weight-light grey--text mb-2">{{hostEmail}}</div>
+                  <div class="font-weight-light mb-2">{{hostIntro}}</div>
 
                   <div
                     v-if="isMyBlog"
-                    class="font-weight-light grey--text title mb-2"
+                    class="font-weight-light grey--text mb-2"
                     style="text-align: center;"
-                  >나의 이웃 | 좋아요 목록</div>
+                  >나의 이웃</div>
                   <div v-else>
                     <div
                       v-if="true"
-                      class="font-weight-light grey--text title mb-2"
+                      class="font-weight-light grey--text mb-2"
                       style="text-align: center;"
                     >이웃 신청</div>
-                    <div v-esle>이웃 친구</div>
+                    <div v-else>이웃 친구</div>
                   </div>
                 </v-card-text>
               </div>
@@ -50,7 +50,7 @@
             cols="9"
             style="height : 100%; display:flex; justify-content:flex-end; align-items:flex-end;"
           >
-            <h1 style="margin-bottom: 30px; margin-right: 30px;">여행가요 blog</h1>
+            <h1 style="margin-bottom: 20px; margin-right: 20px;">{{title}}</h1>
           </v-col>
         </v-row>
       </v-container>
@@ -59,22 +59,68 @@
 </template>
 
 <script>
+import http from "@/util/http-common";
 export default {
   name: "PersonalMainComp",
+  data() {
+    return {
+      title: "",
+      visitcount: 0,
+      titleimg: "",
+      imgurl: "url('~@/assets/1.png')"
+    };
+  },
   props: {
     hostNum: { type: Number },
     hostNickName: { type: String },
     hostEmail: { type: String },
+
+    hostIntro: { type: String },
     isMyBlog: { type: Boolean }
+  },
+  methods: {
+    updateProfile: function() {
+      this.$emit("update-profile");
+      console.log("test");
+    },
+
+    getBlogInfo() {
+      http
+        .get(`/blog/${this.$route.params.hostNum}`)
+        .then(response => {
+          this.title = response.data.title;
+          this.visitcount = response.data.visitcount;
+          this.titleimg = response.data.titleimg;
+          if (this.title == "") {
+            this.title = this.hostNickName + "'s blog";
+          }
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+    }
+  },
+  computed: {
+    styleObject() {
+      if (this.titleimg == null) {
+        return {
+          "--background-image": `url('http://localhost:8080/image/mountain.jpg')`
+        };
+      } else {
+        return {
+          "--background-image": `url('http://localhost:8080/image/${this.titleimg}')`
+        };
+      }
+    }
+  },
+  created: function() {
+    this.getBlogInfo();
   }
 };
 </script>
 
 <style>
-.bg {
-  position: relative;
-  z-index: 1;
-}
 .bg::after {
   width: 100%;
   height: 100%;
@@ -84,8 +130,16 @@ export default {
   left: 0;
   z-index: -1;
   opacity: 0.6;
-  background-image: url("http://localhost:8080/img/mountain.jpg");
   background-size: cover;
   border-radius: 10px;
+  background-image: var(--background-image);
+}
+.bg {
+  color: var(--c-olor);
+  width: 900px;
+  height: 375px;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
 }
 </style>

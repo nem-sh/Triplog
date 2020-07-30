@@ -21,8 +21,10 @@ import com.ssafy.trip.exception.ResourceNotFoundException;
 import com.ssafy.trip.help.UserIdentityAvailability;
 import com.ssafy.trip.help.UserProfile;
 import com.ssafy.trip.model.Article;
+import com.ssafy.trip.model.BlogInfo;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.repository.ArticleRepository;
+import com.ssafy.trip.repository.BlogInfoRepository;
 import com.ssafy.trip.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
@@ -35,6 +37,9 @@ public class UserController {
     
     @Autowired
     private ArticleRepository articleRepository;
+    
+    @Autowired
+    private BlogInfoRepository blogInfoRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -61,6 +66,27 @@ public class UserController {
         return userProfile;
     }
     
+//    @GetMapping("/users/get/{num}")
+//    public UserProfile getUserProfileByNum(@PathVariable(value = "num") Long num) {
+//        MemberUser user = userRepository.findByNum(num)
+//                .orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
+//
+//        UserProfile userProfile = new UserProfile(user.getNum(), user.getEmail(), user.getNickname(), user.getName(), user.getCreatedAt(), user.getImageSrc(), user.getIntro(), user.isValid());
+//        
+////        if (blogInfoRepository.existsByUsernum(num) ==false) {
+////        	BlogInfo blogInfo = new BlogInfo();
+////			blogInfo.setUsernum(num);
+////			blogInfo.setVisitcount(0);
+////			blogInfoRepository.save(blogInfo);
+////        } else {
+////        	BlogInfo blogInfo = blogInfoRepository.findByUsernum(num);
+////            int count = blogInfo.getVisitcount() +1;
+////            blogInfo.setVisitcount(count);
+////            blogInfoRepository.save(blogInfo);
+////        }
+//        
+//        return userProfile;
+//    }
     @GetMapping("/users/get/{num}")
     public UserProfile getUserProfileByNum(@PathVariable(value = "num") Long num) {
         MemberUser user = userRepository.findByNum(num)
