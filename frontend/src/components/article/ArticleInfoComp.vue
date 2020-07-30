@@ -40,11 +40,15 @@
       </v-btn>
 
       <div style="float: right;">
-        <v-btn
+        <!-- <v-btn
           :to="{ name: 'articleModify', params: { articleNum: articleNum }}"
           v-if="this.getUserNum === articleUserNum"
         >수정</v-btn>
-        <v-btn @click="confirmDelete" v-if="this.getUserNum === articleUserNum">삭제</v-btn>
+        <v-btn @click="confirmDelete" v-if="this.getUserNum === articleUserNum">삭제</v-btn> -->
+        <v-btn
+          :to="{ name: 'articleModify', params: { articleNum: articleNum }}"
+        >수정</v-btn>
+        <v-btn @click="confirmDelete">삭제</v-btn>
         <v-btn :to="{ name: 'articleList', params: { hostNum: articleUserNum }}">목록</v-btn>
       </div>
     </div>
