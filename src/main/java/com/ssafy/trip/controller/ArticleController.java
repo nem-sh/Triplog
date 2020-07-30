@@ -98,11 +98,11 @@ public class ArticleController {
 	
 	//좋아요 기능 -남시성
 	
-	@GetMapping("/likelist/{usernum}")
-	public List<ArticleLikeListResponseObject> findArticleLikeList(@PathVariable(value = "usernum") Long usernum){
+	@PostMapping("/likelist")
+	public List<ArticleLikeListResponseObject> findArticleLikeList(@RequestBody Paging paging){
 		
-		MemberUser user =  userRepository.findByNum(usernum)
-    			.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", usernum));
+		MemberUser user =  userRepository.findByNum(paging.getUsernum())
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", paging.getUsernum()));
 		
 		
 		
