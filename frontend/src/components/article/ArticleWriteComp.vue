@@ -108,7 +108,7 @@ export default {
       this.start()
   },
   mounted() {
-      if(window.localStorage.getItem("isSaved")) {
+      if(window.localStorage.getItem("isSaved") == "true") {
           this.confirmLoadData();
       }
   },

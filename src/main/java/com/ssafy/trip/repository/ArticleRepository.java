@@ -32,4 +32,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Modifying
 	void deleteAllByUsernum(Long usernum);
 	List<Article> findByLikearticle(MemberUser user);
+	
+	List<Article> findTop4ByOrderByLikeCountDesc();
 }
