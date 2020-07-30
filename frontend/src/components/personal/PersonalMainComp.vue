@@ -1,10 +1,6 @@
 <template>
-  <v-app>
-    <br />
-    <br />
-    <br />
     <div class="mx-auto bg" :style="styleObject">
-      <v-container style="height: 100%; opacity:1; ">
+      <v-container style=" opacity:1; ">
         <v-row style="height: 100%; width: 100%;  margin :0;">
           <v-col
             cols="3"
@@ -55,7 +51,6 @@
         </v-row>
       </v-container>
     </div>
-  </v-app>
 </template>
 
 <script>
@@ -137,7 +132,6 @@ export default {
 .bg {
   color: var(--c-olor);
   width: 900px;
-  height: 375px;
   border-radius: 10px;
   position: relative;
   z-index: 1;

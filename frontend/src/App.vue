@@ -105,6 +105,7 @@
       </v-app-bar>
     </div>
 
+    <v-sheet height="50"></v-sheet>
     <v-main style="padding: 10px; margin:0 auto;">
       <v-container>
         <router-view @update-profile="info"></router-view>
