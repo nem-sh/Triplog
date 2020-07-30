@@ -4,90 +4,85 @@
     <v-simple-table>
       <template v-slot:default borderless>
         <tbody>
-          <tr>
-            <th class="text-left">제목</th>
-            <td class="text-left">
-              <v-text-field
-                label="제목을 입력하세요"
-                id="articleTitle"
-                ref="articleTitle"
-                v-model="articleTitle"
-              ></v-text-field>
-            </td>
-          </tr>
-          <tr>
-            <th class="text-left">장소</th>
-            <td class="text-left">
-              <v-text-field
-                label="장소를 입력하세요"
-                id="articlePlace"
-                ref="articlePlace"
-                v-model="articlePlace"
-              ></v-text-field>
-            </td>
-          </tr>
-          <tr>
-            <th class="text-left">일정 시작 날짜</th>
-            <td class="text-left">{{getFormatDate(articleDateStart)}}</td>
-          </tr>
-          <tr>
-            <th class="text-left">일정 종료 날짜</th>
-            <td class="text-left">{{getFormatDate(articleDateEnd)}}</td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <br />
-              <v-textarea
-                outlined
-                name="input-7-1"
-                label="내용을 입력하세요"
-                auto-grow
-                rows="1"
-                row-height="500"
-                id="articleContent"
-                ref="articleContent"
-                v-model="articleContent"
-              ></v-textarea>
-            </td>
-          </tr>
+            <tr>
+                <th class="text-left">제목</th>
+                <td class="text-left">
+                    <v-text-field
+                    label="제목을 입력하세요"
+                    id="articleTitle"
+                    ref="articleTitle"
+                    v-model="articleTitle"
+                    ></v-text-field>
+                </td>
+            </tr>
+            <tr>
+                <th class="text-left">장소</th>
+                <td class="text-left">
+                    <v-text-field
+                    label="장소를 입력하세요"
+                    id="articlePlace"
+                    ref="articlePlace"
+                    v-model="articlePlace"
+                    ></v-text-field>
+                </td>
+            </tr>
+            <tr>
+                <th class="text-left">일정 시작 날짜</th>
+                <td class="text-left">{{getFormatDate(articleDateStart)}}</td>
+            </tr>
+            <tr>
+                <th class="text-left">일정 종료 날짜</th>
+                <td class="text-left">{{getFormatDate(articleDateEnd)}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <v-textarea
+                        outlined
+                        name="input-7-1"
+                        label="내용을 입력하세요"
+                        id="articleContent"
+                        ref="articleContent"
+                        v-model="articleContent"
+                    ></v-textarea>
+                </td>
+            </tr>
         </tbody>
       </template>
     </v-simple-table>
-    <div class="text-right">
-      <v-btn @click="goBack">뒤로</v-btn>
-      <v-btn @click="checkHandler">수정</v-btn>
+    <br />
+    <br />
+    <div class="text-center">
+        <v-btn @click="checkHandler">수정</v-btn>
+        <v-btn @click="goBack">뒤로</v-btn>
     </div>
-    <br />
-    <br />
-    <br />
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapState } from 'vuex';
 import moment from "moment";
 import http from "@/util/http-common";
 
 export default {
   name: "articleModifyComp",
   props: {
-    articleNum: { type: Number },
-    articleUserNum: { type: Number },
-    articleTripPackageNum: { type: Number },
-    articleThumbnail: { type: String },
-    articleTemp: { type: Boolean },
+    articleNum: {type: Number},
+    articleUserNum: {type: Number},
+    articleTripPackageNum: {type: Number},
+    articleThumbnail: {type: String},
+    articleTemp: {type: Boolean},
     articleTitle: { type: String },
     articlePlace: { type: String },
     articleDateStart: { type: String },
     articleDateEnd: { type: String },
     articleCreatedAt: { type: String },
-    articleContent: { type: String },
-    blogMasterName: { type: String }
+    articleContent: {type: String},
+    blogMasterName: {type: String}
   },
   data: function() {
     return {
-      alert: false,
-      alertMsg: ""
+      alert:false,
+      alertMsg:"",
     };
   },
   methods: {
@@ -118,7 +113,8 @@ export default {
       if (!err) {
         this.alertMsg = msg;
         this.alert = true;
-      } else this.updateHandler();
+      }
+      else this.updateHandler();
     },
     updateHandler() {
       http
@@ -147,27 +143,20 @@ export default {
         .catch(() => {
           this.alertMsg = "수정 처리시 에러가 발생했습니다.";
           this.alert = true;
-        });
-    }
+          });
+    },
   },
   computed: {
-    ...mapGetters([
-      "isAuthenticated",
-      "isProfileLoaded",
-      "getProfile",
-      "getRealName",
-      "getEmail",
-      "getUserNum"
-    ]),
+    ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail', 'getUserNum']),
     ...mapState({
-      authLoading: state => state.auth.status === "loading",
+      authLoading: state => state.auth.status === 'loading',
       uname: state => `${state.user.getProfile}`,
-      userEmail: state => `${state.user.getEmail}`,
-      userNum: state => `${state.user.getUserNum}`
+      userEmail : state => `${state.user.getEmail}`,
+      userNum : state => `${state.user.getUserNum}`
     }),
-    loading: function() {
-      return this.authStatus === "loading" && !this.isAuthenticated;
+    loading: function () {
+      return this.authStatus === 'loading' && !this.isAuthenticated
     }
-  }
+  },
 };
 </script>
