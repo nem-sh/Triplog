@@ -1,17 +1,18 @@
 <template>
-  <v-container style="width: 80%;">
+  <v-container style="width: 90%;">
     <v-row>
       <v-col cols="12">
         <slot />
       </v-col>
 
       <Card
-        v-for="(likeArticle, i) in likeArticle"
+        v-for="likeArticle in likeArticle"
         :key="likeArticle.title"
-        :size="layout[i]"
+        :size="3"
         :value="likeArticle"
       />
     </v-row>
+    <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
   </v-container>
 </template>
 
@@ -19,15 +20,16 @@
 import { mapGetters, mapState } from "vuex";
 import http from "../../util/http-common";
 import Card from "../../components/likey/Card.vue";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
   name: "Like",
   components: {
-    Card
+    Card,
+    InfiniteLoading
   },
   data() {
     return {
-      layout: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
       likeArticle: [],
       limit: 0,
     };
@@ -46,6 +48,30 @@ export default {
         })
         .catch(error => {
           console.log(error.data);
+        });
+    },
+    infiniteHandler($state) {
+      http
+        .post("/article/likelist/", {
+          usernum: this.getUserNum,
+          limit: this.limit + 9
+        })
+        .then(response => {
+          setTimeout(() => {
+            if (response.data.length) {
+              this.likeArticle = this.likeArticle.concat(response.data);
+              $state.loaded();
+              this.limit += 9;
+              if (this.likeArticle.length / 9 == 0) {
+                $state.complete();
+              }
+            } else {
+              $state.complete();
+            }
+          }, 1000);
+        })
+        .catch(error => {
+          console.error(error);
         });
     }
   },

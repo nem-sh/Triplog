@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 style="color: white">-</h1>
     <div v-if="items.length">
       <div class="grid">
         <ArticleListComp
@@ -102,11 +103,11 @@ p.title {
 }
 .grid {
   display: grid;
-  max-width: 900px;
-  width: 80%;
+  max-width: 1300px;
+  width: 100%;
   background: rgb(255, 255, 255);
   min-height: 400px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-auto-rows: 20px;
   grid-gap: 10px;
 }

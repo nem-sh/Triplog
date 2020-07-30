@@ -100,7 +100,6 @@ public class ArticleController {
 	
 	@PostMapping("/likelist")
 	public List<ArticleLikeListResponseObject> findArticleLikeList(@RequestBody Paging paging){
-		
 		MemberUser user =  userRepository.findByNum(paging.getUsernum())
     			.orElseThrow(() -> new ResourceNotFoundException("User", "usernum", paging.getUsernum()));
 		
@@ -116,7 +115,15 @@ public class ArticleController {
 			
 			objs.add(new ArticleLikeListResponseObject(article, writer));
 		}
-		return objs;
+		
+		if(paging.getLimit() > objs.size())
+			return null;
+		int max = paging.getLimit()+9;
+		if(max > objs.size())
+			max = objs.size();
+		List<ArticleLikeListResponseObject> list = objs.subList(paging.getLimit(), max);
+		
+		return list;
 	}
 	
 	@DeleteMapping("/likelist/{usernum}/{num}")
