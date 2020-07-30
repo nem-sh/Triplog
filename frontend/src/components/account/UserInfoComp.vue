@@ -11,39 +11,16 @@
       <template v-slot:default>
         <tbody>
           <tr>
-              <th class="white text-center teal--text">Profile Image</th>
-              <td class="white">
-                <v-file-input
-                  v-model="imagesrc"
-                  color="cyan darken-2"
-                  counter
-                  label="File input"
-                  multiple
-                  placeholder="Select your files"
-                  prepend-icon="mdi-paperclip"
-                  outlined
-                  :show-size="500"
-                  style="margin-top: 15px;"
-                >
-                  <template v-slot:selection="{ index, text }">
-                    <v-chip
-                      v-if="index < 2"
-                      color="deep-purple accent-4"
-                      dark
-                      label
-                      small
-                    >
-                      {{ text }}
-                    </v-chip>
-              
-                    <span
-                      v-else-if="index === 2"
-                      class="overline grey--text text--darken-3 mx-2"
-                    >
-                      +{{ files.length - 2 }} File(s)
-                    </span>
-                  </template>
-                </v-file-input>
+              <th class="white text-center teal--text">
+                <input ref="imageInput" type="file" hidden @change="onChangeImages">
+                <v-btn type="button" @click="onClickImageUpload">프로필 이미지 변경</v-btn>
+              </th>
+              <td>
+                <div align="center">
+                  <v-img v-if="firstImage & imagesrc !== ''" :src="require(`@/assets/userImage/${imagesrc}`)" class="img" width="100" height="100"/>
+                  <v-img v-if="!firstImage & imageUrl !== ''" :src="imageUrl" class="img" width="100" height="100"/>
+                  <v-img v-if="imagesrc == '' & imageUrl == ''" :src="require(`@/assets/articleImage/noimage.png`)" class="img" width="100" height="100"/>
+                </div>
               </td>
           </tr>
           <tr>
@@ -175,6 +152,7 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 import http from "@/util/http-common";
+import http3 from "@/util/http-common3";
 import moment from "moment";
 import { AUTH_LOGOUT } from "@/store/actions/auth";
 
@@ -198,9 +176,12 @@ export default {
       intro: this.propIntro,
       imagesrc: this.propImage,
       joinedAt: this.propJoinedAt,
+      imageUrl : "",
       alert : false,
       alertMsg : "",
       dialog: false,
+      fileInfo: null,
+      firstImage: true,
     };
   },
   computed: {
@@ -237,6 +218,15 @@ export default {
     }
   },
   methods: {
+    onChangeImages(e) {
+      const file = e.target.files[0];
+      this.fileInfo = file;
+      this.imageUrl = URL.createObjectURL(file);
+      this.firstImage = false;
+    },
+    onClickImageUpload() {
+      this.$refs.imageInput.click();
+    },
     getFormatDate(joinedAt) {
       return moment(new Date(joinedAt)).format("YYYY.MM.DD HH:mm:ss");
     },
@@ -259,7 +249,50 @@ export default {
       else this.modifyHandler();
     },
     modifyHandler() {
-      http
+      if(this.fileInfo != null) {
+        console.log("asdasd");
+        var formData = new FormData();
+        formData.append('img', this.fileInfo);
+        http3
+          .post(`/user/img`, formData).then(({ data }) => {
+            http
+            .put(`/users/${this.getUserNum}`, {
+              name: this.name,
+              nickname: this.nickName,
+              intro : this.intro,
+              imagesrc : data,
+            })
+            .then(({ data }) => {
+              let msg = "수정 처리시 문제가 발생했습니다.";
+              if (data === "success") {
+                msg = "수정이 완료되었습니다.";
+              }
+              this.alertMsg = msg;
+              this.alert = true;
+              this.$emit("closeUserInfoModal", this.alertMsg, this.nickName);
+            }).catch((e) => {
+              if (e.request.status === 404){
+                this.alertMsg = "탈퇴 처리시 에러가 발생했습니다.";
+                this.alert = true;
+              } else{
+                this.$emit("closeLoginModal");
+                this.$router.push(`/apierror/${e.request.status}/`)
+              }
+              console.log(e.request.status)
+              
+    
+            });
+          }).catch((e) => {
+        if (e.request.status === 404){
+          this.alertMsg = "등록 처리시 에러가 발생했습니다.";
+          this.alert = true;
+        } else{
+          this.$router.push(`/apierror/${e.request.status}/`)
+        }
+        console.log(e.request.status)
+        });
+      }else{
+        http
         .put(`/users/${this.getUserNum}`, {
           name: this.name,
           nickname: this.nickName,
@@ -286,6 +319,7 @@ export default {
           
  
         });
+      }
     },
     signOut() {
       http
