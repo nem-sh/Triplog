@@ -94,6 +94,19 @@
           TRIPLOG
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-form class="d-flex" action="/article/ArticleSearch">
+          <v-text-field
+              label="search"
+              rounded
+              class="shrink mt-5 d-flex"
+              height="100%"
+              v-if="searchtoggle"
+              background-color="grey"
+              name="keyword"
+            ></v-text-field>
+          <v-icon class="d-flex" @click="searchtoggle = !searchtoggle">fas fa-search</v-icon>
+          </v-form>
 
         <v-btn
           @click="loginModalToggle = !loginModalToggle"
@@ -165,7 +178,7 @@
     </v-dialog>
   </v-app>
 </template>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
@@ -173,6 +186,7 @@ import Login from "@/components/account/Login.vue";
 import UserInfoComp from "@/components/account/UserInfoComp.vue";
 import SetBlogComp from "@/components/personal/SetBlogComp.vue";
 import http from "@/util/http-common";
+import $ from 'jquery';
 
 export default {
   name: "App",
@@ -199,7 +213,8 @@ export default {
       { title: "My Account", icon: "mdi-account" },
       { title: "좋아요 목록", icon: "mdi-account-group-outline" },
       { title: "게시물 목록", icon: "mdi-account-group-outline" }
-    ]
+    ],
+    searchtoggle: false,
   }),
   components: {
     Login,
@@ -287,7 +302,9 @@ export default {
     },
     notice: function() {
       this.$router.push("noticeList");
-    }
+    },
+   
+  
   },
   computed: {
     ...mapGetters([

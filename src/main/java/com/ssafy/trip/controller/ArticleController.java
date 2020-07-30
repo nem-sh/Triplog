@@ -243,4 +243,10 @@ public class ArticleController {
 		fout.close();
 		return "ok";
 	}
+	
+	@GetMapping("/likesort")
+	public List<Article> getLikeSortedListArticle() {
+		List<Article> list = articleRepository.findTop4ByOrderByLikeCountDesc();
+		return list;
+	}
 }

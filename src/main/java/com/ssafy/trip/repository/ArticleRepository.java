@@ -20,7 +20,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	List<Article> findByTitleContaining(String keyword);
 	List<Article> findByTitleContainingAndNum(String keyword, int user_num);
 	List<Article> findByUsernum(Long user_num);
-	
+	List<Article> findByTitleContainingOrUsernum(String keyword, int user_num);
 	@Query(nativeQuery = true, value = "select * from article where user_num = :user_num order by num desc limit :limit, 10")
 	List<Article> findByUsernumPaging(@Param("user_num") Long user_num, @Param("limit") int limit);
 	
@@ -32,4 +32,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Modifying
 	void deleteAllByUsernum(Long usernum);
 	List<Article> findByLikearticle(MemberUser user);
+	
+	List<Article> findTop4ByOrderByLikeCountDesc();
 }
