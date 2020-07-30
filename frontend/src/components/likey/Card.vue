@@ -11,7 +11,7 @@
         :elevation="hover ? 12 : 2"
         href="#!"
       >
-        <v-img :src="require(`@/assets/${value.article.thumbnail}`)" height="100%" @click.stop="dialog = true">
+        <v-img :src="require(`@/assets/articleImage/${value.article.thumbnail}`)" height="100%" @click.stop="dialog = true">
           <!-- modal str-->
           <!-- <v-dialog v-model="dialog" max-width="590"> -->
           <!-- <v-card @click="dialog = false" style="opacity: 1; height:300px;">
@@ -33,7 +33,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-img :src="require(`@/assets/${value.article.thumbnail}`)" height="388"></v-img>
+              <v-img :src="require(`@/assets/articleImage/${value.article.thumbnail}`)" height="388"></v-img>
               <br />
               <v-card-text class="skipText">{{value.article.content}}</v-card-text>
               <br />
@@ -166,7 +166,7 @@ export default {
     showDetail: function() {
       this.dialog = false;
       this.$router.push(
-        `/like/detail?articleno=${this.value.article.num}&writerusernum=${this.value.writer.num}`
+        `/article/detail/${this.value.article.num}`
       );
     },
 

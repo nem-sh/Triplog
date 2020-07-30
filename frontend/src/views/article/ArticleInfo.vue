@@ -1,5 +1,6 @@
 <template>
     <div>
+      <h1 style="color: white">-</h1>
         <article-info-comp
             :articleNum = "item.num"
             :articleUserNum = "item.user_num"

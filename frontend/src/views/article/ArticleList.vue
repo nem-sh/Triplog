@@ -1,9 +1,16 @@
 <template>
   <div>
-    <h1 style="color: white">-</h1>
-    <div v-if="items.length">
-      <div class="grid">
-        <ArticleListComp
+    <div>
+      <PersonalMainComp
+        :hostNum="item.num"
+        :hostNickName="item.nickname"
+        :hostEmail="item.email"
+        :isMyBlog="isMyBlog"
+      />
+    </div>
+      <div v-masonry="containerId" transition-duration="0.3s" item-selector=".item" class="masonry-container">
+        <ArticleListComp 
+          v-masonry-tile
           v-for="(item, index) in items"
           :key="`${index}_items`"
           :num="item.num"
@@ -12,7 +19,6 @@
           :thumbnail="item.thumbnail"
         />
       </div>
-    </div>
     <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
   </div>
 </template>
@@ -21,17 +27,22 @@
 import http from "@/util/http-common";
 import ArticleListComp from "@/components/article/ArticleListComp.vue";
 import InfiniteLoading from "vue-infinite-loading";
+import { mapGetters, mapState } from "vuex";
+import PersonalMainComp from "@/components/personal/PersonalMainComp.vue";
 
 export default {
   name: "ArticleList",
   components: {
     ArticleListComp,
-    InfiniteLoading
+    InfiniteLoading,
+    PersonalMainComp,
   },
   data: function() {
     return {
       items: [],
-      limit: 0
+      limit: 0,
+      item: {},
+      isMyBlog: false
     };
   },
   created() {
@@ -43,13 +54,13 @@ export default {
       .then(({ data }) => {
         this.items = data;
       });
-  },
-  mounted() {
-    window.addEventListener("scroll", this.SetGridItemHeight);
-    window.addEventListener("resize", this.SetGridItemHeight);
-  },
-  updated() {
-    this.$nextTick(this.SetGridItemHeight);
+    http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
+      this.item = data;
+      console.dir(data);
+      if (this.getUserNum == this.item.num) {
+        this.isMyBlog = true;
+      }
+    });
   },
   methods: {
     SetGridItemHeight: function() {
@@ -90,43 +101,36 @@ export default {
         .catch(error => {
           console.error(error);
         });
-    }
+    },
   },
+  computed: {
+    ...mapGetters(["getUserNum"]),
+    ...mapState({
+      userNum: state => `${state.user.getUserNum}`
+    })
+  }
 };
 </script>
 
 <style>
 p.title {
-  text-shadow: 1px 1px 2px #383838;
   color: rgb(255, 255, 255);
-  text-align: center;
   position: relative;
-  top: 10px;
+  top: 8px;
+  left: 15px;
 }
-.grid {
-  display: grid;
-  max-width: 1300px;
-  width: 100%;
-  background: rgb(255, 255, 255);
-  min-height: 400px;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: 20px;
-  grid-gap: 10px;
+.masonry-container {
+  margin-left: 4%;
 }
 .item {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  background: darkturquoise;
   border-radius: 10px;
+  max-width: 350px;
 }
 .item:hover {
   filter: drop-shadow(3px 3px 5px rgb(136, 136, 136));
-}
-.thumb {
-  width: 100%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  background: turquoise;
 }
 </style>
