@@ -45,9 +45,11 @@ export default {
       });
   },
   mounted() {
-    window.addEventListener("load", this.SetGridItemHeight);
-    window.addEventListener("mousemove", this.SetGridItemHeight);
+    window.addEventListener("scroll", this.SetGridItemHeight);
     window.addEventListener("resize", this.SetGridItemHeight);
+  },
+  updated() {
+    this.$nextTick(this.SetGridItemHeight);
   },
   methods: {
     SetGridItemHeight: function() {
@@ -89,7 +91,7 @@ export default {
           console.error(error);
         });
     }
-  }
+  },
 };
 </script>
 
