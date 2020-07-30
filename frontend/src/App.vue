@@ -2,75 +2,6 @@
   <v-app>
     <div>
       <v-navigation-drawer
-<<<<<<< frontend/src/App.vue
-        :mini-variant.sync="mini"
-        clipped
-        app
-        permanent
-        :height="clientHeight"
-        v-if="this.getProfile"
-      >
-        <v-list-item class="px-2" style="padding: 10px;">
-          <v-list-item-avatar :color="ranColor" size="40">
-            <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
-          </v-list-item-avatar>
-
-          <v-list-item-title>{{this.getProfile}}</v-list-item-title>
-
-          <v-btn icon @click.stop="mini = !mini">
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-        </v-list-item>
-
-        <v-divider></v-divider>
-
-        <v-list>
-          <v-list-item to="/">
-            <v-list-item-icon>
-              <v-icon>mdi-home-city</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>Home</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item @click.stop="info">
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>My Account</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item to="/like">
-            <v-list-item-icon>
-              <v-icon color="pink">mdi-charity</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>좋아요 목록</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item :to="{name: 'articleList', params: {hostNum: this.getUserNum}}">
-            <v-list-item-icon>
-              <v-icon>mdi-inbox-full</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title>게시물 목록</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-
-        <div class="pa-2" style="text-align: center;">
-          <v-btn inline-block @click.stop="logout">로그아웃</v-btn>
-        </div>
-      </v-navigation-drawer>
-=======
           :mini-variant.sync="mini"
           clipped
           app
@@ -164,8 +95,6 @@
 
             </v-list-item>
           </v-list>
-
-          
         </v-navigation-drawer>
 
         <v-app-bar
@@ -177,13 +106,6 @@
         >
           <v-toolbar-title style="margin: 0 auto; font-size: 40px;">TRIPLOG
             <v-icon color="teal lighten-4">mdi-compass-outline</v-icon></v-toolbar-title>
->>>>>>> frontend/src/App.vue
-
-      <v-app-bar app dense color="#6A76AB" dark clipped-left>
-        <v-toolbar-title style="margin: 0 auto; font-size: 40px;">
-          TRIPLOG
-          <v-icon>mdi-compass-outline</v-icon>
-        </v-toolbar-title>
 
         <v-btn
           @click="loginModalToggle = !loginModalToggle"
@@ -200,6 +122,7 @@
         <router-view></router-view>
       </v-container>
     </v-main>
+    
     <v-footer fixed color="white">
       <v-row justify="center" no-gutters>
         <v-btn rounded color="cyan darken-1 white--text" class="my-2" @click="goWrite">
