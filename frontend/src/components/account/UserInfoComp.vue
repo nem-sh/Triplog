@@ -17,9 +17,39 @@
               </th>
               <td>
                 <div align="center">
-                  <v-img v-if="firstImage & imagesrc !== ''" :src="require(`@/assets/userImage/${imagesrc}`)" class="img" width="100" height="100"/>
-                  <v-img v-if="!firstImage & imageUrl !== ''" :src="imageUrl" class="img" width="100" height="100"/>
-                  <v-img v-if="imagesrc == '' & imageUrl == ''" :src="require(`@/assets/articleImage/noimage.png`)" class="img" width="100" height="100"/>
+                  <v-img v-if="firstImage & imagesrc !== ''" :src="require(`@/assets/userImage/${imagesrc}`)" class="img" width="100" height="100">
+                    <template v-slot:placeholder>
+                      <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                      >
+                          <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                  <v-img v-if="!firstImage & imageUrl !== ''" :src="imageUrl" class="img" width="100" height="100">
+                    <template v-slot:placeholder>
+                      <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                      >
+                          <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                  <v-img v-if="imagesrc == '' & imageUrl == ''" :src="require(`@/assets/articleImage/noimage.png`)" class="img" width="100" height="100">
+                    <template v-slot:placeholder>
+                      <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                      >
+                          <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
                 </div>
               </td>
           </tr>
