@@ -9,7 +9,7 @@
       <v-carousel-item
         v-for="(item,i) in items"
         :key="i"
-        :src="item.src"
+        :src="require(`@/assets/mainImage/${item.src}`)"
         >
         <v-row
             class="fill-height"
@@ -62,17 +62,17 @@ export default {
         return {
             items: [
                 {
-                src: 'https://pixabay.com/get/54e8d6454952ac14f6da8c7dda35367b1c39dfe757527540_1280.jpg',
+                src: 'beach-2836300_1280.jpg',
                 h1msg: "TRIPLOG에서 당신의 여행을 기록하세요",
                 h2msg: "전세계의 TRIPLOGGER들이 당신의 여행에 함께할 것입니다.",
                 },
                 {
-                src: 'https://pixabay.com/get/53e6dc404b57b108feda8460da293277133edce1515478_1920.jpg',
+                src: 'volkswagen-569315_1920.jpg',
                 h1msg: "TRIPLOGGER 사이에서 가장 뜨거운 게시물 보기",
                 h2msg: "많은 사랑을 받고 있는 게시물들을 만나보세요. 많은 사랑을 받고 있는 데는 그럴만한 이유가 있을 거예요. 아주 흥미로울 것입니다.",
                 },
                 {
-                src: 'https://pixabay.com/get/57e0d642495aaf14f6d1867dda35367b1c39dfe75057774c_1920.jpg',
+                src: 'hiking-1031383_1920.jpg',
                 h1msg: "여러 TRIPLOGGER들이 다녀간 게시물들을 만나보세요",
                 h2msg: "많은 조회수를 기록한 게시물들에서 TRIPLOGGER들의 발자취를 따라가보세요. 새로운 여행을 발견할 수도 있을 것입니다.",
                 },
