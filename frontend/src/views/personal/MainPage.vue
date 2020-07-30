@@ -4,7 +4,9 @@
       :hostNum="item.num"
       :hostNickName="item.nickname"
       :hostEmail="item.email"
+      :hostIntro="item.intro"
       :isMyBlog="isMyBlog"
+      @update-profile="updateProfile"
     />
   </div>
 </template>
@@ -24,6 +26,13 @@ export default {
       item: {},
       isMyBlog: false
     };
+  },
+  methods: {
+    updateProfile: function() {
+      console.log("zz");
+      this.$emit("update-profile");
+      console.log("zz");
+    }
   },
   created() {
     http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
