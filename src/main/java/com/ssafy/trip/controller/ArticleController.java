@@ -82,7 +82,7 @@ public class ArticleController {
 
 	@PostMapping("/img")
 	public ResponseEntity<String> uploadImgs(@RequestPart MultipartFile img) throws Exception {
-		String baseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\articleImage\\";
+		String baseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\";
 		String originalFileName = img.getOriginalFilename();
 		System.out.println(originalFileName);
 		File dest = new File(baseDir + originalFileName);
