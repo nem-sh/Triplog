@@ -274,14 +274,11 @@ export default {
         this.alertMsg = msg;
         this.alert = true;
         this.$store.commit("modifyProfileName", afterNickName);
-        this.$router.go();
       }
       this.userInfoModalToggle = false;
     },
     closeSetBlogModal: function() {
       this.setBlogModalToggle = false;
-      this.$router.push(`/${this.getUserNum}`);
-      this.$router.go();
     },
     useSnackBar: function(msg) {
       if (msg != null) {
