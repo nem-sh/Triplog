@@ -99,7 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                     .antMatchers("/api/blog/**")
                         .permitAll()
-                    .antMatchers("/api/blog/img")
+                    .antMatchers("/api/basedir/**")
                         .permitAll()
                     .antMatchers("/api/search/**")
                     	.permitAll()
