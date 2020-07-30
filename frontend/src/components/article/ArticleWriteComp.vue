@@ -18,10 +18,8 @@
           </tr>
           <tr>
             <td>
-              <!-- <input ref="imageInput" type="file" hidden @change="onChangeImages">
-              <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn> -->
-              <v-file-input ref="imageInput" @change="onChangeImages">
-              </v-file-input>
+              <input ref="imageInput" type="file" hidden @change="onChangeImages">
+              <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
             </td>
           </tr>
           
@@ -88,7 +86,9 @@
 
 <script>
 import http from "@/util/http-common";
+import http3 from "@/util/http-common3";
 import { mapGetters, mapState } from 'vuex';
+
 export default {
   name: "ArticleWriteComp",
   data() {
@@ -166,32 +166,41 @@ export default {
       this.alert = true;
     }
     else {
-      const formData = new FormData();
-      formData.append('file', this.fileInfo);
       this.registHandler();
     }
    },
    registHandler() {
-     http
-      .post(`/article/post`, {
-        // user_num: this.getUserNum,
-        // title: this.articleTitle,
-        // content: this.articleContent,
-        file: this.fileInfo,
-        // created_at: new Date(),
-      })
-      .then(({ data }) => {
-        
-        let msg = "등록 처리시 문제가 발생했습니다.";
-        if (data === "success") {
-          this.registSuccess = true;
-          msg = "등록이 완료되었습니다.";
-        }
-        this.alertMsg = msg;
-        this.alert = true;
-        this.registSuccess = true;
-        this.storeClean();
-        this.$router.push(`/article/list/${this.getUserNum}`);
+     var formData = new FormData();
+     formData.append('img', this.fileInfo);
+     http3
+      .post(`/article/img`, formData).then(({ data }) => {
+        http
+          .post(`/article`, {
+            thumbnail : data,
+            title: this.articleTitle,
+            content: this.articleContent,
+            created_at: new Date(),
+            user_num: this.getUserNum,
+          }).then(({ data }) => {
+            let msg = "등록 처리시 문제가 발생했습니다.";
+            if (data === "success") {
+              this.registSuccess = true;
+              msg = "등록이 완료되었습니다.";
+            }
+            this.alertMsg = msg;
+            this.alert = true;
+            this.registSuccess = true;
+            this.storeClean();
+            this.$router.push(`/article/list/${this.getUserNum}`);
+          }).catch((e) => {
+            if (e.request.status === 404){
+              this.alertMsg = "등록 처리시 에러가 발생했습니다.";
+              this.alert = true;
+            } else{
+              this.$router.push(`/apierror/${e.request.status}/`)
+            }
+            console.log(e.request.status)
+          });
       }).catch((e) => {
         if (e.request.status === 404){
           this.alertMsg = "등록 처리시 에러가 발생했습니다.";
@@ -200,17 +209,18 @@ export default {
           this.$router.push(`/apierror/${e.request.status}/`)
         }
         console.log(e.request.status)
-        
       });
    },
     onChangeImages(e) {
+      console.log("asdasd");
       const file = e.target.files[0];
       this.fileInfo = file;
       this.imageUrl = URL.createObjectURL(file);
+      console.log(this.imageUrl);
     },
-    // onClickImageUpload() {
-    //   this.$refs.imageInput.click();
-    // },
+    onClickImageUpload() {
+      this.$refs.imageInput.click();
+    },
  },
  computed: {
     ...mapGetters(['isAuthenticated', 'isProfileLoaded','getProfile', 'getRealName', 'getEmail', 'getUserNum']),
