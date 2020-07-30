@@ -1,0 +1,39 @@
+<template>
+    <div>
+        <v-row>
+            <like-sort-list-item-comp
+                v-for="(item, index) in items"
+                :key="`${index}_items`"
+                :num="item.num"
+                :user_num="item.user_num"
+                :title="item.title"
+                :thumbnail="item.thumbnail"
+                />
+        </v-row>
+    </div>
+</template>
+
+<script>
+import http from "@/util/http-common";
+import LikeSortListItemComp from "@/components/Home/LikeSortListItemComp.vue";
+
+export default {
+    name: "LikeSortListComp",
+    components: {
+        LikeSortListItemComp,
+    },
+    data: function() {
+        return {
+        items: [],
+        };
+    },
+    created() {
+        http
+            .get(`/article/likesort`)
+            .then(({ data }) => {
+            this.items = data;
+            console.dir(data);
+            });
+    }
+};
+</script>
