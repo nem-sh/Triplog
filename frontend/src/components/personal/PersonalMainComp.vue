@@ -1,6 +1,6 @@
 <template>
     <div class="mx-auto bg" :style="styleObject">
-      <v-container style=" opacity:1; ">
+      <v-container style="height: 100%; opacity:1; ">
         <v-row style="height: 100%; width: 100%;  margin :0;">
           <v-col
             cols="3"
