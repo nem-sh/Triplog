@@ -61,6 +61,19 @@
             </v-list-item-content>
           </v-list-item>
 
+          <v-list-item
+            class="mb-5"
+            @click.stop="goWrite"
+          >
+            <v-list-item-icon>
+              <v-icon color="green darken-4">mdi-file-edit</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-bold teal--text">Posting</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
           <v-list-item @click.stop="setBlog" class="mb-5">
             <v-list-item-icon>
               <v-icon color="gray">mdi-cogs</v-icon>
@@ -71,7 +84,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item class="mb-15">
+          <v-list-item>
             <v-list-item-icon></v-list-item-icon>
 
             <v-list-item-content>
