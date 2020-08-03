@@ -11,14 +11,18 @@
           <v-expand-transition>
             <div
               v-if="hover"
-              class="d-flex transition-fast-in-fast-out cyan darken-2 v-card--reveal display-3 white--text"
+              class="d-flex transition-fast-in-fast-out cyan darken-2 v-card--reveal display-0 white--text"
               style="height: 100%;"
             >
-              <v-card-title class="imagetitle">{{title}}</v-card-title>
+              <div align="center">
+                <h2>{{title}}</h2>
+                <p>{{getFormatDate(created_at)}}</p>
+              </div>
             </div>
           </v-expand-transition>
         </v-img>
-        <v-img
+        <v-card-subtitle>{{title}}</v-card-subtitle>
+        <!-- <v-img
           v-else
           :src="require(`@/assets/articleImage/noimage.png`)"
           class="thumb"
@@ -30,10 +34,13 @@
               class="d-flex transition-fast-in-fast-out cyan darken-2 v-card--reveal display-3 white--text"
               style="height: 100%;"
             >
-              <v-card-title class="imagetitle">{{title}}</v-card-title>
+              <div align="center">
+                <h2>{{title}}</h2>
+                <p>{{getFormatDate(created_at)}}</p>
+              </div>
             </div>
           </v-expand-transition>
-        </v-img>
+        </v-img> -->
       </v-card>
     </v-hover>
     <br />
@@ -41,17 +48,23 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "list",
   props: {
     num: { type: Number },
     user_num: { type: Number },
     title: { type: String },
-    thumbnail: { type: String }
+    thumbnail: { type: String },
+    created_at: { type: String }
   },
   methods: {
     moveDetail: function() {
       this.$router.push(`/article/detail/${this.num}`);
+    },
+    getFormatDate(regtime) {
+      return moment(new Date(regtime)).format("YY.MM.DD");
     }
   }
 };
