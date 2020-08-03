@@ -95,17 +95,30 @@
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-form class="d-flex" action="/article/ArticleSearch">
+        <v-form class="d-flex search align-items-center" action="/article/ArticleSearch">
+          <div class="d-flex">
           <v-text-field
               label="search"
+              color="black"
+              black
+              filled
+              dense
               rounded
-              class="shrink mt-5 d-flex"
-              height="100%"
+              class=" mr-2 mt-5 form-control input-sm text-black"
+              max-width="64"
+              height="36"
               v-if="searchtoggle"
-              background-color="grey"
+              background-color="blue-grey lighten-5"
+              label-color="black"
               name="keyword"
             ></v-text-field>
-          <v-icon class="d-flex" @click="searchtoggle = !searchtoggle">fas fa-search</v-icon>
+            <!-- <div class="d-flex"><i class="fas fa-search fa-2x" @click="searchtoggle = !searchtoggle"></i></div> -->
+          <v-icon class="d-flex" @click="searchtoggle = !searchtoggle"
+                          align-center
+                          ma-1
+                          >
+                          fas fa-search</v-icon> 
+          </div>
           </v-form>
 
         <v-btn
@@ -345,3 +358,8 @@ export default {
   }
 };
 </script>
+<style>
+.text-black input {
+      color: black !important;
+    }
+</style>

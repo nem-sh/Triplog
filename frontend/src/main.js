@@ -4,7 +4,9 @@ import router from "./router/index.js";
 import store from "./store/index.js";
 import Vuex from "vuex";
 import vuetify from "./plugins/vuetify";
+import vueMoment from 'vue-moment';
 
+Vue.use(vueMoment)
 Vue.use(Vuex);
 
 Vue.config.productionTip = false;
