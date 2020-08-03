@@ -58,6 +58,11 @@ const routes = [
     component: ArticleWrite
   },
   {
+    path: "/like/article/detail/:articleNum",
+    name: "likeArticleInfo",
+    component: LikeArticleInfo
+  },
+  {
     path: "/article/detail/:articleNum",
     name: "articleDetail",
     component: ArticleInfo
