@@ -232,7 +232,7 @@ export default {
 }
 
 .v-card:not(.on-hover) {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .skipText {
