@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <p>dfsf</p>
+  <div style="min-width: 1000px;">
+    <h1>{{articleTitle}}</h1>
+    <h4 style="color:gray">{{blogMasterName}} | {{getFormatDate(articleCreatedAt)}}</h4>
+    <br />
+    <hr width="100%" color="whitegray" />
+    <br />
     <v-simple-table>
       <template v-slot:default borderless>
         <tbody>
-          <tr>
-            <th class="text-left">제목</th>
-            <td class="text-left">{{articleTitle}}</td>
-          </tr>
           <tr>
             <th class="text-left">장소</th>
             <td class="text-left">{{articlePlace}}</td>
@@ -20,34 +20,46 @@
             <th class="text-left">일정 종료 날짜</th>
             <td class="text-left">{{getFormatDate(articleDateEnd)}}</td>
           </tr>
-          <tr>
-            <th class="text-left">작성일</th>
-            <td class="text-left">{{getFormatDate(articleCreatedAt)}}</td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <v-p>{{articleContent}}</v-p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <v-btn @click="likeBtnClick">
-                <v-icon v-if="isLoginedUserLikeThisArticle">mdi-heart</v-icon>
-                <v-icon v-else>mdi-heart-outline</v-icon>
-              </v-btn>
-              <v-content>{{articleLikeCount}}</v-content>
-            </td>
-          </tr>
         </tbody>
       </template>
     </v-simple-table>
     <br />
-    <br />
-    <div class="text-center">
-      <v-btn to="/noticeList" v-if="getProfile === blogMasterName">수정</v-btn>
-      <v-btn @click="deleteArticle" v-if="getProfile === blogMasterName">삭제</v-btn>
-      <v-btn to="/like">목록</v-btn>
+    <div align="center">
+      <v-img
+        v-if="articleThumbnail"
+        :src="require(`@/assets/articleImage/${articleThumbnail}`)"
+        class="img"
+      />
+      <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" />
     </div>
+    <br />
+    <p>{{articleContent}}</p>
+    <!-- 본문 끝 -->
+    <br />
+    <br />
+    <div>
+      <v-btn @click="likeBtnClick" style="float: left;">
+        <v-icon v-if="isLoginedUserLikeThisArticle">mdi-heart</v-icon>
+        <v-icon v-else>mdi-heart-outline</v-icon>
+        {{articleLikeCount}}
+      </v-btn>
+
+      <div style="float: right;">
+        <!-- <v-btn
+          :to="{ name: 'articleModify', params: { articleNum: articleNum }}"
+          v-if="this.getUserNum === articleUserNum"
+        >수정</v-btn>
+        <v-btn @click="confirmDelete" v-if="this.getUserNum === articleUserNum">삭제</v-btn>-->
+
+        <v-btn :to="{ name: 'Like'}">목록</v-btn>
+      </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
   </div>
 </template>
 
@@ -73,27 +85,21 @@ export default {
     articleLikeCount: { type: Number },
     isLoginedUserLikeThisArticle: { type: Boolean }
   },
+  data: function() {
+    return {
+      alert: false,
+      alertMsg: "",
+      dialog: false
+    };
+  },
   methods: {
+    confirmDelete() {
+      this.dialog = true;
+    },
     getFormatDate(regtime) {
       return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
     },
-    deleteArticle: function() {
-      http
-        .delete(`/article/${this.articleNum}`)
-        .then(({ data }) => {
-          // let msg = "삭제 처리시 문제가 발생했습니다.";
-          if (data === "success") {
-            // msg = "삭제가 완료되었습니다.";
-          }
-          // this.alertMsg = msg;
-          // this.alert = true;
-          // this.$router.push("/qna");
-        })
-        .catch(() => {
-          // this.alertMsg = "삭제 처리시 에러가 발생했습니다.";
-          // this.alert = true;
-        });
-    },
+
     likeBtnClick: function() {
       if (this.isLoginedUserLikeThisArticle) {
         this.articleLikeCount--;
@@ -104,7 +110,7 @@ export default {
 
       http
         .put(
-          `/article/${this.articleNum}/${this.getProfile}/${this.isLoginedUserLikeThisArticle}`,
+          `/article/${this.articleNum}/${this.getUserNum}/${this.isLoginedUserLikeThisArticle}`,
           {
             num: this.articleNum,
             user_num: this.articleUserNum,
@@ -156,3 +162,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.img {
+  max-width: 500px;
+}
+</style>

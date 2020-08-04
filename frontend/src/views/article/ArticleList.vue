@@ -12,22 +12,25 @@
       />
     </div>
     <v-sheet height="50"></v-sheet>
-    <div
-      v-masonry="containerId"
-      transition-duration="0.3s"
-      item-selector=".item"
-      class="masonry-container"
-    >
-      <ArticleListComp
-        v-masonry-tile
-        v-for="(item, index) in items"
-        :key="`${index}_items`"
-        :num="item.num"
-        :user_num="item.user_num"
-        :title="item.title"
-        :thumbnail="item.thumbnail"
-      />
-    </div>
+    <v-app id="inspire" style="max-width: 970px">
+      <v-container fluid>
+        <v-row>
+          <v-col cols="12">
+            <v-row align="stretch" justify="space-around">
+              <ArticleListComp
+                v-for="(item, index) in items"
+                :key="`${index}_items`"
+                :num="item.num"
+                :user_num="item.user_num"
+                :title="item.title"
+                :thumbnail="item.thumbnail"
+                :created_at="item.created_at"
+              />
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-app>
     <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
   </div>
 </template>
@@ -72,21 +75,6 @@ export default {
     });
   },
   methods: {
-    SetGridItemHeight: function() {
-      let grid = document.getElementsByClassName("grid")[0];
-      let rowHeight = parseInt(
-        window.getComputedStyle(grid).getPropertyValue("grid-auto-rows")
-      );
-      let rowGap = parseInt(
-        window.getComputedStyle(grid).getPropertyValue("grid-row-gap")
-      );
-      let item = grid.getElementsByClassName("item");
-      for (let i = 0; i < item.length; ++i) {
-        item[i].style.gridRowEnd = `span ${Math.floor(
-          item[i].children[0].children[0].offsetHeight / (rowHeight + rowGap)
-        )}`;
-      }
-    },
     infiniteHandler($state) {
       http
         .post("/article/getList/", {
@@ -128,21 +116,4 @@ export default {
 </script>
 
 <style>
-p.title {
-  color: rgb(255, 255, 255);
-  position: relative;
-  top: 8px;
-  left: 15px;
-}
-.item {
-  margin-bottom: 20px;
-  margin-right: 20px;
-  background: darkturquoise;
-  border-radius: 10px;
-  max-width: 280px;
-}
-.item:hover {
-  filter: drop-shadow(3px 3px 5px rgb(136, 136, 136));
-  background: turquoise;
-}
 </style>

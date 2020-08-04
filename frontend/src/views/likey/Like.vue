@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       likeArticle: [],
-      limit: 0,
+      limit: 0
     };
   },
 

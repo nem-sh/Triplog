@@ -9,7 +9,7 @@
       <v-row style="height: 100%; width: 100%;  margin :0;">
         <v-col
           cols="3"
-          style="height : 100%; back; background-color: rgba( 255, 255, 255, 0.6 ); border-radius:10px;"
+          style="height : 100%; back; background-color: rgba( 255, 255, 255, 0.85 ); border-radius:10px;"
         >
           <v-hover v-slot:default="{ hover }">
             <div class="mx-auto" width="100%" height="100%">
@@ -41,20 +41,17 @@
               </v-img>
               <v-card-text class="pt-6" style="position: relative;">
                 <h3 class="orange--text mb-2">{{hostNickName}}</h3>
-                <div class="font-weight-light grey--text mb-2">{{hostEmail}}</div>
-                <div class="font-weight-light mb-2">{{hostIntro}}</div>
+                <div class="font-weight-light mb-2">{{hostEmail}}</div>
+                <div v-if="hostIntro" class="font-weight-light mb-2">{{hostIntro}}</div>
+                <br v-else />
 
                 <div
                   v-if="isMyBlog"
-                  class="font-weight-light grey--text mb-2"
+                  class="font-weight-light mb-2"
                   style="text-align: center;"
                 >나의 이웃</div>
                 <div v-else>
-                  <div
-                    v-if="true"
-                    class="font-weight-light grey--text mb-2"
-                    style="text-align: center;"
-                  >이웃 신청</div>
+                  <div v-if="true" class="font-weight-light mb-2" style="text-align: center;">이웃 신청</div>
                   <div v-else>이웃 친구</div>
                 </div>
               </v-card-text>
@@ -65,7 +62,7 @@
           cols="9"
           style="height : 100%; display:flex; justify-content:flex-end; align-items:flex-end;"
         >
-          <h1 style="margin-bottom: 20px; margin-right: 20px;">{{title}}</h1>
+          <h1 :style="getColor">{{title}}</h1>
         </v-col>
       </v-row>
     </v-container>
@@ -79,9 +76,9 @@ export default {
   data() {
     return {
       title: "",
+      titleColor: "#000000FF",
       visitcount: 0,
-      titleimg: "adventurealtitude.jpg",
-      basedir: ""
+      titleimg: "adventurealtitude.jpg"
     };
   },
   props: {
@@ -102,7 +99,8 @@ export default {
       http
         .get(`/blog/${this.$route.params.hostNum}`)
         .then(response => {
-          this.title = response.data.title;
+          this.titleColor = response.data.title.slice(0, 9);
+          this.title = response.data.title.slice(9);
           this.visitcount = response.data.visitcount;
           this.titleimg = response.data.titleimg;
           console.log(this.titleimg);
@@ -113,17 +111,6 @@ export default {
             this.titleimg = "adventurealtitude.jpg";
             console.log(this.titleimg);
           }
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error.data);
-        });
-    },
-    getBaseDir() {
-      http
-        .get(`basedir/`)
-        .then(response => {
-          this.basedir = response.data;
           console.log(response.data);
         })
         .catch(error => {
@@ -141,12 +128,13 @@ export default {
       } else {
         return `@/assets/userImage/${this.hostImg}`;
       }
+    },
+    getColor: function() {
+      return `margin-bottom: 20px; margin-right: 20px; color : ${this.titleColor};`;
     }
   },
   created: function() {
-    this.getBaseDir();
     this.getBlogInfo();
-    console.log(this.imgurl);
   }
 };
 </script>

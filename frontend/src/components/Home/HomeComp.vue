@@ -37,6 +37,7 @@
             <div style="text-align:center;">
                 <h1>TRIPLOG는 사용자 친화적인 블로그입니다.</h1>
                 <br>
+                <!-- <v-divider></v-divider> -->
                 <h3>당신은 여러 에디터를 상황, 취향에 맞게 제공받을 수 있고 이를 통해 손쉽게 글을 작성할 수 있습니다.</h3>
             </div>
         </v-row>
