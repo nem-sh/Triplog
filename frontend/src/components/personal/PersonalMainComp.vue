@@ -46,21 +46,26 @@
                 <br v-else />
 
                 <div v-if="isMyBlog" class="font-weight-light mb-2" style="text-align: center;">
-                  <v-btn>이웃 목록</v-btn>
+                  <v-btn @click="getNeighborList">이웃 목록</v-btn>
                 </div>
                 <div v-else class="font-weight-light mb-2" style="text-align: center;">
                   <v-btn v-if="isMyNeighbor" @click="removeNeighbor">이웃 해제</v-btn>
-                  <v-btn v-else @click="addNeighbor">이웃 신청</v-btn>
+                  <v-btn v-else @click="addNeighbor">이웃 추가</v-btn>
                 </div>
               </v-card-text>
-              <NeighborListComp
-                v-for="(neighbor, index) in neighbors"
-                :key="`${index}_neighbors`"
-                :userNum="neighbor.userNum"
-                :neighborNum="neighbor.neighborNum"
-              />
             </div>
           </v-hover>
+        </v-col>
+        <v-col>
+          <v-card v-if="showNeighborList" width="200px">
+            <NeighborListComp
+              v-for="(neighbor, index) in neighbors"
+              :key="`${index}_neighbors`"
+              :userNum="neighbor.userNum"
+              :neighborNum="neighbor.neighborNum"
+              :neighborNickname="neighbor.neighborNickname"
+            />
+          </v-card>
         </v-col>
         <v-col
           cols="9"
@@ -81,7 +86,7 @@ import NeighborListComp from "@/components/personal/NeighborListComp.vue";
 export default {
   name: "PersonalMainComp",
   components: {
-    NeighborListComp,
+    NeighborListComp
   },
   data() {
     return {
@@ -92,7 +97,9 @@ export default {
       isMyNeighbor: false,
       neighbors: [],
       alertMsg: "",
-      dialog: false
+      dialog: false,
+      showNeighborList: false,
+      alert: false,
     };
   },
   props: {
@@ -137,11 +144,20 @@ export default {
           userNum: this.getUserNum,
           neighborNum: this.$route.params.hostNum
         })
+        .then(({ data }) => {
+          let msg = "이웃추가 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "이웃추가가 완료되었습니다.";
+          }
+          this.alertMsg = msg;
+          this.alert= true;
+          this.$emit("closeLoginModal", this.alertMsg);
+          this.$router.go(this.$router.currentRoute);
+        })
         .catch(error => {
           console.log(error.data);
         });
-      console.log(this.$route.params.hostNum);
-      console.log(this.getUserNum);
+        this.$router.go(this.$router.currentRoute);
     },
     removeNeighbor() {
       http
@@ -152,10 +168,21 @@ export default {
             msg = "이웃해제가 완료되었습니다.";
           }
           this.alertMsg = msg;
-          this.dialog = false;
-          this.$emit("useSnackBar", this.alertMsg);
-          this.$router.push(`/article/list/${this.$route.params.hostNum}`);
+          this.alert= true;
+          this.$emit("closeLoginModal", msg);
+          this.$router.go(this.$router.currentRoute);
+        })
+        .catch(error => {
+          console.log(error.data);
         });
+    },
+    getNeighborList() {
+      if(this.showNeighborList == false){
+        this.showNeighborList = true;
+      }else{
+        this.showNeighborList = false;
+      }
+      
     }
   },
   computed: {

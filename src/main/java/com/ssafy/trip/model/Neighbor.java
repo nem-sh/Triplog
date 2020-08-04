@@ -17,24 +17,27 @@ public class Neighbor {
 	private Long userNum;
 	@Column(name = "neighbor_num")
 	private Long neighborNum;
+	@Column(name = "neighbor_nickname")
+	private String neighborNickname;
 
 	public Neighbor() {
 		super();
 	}
 
-	public Neighbor(Long id, Long userNum, Long neighborNum) {
+	public Neighbor(Long num, Long userNum, Long neighborNum, String neighborNickname) {
 		super();
-		this.num = id;
+		this.num = num;
 		this.userNum = userNum;
 		this.neighborNum = neighborNum;
+		this.neighborNickname = neighborNickname;
 	}
 
-	public Long getId() {
+	public Long getNum() {
 		return num;
 	}
 
-	public void setId(Long id) {
-		this.num = id;
+	public void setNum(Long num) {
+		this.num = num;
 	}
 
 	public Long getUserNum() {
@@ -53,9 +56,18 @@ public class Neighbor {
 		this.neighborNum = neighborNum;
 	}
 
+	public String getNeighborNickname() {
+		return neighborNickname;
+	}
+
+	public void setNeighborNickname(String neighborNickname) {
+		this.neighborNickname = neighborNickname;
+	}
+
 	@Override
 	public String toString() {
-		return "Neighbor [num=" + num + ", userNum=" + userNum + ", neighborNum=" + neighborNum + "]";
+		return "Neighbor [num=" + num + ", userNum=" + userNum + ", neighborNum=" + neighborNum + ", neighborNickname="
+				+ neighborNickname + "]";
 	}
 
 }

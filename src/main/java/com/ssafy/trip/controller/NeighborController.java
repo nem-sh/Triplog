@@ -28,7 +28,7 @@ public class NeighborController {
 
 	@PostMapping
 	public ResponseEntity<String> addNeighbor(@RequestBody Neighbor neighbor) {
-		neighborRepository.save(neighbor);
+		neighborRepository.findByUsernumPaging(neighbor.getUserNum(), neighbor.getNeighborNum());
 
 		return ResponseEntity.ok(SUCCESS);
 	}
