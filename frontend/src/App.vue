@@ -123,12 +123,12 @@
               label-color="black"
               name="keyword"
             ></v-text-field>
-            <!-- <div class="d-flex"><i class="fas fa-search fa-2x" @click="searchtoggle = !searchtoggle"></i></div> -->
-          <v-icon class="d-flex" @click="searchtoggle = !searchtoggle"
-                          align-center
-                          ma-1
-                          >
-                          fas fa-search</v-icon> 
+            
+            <v-icon class="d-flex" @click="searchtoggle = !searchtoggle"
+            align-center
+            ma-1
+            >
+            fas fa-search</v-icon> 
           </div>
           </v-form>
 

@@ -188,6 +188,7 @@ export default {
             content: this.articleContent,
             created_at: new Date(),
             user_num: this.getUserNum,
+            userNickname: this.getProfile,
           }).then(({ data }) => {
             let msg = "등록 처리시 문제가 발생했습니다.";
             if (data === "success") {
