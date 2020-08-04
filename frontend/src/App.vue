@@ -2,7 +2,7 @@
   <v-app>
     <div>
       <v-navigation-drawer :mini-variant.sync="mini" clipped app permanent v-if="this.getProfile">
-        <v-list-item class="px-2" style="padding: 10px;">
+        <v-list-item class="px-2 mb-6" style="padding: 10px;">
           <v-list-item-avatar :color="ranColor" size="40">
             <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
           </v-list-item-avatar>
@@ -13,8 +13,6 @@
             <v-icon color="teal">mdi-arrow-left-drop-circle-outline</v-icon>
           </v-btn>
         </v-list-item>
-
-        <v-list-item></v-list-item>
 
         <v-list>
           <v-list-item to="/" @click.stop class="mb-5">
@@ -137,15 +135,6 @@
         <router-view @update-profile="info"></router-view>
       </v-container>
     </v-main>
-
-    <v-footer fixed class="white">
-      <v-row justify="center" no-gutters>
-        <v-btn rounded color="cyan darken-1 white--text" class="my-2" @click="goWrite">
-          <v-icon>mdi-file-edit</v-icon>
-          <div>WRITE</div>
-        </v-btn>
-      </v-row>
-    </v-footer>
 
     <v-snackbar v-model="loginSuccess" timeout="5000">
       <v-icon color="deep-orange darken-3">mdi-home</v-icon>
