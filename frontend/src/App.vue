@@ -97,16 +97,16 @@
         <v-spacer></v-spacer>
         <v-form class="d-flex" action="/article/ArticleSearch">
           <v-text-field
-              label="search"
-              rounded
-              class="shrink mt-5 d-flex"
-              height="100%"
-              v-if="searchtoggle"
-              background-color="grey"
-              name="keyword"
-            ></v-text-field>
+            label="search"
+            rounded
+            class="shrink mt-5 d-flex"
+            height="100%"
+            v-if="searchtoggle"
+            background-color="grey"
+            name="keyword"
+          ></v-text-field>
           <v-icon class="d-flex" @click="searchtoggle = !searchtoggle">fas fa-search</v-icon>
-          </v-form>
+        </v-form>
 
         <v-btn
           @click="loginModalToggle = !loginModalToggle"
@@ -175,7 +175,11 @@
       ></user-info-comp>
     </v-dialog>
     <v-dialog v-model="setBlogModalToggle" max-width="800">
-      <set-blog-comp v-if="userInfo.email" v-on:closeSetBlogModal="closeSetBlogModal" />
+      <set-blog-comp
+        v-if="userInfo.email"
+        v-on:closeSetBlogModal="closeSetBlogModal"
+        v-on:closeSetBlogModal2="closeSetBlogModal2"
+      />
     </v-dialog>
   </v-app>
 </template>
@@ -187,7 +191,7 @@ import Login from "@/components/account/Login.vue";
 import UserInfoComp from "@/components/account/UserInfoComp.vue";
 import SetBlogComp from "@/components/personal/SetBlogComp.vue";
 import http from "@/util/http-common";
-import $ from 'jquery';
+import $ from "jquery";
 
 export default {
   name: "App",
@@ -215,7 +219,7 @@ export default {
       { title: "좋아요 목록", icon: "mdi-account-group-outline" },
       { title: "게시물 목록", icon: "mdi-account-group-outline" }
     ],
-    searchtoggle: false,
+    searchtoggle: false
   }),
   components: {
     Login,
@@ -298,6 +302,9 @@ export default {
       this.setBlogModalToggle = false;
       this.$router.go();
     },
+    closeSetBlogModal2: function() {
+      this.setBlogModalToggle = false;
+    },
     useSnackBar: function(msg) {
       if (msg != null) {
         this.alertMsg = msg;
@@ -306,9 +313,7 @@ export default {
     },
     notice: function() {
       this.$router.push("noticeList");
-    },
-   
-  
+    }
   },
   computed: {
     ...mapGetters([

@@ -2,9 +2,7 @@
   <div>
     <v-container class="cyan darken-2">
       <v-row>
-        <v-col class="white--text pa-2 ml-3">
-          Setting
-        </v-col>
+        <v-col class="white--text pa-2 ml-3">Setting</v-col>
       </v-row>
     </v-container>
     <v-simple-table>
@@ -20,24 +18,45 @@
           <tr>
             <th class="teal lighten-5 text-center teal--text">블로그 명</th>
             <td class="teal lighten-5">
-              <v-text-field
-                type="text"
-                class="form-control"
-                id="title"
-                ref="title"
-                label="블로그 명을 입력하세요"
-                v-model="title"
-              />
+              <v-container fluid class="pa-0">
+                <v-row>
+                  <v-col cols="10">
+                    <v-text-field
+                      type="text"
+                      class="form-control"
+                      id="title"
+                      ref="title"
+                      label="블로그 명을 입력하세요"
+                      v-model="title"
+                    />
+                  </v-col>
+                  <v-col cols="2">
+                    <h1>
+                      <i class="fas fa-square mt-5" :style="getColor" @click="onOffDialog" />
+                    </h1>
+                  </v-col>
+                </v-row>
+                <v-row v-if="dialog">
+                  <v-color-picker class="ma-2" mode="hexa" v-model="titleColor" hide-inputs />
+                </v-row>
+              </v-container>
             </td>
           </tr>
+
           <tr>
             <th class="white text-center teal--text">방문자 수</th>
             <td class="white">{{visitcount}} 명이 다녀갔습니다.</td>
           </tr>
+
           <tr class="cyan darken-2">
-            <td colspan="2">
-              <div class="text-right">
-                <v-btn class="cyan darken-3 white--text" @click="regist">수정</v-btn>
+            <td>
+              <div>
+                <v-btn inline-block @click="regist" class="cyan darken-3 white--text">수정</v-btn>
+              </div>
+            </td>
+            <td class="text-right">
+              <div>
+                <v-btn inline-block @click="closeSetBlogMadal2" class="cyan darken-3 white--text">취소</v-btn>
               </div>
             </td>
           </tr>
@@ -65,12 +84,15 @@ export default {
   data: function() {
     return {
       title: "",
+      titleColor: "#000000FF",
+      sendTitle: "",
       titleimg: "",
       visitcount: 0,
       alert: false,
       alertMsg: "",
       imageUrl: "",
-      num: null
+      num: null,
+      dialog: false
     };
   },
   methods: {
@@ -78,7 +100,8 @@ export default {
       http
         .get(`/blog/${this.getUserNum}`)
         .then(response => {
-          this.title = response.data.title;
+          this.titleColor = response.data.title.slice(0, 9);
+          this.title = response.data.title.slice(9);
           this.visitcount = response.data.visitcount;
           this.num = response.data.num;
           console.log(response.data);
@@ -88,6 +111,7 @@ export default {
         });
     },
     regist() {
+      this.sendTitle = this.sendTitle.concat(this.titleColor, this.title);
       if (this.titleimg) {
         var formData = new FormData();
         formData.append("img", this.titleimg);
@@ -98,7 +122,7 @@ export default {
             http
               .put(`/blog/`, {
                 usernum: this.getUserNum,
-                title: this.title,
+                title: this.sendTitle,
                 titleimg: data
               })
               .then(({ data }) => {
@@ -135,7 +159,7 @@ export default {
         http
           .put(`/blog/`, {
             usernum: this.getUserNum,
-            title: this.title
+            title: this.sendTitle
           })
           .then(({ data }) => {
             let msg = "수정 처리시 문제가 발생했습니다.";
@@ -159,6 +183,9 @@ export default {
           });
       }
     },
+    closeSetBlogMadal2() {
+      this.$emit("closeSetBlogModal2");
+    },
 
     onChangeImages(e) {
       console.log("asdasd");
@@ -169,6 +196,9 @@ export default {
     },
     onClickImageUpload() {
       this.$refs.imageInput.click();
+    },
+    onOffDialog() {
+      this.dialog = !this.dialog;
     }
   },
   computed: {
@@ -188,6 +218,9 @@ export default {
     }),
     loading: function() {
       return this.authStatus === "loading" && !this.isAuthenticated;
+    },
+    getColor: function() {
+      return `color : ${this.titleColor};`;
     }
   },
   created: function() {
