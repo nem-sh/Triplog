@@ -24,6 +24,7 @@
                 :user_num="item.user_num"
                 :title="item.title"
                 :thumbnail="item.thumbnail"
+                :created_at="item.created_at"
               />
             </v-row>
           </v-col>
