@@ -2,7 +2,7 @@
   <v-app>
     <div>
       <v-navigation-drawer :mini-variant.sync="mini" clipped app permanent v-if="this.getProfile">
-        <v-list-item class="px-2" style="padding: 10px;">
+        <v-list-item class="px-2 mb-6" style="padding: 10px;">
           <v-list-item-avatar :color="ranColor" size="40">
             <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
           </v-list-item-avatar>
@@ -13,8 +13,6 @@
             <v-icon color="teal">mdi-arrow-left-drop-circle-outline</v-icon>
           </v-btn>
         </v-list-item>
-
-        <v-list-item></v-list-item>
 
         <v-list>
           <v-list-item to="/" @click.stop class="mb-5">
@@ -61,6 +59,19 @@
             </v-list-item-content>
           </v-list-item>
 
+          <v-list-item
+            class="mb-5"
+            @click.stop="goWrite"
+          >
+            <v-list-item-icon>
+              <v-icon color="green darken-4">mdi-file-edit</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-bold teal--text">Posting</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
           <v-list-item @click.stop="setBlog" class="mb-5">
             <v-list-item-icon>
               <v-icon color="gray">mdi-cogs</v-icon>
@@ -71,7 +82,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item class="mb-15">
+          <v-list-item>
             <v-list-item-icon></v-list-item-icon>
 
             <v-list-item-content>
@@ -95,17 +106,30 @@
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-form class="d-flex" action="/article/ArticleSearch">
+        <v-form class="d-flex search align-items-center" action="/article/ArticleSearch">
+          <div class="d-flex">
           <v-text-field
               label="search"
+              color="black"
+              black
+              filled
+              dense
               rounded
-              class="shrink mt-5 d-flex"
-              height="100%"
+              class=" mr-2 mt-5 form-control input-sm text-black"
+              max-width="64"
+              height="36"
               v-if="searchtoggle"
-              background-color="grey"
+              background-color="blue-grey lighten-5"
+              label-color="black"
               name="keyword"
             ></v-text-field>
-          <v-icon class="d-flex" @click="searchtoggle = !searchtoggle">fas fa-search</v-icon>
+            <!-- <div class="d-flex"><i class="fas fa-search fa-2x" @click="searchtoggle = !searchtoggle"></i></div> -->
+          <v-icon class="d-flex" @click="searchtoggle = !searchtoggle"
+                          align-center
+                          ma-1
+                          >
+                          fas fa-search</v-icon> 
+          </div>
           </v-form>
 
         <v-btn
@@ -124,15 +148,6 @@
         <router-view @update-profile="info"></router-view>
       </v-container>
     </v-main>
-
-    <v-footer fixed class="white">
-      <v-row justify="center" no-gutters>
-        <v-btn rounded color="cyan darken-1 white--text" class="my-2" @click="goWrite">
-          <v-icon>mdi-file-edit</v-icon>
-          <div>WRITE</div>
-        </v-btn>
-      </v-row>
-    </v-footer>
 
     <v-snackbar v-model="loginSuccess" timeout="5000">
       <v-icon color="deep-orange darken-3">mdi-home</v-icon>
@@ -175,7 +190,11 @@
       ></user-info-comp>
     </v-dialog>
     <v-dialog v-model="setBlogModalToggle" max-width="800">
-      <set-blog-comp v-if="userInfo.email" v-on:closeSetBlogModal="closeSetBlogModal" />
+      <set-blog-comp
+        v-if="userInfo.email"
+        v-on:closeSetBlogModal="closeSetBlogModal"
+        v-on:closeSetBlogModal2="closeSetBlogModal2"
+      />
     </v-dialog>
   </v-app>
 </template>
@@ -187,7 +206,7 @@ import Login from "@/components/account/Login.vue";
 import UserInfoComp from "@/components/account/UserInfoComp.vue";
 import SetBlogComp from "@/components/personal/SetBlogComp.vue";
 import http from "@/util/http-common";
-import $ from 'jquery';
+import $ from "jquery";
 
 export default {
   name: "App",
@@ -215,7 +234,7 @@ export default {
       { title: "좋아요 목록", icon: "mdi-account-group-outline" },
       { title: "게시물 목록", icon: "mdi-account-group-outline" }
     ],
-    searchtoggle: false,
+    searchtoggle: false
   }),
   components: {
     Login,
@@ -298,6 +317,9 @@ export default {
       this.setBlogModalToggle = false;
       this.$router.go();
     },
+    closeSetBlogModal2: function() {
+      this.setBlogModalToggle = false;
+    },
     useSnackBar: function(msg) {
       if (msg != null) {
         this.alertMsg = msg;
@@ -306,9 +328,7 @@ export default {
     },
     notice: function() {
       this.$router.push("noticeList");
-    },
-   
-  
+    }
   },
   computed: {
     ...mapGetters([
@@ -345,3 +365,8 @@ export default {
   }
 };
 </script>
+<style>
+.text-black input {
+      color: black !important;
+    }
+</style>

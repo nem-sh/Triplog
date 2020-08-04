@@ -8,9 +8,9 @@
          <thead style="text-align:center;">
              <tr>
                 <th style="text-align:center;">썸네일</th>
-                 <th style="text-align:center;">글 번호</th>
                  <th style="text-align:center;">제목</th>
                  <th style="text-align:center;">작성자</th>
+                 <th style="text-align:center;">작성일</th>
              </tr>
          </thead>
          <tbody>
@@ -20,10 +20,9 @@
                      <v-img v-if="item.thumbnail" :src="require(`@/assets/articleImage/${item.thumbnail}`)" style="width: 100px; height:100px; margin-right:0;" ></v-img>
                     <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" style="width: 100px; height:100px; margin-right:0;" ></v-img>
                  </td>
-                 <td style="width: 200px; text-align:center;">{{item.num}}</td>
                  <td style="width: 200px; text-align:center;"> {{item.title}}</td>
-                 
                  <td style="width: 200px; text-align:center;">{{item.nickName}}</td>
+                 <td style="width: 200px; text-align:center;">{{item.created_at | moment('YYYY-MM-DD') }}</td>
              </tr>
 
          </tbody>
@@ -36,9 +35,9 @@
         <thead>
              <tr>
                 <th style="text-align:center;">썸네일</th>
-                 <th style="text-align:center;">글 번호</th>
                  <th style="text-align:center;">제목</th>
                  <th style="text-align:center;">작성자</th>
+                 <th style="text-align:center;">작성일</th>
              </tr>
          </thead>
          <tbody>
@@ -48,9 +47,9 @@
                      <v-img v-if="item_auth.thumbnail" :src="require(`@/assets/articleImage/${item_auth.thumbnail}`)" class="thumb" style="width: 100px; height:100px; margin-right:0;"></v-img>
                     <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" style="width: 100px; height:100px; margin-right:0;"></v-img>
                  </td>
-                 <td style="width: 200px; text-align:center;">{{item_auth.num}}</td>
                  <td style="width: 200px; text-align:center;"> {{item_auth.title}}</td>
                  <td style="width: 200px; text-align:center;">{{item_auth.nickName}}</td>
+                 <td style="width: 200px; text-align:center;">{{item_auth.created_at  | moment('YYYY-MM-DD')}}</td>
              </tr>
              
          </tbody>

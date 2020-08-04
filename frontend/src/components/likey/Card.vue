@@ -11,7 +11,11 @@
         :elevation="hover ? 12 : 2"
         href="#!"
       >
-        <v-img :src="require(`@/assets/articleImage/${value.article.thumbnail}`)" height="100%" @click.stop="dialog = true">
+        <v-img
+          :src="require(`@/assets/articleImage/${value.article.thumbnail}`)"
+          height="100%"
+          @click.stop="dialog = true"
+        >
           <!-- modal str-->
           <!-- <v-dialog v-model="dialog" max-width="590"> -->
           <!-- <v-card @click="dialog = false" style="opacity: 1; height:300px;">
@@ -33,7 +37,10 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-img :src="require(`@/assets/articleImage/${value.article.thumbnail}`)" height="388"></v-img>
+              <v-img
+                :src="require(`@/assets/articleImage/${value.article.thumbnail}`)"
+                height="388"
+              ></v-img>
               <br />
               <v-card-text class="skipText">{{value.article.content}}</v-card-text>
               <br />
@@ -68,10 +75,16 @@
                 text-color="white"
                 small
                 @click.stop="movePackage"
-              >-패키지로 넘어가는 버튼-</v-chip> -->
+              >-패키지로 넘어가는 버튼-</v-chip>-->
 
-              <h3 class="title font-weight-bold mb-2" style="text-shadow: 1px 1px 2px #383838;">{{value.article.title}}</h3>
-              <div class="caption" style="text-shadow: 1px 1px 2px #383838;">{{value.writer.nickname}}</div>
+              <h3
+                class="title font-weight-bold mb-2"
+                style="text-shadow: 1px 1px 2px #383838;"
+              >{{value.article.title}}</h3>
+              <div
+                class="caption"
+                style="text-shadow: 1px 1px 2px #383838;"
+              >{{value.writer.nickname}}</div>
               <div class="caption" style="text-shadow: 1px 1px 2px #383838;">{{date}}</div>
             </v-col>
 
@@ -165,9 +178,7 @@ export default {
 
     showDetail: function() {
       this.dialog = false;
-      this.$router.push(
-        `/article/detail/${this.value.article.num}`
-      );
+      this.$router.push(`/like/article/detail/${this.value.article.num}`);
     },
 
     movePackage: function() {
@@ -219,7 +230,7 @@ export default {
       this.value.article.created_at.slice(11, 19);
 
     this.date = this.setTime();
-    if(!(this.value.article.thumbnail)){
+    if (!this.value.article.thumbnail) {
       this.value.article.thumbnail = "noimage.png";
     }
   }
@@ -232,7 +243,7 @@ export default {
 }
 
 .v-card:not(.on-hover) {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .skipText {
