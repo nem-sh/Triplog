@@ -45,14 +45,12 @@
                 <div v-if="hostIntro" class="font-weight-light mb-2">{{hostIntro}}</div>
                 <br v-else />
 
-                <div
-                  v-if="isMyBlog"
-                  class="font-weight-light mb-2"
-                  style="text-align: center;"
-                >나의 이웃</div>
-                <div v-else>
-                  <div v-if="true" class="font-weight-light mb-2" style="text-align: center;">이웃 신청</div>
-                  <div v-else>이웃 친구</div>
+                <div v-if="isMyBlog" class="font-weight-light mb-2" style="text-align: center;">
+                  <v-btn>이웃 목록</v-btn>
+                </div>
+                <div v-else class="font-weight-light mb-2" style="text-align: center;">
+                  <v-btn v-if="isMyNeighbor" @click="removeNeighbor">이웃 해제</v-btn>
+                  <v-btn v-else @click="addNeighbor">이웃 신청</v-btn>
                 </div>
               </v-card-text>
             </div>
@@ -71,6 +69,8 @@
 
 <script>
 import http from "@/util/http-common";
+import { mapGetters, mapState } from "vuex";
+
 export default {
   name: "PersonalMainComp",
   data() {
@@ -78,7 +78,9 @@ export default {
       title: "",
       titleColor: "#000000FF",
       visitcount: 0,
-      titleimg: "adventurealtitude.jpg"
+      titleimg: "adventurealtitude.jpg",
+      isMyNeighbor: false,
+      neighbors: []
     };
   },
   props: {
@@ -116,7 +118,20 @@ export default {
         .catch(error => {
           console.log(error.data);
         });
-    }
+    },
+    addNeighbor() {
+      http
+        .post("/neighbor/", {
+          userNum: this.getUserNum,
+          neighborNum: this.$route.params.hostNum
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+      console.log(this.$route.params.hostNum);
+      console.log(this.getUserNum);
+    },
+    removeNeighbor() {}
   },
   computed: {
     getImg: function() {
@@ -131,10 +146,33 @@ export default {
     },
     getColor: function() {
       return `margin-bottom: 20px; margin-right: 20px; color : ${this.titleColor};`;
+    },
+    ...mapGetters(["isAuthenticated", "isProfileLoaded", "getUserNum"]),
+    ...mapState({
+      authLoading: state => state.auth.status === "loading",
+      userNum: state => `${state.user.getUserNum}`
+    }),
+    loading: function() {
+      return this.authStatus === "loading" && !this.isAuthenticated;
     }
   },
-  created: function() {
+  created() {
     this.getBlogInfo();
+  },
+  mounted() {
+    http
+      .get(`/neighbor/${this.getUserNum}`)
+      .then(response => {
+        var list = response.data;
+        for (let index = 0; index < list.length; index++) {
+          if (list[index].neighborNum == this.$route.params.hostNum) {
+            this.isMyNeighbor = true;
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error.data);
+      });
   }
 };
 </script>

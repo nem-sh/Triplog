@@ -1,0 +1,51 @@
+package com.ssafy.trip.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ssafy.trip.model.Neighbor;
+import com.ssafy.trip.repository.NeighborRepository;
+
+@CrossOrigin(origins = "*")
+@RestController
+@RequestMapping("/api/neighbor")
+public class NeighborController {
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
+
+	@Autowired
+	private NeighborRepository neighborRepository;
+
+	@PostMapping
+	public ResponseEntity<String> addNeighbor(@RequestBody Neighbor neighbor) {
+		neighborRepository.save(neighbor);
+
+		return ResponseEntity.ok(SUCCESS);
+	}
+
+	@GetMapping("/{userNum}")
+	public List<Neighbor> getNeighborByUserNum(@PathVariable(value = "userNum") Long userNnum) {
+		List<Neighbor> list = neighborRepository.findByUserNum(userNnum);
+//		for (Neighbor neighbor : list) {
+//			System.out.println(neighbor.getNeighborNum());
+//		}
+		return list;
+	}
+
+	@DeleteMapping("/{userNum}")
+	public ResponseEntity<String> deleteNeighborByUserNum(@PathVariable(value = "userNum") Long userNnum) {
+		neighborRepository.deleteByUserNum(userNnum);
+
+		return ResponseEntity.ok(SUCCESS);
+	}
+}
