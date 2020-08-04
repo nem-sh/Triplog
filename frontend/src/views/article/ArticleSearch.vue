@@ -17,8 +17,8 @@
              <tr v-for="item in articles_title" :key="item.num" @click="clickTableRow(item)" >
                 
                  <td>
-                     <v-img v-if="item.thumbnail" :src="require(`@/assets/blogImage/${item.thumbnail}`)" style="width: 100px; height:100px; margin-right:0;" ></v-img>
-                    <v-img v-else :src="require(`@/assets/blogImage/noimage.png`)" style="width: 100px; height:100px; margin-right:0;" ></v-img>
+                     <v-img v-if="item.thumbnail" :src="require(`@/assets/articleImage/${item.thumbnail}`)" style="width: 100px; height:100px; margin-right:0;" ></v-img>
+                    <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" style="width: 100px; height:100px; margin-right:0;" ></v-img>
                  </td>
                  <td style="width: 200px; text-align:center;"> {{item.title}}</td>
                  <td style="width: 200px; text-align:center;">{{item.nickName}}</td>
@@ -44,8 +44,8 @@
              <tr v-for="item_auth in articles_auth" :key="item_auth.num"  @click="clickTableRow(item_auth)">
                  
                  <td style="text-aligh:center;">
-                     <v-img v-if="item_auth.thumbnail" :src="require(`@/assets/blogImage/${item_auth.thumbnail}`)" class="thumb" style="width: 100px; height:100px; margin-right:0;"></v-img>
-                    <v-img v-else :src="require(`@/assets/blogImage/noimage.png`)" style="width: 100px; height:100px; margin-right:0;"></v-img>
+                     <v-img v-if="item_auth.thumbnail" :src="require(`@/assets/articleImage/${item_auth.thumbnail}`)" class="thumb" style="width: 100px; height:100px; margin-right:0;"></v-img>
+                    <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" style="width: 100px; height:100px; margin-right:0;"></v-img>
                  </td>
                  <td style="width: 200px; text-align:center;"> {{item_auth.title}}</td>
                  <td style="width: 200px; text-align:center;">{{item_auth.nickName}}</td>

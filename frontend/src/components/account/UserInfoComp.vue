@@ -29,7 +29,7 @@
                         </v-row>
                       </template>
                     </v-img>
-                    <v-img v-else :src="require(`@/assets/blogImage/noimage.png`)" class="img" width="100" height="100">
+                    <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" width="100" height="100">
                       <template v-slot:placeholder>
                         <v-row
                             class="fill-height ma-0"
@@ -53,7 +53,7 @@
                         </v-row>
                       </template>
                     </v-img>
-                    <v-img v-else :src="require(`@/assets/blogImage/noimage.png`)" class="img" width="100" height="100">
+                    <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" width="100" height="100">
                       <template v-slot:placeholder>
                         <v-row
                             class="fill-height ma-0"

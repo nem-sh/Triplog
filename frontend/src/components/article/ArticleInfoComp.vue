@@ -25,8 +25,8 @@
     </v-simple-table>
     <br />
     <div align="center">
-    <v-img v-if="articleThumbnail" :src="require(`@/assets/blogImage/${articleThumbnail}`)" class="img" />
-    <v-img v-else :src="require(`@/assets/blogImage/noimage.png`)" class="img" />
+    <v-img v-if="articleThumbnail" :src="require(`@/assets/articleImage/${articleThumbnail}`)" class="img" />
+    <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" />
     </div>
     <br/>
     <p>{{articleContent}}</p>
