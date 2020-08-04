@@ -35,16 +35,14 @@ public class NeighborController {
 
 	@GetMapping("/{userNum}")
 	public List<Neighbor> getNeighborByUserNum(@PathVariable(value = "userNum") Long userNnum) {
-		List<Neighbor> list = neighborRepository.findByUserNum(userNnum);
-//		for (Neighbor neighbor : list) {
-//			System.out.println(neighbor.getNeighborNum());
-//		}
+		List<Neighbor> list = neighborRepository.findByUserNumOrderByNeighborNum(userNnum);
 		return list;
 	}
 
-	@DeleteMapping("/{userNum}")
-	public ResponseEntity<String> deleteNeighborByUserNum(@PathVariable(value = "userNum") Long userNnum) {
-		neighborRepository.deleteByUserNum(userNnum);
+	@DeleteMapping("/{userNum}/{neighborNum}")
+	public ResponseEntity<String> deleteNeighborByUserNum(@PathVariable(value = "userNum") Long userNnum,
+			@PathVariable(value = "neighborNum") Long neighborNum) {
+		neighborRepository.deleteByUserNumAndNeighborNum(userNnum, neighborNum);
 
 		return ResponseEntity.ok(SUCCESS);
 	}

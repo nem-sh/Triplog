@@ -53,6 +53,12 @@
                   <v-btn v-else @click="addNeighbor">이웃 신청</v-btn>
                 </div>
               </v-card-text>
+              <NeighborListComp
+                v-for="(neighbor, index) in neighbors"
+                :key="`${index}_neighbors`"
+                :userNum="neighbor.userNum"
+                :neighborNum="neighbor.neighborNum"
+              />
             </div>
           </v-hover>
         </v-col>
@@ -70,9 +76,13 @@
 <script>
 import http from "@/util/http-common";
 import { mapGetters, mapState } from "vuex";
+import NeighborListComp from "@/components/personal/NeighborListComp.vue";
 
 export default {
   name: "PersonalMainComp",
+  components: {
+    NeighborListComp,
+  },
   data() {
     return {
       title: "",
@@ -80,7 +90,9 @@ export default {
       visitcount: 0,
       titleimg: "adventurealtitude.jpg",
       isMyNeighbor: false,
-      neighbors: []
+      neighbors: [],
+      alertMsg: "",
+      dialog: false
     };
   },
   props: {
@@ -131,7 +143,20 @@ export default {
       console.log(this.$route.params.hostNum);
       console.log(this.getUserNum);
     },
-    removeNeighbor() {}
+    removeNeighbor() {
+      http
+        .delete(`/neighbor/${this.getUserNum}/${this.$route.params.hostNum}`)
+        .then(({ data }) => {
+          let msg = "이웃해제 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "이웃해제가 완료되었습니다.";
+          }
+          this.alertMsg = msg;
+          this.dialog = false;
+          this.$emit("useSnackBar", this.alertMsg);
+          this.$router.push(`/article/list/${this.$route.params.hostNum}`);
+        });
+    }
   },
   computed: {
     getImg: function() {
@@ -163,6 +188,7 @@ export default {
     http
       .get(`/neighbor/${this.getUserNum}`)
       .then(response => {
+        this.neighbors = response.data;
         var list = response.data;
         for (let index = 0; index < list.length; index++) {
           if (list[index].neighborNum == this.$route.params.hostNum) {
