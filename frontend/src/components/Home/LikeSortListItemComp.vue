@@ -4,7 +4,7 @@
         <v-col>
             <v-img 
                 v-if="thumbnail" 
-                :src="require(`@/assets/blogImage/${thumbnail}`)" 
+                :src="require(`@/assets/articleImage/${thumbnail}`)" 
                 height="200" 
                 width="250"
                 lazy-src="https://picsum.photos/id/11/100/60"
@@ -20,7 +20,7 @@
                 </template>
                 <h5>{{title}}</h5>
             </v-img>
-            <v-img v-else :src="require(`@/assets/blogImage/noimage.png`)" />
+            <v-img v-else :src="require(`@/assets/noimage.png`)" />
         </v-col>
     </router-link>
   </div>
