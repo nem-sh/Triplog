@@ -197,6 +197,7 @@ export default {
             this.alertMsg = msg;
             this.alert = true;
             this.registSuccess = true;
+            clearInterval(this.polling);
             this.storeClean();
             this.$router.push(`/article/list/${this.getUserNum}`);
           }).catch((e) => {
