@@ -45,18 +45,27 @@
                 <div v-if="hostIntro" class="font-weight-light mb-2">{{hostIntro}}</div>
                 <br v-else />
 
-                <div
-                  v-if="isMyBlog"
-                  class="font-weight-light mb-2"
-                  style="text-align: center;"
-                >나의 이웃</div>
-                <div v-else>
-                  <div v-if="true" class="font-weight-light mb-2" style="text-align: center;">이웃 신청</div>
-                  <div v-else>이웃 친구</div>
+                <div v-if="isMyBlog" class="font-weight-light mb-2" style="text-align: center;">
+                  <v-btn @click="getNeighborList">이웃 목록</v-btn>
+                </div>
+                <div v-else class="font-weight-light mb-2" style="text-align: center;">
+                  <v-btn v-if="isMyNeighbor" @click="removeNeighbor">이웃 해제</v-btn>
+                  <v-btn v-else @click="addNeighbor">이웃 추가</v-btn>
                 </div>
               </v-card-text>
             </div>
           </v-hover>
+        </v-col>
+        <v-col>
+          <v-card v-if="showNeighborList" width="200px">
+            <NeighborListComp
+              v-for="(neighbor, index) in neighbors"
+              :key="`${index}_neighbors`"
+              :userNum="neighbor.userNum"
+              :neighborNum="neighbor.neighborNum"
+              :neighborNickname="neighbor.neighborNickname"
+            />
+          </v-card>
         </v-col>
         <v-col
           cols="9"
@@ -71,14 +80,26 @@
 
 <script>
 import http from "@/util/http-common";
+import { mapGetters, mapState } from "vuex";
+import NeighborListComp from "@/components/personal/NeighborListComp.vue";
+
 export default {
   name: "PersonalMainComp",
+  components: {
+    NeighborListComp
+  },
   data() {
     return {
       title: "",
       titleColor: "#000000FF",
       visitcount: 0,
-      titleimg: "adventurealtitude.jpg"
+      titleimg: "adventurealtitude.jpg",
+      isMyNeighbor: false,
+      neighbors: [],
+      alertMsg: "",
+      dialog: false,
+      showNeighborList: false,
+      alert: false,
     };
   },
   props: {
@@ -116,6 +137,52 @@ export default {
         .catch(error => {
           console.log(error.data);
         });
+    },
+    addNeighbor() {
+      http
+        .post("/neighbor/", {
+          userNum: this.getUserNum,
+          neighborNum: this.$route.params.hostNum
+        })
+        .then(({ data }) => {
+          let msg = "이웃추가 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "이웃추가가 완료되었습니다.";
+          }
+          this.alertMsg = msg;
+          this.alert= true;
+          this.$emit("closeLoginModal", this.alertMsg);
+          this.$router.go(this.$router.currentRoute);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+        this.$router.go(this.$router.currentRoute);
+    },
+    removeNeighbor() {
+      http
+        .delete(`/neighbor/${this.getUserNum}/${this.$route.params.hostNum}`)
+        .then(({ data }) => {
+          let msg = "이웃해제 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            msg = "이웃해제가 완료되었습니다.";
+          }
+          this.alertMsg = msg;
+          this.alert= true;
+          this.$emit("closeLoginModal", msg);
+          this.$router.go(this.$router.currentRoute);
+        })
+        .catch(error => {
+          console.log(error.data);
+        });
+    },
+    getNeighborList() {
+      if(this.showNeighborList == false){
+        this.showNeighborList = true;
+      }else{
+        this.showNeighborList = false;
+      }
+      
     }
   },
   computed: {
@@ -131,10 +198,34 @@ export default {
     },
     getColor: function() {
       return `margin-bottom: 20px; margin-right: 20px; color : ${this.titleColor};`;
+    },
+    ...mapGetters(["isAuthenticated", "isProfileLoaded", "getUserNum"]),
+    ...mapState({
+      authLoading: state => state.auth.status === "loading",
+      userNum: state => `${state.user.getUserNum}`
+    }),
+    loading: function() {
+      return this.authStatus === "loading" && !this.isAuthenticated;
     }
   },
-  created: function() {
+  created() {
     this.getBlogInfo();
+  },
+  mounted() {
+    http
+      .get(`/neighbor/${this.getUserNum}`)
+      .then(response => {
+        this.neighbors = response.data;
+        var list = response.data;
+        for (let index = 0; index < list.length; index++) {
+          if (list[index].neighborNum == this.$route.params.hostNum) {
+            this.isMyNeighbor = true;
+          }
+        }
+      })
+      .catch(error => {
+        console.log(error.data);
+      });
   }
 };
 </script>

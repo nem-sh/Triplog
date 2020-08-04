@@ -80,7 +80,6 @@ export default {
 }
 .v-card:hover {
   filter: drop-shadow(3px 3px 5px rgb(136, 136, 136));
-  background:powderblue;
   transition: opacity 0.4s ease-in-out;
 }
 .v-card--reveal {
