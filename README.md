@@ -1,3 +1,4 @@
+![이미지이름](./frontend/src/assets/userImage/icons8-around-the-globe-100.png)
 # **TRIPLOG** 
 **TRIPLOG**는 여행을 공유하기 위한 블로그 입니다.
 
