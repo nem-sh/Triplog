@@ -41,38 +41,39 @@
               </v-img>
               <v-card-text class="pt-6" style="position: relative;">
                 <h3 class="orange--text mb-2">{{hostNickName}}</h3>
-                <div class="font-weight-light mb-2">{{hostEmail}}</div>
+                <!-- <div class="font-weight-light mb-2">{{hostEmail}}</div> -->
                 <div v-if="hostIntro" class="font-weight-light mb-2">{{hostIntro}}</div>
                 <br v-else />
-
-                <div v-if="isMyBlog" class="font-weight-light mb-2" style="text-align: center;">
-                  <v-btn @click="getNeighborList">이웃 목록</v-btn>
-                </div>
-                <div v-else class="font-weight-light mb-2" style="text-align: center;">
-                  <v-btn v-if="isMyNeighbor" @click="removeNeighbor">이웃 해제</v-btn>
-                  <v-btn v-else @click="addNeighbor">이웃 추가</v-btn>
-                </div>
               </v-card-text>
             </div>
           </v-hover>
         </v-col>
         <v-col>
-          <v-card v-if="showNeighborList" width="200px">
-            <NeighborListComp
-              v-for="(neighbor, index) in neighbors"
-              :key="`${index}_neighbors`"
-              :userNum="neighbor.userNum"
-              :neighborNum="neighbor.neighborNum"
-              :neighborNickname="neighbor.neighborNickname"
-            />
+          <div v-if="isMyBlog" class="font-weight-light mb-2">
+            <v-btn small @click="getNeighborList">팔로우 목록</v-btn>
+          </div>
+          <div v-else class="font-weight-light mb-2">
+            <v-btn small v-if="isMyNeighbor" @click="removeNeighbor">팔로우 해제</v-btn>
+            <v-btn small v-else @click="addNeighbor">팔로우 추가</v-btn>
+          </div>
+          <v-card v-if="showNeighborList" width="100px">
+            <v-simple-table>
+              <tbody>
+                <NeighborListComp
+                  v-for="(neighbor, index) in neighbors"
+                  :key="`${index}_neighbors`"
+                  :userNum="neighbor.userNum"
+                  :neighborNum="neighbor.neighborNum"
+                  :neighborNickname="neighbor.neighborNickname"
+                />
+              </tbody>
+            </v-simple-table>
           </v-card>
         </v-col>
-        <v-col
-          cols="9"
+        <h1
           style="height : 100%; display:flex; justify-content:flex-end; align-items:flex-end;"
-        >
-          <h1 :style="getColor">{{title}}</h1>
-        </v-col>
+          :style="getColor"
+        >{{title}}</h1>
       </v-row>
     </v-container>
   </div>
@@ -99,7 +100,7 @@ export default {
       alertMsg: "",
       dialog: false,
       showNeighborList: false,
-      alert: false,
+      alert: false
     };
   },
   props: {
@@ -150,14 +151,14 @@ export default {
             msg = "이웃추가가 완료되었습니다.";
           }
           this.alertMsg = msg;
-          this.alert= true;
+          this.alert = true;
           this.$emit("closeLoginModal", this.alertMsg);
           this.$router.go(this.$router.currentRoute);
         })
         .catch(error => {
           console.log(error.data);
         });
-        this.$router.go(this.$router.currentRoute);
+      this.$router.go(this.$router.currentRoute);
     },
     removeNeighbor() {
       http
@@ -168,7 +169,7 @@ export default {
             msg = "이웃해제가 완료되었습니다.";
           }
           this.alertMsg = msg;
-          this.alert= true;
+          this.alert = true;
           this.$emit("closeLoginModal", msg);
           this.$router.go(this.$router.currentRoute);
         })
@@ -177,12 +178,11 @@ export default {
         });
     },
     getNeighborList() {
-      if(this.showNeighborList == false){
+      if (this.showNeighborList == false) {
         this.showNeighborList = true;
-      }else{
+      } else {
         this.showNeighborList = false;
       }
-      
     }
   },
   computed: {

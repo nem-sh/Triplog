@@ -1,11 +1,5 @@
 <template>
-  <v-simple-table>
-    <tbody>
-      <tr @click="moveBlog" align="center">
-        {{neighborNickname}}
-      </tr>
-    </tbody>
-  </v-simple-table>
+  <tr @click="moveBlog" align="center">{{neighborNickname}}</tr>
 </template>
 
 <script>
@@ -14,17 +8,16 @@ export default {
   props: {
     userNum: { type: Number },
     neighborNum: { type: Number },
-    neighborNickname: { type: String },
+    neighborNickname: { type: String }
   },
   methods: {
     moveBlog() {
-      this.$router.push(`/article/list/${this.neighborNum}`);
+      this.$router.replace(`/article/list/${this.neighborNum}`);
       this.$router.go(this.$router.currentRoute);
     }
   }
-}
+};
 </script>
 
 <style>
-
 </style>
