@@ -25,28 +25,30 @@
               <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
             </td>
           </tr>
-          
-          <tr>
-              <th class="text-left">CONTENT</th>
-              <td>
-              <br/>
-              <v-textarea
-               label="내용을 입력하세요"
-               id="content"
-               ref="content"
-               v-model="articleContent"
-               auto-grow
-               outlined
-               row-height="100px"
-              >
-              </v-textarea>
-              </td>
-          </tr>
-          
         </tbody>
-        
       </template>
     </v-simple-table>
+
+    <br/>
+    <v-sheet>
+      <v-btn @click="exec('bold')">
+        굵게
+      </v-btn>
+    </v-sheet>
+    <v-sheet
+      outlined
+      height="500"
+    >
+      <iframe
+      id="editor" 
+      src="../editor.html"
+      frameborder = "0"
+      scrolling = "auto"
+      style="width:100%; height:100%"
+      >
+      </iframe>
+    </v-sheet>
+
     <v-row>
           <v-col>
             <v-btn @click="temp">임시 저장</v-btn>
@@ -109,6 +111,7 @@ export default {
       fileInfo: "",
       polling: null,
       dialog: false,
+      editorHtmlPath: "./assets/editor/editor.html",
     };
   },
   created() {
@@ -120,6 +123,12 @@ export default {
       }
   },
   methods: {
+    exec: function(option) {
+      this.editorDocument().execCommand(option, false, true);
+    },
+    editorDocument: function() {
+		  return document.getElementById('editor').contentDocument || document.getElementById('editor').contentWindow.document;
+	  },
     deleteData() {
         this.storeClean();
         this.dialog = false;
@@ -188,6 +197,7 @@ export default {
             content: this.articleContent,
             created_at: new Date(),
             user_num: this.getUserNum,
+            userNickname: this.getProfile,
           }).then(({ data }) => {
             let msg = "등록 처리시 문제가 발생했습니다.";
             if (data === "success") {

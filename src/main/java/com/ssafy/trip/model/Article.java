@@ -35,6 +35,7 @@ public class Article {
 	private Date date_start;
 	private Date date_end;
 	private int likeCount;
+	private String userNickname;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "like_Article", joinColumns = @JoinColumn(name = "article_num"), inverseJoinColumns = @JoinColumn(name = "user_num"))
@@ -45,12 +46,12 @@ public class Article {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Article(Long num, Long user_num, Long trippackage_num, String title, String place, String content,
+	public Article(Long num, Long usernum, Long trippackage_num, String title, String place, String content,
 			String thumbnail, Boolean temp, Date created_at, Date date_start, Date date_end, int likeCount,
-			List<MemberUser> likearticle) {
+			String userNickname, List<MemberUser> likearticle) {
 		super();
 		this.num = num;
-		this.usernum = user_num;
+		this.usernum = usernum;
 		this.trippackage_num = trippackage_num;
 		this.title = title;
 		this.place = place;
@@ -61,6 +62,7 @@ public class Article {
 		this.date_start = date_start;
 		this.date_end = date_end;
 		this.likeCount = likeCount;
+		this.userNickname = userNickname;
 		this.likearticle = likearticle;
 	}
 
@@ -168,11 +170,21 @@ public class Article {
 		this.likearticle = likearticle;
 	}
 
+
+	public String getUserNickname() {
+		return userNickname;
+	}
+
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
+	}
+
 	@Override
 	public String toString() {
-		return "Article [num=" + num + ", user_num=" + usernum + ", trippackage_num=" + trippackage_num + ", title="
+		return "Article [num=" + num + ", usernum=" + usernum + ", trippackage_num=" + trippackage_num + ", title="
 				+ title + ", place=" + place + ", content=" + content + ", thumbnail=" + thumbnail + ", temp=" + temp
 				+ ", created_at=" + created_at + ", date_start=" + date_start + ", date_end=" + date_end
-				+ ", likeCount=" + likeCount + ", likearticle=" + likearticle + "]";
+				+ ", likeCount=" + likeCount + ", userNickname=" + userNickname + ", likearticle=" + likearticle + "]";
 	}
+	
 }
