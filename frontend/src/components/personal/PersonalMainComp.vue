@@ -50,11 +50,11 @@
         </v-col>
         <v-col>
           <div v-if="isMyBlog" class="font-weight-light mb-2">
-            <v-btn small @click="getNeighborList">이웃 목록</v-btn>
+            <v-btn small @click="getNeighborList">팔로우 목록</v-btn>
           </div>
           <div v-else class="font-weight-light mb-2">
-            <v-btn small v-if="isMyNeighbor" @click="removeNeighbor">이웃 해제</v-btn>
-            <v-btn small v-else @click="addNeighbor">이웃 추가</v-btn>
+            <v-btn small v-if="isMyNeighbor" @click="removeNeighbor">팔로우 해제</v-btn>
+            <v-btn small v-else @click="addNeighbor">팔로우 추가</v-btn>
           </div>
           <v-card v-if="showNeighborList" width="100px">
             <v-simple-table>

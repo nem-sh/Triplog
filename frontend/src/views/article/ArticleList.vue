@@ -112,9 +112,6 @@ export default {
       userNum: state => `${state.user.getUserNum}`
     })
   },
-  activated() {
-    this.$router.go(this.$router.currentRoute);
-  }
 };
 </script>
 

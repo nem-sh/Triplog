@@ -12,7 +12,7 @@ export default {
   },
   methods: {
     moveBlog() {
-      this.$router.push(`/article/list/${this.neighborNum}`);
+      this.$router.replace(`/article/list/${this.neighborNum}`);
       this.$router.go(this.$router.currentRoute);
     }
   }
