@@ -93,6 +93,28 @@ public class ArticleController {
 	
 		return ResponseEntity.ok(newName);
 	}
+	
+	@PostMapping("/content")
+	public ResponseEntity<String> uploadContent(@RequestPart MultipartFile content) throws Exception {
+		String baseDir = System.getProperty("user.dir")+ "\\frontend\\public\\content\\registered\\";
+		String originalFileName = content.getOriginalFilename();
+		System.out.println(originalFileName);
+		File dest = new File(baseDir + originalFileName);
+		
+		String newName = originalFileName;
+		String realName = originalFileName.split("\\.")[0];
+		String extension = originalFileName.split("\\.")[1];
+		int index = 0;
+		while(dest.exists()) {
+			index++;
+			newName = realName + "(" + index + ")." + extension;
+			dest = new File(baseDir + newName);
+		}
+		
+		content.transferTo(dest);
+	
+		return ResponseEntity.ok(newName);
+	}
 
 	@GetMapping("/getList/{hostNum}")
 	public List<Article> findArticlesByHostNum(@PathVariable(value = "hostNum") Long hostNum) {
