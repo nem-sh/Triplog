@@ -47,8 +47,7 @@
 
           <v-list-item
             class="mb-5"
-            @click.stop
-            :to="{name: 'articleList', params: {hostNum: this.getUserNum}}"
+             @click.stop="moveBlog"
           >
             <v-list-item-icon>
               <v-icon color="green darken-4">mdi-blogger</v-icon>
@@ -328,6 +327,10 @@ export default {
     },
     notice: function() {
       this.$router.push("noticeList");
+    },
+    moveBlog() {
+      this.$router.push(`/article/list/${this.getUserNum}`);
+      this.$router.go(this.$router.currentRoute);
     }
   },
   computed: {

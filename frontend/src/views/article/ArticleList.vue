@@ -111,6 +111,9 @@ export default {
     ...mapState({
       userNum: state => `${state.user.getUserNum}`
     })
+  },
+  activated() {
+    this.$router.go(this.$router.currentRoute);
   }
 };
 </script>
