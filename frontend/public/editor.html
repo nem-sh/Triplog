@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Editor</title>
+        <script type="text/javascript">
+
+            window.onload = function() {
+                if (document.body && document.body.contentEditable != undefined && window.ActiveXObject) {
+                    document.body.contentEditable = "true";
+                } else {
+                    document.designMode = "on";
+                }
+            }
+
+        </script>
+    </head>
+    <body>
+        <div>
+            내용을 입력하세요<br />
+        </div>
+    </body>
+</html>
