@@ -29,7 +29,10 @@
     <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" />
     </div>
     <br/>
-    <p>{{articleContent}}</p>
+    <article-content-comp
+      :content = "realContent"
+      v-if="realContent"
+    />
     <!-- 본문 끝 -->
     <br/><br/>
     <div>
@@ -77,12 +80,16 @@
 </template>
 
 <script>
+import ArticleContentComp from "@/components/article/ArticleContentComp.vue";
 import { mapGetters, mapState } from "vuex";
 import moment from "moment";
 import http from "@/util/http-common";
 
 export default {
   name: "articleInfoComp",
+  components: {
+    ArticleContentComp
+  },
   props: {
     articleNum: { type: Number },
     articleUserNum: { type: Number },
@@ -102,10 +109,26 @@ export default {
     return {
       alert: false,
       alertMsg: "",
-      dialog: false
+      dialog: false,
+      realContent: "",
     };
   },
+  created() {
+    this.openContentFile()
+  },
   methods: {
+    openContentFile: function() {
+      var url = '../../content/registered/' + this.articleContent;
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'text';
+      var setRealContent = (val) => {this.realContent = val};
+      xhr.onload = function(e) {
+        var resp = xhr.responseText || e.target.responseText;
+        setRealContent(resp);
+      }
+      xhr.open('GET', url);
+      xhr.send();
+    },
     confirmDelete() {
       this.dialog = true;
     },
