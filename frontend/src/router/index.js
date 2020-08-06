@@ -14,7 +14,6 @@ import Like from "../views/likey/Like.vue"
 
 import Login from "../components/account/Login.vue";
 
-import LikeArticleInfo from "../views/likey/LikeArticleInfo.vue"
 import temp from "../views/temporaryArticle/temp.vue"
 import PersonalMain from "../views/personal/MainPage.vue"
 import UserSetting from "../views/personal/UserSetting.vue"
@@ -48,11 +47,6 @@ const routes = [
     component: Like
   },
   {
-    path: "/like/detail",
-    name: "LikeArticleInfo",
-    component: LikeArticleInfo
-  },
-  {
     path: "/about",
     name: "About",
     // route level code-splitting
@@ -76,11 +70,6 @@ const routes = [
     path: "/article/write",
     name: "articleWrite",
     component: ArticleWrite
-  },
-  {
-    path: "/like/article/detail/:articleNum",
-    name: "likeArticleInfo",
-    component: LikeArticleInfo
   },
   {
     path: "/article/detail/:articleNum",
