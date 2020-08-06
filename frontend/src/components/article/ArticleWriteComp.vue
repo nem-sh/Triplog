@@ -128,7 +128,8 @@ export default {
     createFileByInnerEditorText: function() {
       var innerIframe = document.getElementById('editor').contentWindow.document.body.innerHTML;
       var content = this.prefix + innerIframe + this.suffix;
-      var file = new File([content], "editor.html", {
+      var fileName = this.getUserNum + "_" + this.articleTitle + ".html";
+      var file = new File([content], fileName, {
         type: "text/html",
       });
       return file;
@@ -194,14 +195,16 @@ export default {
    registHandler() {
      var contentFile = this.createFileByInnerEditorText();
      var formData = new FormData();
-     formData.append('content', contentFile);
+     formData.append('files', contentFile);
+     formData.append('files', this.fileInfo);
      http3
-      .post(`/article/content`, formData).then(({ data }) => {
+      .post(`/article/files`, formData).then(({ data }) => {
+        console.log(data);
         http
           .post(`/article`, {
-            thumbnail : data,
+            thumbnail : data[1],
             title: this.articleTitle,
-            content: this.articleContent,
+            content: data[0],
             created_at: new Date(),
             user_num: this.getUserNum,
             userNickname: this.getProfile,
