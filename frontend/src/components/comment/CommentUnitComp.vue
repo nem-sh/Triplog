@@ -91,7 +91,7 @@
               <v-btn class="teal lighten-3" @click="submit">작성</v-btn>
             </v-col>
           </v-row>
-          <div v-for="(coItem, index) in item.cocomments" :key="coItem.num">
+          <div v-for="(coItem, index) in item.cocomments" :key="coItem.createdat">
             <cocomment-unit-comp :item="coItem" :index="index" />
           </div>
         </v-container>
@@ -172,11 +172,13 @@ export default {
     },
     submit() {
       let obj = {
+        articlenum: this.$route.params.articleNum,
         usernickname: this.getProfile,
         content: this.content,
         createdat: new Date(),
         useremail: this.getEmail,
-        userimg: this.getUserImg
+        userimg: this.getUserImg,
+        usernum: this.getUserNum
       };
       this.item.cocomments.unshift(obj);
       http
@@ -191,10 +193,13 @@ export default {
         })
         .then(({ data }) => {
           console.log(data);
+          this.content = "";
         })
         .catch(e => {
           console.log(e);
         });
+
+      this.content = "";
     }
   },
   computed: {
@@ -258,6 +263,7 @@ export default {
     })
   },
   created() {
+    this.updateContent = this.item.comment.content;
     if (this.item.comment) {
       if (this.item.comment.userimg != null) {
         this.userimg = this.item.comment.userimg;

@@ -26,7 +26,7 @@
 
     <v-list three-line>
       <CommentUnitComp v-if="items[0]" :item="header" />
-      <div v-for="(item, index) in items" :key="item.comment.num">
+      <div v-for="(item, index) in items" :key="item.comment.createdat">
         <CommentUnitComp :item="item" :index="index" />
         <CommentUnitComp :item="{ divider: true, inset: true }" />
       </div>
@@ -48,30 +48,7 @@ export default {
       contentLength: "0/100",
       content: "",
       secret: false,
-      header: { header: "Comment" },
-      itemss: [
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Brunch this weekend?",
-          subtitle:
-            "<span class='text--primary'>Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?",
-          created_at: "2017.07.02 14:43"
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-          subtitle:
-            "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          title: "Oui oui",
-          subtitle:
-            "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
-        }
-      ]
+      header: { header: "Comment" }
     };
   },
   props: {
@@ -101,6 +78,7 @@ export default {
         })
         .then(({ data }) => {
           console.log(data);
+          this.content = "";
         })
         .catch(e => {
           console.log(e);
