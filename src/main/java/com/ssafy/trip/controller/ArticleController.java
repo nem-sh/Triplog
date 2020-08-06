@@ -27,6 +27,7 @@ import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.model.Paging;
 import com.ssafy.trip.repository.ArticleRepository;
+import com.ssafy.trip.repository.CommentRepository;
 import com.ssafy.trip.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
@@ -39,6 +40,9 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleRepository articleRepository;
+	
+	@Autowired
+	private CommentRepository commentRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -53,8 +57,10 @@ public class ArticleController {
 
 	@DeleteMapping("/{num}")
 	public ResponseEntity<String> deleteArticleByNum(@PathVariable(value = "num") Long num) {
-		articleRepository.deleteByNum(num);
 
+		commentRepository.deleteAllByArticlenumAndReplyIsNull(num);
+		commentRepository.deleteAllByArticlenum(num);
+		articleRepository.deleteByNum(num);
 		return ResponseEntity.ok(SUCCESS);
 	}
 

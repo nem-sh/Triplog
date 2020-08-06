@@ -6,28 +6,55 @@
 
     <v-list-item v-else :key="item.comment.num">
       <v-list-item-avatar>
-        <v-img :src="require(`@/assets/blogImage/${userimg}`)"></v-img>
+        <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
       </v-list-item-avatar>
 
       <v-list-item-content class="pb-0">
         <div @mouseover="display = true" @mouseleave="display = false" @click.stop="onOffComment">
           <v-row>
-            <v-col cols="8">
+            <v-col cols="8" style="padding:25px;">
               <v-list-item-title v-html="getName"></v-list-item-title>
             </v-col>
-            <v-col cols="4" v-if="display" style="display: flex; justify-content:flex-end;">
-              <i
-                v-if="isMyComment"
-                class="fas fa-times"
-                :style="xButton"
-                @mouseover="displayX = true"
-                @mouseleave="displayX = false"
-                @click.stop="deleteComment"
-              />
+            <v-col cols="4" v-if="display" style="display: flex; justify-content:flex-end; ">
+              <div v-if="isMyComment">
+                <v-icon
+                  left
+                  :style="eButton"
+                  @mouseover="displayE = true"
+                  @mouseleave="displayE = false"
+                  class="mr-3"
+                  @click.stop="updateComment"
+                >mdi-pencil</v-icon>
+                <i
+                  class="fas fa-times"
+                  :style="xButton"
+                  @mouseover="displayX = true"
+                  @mouseleave="displayX = false"
+                  @click.stop="deleteComment"
+                />
+              </div>
             </v-col>
           </v-row>
           <br />
-          <v-list-item-subtitle v-html="item.comment.content"></v-list-item-subtitle>
+          <v-list-item-subtitle v-if="!update" v-html="item.comment.content"></v-list-item-subtitle>
+
+          <v-textarea
+            @click.stop
+            v-if="update"
+            :label="getUpdateContentLength"
+            auto-grow
+            outlined
+            rows="2"
+            row-height="50"
+            maxlength="100"
+            v-model="updateContent"
+            hide-details="false"
+            color="teal lighten-3"
+          />
+          <v-col v-if="update" cols="12" style="display: flex; justify-content:flex-end;">
+            <v-btn class="teal lighten-3 mr-3" @click.stop="rewriteComment">수정</v-btn>
+            <v-btn @click.stop="closeUpdate">취소</v-btn>
+          </v-col>
           <br />
           <br />
           <v-row>
@@ -88,8 +115,11 @@ export default {
       content: "",
       display: false,
       displayX: false,
+      displayE: false,
       openComment: false,
-      userimg: "profile_init.png"
+      userimg: "profile_init.png",
+      update: false,
+      updateContent: ""
     };
   },
   props: {
@@ -115,12 +145,38 @@ export default {
           console.log(e);
         });
     },
+    updateComment() {
+      this.update = true;
+    },
+    closeUpdate() {
+      this.update = false;
+    },
+    rewriteComment() {
+      this.item.comment.content = this.updateContent;
+      this.update = false;
+      http
+        .put(`/comment/${this.item.comment.num}`, {
+          content: this.updateContent,
+          articlenum: this.$route.params.articleNum,
+          userimg: this.getUserImg,
+          usernum: this.getUserNum,
+          usernickname: this.getProfile,
+          useremail: this.getEmail
+        })
+        .then(({ data }) => {
+          console.log(data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     submit() {
       let obj = {
         usernickname: this.getProfile,
         content: this.content,
         createdat: new Date(),
-        useremail: this.getEmail
+        useremail: this.getEmail,
+        userimg: this.getUserImg
       };
       this.item.cocomments.unshift(obj);
       http
@@ -128,7 +184,7 @@ export default {
           content: this.content,
           createdat: new Date(),
           articlenum: this.$route.params.articleNum,
-
+          userimg: this.getUserImg,
           usernum: this.getUserNum,
           usernickname: this.getProfile,
           useremail: this.getEmail
@@ -148,9 +204,22 @@ export default {
       }
       return this.content.length + "/100";
     },
+    getUpdateContentLength: function() {
+      if (this.content.length == 0) {
+        return "RE_WRITE";
+      }
+      return this.content.length + "/100";
+    },
     xButton: function() {
       if (this.displayX) {
         return "color:red;";
+      } else {
+        return "color:black;";
+      }
+    },
+    eButton: function() {
+      if (this.displayE) {
+        return "color:green;";
       } else {
         return "color:black;";
       }
@@ -177,13 +246,15 @@ export default {
       "getProfile",
       "getRealName",
       "getEmail",
-      "getUserNum"
+      "getUserNum",
+      "getUserImg"
     ]),
     ...mapState({
       authLoading: state => state.auth.status === "loading",
       uname: state => `${state.user.getProfile}`,
       userEmail: state => `${state.user.getEmail}`,
-      userNum: state => `${state.user.getUserNum}`
+      userNum: state => `${state.user.getUserNum}`,
+      userImg: state => `${state.user.getUserImg}`
     })
   },
   created() {

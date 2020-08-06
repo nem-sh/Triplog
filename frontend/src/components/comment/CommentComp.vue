@@ -84,7 +84,9 @@ export default {
         usernickname: this.getProfile,
         useremail: this.getEmail,
         content: this.content,
-        createdat: new Date()
+        createdat: new Date(),
+        userimg: this.getUserImg,
+        usernum: this.getUserNum
       };
       this.items.unshift({ comment: obj, cocomments: [] });
       http
@@ -92,7 +94,7 @@ export default {
           content: this.content,
           createdat: new Date(),
           articlenum: this.$route.params.articleNum,
-
+          userimg: this.getUserImg,
           usernum: this.getUserNum,
           usernickname: this.getProfile,
           useremail: this.getEmail
@@ -118,13 +120,15 @@ export default {
       "getProfile",
       "getRealName",
       "getEmail",
-      "getUserNum"
+      "getUserNum",
+      "getUserImg"
     ]),
     ...mapState({
       authLoading: state => state.auth.status === "loading",
       uname: state => `${state.user.getProfile}`,
       userEmail: state => `${state.user.getEmail}`,
-      userNum: state => `${state.user.getUserNum}`
+      userNum: state => `${state.user.getUserNum}`,
+      userImg: state => `${state.user.getUserImg}`
     })
   },
   created() {}

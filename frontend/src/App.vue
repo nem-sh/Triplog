@@ -89,27 +89,26 @@
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        
+
         <v-form action="/article/ArticleSearch">
-        <v-expand-transition style="display: flex;">
-            <v-text-field 
-            label="Search"
-            background-color="cyan darken-1"
-            color="white"
-            outlined
-            v-show="searchtoggle"
-            class="mt-6 shrink"
-            rounded
-            dense
-            clearable
-            name="keyword"
-          />
-        </v-expand-transition>
+          <v-expand-transition style="display: flex;">
+            <v-text-field
+              label="Search"
+              background-color="cyan darken-1"
+              color="white"
+              outlined
+              v-show="searchtoggle"
+              class="mt-6 shrink"
+              rounded
+              dense
+              clearable
+              name="keyword"
+            />
+          </v-expand-transition>
         </v-form>
 
         <v-btn x-large icon @click="searchtoggle = !searchtoggle">
-          <v-icon>
-          mdi-text-search</v-icon>
+          <v-icon>mdi-text-search</v-icon>
         </v-btn>
           
         <v-btn
@@ -240,7 +239,11 @@ export default {
       );
     },
     goWrite: function() {
-      this.$router.push("/article/write");
+      if (this.getValid) {
+        this.$router.push("/article/write");
+      } else {
+        this.$router.push(`/emailAuth`);
+      }
     },
     useSnackBar: function(msg) {
       if (msg != null) {
@@ -252,8 +255,17 @@ export default {
       this.$router.push("noticeList");
     },
     moveBlog() {
-      this.$router.push(`/article/list/${this.getUserNum}`);
-      this.$router.go(this.$router.currentRoute);
+      console.log("test");
+
+      console.log(this.getValid);
+      if (this.getValid) {
+        console.log(this.getValid);
+        this.$router.push(`/article/list/${this.getUserNum}`);
+        this.$router.go(this.$router.currentRoute);
+      } else {
+        console.log(this.getValid);
+        this.$router.push(`/emailAuth`);
+      }
     },
     goLoginPage() {
       this.$router.push("/login");
@@ -266,13 +278,16 @@ export default {
       "getProfile",
       "getRealName",
       "getEmail",
-      "getUserNum"
+      "getUserNum",
+      "getValid"
     ]),
     ...mapState({
       authLoading: state => state.auth.status === "loading",
       uname: state => `${state.user.getProfile}`,
       userEmail: state => `${state.user.getEmail}`,
-      userNum: state => `${state.user.getUserNum}`
+      userNum: state => `${state.user.getUserNum}`,
+
+      valid: state => `${state.user.getValid}`
     }),
     loading: function() {
       return this.authStatus === "loading" && !this.isAuthenticated;

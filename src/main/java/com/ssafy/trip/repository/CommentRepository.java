@@ -14,14 +14,22 @@ import com.ssafy.trip.model.MemberUser;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-	List<Comment> findByArticlenumAndReply(Long num, Comment reply);
-	List<Comment> findByReply(Comment reply);
+	List<Comment> findByArticlenumAndReplyOrderByCreatedat(Long num, Comment reply);
+	List<Comment> findByReplyOrderByCreatedat(Comment reply);
 	
 	Comment findByNum(Long num);
 	
 	@Transactional
     @Modifying
 	void deleteAllByReply(Comment comment);
+	
+	@Transactional
+    @Modifying
+	void deleteAllByArticlenum(Long articlenum);
+	
+	@Transactional
+    @Modifying
+	void deleteAllByArticlenumAndReplyIsNull(Long articlenum);
 	
 	@Transactional
     @Modifying

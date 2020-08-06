@@ -7,7 +7,7 @@
       v-if="!isDelete"
     >
       <v-list-item-avatar>
-        <v-img :src="require(`@/assets/blogImage/${userimg}`)"></v-img>
+        <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
       </v-list-item-avatar>
 
       <v-list-item-content class="pb-0">
@@ -66,13 +66,15 @@ export default {
       "getProfile",
       "getRealName",
       "getEmail",
-      "getUserNum"
+      "getUserNum",
+      "getUserImg"
     ]),
     ...mapState({
       authLoading: state => state.auth.status === "loading",
       uname: state => `${state.user.getProfile}`,
       userEmail: state => `${state.user.getEmail}`,
-      userNum: state => `${state.user.getUserNum}`
+      userNum: state => `${state.user.getUserNum}`,
+      userImg: state => `${state.user.getUserImg}`
     }),
     xButton: function() {
       if (this.displayX) {
