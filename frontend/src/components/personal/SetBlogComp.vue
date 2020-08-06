@@ -1,10 +1,5 @@
 <template>
   <div>
-    <v-container class="cyan darken-2">
-      <v-row>
-        <v-col class="white--text pa-2 ml-3">Setting</v-col>
-      </v-row>
-    </v-container>
     <v-simple-table>
       <template v-slot:default>
         <tbody>

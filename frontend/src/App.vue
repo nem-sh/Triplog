@@ -45,10 +45,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item
-            class="mb-5"
-             @click.stop="moveBlog"
-          >
+          <v-list-item class="mb-5" @click.stop="moveBlog">
             <v-list-item-icon>
               <v-icon color="green darken-4">mdi-blogger</v-icon>
             </v-list-item-icon>
@@ -58,26 +55,13 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item
-            class="mb-5"
-            @click.stop="goWrite"
-          >
+          <v-list-item class="mb-5" @click.stop="goWrite">
             <v-list-item-icon>
               <v-icon color="green darken-4">mdi-file-edit</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
               <v-list-item-title class="font-weight-bold teal--text">Posting</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item @click.stop="setBlog" class="mb-5">
-            <v-list-item-icon>
-              <v-icon color="gray">mdi-cogs</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title class="font-weight-bold teal--text">Setting</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -107,14 +91,14 @@
         <v-spacer></v-spacer>
         <v-form class="d-flex search align-items-center" action="/article/ArticleSearch">
           <div class="d-flex">
-          <v-text-field
+            <v-text-field
               label="search"
               color="black"
               black
               filled
               dense
               rounded
-              class=" mr-2 mt-5 form-control input-sm text-black"
+              class="mr-2 mt-5 form-control input-sm text-black"
               max-width="64"
               height="36"
               v-if="searchtoggle"
@@ -122,14 +106,15 @@
               label-color="black"
               name="keyword"
             ></v-text-field>
-            
-            <v-icon class="d-flex" @click="searchtoggle = !searchtoggle"
-            align-center
-            ma-1
-            >
-            fas fa-search</v-icon> 
+
+            <v-icon
+              class="d-flex"
+              @click="searchtoggle = !searchtoggle"
+              align-center
+              ma-1
+            >fas fa-search</v-icon>
           </div>
-          </v-form>
+        </v-form>
 
         <v-btn
           @click="loginModalToggle = !loginModalToggle"
@@ -170,31 +155,14 @@
         <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
       </template>
     </v-snackbar>
-
-    <v-dialog v-model="loginModalToggle" max-width="800" persistent>
-      <login v-on:closeLoginModal="closeLoginModal"></login>
-    </v-dialog>
-    <v-dialog v-model="userInfoModalToggle" max-width="800">
-      <user-info-comp
-        v-if="userInfo.email"
-        :propImage="userInfo.imagesrc"
-        :propEmail="userInfo.email"
-        :propName="userInfo.name"
-        :propNickname="userInfo.nickname"
-        :propIntro="userInfo.intro"
-        :propValid="userInfo.valid"
-        :propJoinedAt="userInfo.joinedAt"
-        :key="userInfoCompKey"
-        v-on:closeUserInfoModal="closeUserInfoModal"
-      ></user-info-comp>
-    </v-dialog>
-    <v-dialog v-model="setBlogModalToggle" max-width="800">
-      <set-blog-comp
-        v-if="userInfo.email"
-        v-on:closeSetBlogModal="closeSetBlogModal"
-        v-on:closeSetBlogModal2="closeSetBlogModal2"
-      />
-    </v-dialog>
+    <v-footer
+      style=" position:fixed; bottom:18px; width:100%; background-color: rgba( 255, 255, 255, 0 );"
+    >
+      <v-spacer></v-spacer>
+      <v-btn color="cyan darken-2" fab dark bottom right @click="pageUp">
+        <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </v-footer>
   </v-app>
 </template>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -202,8 +170,6 @@
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
 import Login from "@/components/account/Login.vue";
-import UserInfoComp from "@/components/account/UserInfoComp.vue";
-import SetBlogComp from "@/components/personal/SetBlogComp.vue";
 import http from "@/util/http-common";
 import $ from "jquery";
 
@@ -216,12 +182,8 @@ export default {
     loginSuccess: false,
     logoutSuccess: false,
     loginModalToggle: false,
-    userInfoModalToggle: false,
-    setBlogModalToggle: false,
-    userInfo: {},
     alert: false,
     alertMsg: "",
-    userInfoCompKey: 0,
     defaultSelected: "제목",
     items: ["제목", "작성자"],
     titleSearch: "",
@@ -236,9 +198,7 @@ export default {
     searchtoggle: false
   }),
   components: {
-    Login,
-    UserInfoComp,
-    SetBlogComp
+    Login
   },
   methods: {
     goToMyBlog: function() {
@@ -252,20 +212,7 @@ export default {
       });
     },
     info: function() {
-      http.get(`/users/get/${this.getUserNum}`).then(({ data }) => {
-        this.userInfo = data;
-        console.dir(data);
-        this.userInfoCompKey += 1;
-        this.userInfoModalToggle = true;
-      });
-    },
-    setBlog: function() {
-      http.get(`/users/get/${this.getUserNum}`).then(({ data }) => {
-        this.userInfo = data;
-        console.dir(data);
-        this.setBlogCompKey += 1;
-        this.setBlogModalToggle = true;
-      });
+      this.$router.push(`/userSetting/${this.getUserNum}`);
     },
     avatarName: function(name) {
       var tempName = name.split(/(?=[A-Z])/);
@@ -302,23 +249,6 @@ export default {
     goWrite: function() {
       this.$router.push("/article/write");
     },
-    closeUserInfoModal: function(msg, afterNickName) {
-      if (msg != null) {
-        this.alertMsg = msg;
-        this.alert = true;
-        this.$store.commit("modifyProfileName", afterNickName);
-
-        this.$router.go();
-      }
-      this.userInfoModalToggle = false;
-    },
-    closeSetBlogModal: function() {
-      this.setBlogModalToggle = false;
-      this.$router.go();
-    },
-    closeSetBlogModal2: function() {
-      this.setBlogModalToggle = false;
-    },
     useSnackBar: function(msg) {
       if (msg != null) {
         this.alertMsg = msg;
@@ -331,7 +261,10 @@ export default {
     moveBlog() {
       this.$router.push(`/article/list/${this.getUserNum}`);
       this.$router.go(this.$router.currentRoute);
-    }
+    },
+    pageUp() {
+      window.scrollTo(0,0);
+    },
   },
   computed: {
     ...mapGetters([
@@ -370,6 +303,6 @@ export default {
 </script>
 <style>
 .text-black input {
-      color: black !important;
-    }
+  color: black !important;
+}
 </style>
