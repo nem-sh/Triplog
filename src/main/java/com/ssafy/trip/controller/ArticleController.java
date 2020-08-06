@@ -82,8 +82,9 @@ public class ArticleController {
 		for (MultipartFile file : files) {
 			String originalFileName = file.getOriginalFilename();
 			String newName = originalFileName;
-			String realName = originalFileName.split("\\.")[0];
-			String extension = originalFileName.split("\\.")[1];
+			String[] splited = originalFileName.split("\\.");
+			String realName = splited[0];
+			String extension = splited[splited.length - 1];
 			String baseDir = extension.equals("html") ? contentBaseDir : imgBaseDir;
 			
 			File dest = new File(baseDir + originalFileName);
@@ -98,8 +99,6 @@ public class ArticleController {
 			file.transferTo(dest);
 			result.add(newName);
 		}
-		
-		System.out.println(result);
 	
 		return ResponseEntity.ok(result);
 	}

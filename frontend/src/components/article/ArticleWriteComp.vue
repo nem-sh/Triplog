@@ -195,6 +195,7 @@ export default {
    registHandler() {
      var contentFile = this.createFileByInnerEditorText();
      var formData = new FormData();
+     console.log(contentFile);
      formData.append('files', contentFile);
      formData.append('files', this.fileInfo);
      http3
