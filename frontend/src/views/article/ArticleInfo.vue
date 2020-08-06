@@ -16,9 +16,12 @@
       :articleLikeCount="item.likeCount"
       :isLoginedUserLikeThisArticle="isLike"
       v-on:userSnackBar="userSnackBar"
-      v-if="(isLike !== null) & (item.num)"
+      v-if="likeLoaded & itemLoaded"
     />
-    <comment-comp :items="comments"/>
+    <comment-comp 
+      :items="comments"
+      v-if="commentLoaded"
+      />
   </div>
 </template>
 
@@ -38,20 +41,26 @@ export default {
     return {
       item: {},
       isLike: null,
+      likeLoaded: false,
+      itemLoaded: false,
+      commentLoaded: false,
       comments: []
     };
   },
   created() {
     http.get(`/article/${this.$route.params.articleNum}`).then(({ data }) => {
       this.item = data;
+      this.itemLoaded = true;
     });
     http
       .get(`/article/like/${this.$route.params.articleNum}/${this.getUserNum}`)
       .then(({ data }) => {
         this.isLike = data;
+        this.likeLoaded = true;
       });
     http.get(`/comment/${this.$route.params.articleNum}`).then(({ data }) => {
       this.comments = data;
+      this.commentLoaded = true;
     });
   },
   computed: {
