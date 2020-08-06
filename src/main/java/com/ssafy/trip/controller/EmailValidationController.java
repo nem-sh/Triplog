@@ -29,7 +29,7 @@ public class EmailValidationController {
 
         user.setValid(true);
         userRepository.save(user);
-        return "redirect:http://192.168.219.105:8081/emailauth/success";
+        return "redirect:http://localhost:8081/emailauth/success";
     }
 	
 	@RequestMapping("/api/emailValid/re/{num}")

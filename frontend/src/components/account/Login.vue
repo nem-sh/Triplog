@@ -203,12 +203,8 @@ export default {
           this.email = "";
           this.password = "";
           this.nowlogin = !this.nowlogin
-          if (this.getValid){
-            
+          
             this.$router.push(`/`)
-          } else{
-            this.$router.push(`/emailauth`)
-          }
         })
         .catch((e) => {
           if (e.request.status === 404){
