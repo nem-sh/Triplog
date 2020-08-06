@@ -1,6 +1,7 @@
 <template>
   <div id="main_wrap" style="width:800px;">
-    <div id="middle_wrap" v-if="visablelogin & !nowlogin">
+    <div id="middle_wrap">
+      
       <v-container>
         <div>
           <v-tabs v-model="tab" show-arrows background-color="black accent-4" icons-and-text dark grow>
@@ -24,8 +25,10 @@
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12">
-                        <v-text-field v-model="password" label="Password"
-                        
+                        <v-text-field  label="Password"
+                        type="password"
+                       v-model="password"
+                        value
                         id="_pwd"
                         name="pwd"
                         required
@@ -45,14 +48,14 @@
               </v-card>
             </v-tab-item>
 
-            <v-tab-item v-if="!submitted">
+            <v-tab-item>
               <v-card class="px-4">
                 <v-card-text>
                   <v-form action
                     method="post"
                     id="_frmForm"
                     name="frmForm"
-                    @submit.prevent="registerMyself">
+                    @submit.prevent="registryMyself">
                     <v-row>
                       <v-col cols="12">
                         <v-text-field v-model="customer.email" label="E-mail" required
@@ -115,211 +118,10 @@
                 </v-card-text>
               </v-card>
             </v-tab-item>
-            <div class="search_box" v-else>
-             <h3>
-                 <span style="color:blue;">성공적으로 회원가입을 완료하였습니다!</span>
-              </h3>
-             </div>
+           
       </v-tabs>
         </div>
-      </v-container>
-      
-      
-      
-      <div id="content_wrap">
-
-
-          
-
-        <!-- <div
-        >
-          <div id="login_wrap" style="position: absolute; top:20%; width:100%;">
-            <v-form class="login" @submit.prevent="login">
-              <v-simple-table class="content_table">
-                <colgroup>
-                  <col style="width:20%;" />
-                  <col style="width:80%;" />
-                </colgroup>
-                <tbody>
-                  <tr>
-                    <td colspan="2"><h2>로그인</h2></td>
-                  </tr>
-                  <tr>
-                    <th style="background-color:#eeeeee; color:#3e5fba; text-align:center;">
-                      이메일
-                    </th>
-                    <td>
-                      &nbsp;
-                      <input
-                        style="width:80%;height:80%;"
-                        type="text"
-                        id="_email"
-                        name="email"
-                        value
-                        data-msg="이메일을"
-                        title="이메일"
-                        required
-                        v-model="email"
-                        placeholder="이메일을 입력하세요."
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th style="background-color:#eeeeee; color:#3e5fba;">
-                      패스워드
-                    </th>
-                    <td>
-                      &nbsp;
-                      <input
-                        style="width:80%;height:80%;"
-                        type="password"
-                        id="_pwd"
-                        name="pwd"
-                        value
-                        v-model="password"
-                        required
-                        placeholder="패스워드를 입력하세요."
-                        title="패스워드"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2" style="height:50px; text-align:center;">
-                      <v-btn type="submit">로그인</v-btn> &nbsp;&nbsp;
-                      <v-btn
-                        type="button"
-                        @click="moveToSignUp"
-                      >
-                        회원가입으로 이동
-                      </v-btn>
-                      <v-btn @click="close">취소</v-btn>
-                    </td>
-                  </tr>
-                </tbody>
-              </v-simple-table>
-            </v-form>
-          </div>
-        </div> -->
-      </div>
-    </div>
-    <!-- <div v-if="!visablelogin && !nowlogin" style="position:absolute; top:10%; width:800px;">
-      <div v-if="!submitted" style="width:100%">
-        <form
-          action
-          method="post"
-          id="_frmForm"
-          name="frmForm"
-          @submit.prevent="registryMyself"
-        >
-          <v-simple-table class="content_table">
-            <colgroup>
-              <col style="width:20%;" />
-              <col style="width:80%;" />
-            </colgroup>
-            <tbody>
-              <tr> 
-                <td colspan="2"><h2>회원가입</h2></td>
-              </tr>
-            <tr>
-              <th style="text-align:center;">이메일</th>
-              <td>
-                <input
-                  style="width:50%;height:80%;"
-                  size="30"
-                  data-msg="이메일"
-                  type="email"
-                  name="email"
-                  id="_email"
-                  placeholder="이메일을 입력하세요."
-                  v-model="customer.email"
-                />
-                ex) trip123@naver.com
-              </td>
-            </tr>
-            <tr>
-              <th style="text-align:center;">별명</th>
-              <td>
-                <input
-                  style="width:80%;height:80%;"
-                  size="30"
-                  data-msg="별명"
-                  type="text"
-                  name="nickname"
-                  id="_nickname"
-                  placeholder="별명을 입력하세요."
-                  v-model="customer.nickname"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th style="text-align:center;">이름</th>
-              <td>
-                <input
-                  style="width:80%;height:80%;"
-                  size="30"
-                  data-msg="이름"
-                  type="text"
-                  name="cname"
-                  id="_cname"
-                  placeholder="이름을 입력하세요."
-                  v-model="customer.cname"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th style="text-align:center;">패스워드</th>
-              <td>
-                <input
-                  style="width:80%;height:80%;"
-                  size="30"
-                  data-msg="패스워드"
-                  type="password"
-                  name="password"
-                  id="_password"
-                  placeholder="패스워드를 입력하세요."
-                  v-model="customer.password"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th style="text-align:center;">패스워드 재확인</th>
-              <td>
-                <input
-                  style="width:80%;height:80%;"
-                  size="30"
-                  data-msg="패스워드 재확인"
-                  type="password"
-                  name="password_confirm"
-                  id="_password_confirm"
-                  placeholder="패스워드를 다시 입력하세요."
-                  v-model="password_confirm"
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <td colspan="2" style="height:50px; text-align:center;">
-                <v-btn type="submit" name="button">회원가입</v-btn
-                >&nbsp;&nbsp;
-                <v-btn type="button" @click="moveToSignIn">
-                  로그인으로 이동
-                </v-btn>
-                <v-btn @click="close">취소</v-btn>
-              </td>
-            </tr>
-            </tbody>
-          </v-simple-table>
-        </form>
-      </div>
-
-      <div class="search_box" v-else>
-        <h3>
-          <span style="color:blue;">성공적으로 회원가입을 완료하였습니다!</span>
-        </h3>
-      </div>
-    </div>
-
-    <v-snackbar
+        <v-snackbar
         v-model="alert"
         timeout="5000"
       >
@@ -336,7 +138,14 @@
             Close
           </v-btn>
         </template>
-      </v-snackbar> -->
+      </v-snackbar>
+      </v-container>
+      
+      
+      
+
+    </div>
+   
   </div>
 </template>
 <script>
@@ -455,6 +264,7 @@ export default {
             this.visablelogin = true;
             this.submitted = true;
             this.newCustomer();
+            // this.$router.push('/login')
           } else {
             this.alertMsg = response.data.message;
             this.alert = true;
