@@ -42,7 +42,7 @@
                 height="388"
               ></v-img>
               <br />
-              <v-card-text class="skipText">{{value.article.content}}</v-card-text>
+              <v-card-text class="skipText">{{value.article.place}}</v-card-text>
               <br />
               <hr />
               <v-card-actions>

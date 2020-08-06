@@ -349,6 +349,7 @@ export default {
             created_at: new Date(),
             user_num: this.getUserNum,
             userNickname: this.getProfile,
+            place: this.articlePlace,
           }).then(({ data }) => {
             let msg = "등록 처리시 문제가 발생했습니다.";
             if (data === "success") {
@@ -358,8 +359,8 @@ export default {
             this.alertMsg = msg;
             this.alert = true;
             this.registSuccess = true;
-            clearInterval(this.polling);
-            this.storeClean();
+            // clearInterval(this.polling);
+            // this.storeClean();
             this.$router.push(`/article/list/${this.getUserNum}`);
           }).catch((e) => {
             if (e.request.status === 404){
