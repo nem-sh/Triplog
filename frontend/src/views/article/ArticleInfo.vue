@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1 style="color: white">-</h1>
     <article-info-comp
       :articleNum="item.num"
       :articleUserNum="item.user_num"
@@ -13,13 +12,13 @@
       :articleDateEnd="item.date_end"
       :articleCreatedAt="item.created_at"
       :articleContent="item.content"
-      :blogMasterName="blogMaster"
+      :blogMasterName="item.userNickname"
       :articleLikeCount="item.likeCount"
       :isLoginedUserLikeThisArticle="isLike"
       v-on:userSnackBar="userSnackBar"
-      v-if="isLike !== null"
+      v-if="(isLike !== null) & (item.num)"
     />
-    <comment-comp :items="comments" />
+    <comment-comp :items="comments"/>
   </div>
 </template>
 
@@ -38,7 +37,6 @@ export default {
   data: function() {
     return {
       item: {},
-      blogMaster: "a옹",
       isLike: null,
       comments: []
     };
@@ -46,17 +44,14 @@ export default {
   created() {
     http.get(`/article/${this.$route.params.articleNum}`).then(({ data }) => {
       this.item = data;
-      console.dir(data);
     });
     http
       .get(`/article/like/${this.$route.params.articleNum}/${this.getUserNum}`)
       .then(({ data }) => {
         this.isLike = data;
-        console.dir(data);
       });
     http.get(`/comment/${this.$route.params.articleNum}`).then(({ data }) => {
       this.comments = data;
-      console.dir(data);
     });
   },
   computed: {

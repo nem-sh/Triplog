@@ -1,28 +1,34 @@
 <template>
   <div style="min-width: 1000px;">
-    <h1>{{articleTitle}}</h1>
-    <h4 style="color:gray">{{blogMasterName}} | {{getFormatDate(articleCreatedAt)}}</h4>
-    <br />
-    <hr width="100%" color="whitegray" />
-    <br />
-    <v-simple-table>
-      <template v-slot:default borderless>
-        <tbody>
-          <tr>
-            <th class="text-left">장소</th>
-            <td class="text-left">{{articlePlace}}</td>
-          </tr>
-          <tr>
-            <th class="text-left">일정 시작 날짜</th>
-            <td class="text-left">{{getFormatDate(articleDateStart)}}</td>
-          </tr>
-          <tr>
-            <th class="text-left">일정 종료 날짜</th>
-            <td class="text-left">{{getFormatDate(articleDateEnd)}}</td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
+    <div>
+      <h1>{{articleTitle}}</h1>
+      <h4 style="color:gray">{{blogMasterName}}</h4>
+      <h4 style="color:gray">{{getFormatDate(articleCreatedAt)}}</h4>
+    </div>
+    <br>
+    <v-divider/>
+    <v-tabs
+        v-model="tab"
+      >
+        <v-tab
+          v-for="item in tabItems"
+          :key="item.tab"
+        >
+          {{ item.tab }}
+        </v-tab>
+      </v-tabs>
+  
+      <v-tabs-items v-model="tab">
+        <v-tab-item
+          v-for="item in tabItems"
+          :key="item.tab"
+        >
+          <v-card flat>
+            <v-card-text>{{ item.content }}</v-card-text>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
+    <v-divider/>
     <br />
     <div align="center">
     <v-img v-if="articleThumbnail" :src="require(`@/assets/articleImage/${articleThumbnail}`)" class="img" />
@@ -33,34 +39,73 @@
       :content = "realContent"
       v-if="realContent"
     />
-    <!-- 본문 끝 -->
-    <br/><br/>
-    <div>
-      <v-btn @click="likeBtnClick" style="float: left;">
+    <v-divider/>
+    <v-row 
+      class="ma-1"
+      align="center"
+      justify="space-between"
+      >
+      <v-btn
+        class="ml-6"
+        icon
+        :disabled = "likeBtnFlag"
+        :loading = "likeBtnFlag"
+      >
+      <v-chip
+        @click="likeBtnClick" 
+        color="pink"
+        text-color="white"
+      >
+        <v-avatar
+          left
+          class="pink darken-4"
+        >
+          {{articleLikeCount}}
+        </v-avatar>
+
         <v-icon v-if="isLoginedUserLikeThisArticle">mdi-heart</v-icon>
         <v-icon v-else>mdi-heart-outline</v-icon>
-        {{articleLikeCount}}
+      </v-chip>
       </v-btn>
-
-      <div style="float: right;">
-        <!-- <v-btn
-          :to="{ name: 'articleModify', params: { articleNum: articleNum }}"
-          v-if="this.getUserNum === articleUserNum"
-        >수정</v-btn>
-        <v-btn @click="confirmDelete" v-if="this.getUserNum === articleUserNum">삭제</v-btn> -->
-        <v-btn
-          :to="{ name: 'articleModify', params: { articleNum: articleNum }}"
-        >수정</v-btn>
-        <v-btn @click="confirmDelete">삭제</v-btn>
-        <v-btn :to="{ name: 'articleList', params: { hostNum: articleUserNum }}">목록</v-btn>
-      </div>
-    </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+      <v-sheet>
+          <v-btn
+            :to="{ name: 'articleModify', params: { articleNum: articleNum }}"
+            v-if="btnToggle"
+            tile
+            outlined
+          >
+          <v-icon left>mdi-pencil</v-icon>
+          <span>수정</span>
+          </v-btn>
+          <v-btn 
+            @click="confirmDelete"
+            v-if="btnToggle"
+            tile
+            outlined
+            class="ma-2"
+          >
+          <v-icon left>mdi-delete</v-icon>
+          삭제</v-btn>
+        
+      </v-sheet>
+    </v-row>
+    <v-row
+      justify="end"
+      class="ma-1"
+      >
+      <v-btn 
+        tile
+        outlined
+        class="mr-2"
+        :to="{ name: 'articleList', params: { hostNum: articleUserNum }}"
+        >
+        <v-icon left>mdi-arrow-left</v-icon>
+        뒤로
+      </v-btn>
+    </v-row>
+    
+    <br/>
+    <br/>
     <v-dialog v-model="dialog" max-width="350">
       <v-card>
         <v-card-title class="headline">정말 삭제하시겠습니까?</v-card-title>
@@ -111,9 +156,21 @@ export default {
       alertMsg: "",
       dialog: false,
       realContent: "",
+      btnToggle: false,
+      likeBtnFlag: false,
+      tab: null,
+      tabItems: [
+        { tab: '장소', content: this.articlePlace },
+        { tab: '일정', content: this.getFormatDate(this.articleDateStart) + ' ~ ' + this.getFormatDate(this.articleDateEnd) },
+      ],
     };
   },
+  mounted() {
+    if(this.getUserNum == this.articleUserNum) this.btnToggle = true;
+  },
   created() {
+    console.log(this.getUserNum);
+    console.log(this.articleUserNum);
     this.openContentFile()
   },
   methods: {
@@ -155,6 +212,7 @@ export default {
         });
     },
     likeBtnClick: function() {
+      this.likeBtnFlag = true;
       if (this.isLoginedUserLikeThisArticle) {
         this.articleLikeCount--;
       } else {
@@ -187,6 +245,7 @@ export default {
           }
           this.alertMsg = msg;
           this.alert = true;
+          this.likeBtnFlag = false;
           //   this.moveList();
         })
         .catch(() => {
