@@ -1,33 +1,103 @@
 <template>
   <div id="main_wrap" style="min-width: 1000px;">
-    <v-simple-table>
-      <template v-slot:default>
-        <tbody>
-          <tr>
-              <th class="text-left">TITLE</th>
-              <td>
-                <v-text-field
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  ref="title"
-                  label="제목을 입력하세요"
-                  v-model="articleTitle"
-                />
-              </td>
-          </tr>
-          <tr>
-            <td>
-              썸네일 이미지
-            </td>
-            <td>
-              <input ref="imageInput" type="file" hidden @change="onChangeImages">
-              <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
-            </td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
+    <v-row
+      dense
+      >
+      <v-col
+        cols="12"
+        md="2"
+        align-self="center">
+        <div style="width:100%; text-align:center">제목</div>
+      </v-col>
+      <v-col
+        cols="12"
+        md="9"
+      >
+        <v-text-field
+          v-model="articleTitle"
+          label="제목"
+          id="title"
+          ref="title"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row
+      dense
+      >
+      <v-col
+        cols="12"
+        md="2"
+        align-self="center">
+        <div style="width:100%; text-align:center">장소</div>
+      </v-col>
+      <v-col
+        cols="12"
+        md="9">
+        <v-text-field
+          v-model="articlePlace"
+          label="장소를 입력하세요."
+          id="place"
+          ref="place"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row
+      dense
+      >
+      <v-col
+        cols="12"
+        md="2"
+        align-self="center">
+        <div style="width:100%; text-align:center">
+          <v-btn text @click="onClickImageUpload">이미지 업로드</v-btn>
+        </div>
+      </v-col>
+      <v-col
+        cols="12"
+        md="9"
+      >
+        <v-text-field
+          v-model="imageFileName"
+          label="image file"
+          id="imageFileName"
+          ref="imageFileName"
+          disabled
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
+    <v-row
+      style="height: 300px;"
+      v-if="imageUrl"
+      >
+      <v-col
+        cols="12"
+        md="2"
+        align-self="center">
+      </v-col>
+      <v-col
+        cols="12"
+        md="9"
+      >
+      <v-sheet 
+        outlined
+        height="300"
+        align = "center"
+      >
+        <v-img v-if="imageUrl" :src="imageUrl" class="img" aspect-ratio="1.7" contain>
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-sheet>
+      </v-col>
+    </v-row>
+
+    <br>
+
+    <input ref="imageInput" type="file" accept="image/*" hidden @change="onChangeImages">
 
     <br/>
     <v-sheet>
@@ -51,10 +121,10 @@
 
     <v-row>
           <v-col>
-            <v-btn @click="temp">임시 저장</v-btn>
+            <v-btn tile outlined @click="temp">임시 저장</v-btn>
           </v-col>
           <v-col align="right">
-            <v-btn @click="regist">등록</v-btn>
+            <v-btn tile outlined @click="regist">등록</v-btn>
           </v-col>
     </v-row>
     <br/><br/>
@@ -104,9 +174,11 @@ export default {
     return {
       articleContent: "",
       articleTitle: "",
+      articlePlace: "",
       alert : false,
       alertMsg : "",
       registSuccess: false,
+      imageFileName: null,
       imageUrl: null,
       fileInfo: "",
       polling: null,
@@ -243,6 +315,7 @@ export default {
     onChangeImages(e) {
       const file = e.target.files[0];
       this.fileInfo = file;
+      this.imageFileName = file.name;
       this.imageUrl = URL.createObjectURL(file);
     },
     onClickImageUpload() {
