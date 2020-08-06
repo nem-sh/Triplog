@@ -113,7 +113,7 @@
         </v-btn>
           
         <v-btn
-          @click="goLoginPage"
+          @click="loginModalToggle = !loginModalToggle"
           v-if="!(isAuthenticated && isProfileLoaded)"
           icon
         >
@@ -151,15 +151,11 @@
         <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
       </template>
     </v-snackbar>
-    
-    <v-footer
-      style=" position:fixed; bottom:18px; width:100%; background-color: rgba( 255, 255, 255, 0 );"
-    >
-      <v-spacer></v-spacer>
-      <v-btn color="cyan darken-2" fab dark bottom right @click="$vuetify.goTo(0, 0);">
+    <div style="position: fixed; right: 20px; bottom: 20px;">
+      <v-btn color="cyan darken-2" fab dark @click="$vuetify.goTo(0, 0);">
         <v-icon>mdi-chevron-up</v-icon>
       </v-btn>
-    </v-footer>
+    </div>
   </v-app>
 </template>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -258,9 +254,6 @@ export default {
     moveBlog() {
       this.$router.push(`/article/list/${this.getUserNum}`);
       this.$router.go(this.$router.currentRoute);
-    },
-    goLoginPage() {
-      this.$router.push("/login");
     },
   },
   computed: {
