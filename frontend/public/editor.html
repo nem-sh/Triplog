@@ -16,8 +16,11 @@
         </script>
     </head>
     <body>
-        <div>
-            내용을 입력하세요<br />
-        </div>
+        <div class="textDiv" data-text="여기에 글자를 입력해주세요."></div>
     </body>
+    <style>
+        .textDiv:empty:not(:focus):before{
+            content: attr(data-text);
+        }
+    </style>
 </html>
