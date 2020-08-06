@@ -29,6 +29,7 @@ import com.ssafy.trip.model.BlogInfo;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.repository.ArticleRepository;
 import com.ssafy.trip.repository.BlogInfoRepository;
+import com.ssafy.trip.repository.CommentRepository;
 import com.ssafy.trip.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
@@ -38,6 +39,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private CommentRepository commentRepository;
     
     @Autowired
     private ArticleRepository articleRepository;
@@ -125,6 +129,8 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable("num") Long num) {
       try {
     	  articleRepository.deleteAllByUsernum(num);
+
+    	  commentRepository.deleteAllByUsernum(num);
     	  MemberUser user = null;
     	  user = userRepository.findByNum(num)
       			.orElseThrow(() -> new ResourceNotFoundException("User", "num", num));

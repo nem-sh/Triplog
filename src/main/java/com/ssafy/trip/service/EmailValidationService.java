@@ -27,10 +27,21 @@ public class EmailValidationService {
         try {
 			simpleMessage.addRecipient(RecipientType.TO, new InternetAddress(memberMail));
 			simpleMessage.setSubject("TRIP 회원가입 인증 메일");
-			simpleMessage.setText(new StringBuffer().append("<h1>회원가입 인증메일입니다.</h1>")
-					.append("<p>밑의 링크를 클릭하면 메일이 인증 됩니다.</p>")
-					.append("<a href='http://localhost:8080/emailValid/auth/"+memberMail)
-					.append("' target=blank>메일 인증 링크</a>")
+//			simpleMessage.setText(new StringBuffer().append("<h1>회원가입 인증메일입니다.</h1>")
+//					.append("<p>밑의 링크를 클릭하면 메일이 인증 됩니다.</p>")
+//					.append("<a href='http://localhost:8080/emailValid/auth/"+memberMail)
+//					.append("' target=blank>메일 인증 링크</a>")
+//					.toString(), "UTF-8", "html");
+			simpleMessage.setText(new StringBuffer().append("<h1 style=\"color:cyan\">TRIPLOG</h1>")
+					.append("<hr />").append("<h3>안녕하세요. TRIPLOG입니다.</h3>\r\n" + 
+							"    <h3>TRIPLOG계정 사용을 위해 이메일 주소 인증이 필요합니다.</h3>\r\n" + 
+							"    <h3>TRIPLOG 계정 :\r\n" + memberMail + "</h3>"+ "<br />" +
+							"    <p>아래의 버튼을 클릭하여 이메일 주소 인증을 완료하면 해당 이메일 주소를 TRIPLOG 계정으로 사용할 수 있습니다.</p>\r\n" + 
+							"    <p>만일 TRIPLOG 계정을 등록하지 않았는데 본 메일을 받았다면 아래 버튼을 클릭하지 마세요.</p>" + "<br />")
+					.append("<button style=\"background-color: #fff;\r\n" + 
+							"	border-color: #1c98ad;\r\n" + 
+							"	color: #1c98ad; \"><a style=\"text-decoration: none; color:black;\" href=\"http://localhost:8080/emailValid/auth/"+memberMail)
+					.append("\" target=blank>TRIPLOG시작하기</a></button>")
 					.toString(), "UTF-8", "html");
 			javaMailSender.send(simpleMessage);
 			logger.info("async send email to : " + email);
