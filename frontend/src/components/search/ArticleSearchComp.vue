@@ -1,13 +1,31 @@
 <template>
-    <tr @click="clickTableRow()">
-        <td>
-        <v-img v-if="thumbnail" :src="require(`@/assets/articleImage/${thumbnail}`)" style="width: 100px; height:100px; margin-right:0;" ></v-img>
-        <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" style="width: 100px; height:100px; margin-right:0;" ></v-img>
-        </td>
-        <td style="width: 200px; text-align:center;"> {{title}}</td>
-        <td style="width: 200px; text-align:center;">{{userNickname}}</td>
-        <td style="width: 200px; text-align:center;">{{created_at | moment('YYYY-MM-DD') }}</td>
-    </tr>
+    <v-card class="ma-4" width="200" @click="clickTableRow()">
+        <v-scale-transition> 
+            <v-img v-if="thumbnail" :src="require(`@/assets/articleImage/${thumbnail}`)"
+            height="200px">
+            </v-img>
+            <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)"
+            class="align-end"
+            >
+            </v-img>
+            <template v-slot:placeholder>
+                <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                >
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                </v-row>
+            </template>
+        </v-scale-transition>
+        
+        <v-card-title>
+            {{this.title}}
+        </v-card-title>
+        <v-card-subtitle>
+            {{this.created_at | moment('YYYY-MM-DD')}}
+        </v-card-subtitle>
+    </v-card>
 </template>
 
 <script>

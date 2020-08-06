@@ -1,25 +1,19 @@
 <template>
-    <v-simple-table>
-        <thead style="text-align:center;">
-            <tr>
-            <th style="text-align:center;">썸네일</th>
-                <th style="text-align:center;">제목</th>
-                <th style="text-align:center;">작성자</th>
-                <th style="text-align:center;">작성일</th>
-            </tr>
-        </thead>
-        <tbody>
-            <article-search-comp
-            v-for="item in items" 
-            :key="item.num"
-            :propTitle="item.title"
-            :propUserNickname="item.userNickname"
-            :propThumbnail="item.thumbnail"
-            :propCreated_at="item.created_at"
-            :propNum="item.num"
-            />
-        </tbody>
-    </v-simple-table>
+    <v-row>
+        <v-sheet class="mx-auto" max-width="900">
+            <v-slide-group class="pa-4">
+                <v-slide-item v-for="item in items" :key="item.num">
+                    <article-search-comp
+                    :propTitle="item.title"
+                    :propUserNickname="item.userNickname"
+                    :propThumbnail="item.thumbnail"
+                    :propCreated_at="item.created_at"
+                    :propNum="item.num"
+                    />
+                </v-slide-item>
+            </v-slide-group>
+        </v-sheet>
+    </v-row>
 </template>
 
 <script>
@@ -71,4 +65,4 @@ export default {
       this.fetchData()
    },
 }
-</script>
+</script> 
