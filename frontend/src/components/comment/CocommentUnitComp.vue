@@ -115,7 +115,7 @@ export default {
   },
   created() {
     if (this.item.userimg) {
-      if (this.item.comment.userimg != null) {
+      if (this.item.userimg != null) {
         this.userimg = this.item.userimg;
       }
     }
