@@ -89,24 +89,8 @@
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-
-        <!-- <v-form action="/article/ArticleSearch">
-          <v-text-field
-              label="search"
-              color="black"
-              black
-              filled
-              dense
-              rounded
-              class="mr-2 mt-5 form-control input-sm text-black"
-              max-width="64"
-              height="36"
-              v-if="searchtoggle"
-              background-color="blue-grey lighten-5"
-              label-color="black"
-              name="keyword"
-            ></v-text-field>
-        </v-form> -->
+        
+        <v-form action="/article/ArticleSearch">
         <v-expand-transition style="display: flex;">
             <v-text-field 
             label="Search"
@@ -118,8 +102,10 @@
             rounded
             dense
             clearable
+            name="keyword"
           />
         </v-expand-transition>
+        </v-form>
 
         <v-btn x-large icon @click="searchtoggle = !searchtoggle">
           <v-icon>
