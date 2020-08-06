@@ -201,7 +201,7 @@
         tile
         outlined
         class="mr-2"
-        :to="{ name: 'articleList', params: { hostNum: articleUserNum }}"
+        @click="goBack"
         >
         <v-icon left>mdi-arrow-left</v-icon>
         뒤로
@@ -351,6 +351,9 @@ export default {
       return Math.floor((b - a + 1) * Math.random()) + a
     },
     // 여기까지 캘린더 메소드
+    goBack: function() {
+      window.history.back();
+    },
     openContentFile: function() {
       var url = '../../content/registered/' + this.articleContent;
       var xhr = new XMLHttpRequest();
