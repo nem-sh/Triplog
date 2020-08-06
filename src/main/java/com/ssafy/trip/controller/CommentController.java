@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,12 +30,12 @@ public class CommentController {
 	@GetMapping("/{articlenum}")
 	public List<CommentResponse> getComment(@PathVariable(value = "articlenum") Long num) {
 		
-		List<Comment> comments = commentRepository.findByArticlenumAndReply(num, null);
+		List<Comment> comments = commentRepository.findByArticlenumAndReplyOrderByCreatedat(num, null);
 		System.out.println("dd");
 		System.out.println(comments);
 		List<CommentResponse> commentResponses = new ArrayList<CommentResponse>();
 		for(Comment comment : comments) {
-			List<Comment> cocomments = commentRepository.findByReply(comment);
+			List<Comment> cocomments = commentRepository.findByReplyOrderByCreatedat(comment);
 			
 			commentResponses.add(new CommentResponse(comment, cocomments));
 		}
@@ -70,6 +71,21 @@ public class CommentController {
 		Comment reply = commentRepository.findByNum(replyNum);
 		comment.setReply(reply);
 		commentRepository.save(comment);
+
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
+	}
+	@PutMapping("/{num}")
+	public ResponseEntity<?> putCocomment(@PathVariable(value = "num") Long num, @RequestBody Comment comment) {
+		
+		
+		Comment saveComment = commentRepository.findByNum(num);
+		saveComment.setContent(comment.getContent());
+
+		saveComment.setUserimg(comment.getUserimg());
+
+		saveComment.setUsernickname(comment.getUsernickname());
+
+		commentRepository.save(saveComment);
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
 	}

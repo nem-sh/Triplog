@@ -155,6 +155,8 @@ export default {
   name: "login",
   data() {
     return {
+      
+      valid: this.propValid,
       tab: 0,
       tabs: [
           {name:"Login", icon:"mdi-account"},
@@ -177,6 +179,10 @@ export default {
       password_confirm: "",
     };
   },
+  props:{
+
+    propValid: { type: Boolean },
+  },
   methods: {
     login: function() {
       //model에 바인딩된 데이터 모두 ==> this
@@ -187,7 +193,12 @@ export default {
           this.email = "";
           this.password = "";
           this.nowlogin = !this.nowlogin
-          this.$emit("closeLoginModal");
+          if (this.valid==true){
+            
+            this.$router.push(`/`)
+          } else{
+            this.$router.push(`/emailauth`)
+          }
         })
         .catch((e) => {
           if (e.request.status === 404){
@@ -264,7 +275,7 @@ export default {
             this.visablelogin = true;
             this.submitted = true;
             this.newCustomer();
-            // this.$router.push('/login')
+            this.$router.push('/emailauth')
           } else {
             this.alertMsg = response.data.message;
             this.alert = true;

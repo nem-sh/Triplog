@@ -89,34 +89,29 @@
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        
+
         <v-form action="/article/ArticleSearch">
-        <v-expand-transition style="display: flex;">
-            <v-text-field 
-            label="Search"
-            background-color="cyan darken-1"
-            color="white"
-            outlined
-            v-show="searchtoggle"
-            class="mt-6 shrink"
-            rounded
-            dense
-            clearable
-            name="keyword"
-          />
-        </v-expand-transition>
+          <v-expand-transition style="display: flex;">
+            <v-text-field
+              label="Search"
+              background-color="cyan darken-1"
+              color="white"
+              outlined
+              v-show="searchtoggle"
+              class="mt-6 shrink"
+              rounded
+              dense
+              clearable
+              name="keyword"
+            />
+          </v-expand-transition>
         </v-form>
 
         <v-btn x-large icon @click="searchtoggle = !searchtoggle">
-          <v-icon>
-          mdi-text-search</v-icon>
+          <v-icon>mdi-text-search</v-icon>
         </v-btn>
-          
-        <v-btn
-          @click="goLoginPage"
-          v-if="!(isAuthenticated && isProfileLoaded)"
-          icon
-        >
+
+        <v-btn @click="goLoginPage" v-if="!(isAuthenticated && isProfileLoaded)" icon>
           <v-icon>mdi-account-arrow-right</v-icon>
         </v-btn>
       </v-app-bar>
@@ -151,7 +146,7 @@
         <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
       </template>
     </v-snackbar>
-    
+
     <v-footer
       style=" position:fixed; bottom:18px; width:100%; background-color: rgba( 255, 255, 255, 0 );"
     >
@@ -244,7 +239,11 @@ export default {
       );
     },
     goWrite: function() {
-      this.$router.push("/article/write");
+      if (this.propValid == true) {
+        this.$router.push("/article/write");
+      } else {
+        this.$router.push(`/emailAuth`);
+      }
     },
     useSnackBar: function(msg) {
       if (msg != null) {
@@ -256,12 +255,16 @@ export default {
       this.$router.push("noticeList");
     },
     moveBlog() {
-      this.$router.push(`/article/list/${this.getUserNum}`);
-      this.$router.go(this.$router.currentRoute);
+      if (this.propValid == true) {
+        this.$router.push(`/article/list/${this.getUserNum}`);
+        this.$router.go(this.$router.currentRoute);
+      } else {
+        this.$router.push(`/emailAuth`);
+      }
     },
     goLoginPage() {
       this.$router.push("/login");
-    },
+    }
   },
   computed: {
     ...mapGetters([
