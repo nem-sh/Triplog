@@ -1,24 +1,16 @@
 <template>
   <div>
-    <v-container class="cyan darken-2">
-      <v-row>
-        <v-col class="white--text pa-2 ml-3">
-          My Account
-        </v-col>
-      </v-row>
-    </v-container>
     <v-simple-table>
       <template v-slot:default>
         <tbody>
           <tr>
               <th class="white text-center teal--text">
-                <input ref="imageInput" type="file" hidden @change="onChangeImages">
-                <v-btn type="button" @click="onClickImageUpload">프로필 이미지 변경</v-btn>
+                프로필 이미지
               </th>
               <td>
                 <div align="center">
                   <div v-if="firstImage">
-                    <v-img v-if="imagesrc" :src="require(`@/assets/userImage/${imagesrc}`)" class="img" width="100" height="100">
+                    <v-img v-if="imagesrc" :src="require(`@/assets/userImage/${imagesrc}`)" class="img" width="200" height="100">
                       <template v-slot:placeholder>
                         <v-row
                             class="fill-height ma-0"
@@ -29,7 +21,7 @@
                         </v-row>
                       </template>
                     </v-img>
-                    <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" width="100" height="100">
+                    <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" width="200" height="100">
                       <template v-slot:placeholder>
                         <v-row
                             class="fill-height ma-0"
@@ -42,7 +34,7 @@
                     </v-img>
                   </div>
                   <div v-else>
-                    <v-img v-if="imageUrl" :src="imageUrl" class="img" width="100" height="100">
+                    <v-img v-if="imageUrl" :src="imageUrl" class="img" width="200" height="100">
                       <template v-slot:placeholder>
                         <v-row
                             class="fill-height ma-0"
@@ -53,7 +45,7 @@
                         </v-row>
                       </template>
                     </v-img>
-                    <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" width="100" height="100">
+                    <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" width="200" height="100">
                       <template v-slot:placeholder>
                         <v-row
                             class="fill-height ma-0"
@@ -65,6 +57,8 @@
                       </template>
                     </v-img>
                   </div>
+                  <input ref="imageInput" type="file" hidden @change="onChangeImages">
+                <v-btn small type="button" @click="onClickImageUpload">프로필 이미지 변경</v-btn>
                 </div>
               </td>
           </tr>
