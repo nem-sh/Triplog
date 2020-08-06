@@ -4,7 +4,7 @@
       
       <v-container>
         <div>
-          <v-tabs v-model="tab" show-arrows background-color="black accent-4" icons-and-text dark grow>
+          <v-tabs v-model="tab" show-arrows background-color="cyan darken-2" icons-and-text teal grow>
           <v-tabs-slider></v-tabs-slider>
           <v-tab v-for="i in tabs" :key="i">
             <v-icon large>{{i.icon}}</v-icon>
@@ -15,7 +15,7 @@
                 <v-card-text>
                   <v-form @submit.prevent="login" >
                     <v-row>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :  </p></v-col>
                       <v-col cols="10">
                          <v-text-field v-model="email" label="E-mail" required
                         type="text"
@@ -24,7 +24,7 @@
                         placeholder="이메일을 입력하세요"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :  </p></v-col>
                       <v-col cols="10">
                         <v-text-field  label="Password"
                         type="password"
@@ -41,7 +41,7 @@
                         </v-col>
                       <v-spacer></v-spacer>
                       <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                        <v-btn type="submit" x-large block color="black"><p style="color:white; margin-bottom:0px;"> Login</p></v-btn>
+                        <v-btn type="submit" x-large block color="cyan darken-4"><p style="color:white; margin-bottom:0px;"> Login</p></v-btn>
                       </v-col>
                     </v-row>
 
@@ -59,7 +59,7 @@
                     name="frmForm"
                     @submit.prevent="registryMyself">
                     <v-row>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :  </p></v-col>
                       <v-col cols="10">
                         <v-text-field v-model="customer.email" label="E-mail" required
                         placeholder="이메일을 입력하세요"
@@ -69,7 +69,7 @@
                         outlined
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 별명 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 별명 :  </p></v-col>
                       <v-col cols="10">
                         <v-text-field v-model="customer.nickname"
                           data-msg="별명"
@@ -79,7 +79,7 @@
                           placeholder="별명을 입력하세요"
                           label="Nickname"></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 이름 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이름 :  </p></v-col>
                       <v-col cols="10">
                         <v-text-field v-model="customer.cname"
                         label="Name"
@@ -91,7 +91,7 @@
                         data-msg="이름"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :  </p></v-col>
                       <v-col cols="10">
                         <v-text-field block v-model="customer.password"
                           type="password"
@@ -105,7 +105,7 @@
                         </v-text-field>
 
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 확인 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 확인 :  </p></v-col>
                       <v-col cols="10">
                         <v-text-field
                         data-msg="패스워드 재확인"
@@ -122,7 +122,7 @@
                       </v-col>
                       <v-spacer></v-spacer>
                       <v-col class="d-flex ml-auto" cols="12">
-                          <v-btn type="submit" x-large block color="black"><p style="color:white; margin-bottom:0px;">SignUp</p> </v-btn>
+                          <v-btn type="submit" x-large block color="cyan darken-4"><p style="color:white; margin-bottom:0px;">SignUp</p> </v-btn>
                       </v-col>
                     </v-row>
 
