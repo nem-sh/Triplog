@@ -30,10 +30,77 @@
     </v-simple-table>
 
     <br/>
-    <v-sheet>
-      <v-btn @click="exec('bold')">
-        굵게
+    <v-sheet class="ma-1">
+      <div>
+      <h2>Font</h2>
+      <v-btn class="mr-1" @click="exec('bold')" label outlined color="cyan darken-2">
+        <v-icon>mdi-format-bold</v-icon>
       </v-btn>
+      <v-btn class="mr-1" @click="exec('italic')" label outlined color="cyan darken-2">
+        <v-icon>mdi-format-italic</v-icon>
+      </v-btn>
+      <v-btn class="mr-1" @click="exec('underline')" label outlined color="cyan darken-2">
+        <v-icon>mdi-format-underline</v-icon>
+      </v-btn>
+      <v-btn class="mr-1" @click="exec('subscript')" label outlined color="cyan darken-2">
+        <v-icon>mdi-format-subscript</v-icon>
+      </v-btn>
+      <v-btn class="mr-1" @click="exec('superscript')" label outlined color="cyan darken-2">
+        <v-icon>mdi-format-superscript</v-icon>
+      </v-btn>
+      </div>
+      <!-- <v-btn class="mr-1" @click="this.showColorPicker != this.showColorPicker" outlined color="cyan darken-2">
+        <v-icon>mdi-format-color-fill</v-icon>
+      </v-btn> -->
+      <!-- <v-color-picker class="ma-2" mode="hexa" show-swatches v-if="showColorPicker"/> -->
+      
+<!-- exec('foreColor') v-model="titleColor"-->
+
+      <div>
+        <div style="display: inline-block; margin-right: 10px;">
+          <h2>Paragraph</h2>
+          <v-chip class="mr-1" @click="exec('justifyLeft')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-align-left</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('justifyCenter')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-align-center</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('justifyRight')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-align-right</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('justifyFull')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-align-justify</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('insertHorizontalRule')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-align-middle</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('insertOrderedList')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-list-numbered</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('insertunorderedList')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-list-bulleted</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('insertParagraph')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-textdirection-l-to-r</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('indent')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-indent-increase</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('outdent')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-indent-decrease</v-icon>
+          </v-chip>
+        </div>
+
+        <div style="display: inline-block;">
+        <h2>Etc</h2>
+        <v-chip class="mr-1" @click="exec('undo')" label outlined color="cyan darken-2">
+          <v-icon>mdi-keyboard-return</v-icon>
+        </v-chip>
+        </div>
+      </div>
+
+      
+
     </v-sheet>
     <v-sheet
       outlined
@@ -114,6 +181,7 @@ export default {
       editorHtmlPath: "./assets/editor/editor.html",
       prefix: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
       suffix: '</body></html>',
+      showColorPicker: false,
     };
   },
   created() {
