@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,26 +73,35 @@ public class ArticleController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 
-	@PostMapping("/img")
-	public ResponseEntity<String> uploadImgs(@RequestPart MultipartFile img) throws Exception {
-		String baseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\articleImage\\";
-		String originalFileName = img.getOriginalFilename();
-		System.out.println(originalFileName);
-		File dest = new File(baseDir + originalFileName);
+	@PostMapping("/files")
+	public ResponseEntity<List<String>> uploadFiles(@RequestPart List<MultipartFile> files) throws Exception {
+		String contentBaseDir = System.getProperty("user.dir")+ "\\frontend\\public\\content\\registered\\";
+		String imgBaseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\articleImage\\";
+		List<String> result = new LinkedList<String>();
 		
-		String newName = originalFileName;
-		String realName = originalFileName.split("\\.")[0];
-		String extension = originalFileName.split("\\.")[1];
-		int index = 0;
-		while(dest.exists()) {
-			index++;
-			newName = realName + "(" + index + ")." + extension;
-			dest = new File(baseDir + newName);
+		for (MultipartFile file : files) {
+			String originalFileName = file.getOriginalFilename();
+			String newName = originalFileName;
+			String realName = originalFileName.split("\\.")[0];
+			String extension = originalFileName.split("\\.")[1];
+			String baseDir = extension.equals("html") ? contentBaseDir : imgBaseDir;
+			
+			File dest = new File(baseDir + originalFileName);
+			
+			int index = 0;
+			while(dest.exists()) {
+				index++;
+				newName = realName + "(" + index + ")." + extension;
+				dest = new File(baseDir + newName);
+			}
+			
+			file.transferTo(dest);
+			result.add(newName);
 		}
 		
-		img.transferTo(dest);
+		System.out.println(result);
 	
-		return ResponseEntity.ok(newName);
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("/getList/{hostNum}")
