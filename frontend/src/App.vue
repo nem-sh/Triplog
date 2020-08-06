@@ -132,7 +132,7 @@
           </v-form>
 
         <v-btn
-          @click="loginModalToggle = !loginModalToggle"
+          @click="goLoginPage"
           v-if="!(isAuthenticated && isProfileLoaded)"
           icon
         >
@@ -171,9 +171,7 @@
       </template>
     </v-snackbar>
 
-    <v-dialog v-model="loginModalToggle" max-width="800" persistent>
-      <login v-on:closeLoginModal="closeLoginModal"></login>
-    </v-dialog>
+   
     <v-dialog v-model="userInfoModalToggle" max-width="800">
       <user-info-comp
         v-if="userInfo.email"
@@ -331,6 +329,9 @@ export default {
     moveBlog() {
       this.$router.push(`/article/list/${this.getUserNum}`);
       this.$router.go(this.$router.currentRoute);
+    },
+    goLoginPage() {
+      this.$router.push("/login");
     }
   },
   computed: {

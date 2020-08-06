@@ -10,6 +10,8 @@ import ArticleList from "../views/article/ArticleList.vue"
 import ArticleModify from "../views/article/ArticleModify.vue"
 import Like from "../views/likey/Like.vue"
 
+import Login from "../components/account/Login.vue";
+
 import LikeArticleInfo from "../views/likey/LikeArticleInfo.vue"
 import temp from "../views/temporaryArticle/temp.vue"
 import PersonalMain from "../views/personal/MainPage.vue"
@@ -21,6 +23,11 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path:"/login",
+    name:"Login",
+    component:Login
   },
   {
     path: "/like",
