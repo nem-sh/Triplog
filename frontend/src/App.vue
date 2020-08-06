@@ -45,10 +45,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item
-            class="mb-5"
-             @click.stop="moveBlog"
-          >
+          <v-list-item class="mb-5" @click.stop="moveBlog">
             <v-list-item-icon>
               <v-icon color="green darken-4">mdi-blogger</v-icon>
             </v-list-item-icon>
@@ -58,10 +55,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item
-            class="mb-5"
-            @click.stop="goWrite"
-          >
+          <v-list-item class="mb-5" @click.stop="goWrite">
             <v-list-item-icon>
               <v-icon color="green darken-4">mdi-file-edit</v-icon>
             </v-list-item-icon>
@@ -97,14 +91,14 @@
         <v-spacer></v-spacer>
         <v-form class="d-flex search align-items-center" action="/article/ArticleSearch">
           <div class="d-flex">
-          <v-text-field
+            <v-text-field
               label="search"
               color="black"
               black
               filled
               dense
               rounded
-              class=" mr-2 mt-5 form-control input-sm text-black"
+              class="mr-2 mt-5 form-control input-sm text-black"
               max-width="64"
               height="36"
               v-if="searchtoggle"
@@ -112,14 +106,15 @@
               label-color="black"
               name="keyword"
             ></v-text-field>
-            
-            <v-icon class="d-flex" @click="searchtoggle = !searchtoggle"
-            align-center
-            ma-1
-            >
-            fas fa-search</v-icon> 
+
+            <v-icon
+              class="d-flex"
+              @click="searchtoggle = !searchtoggle"
+              align-center
+              ma-1
+            >fas fa-search</v-icon>
           </div>
-          </v-form>
+        </v-form>
 
         <v-btn
           @click="loginModalToggle = !loginModalToggle"
@@ -160,6 +155,14 @@
         <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
       </template>
     </v-snackbar>
+    <v-footer
+      style=" position:fixed; bottom:18px; width:100%; background-color: rgba( 255, 255, 255, 0 );"
+    >
+      <v-spacer></v-spacer>
+      <v-btn color="cyan darken-2" fab dark bottom right @click="pageUp">
+        <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </v-footer>
   </v-app>
 </template>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -195,7 +198,7 @@ export default {
     searchtoggle: false
   }),
   components: {
-    Login,
+    Login
   },
   methods: {
     goToMyBlog: function() {
@@ -258,7 +261,10 @@ export default {
     moveBlog() {
       this.$router.push(`/article/list/${this.getUserNum}`);
       this.$router.go(this.$router.currentRoute);
-    }
+    },
+    pageUp() {
+      window.scrollTo(0,0);
+    },
   },
   computed: {
     ...mapGetters([
@@ -297,6 +303,6 @@ export default {
 </script>
 <style>
 .text-black input {
-      color: black !important;
-    }
+  color: black !important;
+}
 </style>
