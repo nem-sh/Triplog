@@ -113,7 +113,7 @@
         </v-btn>
           
         <v-btn
-          @click="loginModalToggle = !loginModalToggle"
+          @click="goLoginPage"
           v-if="!(isAuthenticated && isProfileLoaded)"
           icon
         >
@@ -151,6 +151,30 @@
         <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
       </template>
     </v-snackbar>
+
+   
+    <v-dialog v-model="userInfoModalToggle" max-width="800">
+      <user-info-comp
+        v-if="userInfo.email"
+        :propImage="userInfo.imagesrc"
+        :propEmail="userInfo.email"
+        :propName="userInfo.name"
+        :propNickname="userInfo.nickname"
+        :propIntro="userInfo.intro"
+        :propValid="userInfo.valid"
+        :propJoinedAt="userInfo.joinedAt"
+        :key="userInfoCompKey"
+        v-on:closeUserInfoModal="closeUserInfoModal"
+      ></user-info-comp>
+    </v-dialog>
+    <v-dialog v-model="setBlogModalToggle" max-width="800">
+      <set-blog-comp
+        v-if="userInfo.email"
+        v-on:closeSetBlogModal="closeSetBlogModal"
+        v-on:closeSetBlogModal2="closeSetBlogModal2"
+      />
+    </v-dialog>
+    
     <v-footer
       style=" position:fixed; bottom:18px; width:100%; background-color: rgba( 255, 255, 255, 0 );"
     >
@@ -258,6 +282,12 @@ export default {
       this.$router.push(`/article/list/${this.getUserNum}`);
       this.$router.go(this.$router.currentRoute);
     },
+<<<<<<< frontend/src/App.vue
+    goLoginPage() {
+      this.$router.push("/login");
+    }
+=======
+>>>>>>> frontend/src/App.vue
   },
   computed: {
     ...mapGetters([
