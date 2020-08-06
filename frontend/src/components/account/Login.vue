@@ -149,6 +149,8 @@
   </div>
 </template>
 <script>
+
+import { mapGetters, mapState } from "vuex";
 import { AUTH_REQUEST } from "@/store/actions/auth";
 import http2 from "@/util/http-common2.js";
 export default {
@@ -156,7 +158,6 @@ export default {
   data() {
     return {
       
-      valid: this.propValid,
       tab: 0,
       tabs: [
           {name:"Login", icon:"mdi-account"},
@@ -179,10 +180,7 @@ export default {
       password_confirm: "",
     };
   },
-  props:{
-
-    propValid: { type: Boolean },
-  },
+ 
   methods: {
     login: function() {
       //model에 바인딩된 데이터 모두 ==> this
@@ -193,7 +191,7 @@ export default {
           this.email = "";
           this.password = "";
           this.nowlogin = !this.nowlogin
-          if (this.valid==true){
+          if (this.getValid){
             
             this.$router.push(`/`)
           } else{
@@ -333,8 +331,27 @@ export default {
   computed: {
     passwordMatch() {
       return () => this.password === this.verify || "Password must match";
-    }
-  },
+    },
+
+  
+  ...mapGetters([
+      "isAuthenticated",
+      "isProfileLoaded",
+      "getProfile",
+      "getRealName",
+      "getEmail",
+      "getUserNum",
+      "getValid"
+    ]),
+    ...mapState({
+      authLoading: state => state.auth.status === "loading",
+      uname: state => `${state.user.getProfile}`,
+      userEmail: state => `${state.user.getEmail}`,
+      userNum: state => `${state.user.getUserNum}`,
+
+      valid: state => `${state.user.getValid}`
+    }),
+    },
 
 };
 </script>

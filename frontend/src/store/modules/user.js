@@ -10,6 +10,7 @@ const state = {
   email: localStorage.getItem("email") || "",
   userNum: localStorage.getItem("userNum") || "",
   userImg: localStorage.getItem("userImg") || "",
+  valid: localStorage.getItem("valid") || "",
 };
 
 const getters = {
@@ -19,6 +20,7 @@ const getters = {
   getEmail: state => state.email,
   getUserNum: state => state.userNum,
   getUserImg: state => state.userImg,
+  getValid: state => state.valid,
 };
 
 const actions = {
@@ -45,11 +47,13 @@ const mutations = {
     localStorage.setItem("email", resp.email);
     localStorage.setItem("userNum", resp.num);
     localStorage.setItem("userImg", resp.imagesrc);
+    localStorage.setItem("valid", resp.valid);
     Vue.set(state, "profilename", resp.nickname);
     Vue.set(state, "realname", resp.name);
     Vue.set(state, "email", resp.email);
     Vue.set(state, "userNum", resp.num);
     Vue.set(state, "userImg", resp.imagesrc);
+    Vue.set(state, "valid", resp.valid);
 
   },
   [USER_ERROR]: state => {
@@ -61,6 +65,8 @@ const mutations = {
     state.email = "";
     state.userNum = "";
     state.userImg = "";
+
+    state.valid = "";
   },
   modifyProfileName: function (state, after) {
     state.profilename = after;
