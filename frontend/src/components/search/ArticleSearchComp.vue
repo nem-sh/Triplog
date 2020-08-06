@@ -1,6 +1,6 @@
 <template>
     <v-card class="ma-4" width="200" @click="clickTableRow()">
-        <v-scale-transition>
+        <v-scale-transition> 
             <v-img v-if="thumbnail" :src="require(`@/assets/articleImage/${thumbnail}`)"
             height="200px">
             </v-img>

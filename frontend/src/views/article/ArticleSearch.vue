@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>"{{this.keyword}}" 의 검색 결과 입니다.</h2>
+        <h2> "{{this.keyword}}" 의 검색 결과 입니다.</h2>
         <br>
         <div>
             <h3>제목 검색결과</h3>

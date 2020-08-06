@@ -65,4 +65,4 @@ export default {
       this.fetchData()
    },
 }
-</script>
+</script> 
