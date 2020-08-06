@@ -2,7 +2,7 @@
   <div>
     <div id="app">
       <v-app id="inspire">
-        <v-card width="1000px">
+        <v-card width="800px">
           <v-toolbar flat color="cyan darken-2" dark>
             <v-toolbar-title>User Setting</v-toolbar-title>
           </v-toolbar>

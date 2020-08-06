@@ -159,7 +159,7 @@
       style=" position:fixed; bottom:18px; width:100%; background-color: rgba( 255, 255, 255, 0 );"
     >
       <v-spacer></v-spacer>
-      <v-btn color="cyan darken-2" fab dark bottom right @click="pageUp">
+      <v-btn color="cyan darken-2" fab dark bottom right @click="$vuetify.goTo(0, 0);">
         <v-icon>mdi-chevron-up</v-icon>
       </v-btn>
     </v-footer>
@@ -261,9 +261,6 @@ export default {
     moveBlog() {
       this.$router.push(`/article/list/${this.getUserNum}`);
       this.$router.go(this.$router.currentRoute);
-    },
-    pageUp() {
-      window.scrollTo(0,0);
     },
   },
   computed: {
