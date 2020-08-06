@@ -13,6 +13,7 @@ import Like from "../views/likey/Like.vue"
 import LikeArticleInfo from "../views/likey/LikeArticleInfo.vue"
 import temp from "../views/temporaryArticle/temp.vue"
 import PersonalMain from "../views/personal/MainPage.vue"
+import UserSetting from "../views/personal/UserSetting.vue"
 // import { component } from "vue/types/umd";
 Vue.use(VueRouter);
 
@@ -86,6 +87,11 @@ const routes = [
     path: "/:hostNum",
     name: "PersonalMain",
     component: PersonalMain
+  },
+  {
+    path: "/userSetting/:hostNum",
+    name: "UserSetting",
+    component: UserSetting
   },
 ];
 
