@@ -60,7 +60,7 @@ export default {
   height: 300px;
 }
 .v-card:hover {
-  filter: drop-shadow(3px 3px 5px rgb(136, 136, 136));
+  /* filter: drop-shadow(3px 3px 5px rgb(136, 136, 136)); */
   transition: opacity 0.4s ease-in-out;
 }
 .v-card--reveal {

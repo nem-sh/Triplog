@@ -5,7 +5,14 @@
         <v-row>
           <v-col>
             <p class="teal--text">블로그 이미지</p>
-            <div>
+            <div align="center">
+              <v-img
+                  v-if="titleimg"
+                  :src="require(`@/assets/blogImage/${titleimg}`)"
+                  class="img"
+                  width="200"
+                  height="100"
+                />
               <input ref="imageInput" type="file" hidden @change="onChangeImages" />
               <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
             </div>
@@ -96,6 +103,7 @@ export default {
           this.title = response.data.title.slice(9);
           this.visitcount = response.data.visitcount;
           this.num = response.data.num;
+          this.titleimg = response.data.titleimg;
           console.log(response.data);
         })
         .catch(error => {
