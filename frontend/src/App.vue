@@ -113,7 +113,7 @@
         </v-btn>
           
         <v-btn
-          @click="loginModalToggle = !loginModalToggle"
+          @click="goLoginPage()"
           v-if="!(isAuthenticated && isProfileLoaded)"
           icon
         >
@@ -255,6 +255,9 @@ export default {
       this.$router.push(`/article/list/${this.getUserNum}`);
       this.$router.go(this.$router.currentRoute);
     },
+    goLoginPage() {
+      this.$router.push("/login");
+    }
   },
   computed: {
     ...mapGetters([
