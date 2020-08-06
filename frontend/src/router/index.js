@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import APIError from "../components/error/APIError.vue";
+import EmailAuth from "../components/error/EmailAuth.vue";
+import EmailAuthSuccess from "../components/error/EmailAuthSuccess.vue";
 import ArticleWrite from "../views/article/ArticleWrite.vue"
 import ArticleSearch from "../views/article/ArticleSearch.vue";
 import ArticleInfo from "../views/article/ArticleInfo.vue"
@@ -15,6 +17,7 @@ import Login from "../components/account/Login.vue";
 import LikeArticleInfo from "../views/likey/LikeArticleInfo.vue"
 import temp from "../views/temporaryArticle/temp.vue"
 import PersonalMain from "../views/personal/MainPage.vue"
+import UserSetting from "../views/personal/UserSetting.vue"
 // import { component } from "vue/types/umd";
 Vue.use(VueRouter);
 
@@ -28,6 +31,16 @@ const routes = [
     path:"/login",
     name:"Login",
     component:Login
+  },
+  {
+    path: "/emailauth",
+    name: "EmailAuth",
+    component: EmailAuth
+  },
+  {
+    path: "/emailauth/success",
+    name: "EmailAuthSuccess",
+    component: EmailAuthSuccess
   },
   {
     path: "/like",
@@ -93,6 +106,11 @@ const routes = [
     path: "/:hostNum",
     name: "PersonalMain",
     component: PersonalMain
+  },
+  {
+    path: "/userSetting/:hostNum",
+    name: "UserSetting",
+    component: UserSetting
   },
 ];
 

@@ -1,68 +1,60 @@
 <template>
   <div>
-    <v-container class="cyan darken-2">
-      <v-row>
-        <v-col class="white--text pa-2 ml-3">Setting</v-col>
-      </v-row>
-    </v-container>
-    <v-simple-table>
-      <template v-slot:default>
-        <tbody>
-          <tr>
-            <th class="white text-center teal--text">블로그 이미지</th>
-            <td class="white">
+    <div id="app">
+      <v-container style="max-width: 700px;">
+        <v-row>
+          <v-col>
+            <p class="teal--text">블로그 이미지</p>
+            <div>
               <input ref="imageInput" type="file" hidden @change="onChangeImages" />
               <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
-            </td>
-          </tr>
-          <tr>
-            <th class="teal lighten-5 text-center teal--text">블로그 명</th>
-            <td class="teal lighten-5">
-              <v-container fluid class="pa-0">
-                <v-row>
-                  <v-col cols="10">
-                    <v-text-field
-                      type="text"
-                      class="form-control"
-                      id="title"
-                      ref="title"
-                      label="블로그 명을 입력하세요"
-                      v-model="title"
-                    />
-                  </v-col>
-                  <v-col cols="2">
-                    <h1>
-                      <i class="fas fa-square mt-5" :style="getColor" @click="onOffDialog" />
-                    </h1>
-                  </v-col>
-                </v-row>
-                <v-row v-if="dialog">
+            </div>
+          </v-col>
+          <v-col >
+            <p class="teal--text">방문자 수</p>
+            <p>{{visitcount}} 명이 다녀갔습니다.</p>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="teal--text">
+            블로그 명
+            <v-container fluid class="pa-0">
+              <v-row>
+                <v-col cols="10">
+                  <v-textarea
+                    auto-grow
+                    outlined
+                    rows="1"
+                    row-height="15"
+                    label="블로그 명을 입력하세요"
+                    v-model="title"
+                  ></v-textarea>
+                </v-col>
+                <v-col cols="2">
+                  <h1>
+                    <i class="fas fa-square mt-5" :style="getColor" @click="onOffDialog" />
+                  </h1>
+                </v-col>
+              </v-row>
+              <v-row v-if="dialog">
+                <v-col>
                   <v-color-picker class="ma-2" mode="hexa" v-model="titleColor" hide-inputs />
-                </v-row>
-              </v-container>
-            </td>
-          </tr>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-col>
+        </v-row>
 
-          <tr>
-            <th class="white text-center teal--text">방문자 수</th>
-            <td class="white">{{visitcount}} 명이 다녀갔습니다.</td>
-          </tr>
-
-          <tr class="cyan darken-2">
-            <td>
-              <div>
-                <v-btn inline-block @click="regist" class="cyan darken-3 white--text">수정</v-btn>
-              </div>
-            </td>
-            <td class="text-right">
-              <div>
-                <v-btn inline-block @click="closeSetBlogMadal2" class="cyan darken-3 white--text">취소</v-btn>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
+        <v-row>
+          <v-col>
+            <v-btn inline-block @click="regist" class="cyan darken-3 white--text">수정</v-btn>
+          </v-col>
+          <v-col class="text-right">
+            <v-btn inline-block @click="closeSetBlogMadal2" class="cyan darken-3 white--text">취소</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
 
     <v-snackbar v-model="alert" timeout="5000">
       <v-icon color="deep-orange darken-3">mdi-home</v-icon>

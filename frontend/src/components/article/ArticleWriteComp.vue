@@ -112,10 +112,12 @@ export default {
       polling: null,
       dialog: false,
       editorHtmlPath: "./assets/editor/editor.html",
+      prefix: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
+      suffix: '</body></html>',
     };
   },
   created() {
-      this.start()
+      // this.start()
   },
   mounted() {
       if(window.localStorage.getItem("isSaved") == "true") {
@@ -123,6 +125,15 @@ export default {
       }
   },
   methods: {
+    createFileByInnerEditorText: function() {
+      var innerIframe = document.getElementById('editor').contentWindow.document.body.innerHTML;
+      var content = this.prefix + innerIframe + this.suffix;
+      var fileName = this.getUserNum + "_" + this.articleTitle + ".html";
+      var file = new File([content], fileName, {
+        type: "text/html",
+      });
+      return file;
+    },
     exec: function(option) {
       this.editorDocument().execCommand(option, false, true);
     },
@@ -168,10 +179,6 @@ export default {
    regist() {
     let err = true;
     let msg = "";
-    !this.articleContent &&
-      ((msg = "내용을 입력해주세요"),
-      (err = false),
-      this.$refs.content.focus());
     !this.articleTitle &&
       ((msg = "제목을 입력해주세요"),
       (err = false),
@@ -186,15 +193,19 @@ export default {
     }
    },
    registHandler() {
+     var contentFile = this.createFileByInnerEditorText();
      var formData = new FormData();
-     formData.append('img', this.fileInfo);
+     console.log(contentFile);
+     formData.append('files', contentFile);
+     formData.append('files', this.fileInfo);
      http3
-      .post(`/article/img`, formData).then(({ data }) => {
+      .post(`/article/files`, formData).then(({ data }) => {
+        console.log(data);
         http
           .post(`/article`, {
-            thumbnail : data,
+            thumbnail : data[1],
             title: this.articleTitle,
-            content: this.articleContent,
+            content: data[0],
             created_at: new Date(),
             user_num: this.getUserNum,
             userNickname: this.getProfile,
@@ -230,11 +241,9 @@ export default {
       });
    },
     onChangeImages(e) {
-      console.log("asdasd");
       const file = e.target.files[0];
       this.fileInfo = file;
       this.imageUrl = URL.createObjectURL(file);
-      console.log(this.imageUrl);
     },
     onClickImageUpload() {
       this.$refs.imageInput.click();
