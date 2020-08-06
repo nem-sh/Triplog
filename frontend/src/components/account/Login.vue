@@ -15,7 +15,7 @@
                 <v-card-text>
                   <v-form @submit.prevent="login" >
                     <v-row>
-                      <v-col cols="2"><p style="margin-top:10px;font-weight:bold;"> 이메일 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :  </p></v-col>
                       <v-col cols="10">
                          <v-text-field v-model="email" label="E-mail" required
                         type="text"
@@ -24,11 +24,13 @@
                         placeholder="이메일을 입력하세요"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="12">
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :  </p></v-col>
+                      <v-col cols="10">
                         <v-text-field  label="Password"
                         type="password"
                        v-model="password"
                         value
+                        outlined
                         id="_pwd"
                         name="pwd"
                         required
@@ -39,7 +41,7 @@
                         </v-col>
                       <v-spacer></v-spacer>
                       <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
-                        <v-btn type="submit" x-large block color="black"><p style="color:white;"> Login</p></v-btn>
+                        <v-btn type="submit" x-large block color="black"><p style="color:white; margin-bottom:0px;"> Login</p></v-btn>
                       </v-col>
                     </v-row>
 
@@ -57,36 +59,44 @@
                     name="frmForm"
                     @submit.prevent="registryMyself">
                     <v-row>
-                      <v-col cols="12">
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :  </p></v-col>
+                      <v-col cols="10">
                         <v-text-field v-model="customer.email" label="E-mail" required
                         placeholder="이메일을 입력하세요"
                         id="_email"
                         name="email"
                         type="email"
+                        outlined
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="12">
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 별명 :  </p></v-col>
+                      <v-col cols="10">
                         <v-text-field v-model="customer.nickname"
                           data-msg="별명"
+                          outlined
                           name="nickname"
                           id="_nickname"
                           placeholder="별명을 입력하세요"
                           label="Nickname"></v-text-field>
                       </v-col>
-                      <v-col cols="12">
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 이름 :  </p></v-col>
+                      <v-col cols="10">
                         <v-text-field v-model="customer.cname"
                         label="Name"
                         required
                         placeholder="이름을 입력하세요"
                         id="_cname"
+                        outlined
                         name="cname"
                         data-msg="이름"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="12">
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :  </p></v-col>
+                      <v-col cols="10">
                         <v-text-field block v-model="customer.password"
                           type="password"
                           data-msg=" 패스워드"
+                          outlined
                           name="password"
                           id="_password"
                         placeholder="패스워드를 입력하세요"
@@ -95,10 +105,12 @@
                         </v-text-field>
 
                       </v-col>
-                      <v-col cols="12">
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:13px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 확인 :  </p></v-col>
+                      <v-col cols="10">
                         <v-text-field
                         data-msg="패스워드 재확인"
                         type="password"
+                        outlined
                         name="password_confirm"
                         id="_password_confirm"
                         placeholder="패스워드를 다시 입력하세요"
@@ -110,7 +122,7 @@
                       </v-col>
                       <v-spacer></v-spacer>
                       <v-col class="d-flex ml-auto" cols="12">
-                          <v-btn type="submit" x-large block color="black"><p style="color:white;">Register</p> </v-btn>
+                          <v-btn type="submit" x-large block color="black"><p style="color:white; margin-bottom:0px;">SignUp</p> </v-btn>
                       </v-col>
                     </v-row>
 
@@ -158,7 +170,7 @@ export default {
       tab: 0,
       tabs: [
           {name:"Login", icon:"mdi-account"},
-          {name:"Register", icon:"mdi-account-outline"}
+          {name:"Signup", icon:"mdi-account-outline"}
        ],
        show1:false,
       nowlogin: false,
@@ -187,7 +199,7 @@ export default {
           this.email = "";
           this.password = "";
           this.nowlogin = !this.nowlogin
-          this.$emit("closeLoginModal");
+          this.$router.push("/")
         })
         .catch((e) => {
           if (e.request.status === 404){
