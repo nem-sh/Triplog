@@ -89,9 +89,9 @@
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-form class="d-flex search align-items-center" action="/article/ArticleSearch">
-          <div class="d-flex">
-            <v-text-field
+
+        <!-- <v-form action="/article/ArticleSearch">
+          <v-text-field
               label="search"
               color="black"
               black
@@ -106,16 +106,26 @@
               label-color="black"
               name="keyword"
             ></v-text-field>
+        </v-form> -->
+        <v-expand-transition style="display: flex;">
+            <v-text-field 
+            label="Search"
+            background-color="cyan darken-1"
+            color="white"
+            outlined
+            v-show="searchtoggle"
+            class="mt-6 shrink"
+            rounded
+            dense
+            clearable
+          />
+        </v-expand-transition>
 
-            <v-icon
-              class="d-flex"
-              @click="searchtoggle = !searchtoggle"
-              align-center
-              ma-1
-            >fas fa-search</v-icon>
-          </div>
-        </v-form>
-
+        <v-btn x-large icon @click="searchtoggle = !searchtoggle">
+          <v-icon>
+          mdi-text-search</v-icon>
+        </v-btn>
+          
         <v-btn
           @click="loginModalToggle = !loginModalToggle"
           v-if="!(isAuthenticated && isProfileLoaded)"
@@ -301,8 +311,3 @@ export default {
   }
 };
 </script>
-<style>
-.text-black input {
-  color: black !important;
-}
-</style>
