@@ -5,7 +5,7 @@
     <v-divider v-else-if="item.divider" :key="index" :inset="item.inset"></v-divider>
 
     <v-list-item v-else :key="item.comment.num">
-      <v-list-item-avatar>
+      <v-list-item-avatar @click="goToBlog" style="cursor:pointer">
         <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
       </v-list-item-avatar>
 
@@ -13,7 +13,7 @@
         <div @mouseover="display = true" @mouseleave="display = false" @click.stop="onOffComment">
           <v-row>
             <v-col cols="8" style="padding:25px;">
-              <v-list-item-title v-html="getName"></v-list-item-title>
+              <v-list-item-title v-html="getName" @click="goToBlog" style="cursor:pointer"></v-list-item-title>
             </v-col>
             <v-col cols="4" v-if="display" style="display: flex; justify-content:flex-end; ">
               <div v-if="isMyComment">
@@ -127,6 +127,9 @@ export default {
     index: Number
   },
   methods: {
+    goToBlog: function() {
+      this.$router.push(`/article/list/${this.articleUserNum}`);
+    },
     onOffComment() {
       if (this.openComment == true) {
         this.openComment = false;
