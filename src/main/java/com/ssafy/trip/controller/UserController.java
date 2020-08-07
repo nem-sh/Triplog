@@ -108,6 +108,8 @@ public class UserController {
     @PutMapping("/users/{num}")
     public ResponseEntity<String> modifyUserProfile(@RequestBody UserProfile userProfile, @PathVariable(value = "num") Long num) {
     	MemberUser user = null;
+    	List<Comment> comments = commentRepository.findByUsernum(num);
+    	
     	String SUCCESS = "success";
         try {
         	user = userRepository.findByNum(num)
@@ -116,6 +118,11 @@ public class UserController {
         	user.setNickname(userProfile.getNickname());
         	user.setIntro(userProfile.getIntro());
         	user.setImageSrc(userProfile.getImagesrc());
+        	for(Comment comment:comments) {
+        		comment.setUserimg(userProfile.getImagesrc());
+        		comment.setUsernickname(userProfile.getNickname());
+
+        	}
         } catch (Exception e) {
         	return null;
         }

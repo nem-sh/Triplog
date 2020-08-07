@@ -180,9 +180,18 @@ export default {
         userimg: this.getUserImg,
         usernum: this.getUserNum
       };
+      console.log({
+        content: this.content,
+        createdat: new Date(),
+        articlenum: this.$route.params.articleNum,
+        userimg: this.getUserImg,
+        usernum: this.getUserNum,
+        usernickname: this.getProfile,
+        useremail: this.getEmail
+      });
       this.item.cocomments.unshift(obj);
       http
-        .post(`/comment/${this.item.comment.num}`, {
+        .post(`/comment/${this.item.comment.createdat}`, {
           content: this.content,
           createdat: new Date(),
           articlenum: this.$route.params.articleNum,
@@ -265,7 +274,7 @@ export default {
   created() {
     this.updateContent = this.item.comment.content;
     if (this.item.comment) {
-      if (this.item.comment.userimg != null) {
+      if (this.item.comment.userimg != "null") {
         this.userimg = this.item.comment.userimg;
       }
     }
