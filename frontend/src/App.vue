@@ -3,12 +3,12 @@
     <div>
       <v-navigation-drawer :mini-variant.sync="mini" clipped app permanent v-if="this.getProfile">
         <v-list-item class="px-2 mb-6" style="padding: 10px;">
-          <!-- <v-list-item-avatar>
+          <v-list-item-avatar>
             <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
-          </v-list-item-avatar>-->
-          <v-list-item-avatar :color="ranColor" size="40">
-            <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
           </v-list-item-avatar>
+          <!-- <v-list-item-avatar :color="ranColor" size="40">
+            <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
+          </v-list-item-avatar> -->
 
           <v-list-item-title class="font-weight-bold">{{this.getProfile}}님</v-list-item-title>
 
@@ -187,7 +187,7 @@ export default {
       { title: "게시물 목록", icon: "mdi-account-group-outline" }
     ],
     searchtoggle: false,
-    userimg: getUserImg
+    userimg: null
   }),
   components: {
     Login
