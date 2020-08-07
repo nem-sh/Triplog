@@ -205,6 +205,7 @@ export default {
           this.nowlogin = !this.nowlogin
           
             this.$router.push(`/`)
+            
         })
         .catch((e) => {
           if (e.request.status === 404){

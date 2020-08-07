@@ -3,6 +3,9 @@
     <div>
       <v-navigation-drawer :mini-variant.sync="mini" clipped app permanent v-if="this.getProfile">
         <v-list-item class="px-2 mb-6" style="padding: 10px;">
+          <!-- <v-list-item-avatar>
+            <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
+          </v-list-item-avatar>-->
           <v-list-item-avatar :color="ranColor" size="40">
             <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
           </v-list-item-avatar>
@@ -110,12 +113,8 @@
         <v-btn x-large icon @click="searchtoggle = !searchtoggle">
           <v-icon>mdi-text-search</v-icon>
         </v-btn>
-          
-        <v-btn
-          @click="goLoginPage()"
-          v-if="!(isAuthenticated && isProfileLoaded)"
-          icon
-        >
+
+        <v-btn @click="goLoginPage()" v-if="!(isAuthenticated && isProfileLoaded)" icon>
           <v-icon>mdi-account-arrow-right</v-icon>
         </v-btn>
       </v-app-bar>
@@ -187,7 +186,8 @@ export default {
       { title: "좋아요 목록", icon: "mdi-account-group-outline" },
       { title: "게시물 목록", icon: "mdi-account-group-outline" }
     ],
-    searchtoggle: false
+    searchtoggle: false,
+    userimg: getUserImg
   }),
   components: {
     Login
@@ -279,7 +279,8 @@ export default {
       "getRealName",
       "getEmail",
       "getUserNum",
-      "getValid"
+      "getValid",
+      "getUserImg"
     ]),
     ...mapState({
       authLoading: state => state.auth.status === "loading",
@@ -305,6 +306,13 @@ export default {
       } else {
         this.loginSuccess = true;
       }
+    }
+  },
+  created() {
+    if (this.getUserImg == "null") {
+      this.userimg = "profile_init.png";
+    } else {
+      this.userimg = this.getUserImg;
     }
   }
 };
