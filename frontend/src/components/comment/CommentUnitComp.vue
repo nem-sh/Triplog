@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     goToBlog: function() {
-      this.$router.push(`/article/list/${this.articleUserNum}`);
+      this.$router.push(`/article/list/${this.item.comment.usernum}`);
     },
     onOffComment() {
       if (this.openComment == true) {
