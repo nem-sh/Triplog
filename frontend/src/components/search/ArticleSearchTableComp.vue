@@ -1,19 +1,22 @@
 <template>
-    <v-row>
-        <v-sheet class="mx-auto" max-width="900">
-            <v-slide-group class="pa-4">
-                <v-slide-item v-for="item in items" :key="item.num">
-                    <article-search-comp
-                    :propTitle="item.title"
-                    :propUserNickname="item.userNickname"
-                    :propThumbnail="item.thumbnail"
-                    :propCreated_at="item.created_at"
-                    :propNum="item.num"
-                    />
-                </v-slide-item>
-            </v-slide-group>
-        </v-sheet>
-    </v-row>
+    <div>
+        <h5 v-if="items.length == 0">검색 결과가 없습니다.</h5>
+        <v-row>
+            <v-sheet class="mx-auto" max-width="900">
+                <v-slide-group class="pa-4">
+                    <v-slide-item v-for="item in items" :key="item.num">
+                        <article-search-comp
+                        :propTitle="item.title"
+                        :propUserNickname="item.userNickname"
+                        :propThumbnail="item.thumbnail"
+                        :propCreated_at="item.created_at"
+                        :propNum="item.num"
+                        />
+                    </v-slide-item>
+                </v-slide-group>
+            </v-sheet>
+        </v-row>
+    </div>
 </template>
 
 <script>
@@ -41,7 +44,6 @@ export default {
            if (this.option == 'title') {
                 http.get(`/search/searchArticle/${this.keyword}`)
                 .then((response) => {
-                    console.log(response)
                     this.items = response.data
                 })
                 .catch((e) => {
@@ -51,7 +53,6 @@ export default {
            } else {
                http.get(`/search/searchUserArticle/${this.keyword}`)
                 .then((response)=>{
-                    console.log(response)
                     this.items = response.data
                 }).catch((e)=>{
                     console.log(e)
