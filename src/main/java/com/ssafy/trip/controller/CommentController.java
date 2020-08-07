@@ -67,7 +67,6 @@ public class CommentController {
 	@PostMapping("/{replyNum}")
 	public ResponseEntity<?> createCocomment(@PathVariable(value = "replyNum") Long replyNum, @RequestBody Comment comment) {
 		
-		
 		Comment reply = commentRepository.findByNum(replyNum);
 		comment.setReply(reply);
 		commentRepository.save(comment);
