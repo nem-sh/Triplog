@@ -6,14 +6,14 @@
       @mouseleave="display = false"
       v-if="!isDelete"
     >
-      <v-list-item-avatar>
+      <v-list-item-avatar @click="goToBlog" style="cursor:pointer">
         <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
       </v-list-item-avatar>
 
       <v-list-item-content class="pb-0">
         <v-row>
           <v-col cols="8">
-            <v-list-item-title v-html="getName"></v-list-item-title>
+            <v-list-item-title v-html="getName" @click="goToBlog" style="cursor:pointer"></v-list-item-title>
           </v-col>
           <v-col cols="4" v-if="display" style="display: flex; justify-content:flex-end;">
             <i
@@ -101,6 +101,9 @@ export default {
     }
   },
   methods: {
+    goToBlog: function() {
+      this.$router.push(`/article/list/${this.articleUserNum}`);
+    },
     deleteComment() {
       this.isDelete = true;
       http

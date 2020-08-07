@@ -2,7 +2,7 @@
   <div style="min-width: 1000px;">
     <div>
       <h1>{{articleTitle}}</h1>
-      <h4 style="color:gray">{{blogMasterName}}</h4>
+      <h4 style="color:gray; cursor:pointer" @click="goToBlog">{{blogMasterName}}</h4>
       <h4 style="color:gray">{{getFormatDate(articleCreatedAt)}}</h4>
     </div>
     <br>
@@ -289,6 +289,9 @@ export default {
     this.openContentFile()
   },
   methods: {
+    goToBlog: function() {
+      this.$router.push(`/article/list/${this.articleUserNum}`);
+    },
     viewDay ({ date }) {
       this.focus = date
       this.type = 'day'
