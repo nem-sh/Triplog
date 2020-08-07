@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     goToBlog: function() {
-      this.$router.push(`/article/list/${this.articleUserNum}`);
+      this.$router.push(`/article/list/${this.item.usernum}`);
     },
     deleteComment() {
       this.isDelete = true;
