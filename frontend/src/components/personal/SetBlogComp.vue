@@ -6,13 +6,56 @@
           <v-col>
             <p class="teal--text">블로그 이미지</p>
             <div align="center">
-              <v-img
+                <div v-if="firstImage">
+                <v-img
                   v-if="titleimg"
                   :src="require(`@/assets/blogImage/${titleimg}`)"
                   class="img"
                   width="200"
                   height="100"
-                />
+                >
+                  <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+                <v-img
+                  v-else
+                  :src="require(`@/assets/articleImage/noimage.png`)"
+                  class="img"
+                  width="200"
+                  height="100"
+                >
+                  <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </div>
+              <div v-else>
+                <v-img v-if="imageUrl" :src="imageUrl" class="img" width="200" height="100">
+                  <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+                <v-img
+                  v-else
+                  :src="require(`@/assets/articleImage/noimage.png`)"
+                  class="img"
+                  width="200"
+                  height="100"
+                >
+                  <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </div>
               <input ref="imageInput" type="file" hidden @change="onChangeImages" />
               <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
             </div>
@@ -91,7 +134,9 @@ export default {
       alertMsg: "",
       imageUrl: "",
       num: null,
-      dialog: false
+      dialog: false,
+      firstImage: true,
+      fileInfo: null,
     };
   },
   methods: {
@@ -112,9 +157,9 @@ export default {
     },
     regist() {
       this.sendTitle = this.sendTitle.concat(this.titleColor, this.title);
-      if (this.titleimg) {
+      if (this.fileInfo != null) {
         var formData = new FormData();
-        formData.append("img", this.titleimg);
+        formData.append("img", this.fileInfo);
         http3
           .put(`/blog/img`, formData)
           .then(({ data }) => {
@@ -188,11 +233,10 @@ export default {
     },
 
     onChangeImages(e) {
-      console.log("asdasd");
       const file = e.target.files[0];
-      this.titleimg = file;
+      this.fileInfo = file;
       this.imageUrl = URL.createObjectURL(file);
-      console.log(this.imageUrl);
+      this.firstImage = false;
     },
     onClickImageUpload() {
       this.$refs.imageInput.click();
