@@ -22,25 +22,6 @@
           </v-expand-transition>
         </v-img>
         <v-card-subtitle>{{title}}</v-card-subtitle>
-        <!-- <v-img
-          v-else
-          :src="require(`@/assets/articleImage/noimage.png`)"
-          class="thumb"
-          @click="moveDetail"
-        >
-          <v-expand-transition>
-            <div
-              v-if="hover"
-              class="d-flex transition-fast-in-fast-out cyan darken-2 v-card--reveal display-3 white--text"
-              style="height: 100%;"
-            >
-              <div align="center">
-                <h2>{{title}}</h2>
-                <p>{{getFormatDate(created_at)}}</p>
-              </div>
-            </div>
-          </v-expand-transition>
-        </v-img> -->
       </v-card>
     </v-hover>
     <br />
@@ -79,8 +60,7 @@ export default {
   height: 300px;
 }
 .v-card:hover {
-  filter: drop-shadow(3px 3px 5px rgb(136, 136, 136));
-  background:powderblue;
+  /* filter: drop-shadow(3px 3px 5px rgb(136, 136, 136)); */
   transition: opacity 0.4s ease-in-out;
 }
 .v-card--reveal {

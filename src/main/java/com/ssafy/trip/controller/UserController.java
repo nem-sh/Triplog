@@ -26,9 +26,11 @@ import com.ssafy.trip.help.UserIdentityAvailability;
 import com.ssafy.trip.help.UserProfile;
 import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.BlogInfo;
+import com.ssafy.trip.model.Comment;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.repository.ArticleRepository;
 import com.ssafy.trip.repository.BlogInfoRepository;
+import com.ssafy.trip.repository.CommentRepository;
 import com.ssafy.trip.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
@@ -38,6 +40,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private CommentRepository commentRepository;
     
     @Autowired
     private ArticleRepository articleRepository;
@@ -103,6 +108,8 @@ public class UserController {
     @PutMapping("/users/{num}")
     public ResponseEntity<String> modifyUserProfile(@RequestBody UserProfile userProfile, @PathVariable(value = "num") Long num) {
     	MemberUser user = null;
+    	List<Comment> comments = commentRepository.findByUsernum(num);
+    	
     	String SUCCESS = "success";
         try {
         	user = userRepository.findByNum(num)
@@ -111,6 +118,11 @@ public class UserController {
         	user.setNickname(userProfile.getNickname());
         	user.setIntro(userProfile.getIntro());
         	user.setImageSrc(userProfile.getImagesrc());
+        	for(Comment comment:comments) {
+        		comment.setUserimg(userProfile.getImagesrc());
+        		comment.setUsernickname(userProfile.getNickname());
+
+        	}
         } catch (Exception e) {
         	return null;
         }
@@ -124,12 +136,49 @@ public class UserController {
     @DeleteMapping("/users/delete/{num}")
     public ResponseEntity<?> deleteUser(@PathVariable("num") Long num) {
       try {
-    	  articleRepository.deleteAllByUsernum(num);
-    	  MemberUser user = null;
-    	  user = userRepository.findByNum(num)
-      			.orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
-    	 
+
+    	  commentRepository.deleteAllByUsernumAndReplyIsNotNull(num);
+    	  
+    	  List<Comment> comments = commentRepository.findByUsernum(num);
+    	  
+    	  for(Comment comment : comments) {
+    			  commentRepository.deleteAllByReply(comment);
+    			  commentRepository.delete(comment);
+    	  }
+    	  
+    	  
+    	  
+    	  
+    	  List<Article> articles = articleRepository.findByUsernum(num);
+    	  for(Article article : articles) {
+    		  Long articlenum = article.getNum();
+    		 System.out.println("test");
+    		  commentRepository.deleteAllByArticlenumAndReplyIsNotNull(articlenum);
+    		  commentRepository.deleteAllByArticlenum(articlenum);
+
+  				articleRepository.deleteByNum(articlenum);
+    	  }
+    	  MemberUser user = userRepository.findByNum(num)
+        			.orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
+      	 
+    	  articles = articleRepository.findByLikearticle(user);
+    	  for(Article article : articles) {
+    		  List<MemberUser> users = article.getLikearticle();
+    			article.setLikeCount(article.getLikeCount()-1);
+    			users.remove(user);
+    			
+    			article.setLikearticle(users);
+    			articleRepository.save(article);
+    	  }
+    	  
+    	  
+    	  
+    	  
+    	  BlogInfo blog = blogInfoRepository.findByUsernum(num);
+
+    	  blogInfoRepository.delete(blog);
     	  userRepository.delete(user);
+    	  System.out.println("test");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);

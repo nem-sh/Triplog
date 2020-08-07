@@ -3,9 +3,12 @@
     <div>
       <v-navigation-drawer :mini-variant.sync="mini" clipped app permanent v-if="this.getProfile">
         <v-list-item class="px-2 mb-6" style="padding: 10px;">
-          <v-list-item-avatar :color="ranColor" size="40">
-            <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
+          <v-list-item-avatar>
+            <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
           </v-list-item-avatar>
+          <!-- <v-list-item-avatar :color="ranColor" size="40">
+            <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
+          </v-list-item-avatar> -->
 
           <v-list-item-title class="font-weight-bold">{{this.getProfile}}님</v-list-item-title>
 
@@ -45,11 +48,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item
-            class="mb-5"
-            @click.stop
-            :to="{name: 'articleList', params: {hostNum: this.getUserNum}}"
-          >
+          <v-list-item class="mb-5" @click.stop="moveBlog">
             <v-list-item-icon>
               <v-icon color="green darken-4">mdi-blogger</v-icon>
             </v-list-item-icon>
@@ -59,26 +58,13 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item
-            class="mb-5"
-            @click.stop="goWrite"
-          >
+          <v-list-item class="mb-5" @click.stop="goWrite">
             <v-list-item-icon>
               <v-icon color="green darken-4">mdi-file-edit</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
               <v-list-item-title class="font-weight-bold teal--text">Posting</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item @click.stop="setBlog" class="mb-5">
-            <v-list-item-icon>
-              <v-icon color="gray">mdi-cogs</v-icon>
-            </v-list-item-icon>
-
-            <v-list-item-content>
-              <v-list-item-title class="font-weight-bold teal--text">Setting</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -106,37 +92,29 @@
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-form class="d-flex search align-items-center" action="/article/ArticleSearch">
-          <div class="d-flex">
-          <v-text-field
-              label="search"
-              color="black"
-              black
-              filled
-              dense
-              rounded
-              class=" mr-2 mt-5 form-control input-sm text-black"
-              max-width="64"
-              height="36"
-              v-if="searchtoggle"
-              background-color="blue-grey lighten-5"
-              label-color="black"
-              name="keyword"
-            ></v-text-field>
-            <!-- <div class="d-flex"><i class="fas fa-search fa-2x" @click="searchtoggle = !searchtoggle"></i></div> -->
-          <v-icon class="d-flex" @click="searchtoggle = !searchtoggle"
-                          align-center
-                          ma-1
-                          >
-                          fas fa-search</v-icon> 
-          </div>
-          </v-form>
 
-        <v-btn
-          @click="loginModalToggle = !loginModalToggle"
-          v-if="!(isAuthenticated && isProfileLoaded)"
-          icon
-        >
+        <v-form action="/article/ArticleSearch">
+          <v-expand-transition style="display: flex;">
+            <v-text-field
+              label="Search"
+              background-color="cyan darken-1"
+              color="white"
+              outlined
+              v-show="searchtoggle"
+              class="mt-6 shrink"
+              rounded
+              dense
+              clearable
+              name="keyword"
+            />
+          </v-expand-transition>
+        </v-form>
+
+        <v-btn x-large icon @click="searchtoggle = !searchtoggle">
+          <v-icon>mdi-text-search</v-icon>
+        </v-btn>
+
+        <v-btn @click="goLoginPage()" v-if="!(isAuthenticated && isProfileLoaded)" icon>
           <v-icon>mdi-account-arrow-right</v-icon>
         </v-btn>
       </v-app-bar>
@@ -171,31 +149,11 @@
         <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
       </template>
     </v-snackbar>
-
-    <v-dialog v-model="loginModalToggle" max-width="800" persistent>
-      <login v-on:closeLoginModal="closeLoginModal"></login>
-    </v-dialog>
-    <v-dialog v-model="userInfoModalToggle" max-width="800">
-      <user-info-comp
-        v-if="userInfo.email"
-        :propImage="userInfo.imagesrc"
-        :propEmail="userInfo.email"
-        :propName="userInfo.name"
-        :propNickname="userInfo.nickname"
-        :propIntro="userInfo.intro"
-        :propValid="userInfo.valid"
-        :propJoinedAt="userInfo.joinedAt"
-        :key="userInfoCompKey"
-        v-on:closeUserInfoModal="closeUserInfoModal"
-      ></user-info-comp>
-    </v-dialog>
-    <v-dialog v-model="setBlogModalToggle" max-width="800">
-      <set-blog-comp
-        v-if="userInfo.email"
-        v-on:closeSetBlogModal="closeSetBlogModal"
-        v-on:closeSetBlogModal2="closeSetBlogModal2"
-      />
-    </v-dialog>
+    <div style="position: fixed; right: 20px; bottom: 20px;">
+      <v-btn color="cyan darken-2" fab dark @click="$vuetify.goTo(0, 0);">
+        <v-icon>mdi-chevron-up</v-icon>
+      </v-btn>
+    </div>
   </v-app>
 </template>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -203,8 +161,6 @@
 import { mapGetters, mapState } from "vuex";
 import { AUTH_LOGOUT } from "./store/actions/auth";
 import Login from "@/components/account/Login.vue";
-import UserInfoComp from "@/components/account/UserInfoComp.vue";
-import SetBlogComp from "@/components/personal/SetBlogComp.vue";
 import http from "@/util/http-common";
 import $ from "jquery";
 
@@ -217,12 +173,8 @@ export default {
     loginSuccess: false,
     logoutSuccess: false,
     loginModalToggle: false,
-    userInfoModalToggle: false,
-    setBlogModalToggle: false,
-    userInfo: {},
     alert: false,
     alertMsg: "",
-    userInfoCompKey: 0,
     defaultSelected: "제목",
     items: ["제목", "작성자"],
     titleSearch: "",
@@ -234,12 +186,11 @@ export default {
       { title: "좋아요 목록", icon: "mdi-account-group-outline" },
       { title: "게시물 목록", icon: "mdi-account-group-outline" }
     ],
-    searchtoggle: false
+    searchtoggle: false,
+    userimg: null
   }),
   components: {
-    Login,
-    UserInfoComp,
-    SetBlogComp
+    Login
   },
   methods: {
     goToMyBlog: function() {
@@ -253,20 +204,7 @@ export default {
       });
     },
     info: function() {
-      http.get(`/users/get/${this.getUserNum}`).then(({ data }) => {
-        this.userInfo = data;
-        console.dir(data);
-        this.userInfoCompKey += 1;
-        this.userInfoModalToggle = true;
-      });
-    },
-    setBlog: function() {
-      http.get(`/users/get/${this.getUserNum}`).then(({ data }) => {
-        this.userInfo = data;
-        console.dir(data);
-        this.setBlogCompKey += 1;
-        this.setBlogModalToggle = true;
-      });
+      this.$router.push(`/userSetting/${this.getUserNum}`);
     },
     avatarName: function(name) {
       var tempName = name.split(/(?=[A-Z])/);
@@ -301,24 +239,11 @@ export default {
       );
     },
     goWrite: function() {
-      this.$router.push("/article/write");
-    },
-    closeUserInfoModal: function(msg, afterNickName) {
-      if (msg != null) {
-        this.alertMsg = msg;
-        this.alert = true;
-        this.$store.commit("modifyProfileName", afterNickName);
-
-        this.$router.go();
+      if (this.getValid) {
+        this.$router.push("/article/write");
+      } else {
+        this.$router.push(`/emailAuth`);
       }
-      this.userInfoModalToggle = false;
-    },
-    closeSetBlogModal: function() {
-      this.setBlogModalToggle = false;
-      this.$router.go();
-    },
-    closeSetBlogModal2: function() {
-      this.setBlogModalToggle = false;
     },
     useSnackBar: function(msg) {
       if (msg != null) {
@@ -328,6 +253,22 @@ export default {
     },
     notice: function() {
       this.$router.push("noticeList");
+    },
+    moveBlog() {
+      console.log("test");
+
+      console.log(this.getValid);
+      if (this.getValid) {
+        console.log(this.getValid);
+        this.$router.push(`/article/list/${this.getUserNum}`);
+        this.$router.go(this.$router.currentRoute);
+      } else {
+        console.log(this.getValid);
+        this.$router.push(`/emailAuth`);
+      }
+    },
+    goLoginPage() {
+      this.$router.push("/login");
     }
   },
   computed: {
@@ -337,13 +278,17 @@ export default {
       "getProfile",
       "getRealName",
       "getEmail",
-      "getUserNum"
+      "getUserNum",
+      "getValid",
+      "getUserImg"
     ]),
     ...mapState({
       authLoading: state => state.auth.status === "loading",
       uname: state => `${state.user.getProfile}`,
       userEmail: state => `${state.user.getEmail}`,
-      userNum: state => `${state.user.getUserNum}`
+      userNum: state => `${state.user.getUserNum}`,
+
+      valid: state => `${state.user.getValid}`
     }),
     loading: function() {
       return this.authStatus === "loading" && !this.isAuthenticated;
@@ -362,11 +307,13 @@ export default {
         this.loginSuccess = true;
       }
     }
+  },
+  created() {
+    if (this.getUserImg == "null") {
+      this.userimg = "profile_init.png";
+    } else {
+      this.userimg = this.getUserImg;
+    }
   }
 };
 </script>
-<style>
-.text-black input {
-      color: black !important;
-    }
-</style>

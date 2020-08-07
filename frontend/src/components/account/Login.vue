@@ -1,189 +1,139 @@
 <template>
-  <div id="main_wrap">
-    <div id="middle_wrap" v-if="visablelogin">
-      <div id="content_wrap">
-        <div
-        >
-          <div id="login_wrap">
-            <form class="login" @submit.prevent="login">
-              <v-simple-table class="content_table">
-                <colgroup>
-                  <col style="width:30%;" />
-                  <col style="width:70%;" />
-                </colgroup>
-                <tbody>
-                  <tr>
-                    <td colspan="2"><h2>로그인</h2></td>
-                  </tr>
-                  <tr>
-                    <th style="background-color:#eeeeee; color:#3e5fba;">
-                      이메일
-                    </th>
-                    <td>
-                      &nbsp;
-                      <input
+  <div id="main_wrap" style="width:800px;">
+    <div id="middle_wrap">
+      
+      <v-container>
+        <div>
+          <v-tabs v-model="tab" show-arrows background-color="cyan darken-2" icons-and-text teal grow>
+          <v-tabs-slider></v-tabs-slider>
+          <v-tab v-for="i in tabs" :key="i">
+            <v-icon large>{{i.icon}}</v-icon>
+            <div class="caption py-1">{{i.name}}</div> 
+            </v-tab>
+            <v-tab-item>
+              <v-card class="px-4">
+                <v-card-text>
+                  <v-form @submit.prevent="login" >
+                    <v-row>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :  </p></v-col>
+                      <v-col cols="10">
+                         <v-text-field v-model="email" label="E-mail" required
                         type="text"
-                        id="_email"
-                        name="email"
+                        outlined
                         value
-                        data-msg="이메일을"
-                        title="이메일"
-                        required
-                        v-model="email"
-                        placeholder="이메일을 입력하세요."
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th style="background-color:#eeeeee; color:#3e5fba;">
-                      패스워드
-                    </th>
-                    <td>
-                      &nbsp;
-                      <input
+                        placeholder="이메일을 입력하세요"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :  </p></v-col>
+                      <v-col cols="10">
+                        <v-text-field  label="Password"
                         type="password"
+                       v-model="password"
+                        value
+                        outlined
                         id="_pwd"
                         name="pwd"
-                        value
-                        v-model="password"
                         required
-                        placeholder="패스워드를 입력하세요."
-                        title="패스워드"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2" style="height:50px; text-align:center;">
-                      <v-btn type="submit">로그인</v-btn> &nbsp;&nbsp;
-                      <v-btn
-                        type="button"
-                        @click="moveToSignUp"
-                      >
-                        회원가입으로 이동
-                      </v-btn>
-                      <v-btn @click="close">취소</v-btn>
-                    </td>
-                  </tr>
-                </tbody>
-              </v-simple-table>
-            </form>
-          </div>
+                        placeholder="패스워드를 입력하세요"
+                        title="패스워드"></v-text-field>
+                      </v-col>
+                       <v-col class="d-flex" cols="12" sm="6" xsm="12">
+                        </v-col>
+                      <v-spacer></v-spacer>
+                      <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
+                        <v-btn type="submit" x-large block color="cyan darken-4"><p style="color:white; margin-bottom:0px;"> Login</p></v-btn>
+                      </v-col>
+                    </v-row>
+
+                  </v-form>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+
+            <v-tab-item>
+              <v-card class="px-4">
+                <v-card-text>
+                  <v-form action
+                    method="post"
+                    id="_frmForm"
+                    name="frmForm"
+                    @submit.prevent="registryMyself">
+                    <v-row>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :  </p></v-col>
+                      <v-col cols="10">
+                        <v-text-field v-model="customer.email" label="E-mail" required
+                        placeholder="이메일을 입력하세요"
+                        id="_email"
+                        name="email"
+                        type="email"
+                        outlined
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 별명 :  </p></v-col>
+                      <v-col cols="10">
+                        <v-text-field v-model="customer.nickname"
+                          data-msg="별명"
+                          outlined
+                          name="nickname"
+                          id="_nickname"
+                          placeholder="별명을 입력하세요"
+                          label="Nickname"></v-text-field>
+                      </v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이름 :  </p></v-col>
+                      <v-col cols="10">
+                        <v-text-field v-model="customer.cname"
+                        label="Name"
+                        required
+                        placeholder="이름을 입력하세요"
+                        id="_cname"
+                        outlined
+                        name="cname"
+                        data-msg="이름"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :  </p></v-col>
+                      <v-col cols="10">
+                        <v-text-field block v-model="customer.password"
+                          type="password"
+                          data-msg=" 패스워드"
+                          outlined
+                          name="password"
+                          id="_password"
+                        placeholder="패스워드를 입력하세요"
+                        label="Password">
+
+                        </v-text-field>
+
+                      </v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 확인 :  </p></v-col>
+                      <v-col cols="10">
+                        <v-text-field
+                        data-msg="패스워드 재확인"
+                        type="password"
+                        outlined
+                        name="password_confirm"
+                        id="_password_confirm"
+                        placeholder="패스워드를 다시 입력하세요"
+                        v-model="password_confirm"
+                        block
+                        label="Confirm-password"
+                       
+                        ></v-text-field>
+                      </v-col>
+                      <v-spacer></v-spacer>
+                      <v-col class="d-flex ml-auto" cols="12">
+                          <v-btn type="submit" x-large block color="cyan darken-4"><p style="color:white; margin-bottom:0px;">SignUp</p> </v-btn>
+                      </v-col>
+                    </v-row>
+
+                  </v-form>
+                </v-card-text>
+              </v-card>
+            </v-tab-item>
+           
+      </v-tabs>
         </div>
-      </div>
-    </div>
-    <div v-if="!visablelogin">
-      <div v-if="!submitted">
-        <form
-          action
-          method="post"
-          id="_frmForm"
-          name="frmForm"
-          @submit.prevent="registryMyself"
-        >
-          <v-simple-table class="content_table">
-            <colgroup>
-              <col style="width:30%;" />
-              <col style="width:70%;" />
-            </colgroup>
-            <tbody>
-              <tr> 
-                <td colspan="2"><h2>회원가입</h2></td>
-              </tr>
-            <tr>
-              <th>이메일</th>
-              <td>
-                <input
-                  size="30"
-                  data-msg="이메일"
-                  type="email"
-                  name="email"
-                  id="_email"
-                  placeholder="이메일을 입력하세요."
-                  v-model="customer.email"
-                />
-                ex) trip123@naver.com
-              </td>
-            </tr>
-            <tr>
-              <th>별명</th>
-              <td>
-                <input
-                  size="30"
-                  data-msg="별명"
-                  type="text"
-                  name="nickname"
-                  id="_nickname"
-                  placeholder="별명을 입력하세요."
-                  v-model="customer.nickname"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>이름</th>
-              <td>
-                <input
-                  size="30"
-                  data-msg="이름"
-                  type="text"
-                  name="cname"
-                  id="_cname"
-                  placeholder="이름을 입력하세요."
-                  v-model="customer.cname"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>패스워드</th>
-              <td>
-                <input
-                  size="30"
-                  data-msg="패스워드"
-                  type="password"
-                  name="password"
-                  id="_password"
-                  placeholder="패스워드를 입력하세요."
-                  v-model="customer.password"
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>패스워드 재확인</th>
-              <td>
-                <input 
-                  size="30"
-                  data-msg="패스워드 재확인"
-                  type="password"
-                  name="password_confirm"
-                  id="_password_confirm"
-                  placeholder="패스워드를 다시 입력하세요."
-                  v-model="password_confirm"
-                />
-              </td>
-            </tr>
-
-            <tr>
-              <td colspan="2" style="height:50px; text-align:center;">
-                <v-btn type="submit" name="button">회원가입</v-btn
-                >&nbsp;&nbsp;
-                <v-btn type="button" @click="moveToSignIn">
-                  로그인으로 이동
-                </v-btn>
-                <v-btn @click="close">취소</v-btn>
-              </td>
-            </tr>
-            </tbody>
-          </v-simple-table>
-        </form>
-      </div>
-
-      <div class="search_box" v-else>
-        <h3>
-          <span style="color:blue;">성공적으로 회원가입을 완료하였습니다!</span>
-        </h3>
-      </div>
-    </div>
-
-    <v-snackbar
+        <v-snackbar
         v-model="alert"
         timeout="5000"
       >
@@ -201,15 +151,32 @@
           </v-btn>
         </template>
       </v-snackbar>
+      </v-container>
+      
+      
+      
+
+    </div>
+   
   </div>
 </template>
 <script>
+
+import { mapGetters, mapState } from "vuex";
 import { AUTH_REQUEST } from "@/store/actions/auth";
 import http2 from "@/util/http-common2.js";
 export default {
   name: "login",
   data() {
     return {
+      
+      tab: 0,
+      tabs: [
+          {name:"Login", icon:"mdi-account"},
+          {name:"Signup", icon:"mdi-account-outline"}
+       ],
+       show1:false,
+      nowlogin: false,
       visablelogin: true,
       email: "",
       password: "",
@@ -225,6 +192,7 @@ export default {
       password_confirm: "",
     };
   },
+ 
   methods: {
     login: function() {
       //model에 바인딩된 데이터 모두 ==> this
@@ -234,7 +202,10 @@ export default {
         .then(() => {
           this.email = "";
           this.password = "";
-          this.$emit("closeLoginModal");
+          this.nowlogin = !this.nowlogin
+          
+            this.$router.push(`/`)
+            
         })
         .catch((e) => {
           if (e.request.status === 404){
@@ -311,6 +282,7 @@ export default {
             this.visablelogin = true;
             this.submitted = true;
             this.newCustomer();
+            this.$router.push('/emailauth')
           } else {
             this.alertMsg = response.data.message;
             this.alert = true;
@@ -361,8 +333,35 @@ export default {
     moveToSignIn() {
       this.visablelogin = !this.visablelogin;
       this.newCustomer();
-    }
-  }
+    },
+    
+
+  },
+  computed: {
+    passwordMatch() {
+      return () => this.password === this.verify || "Password must match";
+    },
+
+  
+  ...mapGetters([
+      "isAuthenticated",
+      "isProfileLoaded",
+      "getProfile",
+      "getRealName",
+      "getEmail",
+      "getUserNum",
+      "getValid"
+    ]),
+    ...mapState({
+      authLoading: state => state.auth.status === "loading",
+      uname: state => `${state.user.getProfile}`,
+      userEmail: state => `${state.user.getEmail}`,
+      userNum: state => `${state.user.getUserNum}`,
+
+      valid: state => `${state.user.getValid}`
+    }),
+    },
+
 };
 </script>
 

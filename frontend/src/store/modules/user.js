@@ -5,18 +5,22 @@ import { AUTH_LOGOUT } from "../actions/auth";
 
 const state = {
   status: "",
-  profilename: localStorage.getItem("profilename") || "" ,
-  realname: localStorage.getItem("realname") || "" ,
+  profilename: localStorage.getItem("profilename") || "",
+  realname: localStorage.getItem("realname") || "",
   email: localStorage.getItem("email") || "",
   userNum: localStorage.getItem("userNum") || "",
+  userImg: localStorage.getItem("userImg") || "",
+  valid: localStorage.getItem("valid") || "",
 };
 
 const getters = {
   getProfile: state => state.profilename,
   isProfileLoaded: state => !!state.profilename,
-  getRealName: state=> state.realname,
-  getEmail: state=> state.email,
-  getUserNum: state=> state.userNum,
+  getRealName: state => state.realname,
+  getEmail: state => state.email,
+  getUserNum: state => state.userNum,
+  getUserImg: state => state.userImg,
+  getValid: state => state.valid,
 };
 
 const actions = {
@@ -42,10 +46,15 @@ const mutations = {
     localStorage.setItem("realname", resp.name);
     localStorage.setItem("email", resp.email);
     localStorage.setItem("userNum", resp.num);
+    localStorage.setItem("userImg", resp.imagesrc);
+    localStorage.setItem("valid", resp.valid);
     Vue.set(state, "profilename", resp.nickname);
     Vue.set(state, "realname", resp.name);
     Vue.set(state, "email", resp.email);
     Vue.set(state, "userNum", resp.num);
+    Vue.set(state, "userImg", resp.imagesrc);
+    Vue.set(state, "valid", resp.valid);
+
   },
   [USER_ERROR]: state => {
     state.status = "error";
@@ -55,8 +64,11 @@ const mutations = {
     state.realname = "";
     state.email = "";
     state.userNum = "";
+    state.userImg = "";
+
+    state.valid = "";
   },
-  modifyProfileName: function(state, after) {
+  modifyProfileName: function (state, after) {
     state.profilename = after;
   }
 };

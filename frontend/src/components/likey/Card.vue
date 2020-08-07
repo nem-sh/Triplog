@@ -42,7 +42,7 @@
                 height="388"
               ></v-img>
               <br />
-              <v-card-text class="skipText">{{value.article.content}}</v-card-text>
+              <v-card-text class="skipText">{{value.article.place}}</v-card-text>
               <br />
               <hr />
               <v-card-actions>
@@ -178,7 +178,7 @@ export default {
 
     showDetail: function() {
       this.dialog = false;
-      this.$router.push(`/like/article/detail/${this.value.article.num}`);
+      this.$router.push(`/article/detail/${this.value.article.num}`);
     },
 
     movePackage: function() {

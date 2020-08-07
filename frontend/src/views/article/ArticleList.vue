@@ -111,6 +111,11 @@ export default {
     ...mapState({
       userNum: state => `${state.user.getUserNum}`
     })
+  },
+  watch: {
+    getUserNum: function(){
+      this.$router.go(this.$router.currentRoute);
+    }
   }
 };
 </script>

@@ -1,58 +1,197 @@
 <template>
   <div id="main_wrap" style="min-width: 1000px;">
-    <v-simple-table>
-      <template v-slot:default>
-        <tbody>
-          <tr>
-              <th class="text-left">TITLE</th>
-              <td>
-                <v-text-field
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  ref="title"
-                  label="제목을 입력하세요"
-                  v-model="articleTitle"
-                />
-              </td>
-          </tr>
-          <tr>
-            <td>
-              썸네일 이미지
-            </td>
-            <td>
-              <input ref="imageInput" type="file" hidden @change="onChangeImages">
-              <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
-            </td>
-          </tr>
-          
-          <tr>
-              <th class="text-left">CONTENT</th>
-              <td>
-              <br/>
-              <v-textarea
-               label="내용을 입력하세요"
-               id="content"
-               ref="content"
-               v-model="articleContent"
-               auto-grow
-               outlined
-               row-height="100px"
-              >
-              </v-textarea>
-              </td>
-          </tr>
-          
-        </tbody>
-        
-      </template>
-    </v-simple-table>
+    <v-row
+      dense
+      >
+      <v-col
+        cols="12"
+        md="2"
+        align-self="center">
+        <div style="width:100%; text-align:center">제목</div>
+      </v-col>
+      <v-col
+        cols="12"
+        md="9"
+      >
+        <v-text-field
+          v-model="articleTitle"
+          label="제목"
+          id="title"
+          ref="title"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row
+      dense
+      >
+      <v-col
+        cols="12"
+        md="2"
+        align-self="center">
+        <div style="width:100%; text-align:center">장소</div>
+      </v-col>
+      <v-col
+        cols="12"
+        md="9">
+        <v-text-field
+          v-model="articlePlace"
+          label="장소를 입력하세요."
+          id="place"
+          ref="place"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+    <v-row
+      dense
+      >
+      <v-col
+        cols="12"
+        md="2"
+        align-self="center">
+        <div style="width:100%; text-align:center">
+          <v-btn text @click="onClickImageUpload">이미지 업로드</v-btn>
+        </div>
+      </v-col>
+      <v-col
+        cols="12"
+        md="9"
+      >
+        <v-text-field
+          v-model="imageFileName"
+          label="image file"
+          id="imageFileName"
+          ref="imageFileName"
+          disabled
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
+    <v-row
+      style="height: 300px;"
+      v-if="imageUrl"
+      >
+      <v-col
+        cols="12"
+        md="2"
+        align-self="center">
+      </v-col>
+      <v-col
+        cols="12"
+        md="9"
+      >
+      <v-sheet 
+        outlined
+        height="300"
+        align = "center"
+      >
+        <v-img v-if="imageUrl" :src="imageUrl" class="img" aspect-ratio="1.7" contain>
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-sheet>
+      </v-col>
+    </v-row>
+
+    <br>
+
+    <input ref="imageInput" type="file" accept="image/*" hidden @change="onChangeImages">
+
+    <br/>
+    <v-sheet class="ma-1">
+      <div>
+      <h2>Font</h2>
+      <v-btn class="mr-1" @click="exec('bold')" label outlined color="cyan darken-2">
+        <v-icon>mdi-format-bold</v-icon>
+      </v-btn>
+      <v-btn class="mr-1" @click="exec('italic')" label outlined color="cyan darken-2">
+        <v-icon>mdi-format-italic</v-icon>
+      </v-btn>
+      <v-btn class="mr-1" @click="exec('underline')" label outlined color="cyan darken-2">
+        <v-icon>mdi-format-underline</v-icon>
+      </v-btn>
+      <v-btn class="mr-1" @click="exec('subscript')" label outlined color="cyan darken-2">
+        <v-icon>mdi-format-subscript</v-icon>
+      </v-btn>
+      <v-btn class="mr-1" @click="exec('superscript')" label outlined color="cyan darken-2">
+        <v-icon>mdi-format-superscript</v-icon>
+      </v-btn>
+      </div>
+      <!-- <v-btn class="mr-1" @click="this.showColorPicker != this.showColorPicker" outlined color="cyan darken-2">
+        <v-icon>mdi-format-color-fill</v-icon>
+      </v-btn> -->
+      <!-- <v-color-picker class="ma-2" mode="hexa" show-swatches v-if="showColorPicker"/> -->
+      
+<!-- exec('foreColor') v-model="titleColor"-->
+
+      <div>
+        <div style="display: inline-block; margin-right: 10px;">
+          <h2>Paragraph</h2>
+          <v-chip class="mr-1" @click="exec('justifyLeft')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-align-left</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('justifyCenter')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-align-center</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('justifyRight')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-align-right</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('justifyFull')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-align-justify</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('insertHorizontalRule')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-align-middle</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('insertOrderedList')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-list-numbered</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('insertunorderedList')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-list-bulleted</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('insertParagraph')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-textdirection-l-to-r</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('indent')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-indent-increase</v-icon>
+          </v-chip>
+          <v-chip class="mr-1" @click="exec('outdent')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-indent-decrease</v-icon>
+          </v-chip>
+        </div>
+
+        <div style="display: inline-block;">
+        <h2>Etc</h2>
+        <v-chip class="mr-1" @click="exec('undo')" label outlined color="cyan darken-2">
+          <v-icon>mdi-keyboard-return</v-icon>
+        </v-chip>
+        </div>
+      </div>
+
+      
+
+    </v-sheet>
+    <v-sheet
+      outlined
+      height="500"
+    >
+      <iframe
+      id="editor" 
+      src="../editor.html"
+      frameborder = "0"
+      scrolling = "auto"
+      style="width:100%; height:100%"
+      >
+      </iframe>
+    </v-sheet>
+
     <v-row>
           <v-col>
-            <v-btn @click="temp">임시 저장</v-btn>
+            <v-btn tile outlined @click="temp">임시 저장</v-btn>
           </v-col>
           <v-col align="right">
-            <v-btn @click="regist">등록</v-btn>
+            <v-btn tile outlined @click="regist">등록</v-btn>
           </v-col>
     </v-row>
     <br/><br/>
@@ -102,17 +241,23 @@ export default {
     return {
       articleContent: "",
       articleTitle: "",
+      articlePlace: "",
       alert : false,
       alertMsg : "",
       registSuccess: false,
+      imageFileName: null,
       imageUrl: null,
       fileInfo: "",
       polling: null,
       dialog: false,
+      editorHtmlPath: "./assets/editor/editor.html",
+      prefix: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
+      suffix: '</body></html>',
+      showColorPicker: false,
     };
   },
   created() {
-      this.start()
+      // this.start()
   },
   mounted() {
       if(window.localStorage.getItem("isSaved") == "true") {
@@ -120,6 +265,21 @@ export default {
       }
   },
   methods: {
+    createFileByInnerEditorText: function() {
+      var innerIframe = document.getElementById('editor').contentWindow.document.body.innerHTML;
+      var content = this.prefix + innerIframe + this.suffix;
+      var fileName = this.getUserNum + "_" + this.articleTitle + ".html";
+      var file = new File([content], fileName, {
+        type: "text/html",
+      });
+      return file;
+    },
+    exec: function(option) {
+      this.editorDocument().execCommand(option, false, true);
+    },
+    editorDocument: function() {
+		  return document.getElementById('editor').contentDocument || document.getElementById('editor').contentWindow.document;
+	  },
     deleteData() {
         this.storeClean();
         this.dialog = false;
@@ -159,10 +319,6 @@ export default {
    regist() {
     let err = true;
     let msg = "";
-    !this.articleContent &&
-      ((msg = "내용을 입력해주세요"),
-      (err = false),
-      this.$refs.content.focus());
     !this.articleTitle &&
       ((msg = "제목을 입력해주세요"),
       (err = false),
@@ -177,17 +333,23 @@ export default {
     }
    },
    registHandler() {
+     var contentFile = this.createFileByInnerEditorText();
      var formData = new FormData();
-     formData.append('img', this.fileInfo);
+     console.log(contentFile);
+     formData.append('files', contentFile);
+     formData.append('files', this.fileInfo);
      http3
-      .post(`/article/img`, formData).then(({ data }) => {
+      .post(`/article/files`, formData).then(({ data }) => {
+        console.log(data);
         http
           .post(`/article`, {
-            thumbnail : data,
+            thumbnail : data[1],
             title: this.articleTitle,
-            content: this.articleContent,
+            content: data[0],
             created_at: new Date(),
             user_num: this.getUserNum,
+            userNickname: this.getProfile,
+            place: this.articlePlace,
           }).then(({ data }) => {
             let msg = "등록 처리시 문제가 발생했습니다.";
             if (data === "success") {
@@ -197,8 +359,8 @@ export default {
             this.alertMsg = msg;
             this.alert = true;
             this.registSuccess = true;
-            clearInterval(this.polling);
-            this.storeClean();
+            // clearInterval(this.polling);
+            // this.storeClean();
             this.$router.push(`/article/list/${this.getUserNum}`);
           }).catch((e) => {
             if (e.request.status === 404){
@@ -220,11 +382,10 @@ export default {
       });
    },
     onChangeImages(e) {
-      console.log("asdasd");
       const file = e.target.files[0];
       this.fileInfo = file;
+      this.imageFileName = file.name;
       this.imageUrl = URL.createObjectURL(file);
-      console.log(this.imageUrl);
     },
     onClickImageUpload() {
       this.$refs.imageInput.click();

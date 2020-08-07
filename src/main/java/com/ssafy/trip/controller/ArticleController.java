@@ -8,10 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,19 +17,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ssafy.trip.exception.ResourceNotFoundException;
 import com.ssafy.trip.help.ArticleLikeListResponseObject;
-import com.ssafy.trip.help.ArticleRequestWithFile;
 import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.model.Paging;
 import com.ssafy.trip.repository.ArticleRepository;
+import com.ssafy.trip.repository.CommentRepository;
 import com.ssafy.trip.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
@@ -46,6 +40,9 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleRepository articleRepository;
+	
+	@Autowired
+	private CommentRepository commentRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -60,8 +57,10 @@ public class ArticleController {
 
 	@DeleteMapping("/{num}")
 	public ResponseEntity<String> deleteArticleByNum(@PathVariable(value = "num") Long num) {
-		articleRepository.deleteByNum(num);
 
+		commentRepository.deleteAllByArticlenumAndReplyIsNull(num);
+		commentRepository.deleteAllByArticlenum(num);
+		articleRepository.deleteByNum(num);
 		return ResponseEntity.ok(SUCCESS);
 	}
 
@@ -80,26 +79,34 @@ public class ArticleController {
 		return ResponseEntity.ok(SUCCESS);
 	}
 
-	@PostMapping("/img")
-	public ResponseEntity<String> uploadImgs(@RequestPart MultipartFile img) throws Exception {
-		String baseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\articleImage\\";
-		String originalFileName = img.getOriginalFilename();
-		System.out.println(originalFileName);
-		File dest = new File(baseDir + originalFileName);
+	@PostMapping("/files")
+	public ResponseEntity<List<String>> uploadFiles(@RequestPart List<MultipartFile> files) throws Exception {
+		String contentBaseDir = System.getProperty("user.dir")+ "\\frontend\\public\\content\\registered\\";
+		String imgBaseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\articleImage\\";
+		List<String> result = new LinkedList<String>();
 		
-		String newName = originalFileName;
-		String realName = originalFileName.split("\\.")[0];
-		String extension = originalFileName.split("\\.")[1];
-		int index = 0;
-		while(dest.exists()) {
-			index++;
-			newName = realName + "(" + index + ")." + extension;
-			dest = new File(baseDir + newName);
+		for (MultipartFile file : files) {
+			String originalFileName = file.getOriginalFilename();
+			String newName = originalFileName;
+			String[] splited = originalFileName.split("\\.");
+			String realName = splited[0];
+			String extension = splited[splited.length - 1];
+			String baseDir = extension.equals("html") ? contentBaseDir : imgBaseDir;
+			
+			File dest = new File(baseDir + originalFileName);
+			
+			int index = 0;
+			while(dest.exists()) {
+				index++;
+				newName = realName + "(" + index + ")." + extension;
+				dest = new File(baseDir + newName);
+			}
+			
+			file.transferTo(dest);
+			result.add(newName);
 		}
-		
-		img.transferTo(dest);
 	
-		return ResponseEntity.ok(newName);
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("/getList/{hostNum}")
@@ -247,6 +254,7 @@ public class ArticleController {
 	@GetMapping("/likesort")
 	public List<Article> getLikeSortedListArticle() {
 		List<Article> list = articleRepository.findTop4ByOrderByLikeCountDesc();
+		
 		return list;
 	}
 }
