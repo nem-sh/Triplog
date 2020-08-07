@@ -64,10 +64,10 @@ public class CommentController {
 
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
 	}
-	@PostMapping("/{replyNum}")
-	public ResponseEntity<?> createCocomment(@PathVariable(value = "replyNum") Long replyNum, @RequestBody Comment comment) {
+	@PostMapping("/{content}")
+	public ResponseEntity<?> createCocomment(@PathVariable(value = "content") String content, @RequestBody Comment comment) {
 		
-		Comment reply = commentRepository.findByNum(replyNum);
+		Comment reply = commentRepository.findByContent(content);
 		comment.setReply(reply);
 		commentRepository.save(comment);
 

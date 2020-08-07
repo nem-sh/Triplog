@@ -1,6 +1,6 @@
 <template>
   <div>
-    <home-comp/>
+    <home-comp />
   </div>
 </template>
 
@@ -11,6 +11,7 @@ export default {
   name: "Home",
   components: {
     HomeComp
-  }
+  },
+  created() {}
 };
 </script>

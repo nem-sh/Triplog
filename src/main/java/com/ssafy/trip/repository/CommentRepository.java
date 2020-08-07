@@ -16,6 +16,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 	List<Comment> findByArticlenumAndReplyOrderByCreatedat(Long num, Comment reply);
 	List<Comment> findByReplyOrderByCreatedat(Comment reply);
 	List<Comment> findByUsernum(Long num);
+
+	Comment findByContent(String content);
 	Comment findByNum(Long num);
 	Comment findByCreatedat(Date createdat);
 	@Transactional

@@ -194,7 +194,7 @@ export default {
       });
       this.item.cocomments.unshift(obj);
       http
-        .post(`/comment/${this.item.comment.createdat}`, {
+        .post(`/comment/${this.item.comment.content}`, {
           content: this.content,
           createdat: new Date(),
           articlenum: this.$route.params.articleNum,
