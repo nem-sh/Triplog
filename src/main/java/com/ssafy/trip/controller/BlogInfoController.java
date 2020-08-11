@@ -84,4 +84,11 @@ public class BlogInfoController {
 		
 		return blogInfo;
 	}
+	@GetMapping("/blog/visit/{usernum}")
+	public BlogInfo visitBlog(@PathVariable(value="usernum") Long usernum) {
+		BlogInfo blogvisitInfo = blogInfoRepository.findByUsernum(usernum);
+		blogvisitInfo.setVisitcount(blogvisitInfo.getVisitcount()+1);
+		blogInfoRepository.save(blogvisitInfo);
+		return blogvisitInfo;
+	}
 }

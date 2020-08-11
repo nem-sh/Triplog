@@ -166,11 +166,13 @@
         >
           {{articleLikeCount}}
         </v-avatar>
+        
 
         <v-icon v-if="isLoginedUserLikeThisArticle">mdi-heart</v-icon>
         <v-icon v-else>mdi-heart-outline</v-icon>
       </v-chip>
       </v-btn>
+      views{{articleViews}}
       <v-sheet>
           <v-btn
             :to="{ name: 'articleModify', params: { articleNum: articleNum }}"
@@ -252,7 +254,8 @@ export default {
     articleContent: { type: String },
     blogMasterName: { type: String },
     articleLikeCount: { type: Number },
-    isLoginedUserLikeThisArticle: { type: Boolean }
+    isLoginedUserLikeThisArticle: { type: Boolean },
+    articleViews: {type: Number}
   },
   data: function() {
     return {
@@ -277,6 +280,7 @@ export default {
       events: [],
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+      views: 0,
     };
   },
   mounted() {
@@ -284,8 +288,9 @@ export default {
     this.$refs.calendar.checkChange();
   },
   created() {
-    console.log(this.getUserNum);
-    console.log(this.articleUserNum);
+    // console.log(this.getUserNum);
+    // console.log(this.articleUserNum);
+    console.log(this.articleViews)
     this.openContentFile()
   },
   methods: {
@@ -418,7 +423,9 @@ export default {
             created_at: this.articleCreatedAt,
             date_start: this.articleDateStart,
             date_end: this.articleDateEnd,
-            likeCount: this.articleLikeCount
+            likeCount: this.articleLikeCount,
+            viws: this.articleViews,
+
           }
         )
         .then(({ data }) => {

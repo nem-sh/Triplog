@@ -51,7 +51,13 @@ public class ArticleController {
 	public ResponseEntity<Article> getArticleByNum(@PathVariable(value = "num") Long num) {
 		Article article = articleRepository.findByNum(num)
 				.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
-
+		
+		if (article.getViews() == null) {
+			article.setViews((long) 0);
+		}
+		
+		article.setViews(article.getViews()+1);
+		articleRepository.save(article);
 		return ResponseEntity.ok(article);
 	}
 

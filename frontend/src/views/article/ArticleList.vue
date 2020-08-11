@@ -41,6 +41,7 @@ import ArticleListComp from "@/components/article/ArticleListComp.vue";
 import InfiniteLoading from "vue-infinite-loading";
 import { mapGetters, mapState } from "vuex";
 import PersonalMainComp from "@/components/personal/PersonalMainComp.vue";
+// import Axios from 'axios';
 
 export default {
   name: "ArticleList",
@@ -54,10 +55,13 @@ export default {
       items: [],
       limit: 0,
       item: {},
-      isMyBlog: false
+      isMyBlog: false,
+      visitCount: 0
+      
     };
   },
   created() {
+    // console.log(this.$route.params.hostNum)
     http
       .post("/article/getList/", {
         usernum: this.$route.params.hostNum,
@@ -68,11 +72,25 @@ export default {
       });
     http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
       this.item = data;
-      console.dir(data);
+      // console.dir(data);
       if (this.getUserNum == this.item.num) {
         this.isMyBlog = true;
       }
-    });
+    }),
+    http.get(`/blog/visit/${this.$route.params.hostNum}`).then(({data}) => {
+      this.item = data;
+      
+      this.visitCount = data.visitcount;
+      
+    }).catch((err) => {
+      console.log(err)
+    })
+    // Axios.get(`/api/blog/visit/${this.$route.params.hostNum}`)
+    // .then(response => {
+    //   console.log(response.data)
+    // }).catch(error=>{
+    //   console.log(error)
+    // })
   },
   methods: {
     infiniteHandler($state) {

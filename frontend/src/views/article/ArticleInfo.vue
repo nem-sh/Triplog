@@ -15,6 +15,7 @@
       :blogMasterName="item.userNickname"
       :articleLikeCount="item.likeCount"
       :isLoginedUserLikeThisArticle="isLike"
+      :articleViews="item.views"
       v-on:userSnackBar="userSnackBar"
       v-if="likeLoaded & itemLoaded"
     />
@@ -49,7 +50,9 @@ export default {
   },
   created() {
     http.get(`/article/${this.$route.params.articleNum}`).then(({ data }) => {
+      
       this.item = data;
+      console.log(this.item.views)
       this.itemLoaded = true;
     });
     http
