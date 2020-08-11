@@ -62,7 +62,7 @@
           </v-col>
           <v-col >
             <p class="teal--text">방문자 수</p>
-            <p>{{visitcount}} 명이 다녀갔습니다.</p>
+            <p>{{visitCount}} 명이 다녀갔습니다.</p>
           </v-col>
         </v-row>
         <v-row>
@@ -129,7 +129,7 @@ export default {
       titleColor: "#000000FF",
       sendTitle: "",
       titleimg: "",
-      visitcount: 0,
+      visitCount: null,
       alert: false,
       alertMsg: "",
       imageUrl: "",
@@ -137,6 +137,7 @@ export default {
       dialog: false,
       firstImage: true,
       fileInfo: null,
+      
     };
   },
   methods: {
@@ -144,15 +145,20 @@ export default {
       http
         .get(`/blog/${this.getUserNum}`)
         .then(response => {
+          console.log(this.getUserNum)
+          console.log(response.data.visitcount)
+          this.visitCount = response.data.visitcount;
           this.titleColor = response.data.title.slice(0, 9);
           this.title = response.data.title.slice(9);
-          this.visitcount = response.data.visitcount;
+          
+          // console.log(this.visitCount)
           this.num = response.data.num;
+          // console.log(this.num)
           this.titleimg = response.data.titleimg;
-          console.log(response.data);
+          
         })
         .catch(error => {
-          console.log(error.data);
+          console.log(error);
         });
     },
     regist() {
@@ -163,7 +169,7 @@ export default {
         http3
           .put(`/blog/img`, formData)
           .then(({ data }) => {
-            console.log(data, "이미지");
+            // console.log(data, "이미지");
             http
               .put(`/blog/`, {
                 usernum: this.getUserNum,
@@ -269,7 +275,10 @@ export default {
   },
   created: function() {
     this.getBlogInfo();
-  }
+    
+
+  },
+  
 };
 </script>
 
