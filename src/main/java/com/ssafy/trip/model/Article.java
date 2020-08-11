@@ -36,6 +36,7 @@ public class Article {
 	private Date date_end;
 	private int likeCount;
 	private String userNickname;
+	private Long views;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "like_Article", joinColumns = @JoinColumn(name = "article_num"), inverseJoinColumns = @JoinColumn(name = "user_num"))
@@ -179,12 +180,21 @@ public class Article {
 		this.userNickname = userNickname;
 	}
 
+	public Long getViews() {
+		return views;
+	}
+
+	public void setViews(Long views) {
+		this.views = views;
+	}
+	
 	@Override
 	public String toString() {
 		return "Article [num=" + num + ", usernum=" + usernum + ", trippackage_num=" + trippackage_num + ", title="
 				+ title + ", place=" + place + ", content=" + content + ", thumbnail=" + thumbnail + ", temp=" + temp
 				+ ", created_at=" + created_at + ", date_start=" + date_start + ", date_end=" + date_end
-				+ ", likeCount=" + likeCount + ", userNickname=" + userNickname + ", likearticle=" + likearticle + "]";
+				+ ", likeCount=" + likeCount + ", userNickname=" + userNickname + ", likearticle=" + likearticle + ",views="+views +"]";
 	}
-	
+
+
 }

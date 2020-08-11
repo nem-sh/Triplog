@@ -149,10 +149,13 @@
         <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
       </template>
     </v-snackbar>
-    <div style="position: fixed; right: 20px; bottom: 20px;">
-      <v-btn color="cyan darken-2" fab dark @click="$vuetify.goTo(0, 0);">
-        <v-icon>mdi-chevron-up</v-icon>
-      </v-btn>
+
+    <div style="position: fixed; right: 20px; bottom: 20px;">{{scroll}}
+      <v-fab-transition>
+        <v-btn v-show="hidden" color="cyan darken-2" fab dark @click="$vuetify.goTo(0, 0);">
+          <v-icon>mdi-chevron-up</v-icon>
+        </v-btn>
+      </v-fab-transition>
     </div>
   </v-app>
 </template>
@@ -187,7 +190,10 @@ export default {
       { title: "게시물 목록", icon: "mdi-account-group-outline" }
     ],
     searchtoggle: false,
-    userimg: null
+    userimg: null,
+    hidden: false,
+    scrolled: false,
+    headerTop: 0
   }),
   components: {
     Login
@@ -269,7 +275,15 @@ export default {
     },
     goLoginPage() {
       this.$router.push("/login");
-    }
+    },
+    detectWindowScrollY () {
+      this.scrolled = window.scrollY > this.headerTop ? true : false
+      if(this.scrolled){
+        this.hidden = true;
+      }else{
+        this.hidden = false;
+      }
+    },
   },
   computed: {
     ...mapGetters([
@@ -298,6 +312,12 @@ export default {
     this.randomColorGenerateor();
     this.handleResize();
     window.addEventListener("resize", this.handleResize);
+    window.addEventListener('scroll', this.detectWindowScrollY);
+    this.header = this.$refs.pageHeader;
+    this.headerTop = this.header.offsetTop;
+  },
+  beforeDestory() {
+    window.removeEventListener('scroll', this.detectWindowScrollY)
   },
   watch: {
     getProfile: function() {
