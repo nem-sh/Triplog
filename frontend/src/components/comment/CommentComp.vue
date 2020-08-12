@@ -25,10 +25,10 @@
     </v-row>
 
     <v-list three-line>
-      <CommentUnitComp v-if="items[0]" :item="header" />
-      <div v-for="(item, index) in items" :key="item.comment.createdat">
+      <CommentAsistUnitComp v-if="items[0]" :item="header" />
+      <div v-for="(item, index) in items" :key="item.comment.content">
         <CommentUnitComp :item="item" :index="index" />
-        <CommentUnitComp :item="{ divider: true, inset: true }" />
+        <CommentAsistUnitComp :item="{ divider: true, inset: true }" />
       </div>
     </v-list>
   </v-container>
@@ -38,10 +38,13 @@
 import { mapGetters, mapState } from "vuex";
 import http from "@/util/http-common";
 import CommentUnitComp from "./CommentUnitComp";
+
+import CommentAsistUnitComp from "./CommentAsistUnitComp";
 export default {
   name: "CommentComp",
   components: {
-    CommentUnitComp
+    CommentUnitComp,
+    CommentAsistUnitComp
   },
   data: function() {
     return {
@@ -52,7 +55,8 @@ export default {
     };
   },
   props: {
-    items: Array
+    items: Array,
+    writedParagraphComment: Object
   },
   methods: {
     writeComment() {
@@ -92,6 +96,7 @@ export default {
       }
       return this.content.length + "/100";
     },
+
     ...mapGetters([
       "isAuthenticated",
       "isProfileLoaded",
@@ -108,6 +113,16 @@ export default {
       userNum: state => `${state.user.getUserNum}`,
       userImg: state => `${state.user.getUserImg}`
     })
+  },
+  watch: {
+    writedParagraphComment: function() {
+      if (this.writedParagraphComment != null) {
+        this.items.unshift({
+          comment: this.writedParagraphComment,
+          cocomments: []
+        });
+      }
+    }
   },
   created() {}
 };
