@@ -40,7 +40,7 @@ public class EmailValidationService {
 							"    <p>만일 TRIPLOG 계정을 등록하지 않았는데 본 메일을 받았다면 아래 버튼을 클릭하지 마세요.</p>" + "<br />")
 					.append("<button style=\"background-color: #fff;\r\n" + 
 							"	border-color: #1c98ad;\r\n" + 
-							"	color: #1c98ad; \"><a style=\"text-decoration: none; color:black;\" href=\"http://localhost:8080/emailValid/auth/"+memberMail)
+							"	color: #1c98ad; \"><a style=\"text-decoration: none; color:black;\" href=\"http://i3b207.p.ssafy.io:8080/emailValid/auth/"+memberMail)
 					.append("\" target=blank>TRIPLOG시작하기</a></button>")
 					.toString(), "UTF-8", "html");
 			javaMailSender.send(simpleMessage);
