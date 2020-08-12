@@ -121,9 +121,10 @@
         <v-icon>mdi-format-superscript</v-icon>
       </v-btn>
       <v-select :items="fontItems"
-        label = "폰트 종류를 선택하세요"
+        label = "Font Style"
         dense
         outlined
+        menu-props="auto"
         prepend-inner-icon="mdi-format-font"
         color="cyan darken-2"
         v-model="fontValue"
@@ -266,11 +267,11 @@ export default {
       suffix: '</body></html>',
       showColorPicker: false,
       fontItems: [
-        {text: '기본값', value: 'null'},
         {header: 'Korean'},
+        {text: '고딕', value: 'null'},
         {text: '굴림', value: '굴림'},
         {text: '돋움', value: '돋움'},
-        {text: '고딕', value: '고딕'},
+        // {text: '고딕', value: '고딕'},
         {text: '궁서', value: '궁서'},
         {text: 'Nanum Gothic', value: 'Nanum Gothic'},
         {text: 'Gaegu', value: 'Gaegu'},
