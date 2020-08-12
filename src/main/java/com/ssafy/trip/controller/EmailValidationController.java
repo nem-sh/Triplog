@@ -29,7 +29,7 @@ public class EmailValidationController {
 
         user.setValid(true);
         userRepository.save(user);
-        return "redirect:http://localhost/emailauth/success";
+        return "redirect:http://i3b207.p.ssafy.io/emailauth/success";
     }
 	
 	@RequestMapping("/api/emailValid/re/{num}")
