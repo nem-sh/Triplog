@@ -1,5 +1,5 @@
 <template>
-  <div style="min-width: 1000px;">
+  <v-container style="min-width: 1000px;">
     <div>
       <h1>{{articleTitle}}</h1>
       <h4 style="color:gray; cursor:pointer" @click="goToBlog">{{blogMasterName}}</h4>
@@ -166,7 +166,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </div>
+  </v-container>
 </template>
 
 <script>
