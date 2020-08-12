@@ -1,7 +1,37 @@
 <template>
   <v-app>
+    <v-footer fixed padless class="d-sm-flex d-sm-none">
+      <v-card flat tile width="100%" class="lighten-1 text-center">
+        <v-card-text>
+          <v-btn class="mx-4" icon>
+            <v-icon size="24px">mdi-account</v-icon>
+          </v-btn>
+          <v-btn class="mx-4" icon>
+            <v-icon size="24px">mdi-charity</v-icon>
+          </v-btn>
+          <v-btn class="mx-4" icon>
+            <v-icon size="24px">mdi-blogger</v-icon>
+          </v-btn>
+          <v-btn class="mx-4" icon>
+            <v-icon size="24px">mdi-file-edit</v-icon>
+          </v-btn>
+          <v-btn class="mx-4" icon>
+            <v-icon size="24px">fas fa-unlock</v-icon>
+          </v-btn>
+        </v-card-text>
+
+        <v-divider></v-divider>
+      </v-card>
+    </v-footer>
     <div>
-      <v-navigation-drawer :mini-variant.sync="mini" clipped app permanent v-if="this.getProfile">
+      <v-navigation-drawer
+        class="d-none d-sm-flex"
+        :mini-variant.sync="mini"
+        clipped
+        app
+        permanent
+        v-if="this.getProfile"
+      >
         <v-list-item class="px-2 mb-6" style="padding: 10px;">
           <v-list-item-avatar>
             <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>

@@ -14,6 +14,7 @@
     "jquery": "^3.5.1",
     "moment": "^2.26.0",
     "vue": "^2.6.11",
+    "vue-daum-postcode": "^0.9.0",
     "vue-infinite-loading": "^2.4.5",
     "vue-masonry": "^0.11.8",
     "vue-moment": "^4.1.0",

@@ -74,12 +74,19 @@ export default {
       console.log(this.item.views);
       this.itemLoaded = true;
     });
-    http
-      .get(`/article/like/${this.$route.params.articleNum}/${this.getUserNum}`)
-      .then(({ data }) => {
-        this.isLike = data;
-        this.likeLoaded = true;
-      });
+    if (this.getUserNum != "") {
+      http
+        .get(
+          `/article/like/${this.$route.params.articleNum}/${this.getUserNum}`
+        )
+        .then(({ data }) => {
+          this.isLike = data;
+          this.likeLoaded = true;
+        });
+    } else {
+      this.isLike = false;
+      this.likeLoaded = true;
+    }
     http.get(`/comment/${this.$route.params.articleNum}`).then(({ data }) => {
       this.comments = data;
       this.commentLoaded = true;
