@@ -33,12 +33,14 @@
       <v-col
         cols="12"
         md="9">
-        <v-text-field
-          v-model="articlePlace"
-          label="장소를 입력하세요."
-          id="place"
-          ref="place"
-        ></v-text-field>
+        <v-dialog v-model="addressDialog" persistent max-width="500">
+        <template v-slot:activator="{ on, attrs }">
+          <div>
+            <v-btn small v-bind="attrs" v-on="on" >주소 찾기</v-btn> {{ address.address }}
+          </div>
+        </template>
+          <vue-daum-postcode @complete="address = $event; addressDialog = false;" />
+      </v-dialog>
       </v-col>
     </v-row>
     <v-row
@@ -234,9 +236,13 @@
 import http from "@/util/http-common";
 import http3 from "@/util/http-common3";
 import { mapGetters, mapState } from 'vuex';
+import { VueDaumPostcode } from "vue-daum-postcode"
 
 export default {
   name: "ArticleWriteComp",
+  components: {
+    VueDaumPostcode,
+  },
   data() {
     return {
       articleContent: "",
@@ -254,6 +260,8 @@ export default {
       prefix: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
       suffix: '</body></html>',
       showColorPicker: false,
+      address: {},
+      addressDialog: false,
     };
   },
   created() {
@@ -349,7 +357,7 @@ export default {
             created_at: new Date(),
             user_num: this.getUserNum,
             userNickname: this.getProfile,
-            place: this.articlePlace,
+            place: this.address.address,
           }).then(({ data }) => {
             let msg = "등록 처리시 문제가 발생했습니다.";
             if (data === "success") {
