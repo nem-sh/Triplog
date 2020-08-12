@@ -48,16 +48,25 @@
         >
         <h2>많은 좋아요를 받은 게시물들</h2>
         <like-sort-list-comp></like-sort-list-comp>
+        <h2>많은 사람들이 본 게시물들</h2>
+        <view-sort-list-comp></view-sort-list-comp>
+        <h2>많은 댓글이 달린 게시물들</h2>
+        <comment-sort-list-comp></comment-sort-list-comp>
     </v-container>
 </v-container>
 </template>
 
 <script>
 import LikeSortListComp from "@/components/Home/LikeSortListComp.vue";
+import ViewSortListComp from "@/components/Home/ViewSortListComp.vue";
+import CommentSortListComp from "@/components/Home/CommentSortListComp.vue";
+
 export default {
     name: "HomeComp",
     components: {
-        LikeSortListComp
+        LikeSortListComp,
+        ViewSortListComp,
+        CommentSortListComp,
     },
     data () {
         return {

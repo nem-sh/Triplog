@@ -16,6 +16,7 @@ import com.ssafy.trip.model.MemberUser;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 	Optional<Article> findByNum(Long num);
+	
 //	블로그에서 검색기능
 	List<Article> findByTitleContaining(String keyword);
 	List<Article> findByTitleContainingAndNum(String keyword, int user_num);
@@ -24,7 +25,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	List<Article> findByUserNicknameContaining(String keyword);
 	@Query(nativeQuery = true, value = "select * from article where user_num = :user_num order by num desc limit :limit, 10")
 	List<Article> findByUsernumPaging(@Param("user_num") Long user_num, @Param("limit") int limit);
-	
+	List<Article> findAll();
 	@Transactional
     @Modifying
 	void deleteByNum(Long num);
@@ -35,4 +36,5 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	List<Article> findByLikearticle(MemberUser user);
 	
 	List<Article> findTop4ByOrderByLikeCountDesc();
+	List<Article>findTop4ByOrderByViewsDesc();
 }
