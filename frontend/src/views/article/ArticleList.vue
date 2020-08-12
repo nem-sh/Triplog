@@ -11,27 +11,64 @@
         @update-profile="updateProfile"
       />
     </div>
-    <v-sheet height="50"></v-sheet>
-    <v-app id="inspire" style="max-width: 970px">
-      <v-container fluid>
-        <v-row>
-          <v-col cols="12">
-            <v-row align="stretch" justify="space-around">
-              <ArticleListComp
-                v-for="(item, index) in items"
-                :key="`${index}_items`"
-                :num="item.num"
-                :user_num="item.user_num"
-                :title="item.title"
-                :thumbnail="item.thumbnail"
-                :created_at="item.created_at"
-              />
+
+    <v-tabs centered grow color="cyan darken-2">
+      <v-tab>
+        <v-icon left>mdi-account</v-icon>All Posts
+      </v-tab>
+      <v-tab v-for="item in tripList" :key="item">
+        <v-icon left>mdi-account</v-icon>
+        {{item.name}}
+      </v-tab>
+      <v-tab>
+        <v-icon left>mdi-cogs</v-icon>TripPackage
+      </v-tab>
+      <v-tab-item>
+        <v-app id="inspire" style="max-width: 970px">
+          <v-container fluid>
+            <v-row>
+              <v-col cols="12">
+                <v-row align="stretch" justify="space-around">
+                  <ArticleListComp
+                    v-for="(item, index) in items"
+                    :key="`${index}_items`"
+                    :num="item.num"
+                    :user_num="item.user_num"
+                    :title="item.title"
+                    :thumbnail="item.thumbnail"
+                    :created_at="item.created_at"
+                  />
+                </v-row>
+              </v-col>
             </v-row>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-app>
-    <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
+          </v-container>
+        </v-app>
+        <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
+      </v-tab-item>
+
+      <v-tab-item v-for="item in tripList" :key="item">
+        <Category
+        :num="item.num"
+        :userNum="item.userNum"
+        :name="item.name"
+        />
+        <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
+      </v-tab-item>
+
+      <v-tab-item>
+        <v-app id="inspire" style="max-width: 970px">
+          <v-container fluid>
+            <v-row>
+              <v-col cols="12">
+                <v-row align="stretch" justify="space-around">
+                  <TripPackageComp />
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-app>
+      </v-tab-item>
+    </v-tabs>
   </div>
 </template>
 
@@ -41,20 +78,25 @@ import ArticleListComp from "@/components/article/ArticleListComp.vue";
 import InfiniteLoading from "vue-infinite-loading";
 import { mapGetters, mapState } from "vuex";
 import PersonalMainComp from "@/components/personal/PersonalMainComp.vue";
+import TripPackageComp from "@/components/tripPackage/TripPackageComp.vue";
+import Category from "@/components/tripPackage/Category.vue";
 
 export default {
   name: "ArticleList",
   components: {
     ArticleListComp,
     InfiniteLoading,
-    PersonalMainComp
+    PersonalMainComp,
+    TripPackageComp,
+    Category
   },
   data: function() {
     return {
       items: [],
       limit: 0,
       item: {},
-      isMyBlog: false
+      isMyBlog: false,
+      tripList: []
     };
   },
   created() {
@@ -72,6 +114,9 @@ export default {
       if (this.getUserNum == this.item.num) {
         this.isMyBlog = true;
       }
+    });
+    http.get(`/tripPackage/${this.$route.params.hostNum}`).then(({ data }) => {
+      this.tripList = data;
     });
   },
   methods: {
@@ -113,7 +158,7 @@ export default {
     })
   },
   watch: {
-    getUserNum: function(){
+    getUserNum: function() {
       this.$router.go(this.$router.currentRoute);
     }
   }

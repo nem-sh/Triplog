@@ -19,11 +19,17 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 //	블로그에서 검색기능
 	List<Article> findByTitleContaining(String keyword);
 	List<Article> findByTitleContainingAndNum(String keyword, int user_num);
-	List<Article> findByUsernum(Long user_num);
-	List<Article> findByTitleContainingOrUsernum(String keyword, int user_num);
+	List<Article> findByUserNum(Long user_num);
+	List<Article> findByTitleContainingOrUserNum(String keyword, int user_num);
 	List<Article> findByUserNicknameContaining(String keyword);
 	@Query(nativeQuery = true, value = "select * from article where user_num = :user_num order by num desc limit :limit, 10")
 	List<Article> findByUsernumPaging(@Param("user_num") Long user_num, @Param("limit") int limit);
+	List<Article> findByTrippackageNum(@Param("trippackageNum") Long trippackageNum);
+	List<Article> findByUserNumAndTrippackageNumIsNull(Long user_num);
+	@Transactional
+	@Modifying
+	@Query("update Article set trippackage_num = :tripNum where num = :articleNum")
+	void updateTripPackage(@Param("tripNum") Long tripNum, @Param("articleNum") Long articleNum);
 	
 	@Transactional
     @Modifying
@@ -31,7 +37,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	
 	@Transactional
     @Modifying
-	void deleteAllByUsernum(Long usernum);
+	void deleteAllByUserNum(Long usernum);
 	List<Article> findByLikearticle(MemberUser user);
 	
 	List<Article> findTop4ByOrderByLikeCountDesc();
