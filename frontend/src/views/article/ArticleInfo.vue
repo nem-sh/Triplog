@@ -18,11 +18,10 @@
       :articleViews="item.views"
       v-on:userSnackBar="userSnackBar"
       v-if="likeLoaded & itemLoaded"
+      @send-paragraph-info="sendParagraphInfo"
     />
-    <comment-comp 
-      :items="comments"
-      v-if="commentLoaded"
-      />
+    <comment-paragraph-comp :paragraphInfo="paragraphInfo" />
+    <comment-comp :items="comments" v-if="commentLoaded" />
   </div>
 </template>
 
@@ -30,16 +29,22 @@
 import { mapGetters, mapState } from "vuex";
 import ArticleInfoComp from "@/components/article/ArticleInfoComp.vue";
 import CommentComp from "@/components/comment/CommentComp.vue";
+import CommentParagraphComp from "@/components/comment/CommentParagraphComp.vue";
 import http from "@/util/http-common";
 
 export default {
   name: "ArticleInfo",
   components: {
     ArticleInfoComp,
-    CommentComp
+    CommentComp,
+    CommentParagraphComp
   },
   data: function() {
     return {
+      paragraphInfo: {
+        paragraph: "",
+        choiceId: null
+      },
       item: {},
       isLike: null,
       likeLoaded: false,
@@ -48,11 +53,16 @@ export default {
       comments: []
     };
   },
+  methods: {
+    sendParagraphInfo(paragraphInfo) {
+      this.paragraphInfo.paragraph = paragraphInfo.paragraph;
+      this.paragraphInfo.choiceId = paragraphInfo.choiceId;
+    }
+  },
   created() {
     http.get(`/article/${this.$route.params.articleNum}`).then(({ data }) => {
-      
       this.item = data;
-      console.log(this.item.views)
+      console.log(this.item.views);
       this.itemLoaded = true;
     });
     http
