@@ -1,21 +1,21 @@
 <template>
   <v-app>
-    <v-footer fixed padless class="d-sm-flex d-sm-none">
+    <v-footer fixed padless class="d-flex d-sm-none">
       <v-card flat tile width="100%" class="lighten-1 text-center">
         <v-card-text>
-          <v-btn class="mx-4" icon>
+          <v-btn class="mx-4" icon @click="info">
             <v-icon size="24px">mdi-account</v-icon>
           </v-btn>
-          <v-btn class="mx-4" icon>
+          <v-btn class="mx-4" icon @click="$router.push('/like')">
             <v-icon size="24px">mdi-charity</v-icon>
           </v-btn>
-          <v-btn class="mx-4" icon>
+          <v-btn class="mx-4" icon @click="moveBlog">
             <v-icon size="24px">mdi-blogger</v-icon>
           </v-btn>
-          <v-btn class="mx-4" icon>
+          <v-btn class="mx-4" icon @click="goWrite">
             <v-icon size="24px">mdi-file-edit</v-icon>
           </v-btn>
-          <v-btn class="mx-4" icon>
+          <v-btn class="mx-4" icon @click="logout" v-if="getUserNum !=''">
             <v-icon size="24px">fas fa-unlock</v-icon>
           </v-btn>
         </v-card-text>
@@ -117,7 +117,7 @@
       </v-navigation-drawer>
 
       <v-app-bar app dense color="cyan darken-2" dark clipped-left>
-        <v-toolbar-title style="font-size: 40px;">
+        <v-toolbar-title style="font-size: 40px;" @click="$router.push('/')">
           TRIPLOG
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
@@ -180,9 +180,16 @@
       </template>
     </v-snackbar>
 
-    <div style="position: fixed; right: 20px; bottom: 20px;">
+    <div style="position: fixed; right: 20px; bottom: 20px;" class="d-none d-sm-flex">
       <v-fab-transition>
         <v-btn v-show="hidden" color="cyan darken-2" fab dark @click="$vuetify.goTo(0, 0);">
+          <v-icon>mdi-chevron-up</v-icon>
+        </v-btn>
+      </v-fab-transition>
+    </div>
+    <div style="position: fixed; right: 20px; bottom: 80px;" class="d-sm-none d-flex">
+      <v-fab-transition>
+        <v-btn v-show="hidden" color="cyan darken-2" small fab dark @click="$vuetify.goTo(0, 0);">
           <v-icon>mdi-chevron-up</v-icon>
         </v-btn>
       </v-fab-transition>
