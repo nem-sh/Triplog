@@ -20,8 +20,12 @@
       v-if="likeLoaded & itemLoaded"
       @send-paragraph-info="sendParagraphInfo"
     />
-    <comment-paragraph-comp :paragraphInfo="paragraphInfo" />
-    <comment-comp :items="comments" v-if="commentLoaded" />
+    <comment-paragraph-comp :paragraphInfo="paragraphInfo" @write-comment="writeParagraphComment" />
+    <comment-comp
+      :items="comments"
+      :writedParagraphComment="writedParagraphComment"
+      v-if="commentLoaded"
+    />
   </div>
 </template>
 
@@ -50,13 +54,18 @@ export default {
       likeLoaded: false,
       itemLoaded: false,
       commentLoaded: false,
-      comments: []
+      comments: [],
+      writedParagraphComment: {}
     };
   },
   methods: {
     sendParagraphInfo(paragraphInfo) {
       this.paragraphInfo.paragraph = paragraphInfo.paragraph;
       this.paragraphInfo.choiceId = paragraphInfo.choiceId;
+    },
+    writeParagraphComment(obj) {
+      console.log(obj);
+      this.writedParagraphComment = obj;
     }
   },
   created() {

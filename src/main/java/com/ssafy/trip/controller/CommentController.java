@@ -56,6 +56,20 @@ public class CommentController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
 	}
 	
+	@DeleteMapping("/content/{content}")
+	public ResponseEntity<?> deleteContentComment(@PathVariable(value = "content") String content) {
+
+		System.out.println("11");
+		Comment comment = commentRepository.findByContent(content);
+		System.out.println("211");
+		System.out.println(comment);
+  	  	commentRepository.deleteAllByReply(comment);
+		
+  	  	commentRepository.delete(comment);
+
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
+	}
+	
 	@PostMapping("/")
 	public ResponseEntity<?> createComment(@RequestBody Comment comment) {
 		

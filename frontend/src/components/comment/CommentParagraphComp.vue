@@ -46,16 +46,17 @@ export default {
   },
   methods: {
     writeComment() {
-      // let obj = {
-      //   avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-      //   usernickname: this.getProfile,
-      //   useremail: this.getEmail,
-      //   content: this.content,
-      //   createdat: new Date(),
-      //   userimg: this.getUserImg,
-      //   usernum: this.getUserNum,
-      //   paragraph: this.paragraphInfo.paragraph
-      // };
+      let obj = {
+        avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+        usernickname: this.getProfile,
+        useremail: this.getEmail,
+        content: this.content,
+        createdat: new Date(),
+        userimg: this.getUserImg,
+        usernum: this.getUserNum,
+        paragraph: this.paragraphInfo.paragraph
+      };
+      this.$emit("write-comment", obj);
       // this.items.unshift({ comment: obj, cocomments: [] });
       http
         .post(`/comment/`, {
