@@ -1,14 +1,14 @@
 <template>
-  <div id="main_wrap" style="width:800px;">
-    <div id="middle_wrap">
+  <v-container id="main_wrap" class="pa-0" >
+    <v-container id="middle_wrap" class="pa-0">
       
-      <v-container>
-        <div>
+      <v-container class="pa-0">
+        <v-container class="pa-0">
           <v-tabs v-model="tab" show-arrows background-color="cyan darken-2" icons-and-text teal grow>
           <v-tabs-slider></v-tabs-slider>
           <v-tab v-for="i in tabs" :key="i">
             <v-icon large>{{i.icon}}</v-icon>
-            <div class="caption py-1">{{i.name}}</div> 
+            <v-container class="caption py-1">{{i.name}}</v-container> 
             </v-tab>
             <v-tab-item>
               <v-card class="px-4">
@@ -129,10 +129,12 @@
                   </v-form>
                 </v-card-text>
               </v-card>
+              <br>
+                    <br>
             </v-tab-item>
            
       </v-tabs>
-        </div>
+        </v-container>
         <v-snackbar
         v-model="alert"
         timeout="5000"
@@ -156,9 +158,9 @@
       
       
 
-    </div>
+    </v-container>
    
-  </div>
+  </v-container>
 </template>
 <script>
 

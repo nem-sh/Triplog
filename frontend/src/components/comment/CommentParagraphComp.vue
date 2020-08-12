@@ -16,12 +16,33 @@
       </div>
     </div>
     <div
+      class="d-none d-sm-flex"
       style="position: fixed; right: 20px; bottom:90px; display: flex;justify-content: flex-end;"
     >
       <v-btn @click="writeComment" dark fab v-show="fab" color="green" style="margin-right: 10px">
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
       <v-btn @click="fab=!fab" :color="commentWriteBtnColor" dark fab>
+        <v-icon v-if="fab">mdi-close</v-icon>
+        <v-icon v-else>mdi-pencil</v-icon>
+      </v-btn>
+    </div>
+    <div
+      class="d-sm-none d-flex"
+      style="position: fixed; right: 20px; bottom: 130px; display: flex;justify-content: flex-end;"
+    >
+      <v-btn
+        @click="writeComment"
+        dark
+        fab
+        v-show="fab"
+        small
+        color="green"
+        style="margin-right: 10px"
+      >
+        <v-icon>mdi-pencil</v-icon>
+      </v-btn>
+      <v-btn @click="fab=!fab" small :color="commentWriteBtnColor" dark fab>
         <v-icon v-if="fab">mdi-close</v-icon>
         <v-icon v-else>mdi-pencil</v-icon>
       </v-btn>
