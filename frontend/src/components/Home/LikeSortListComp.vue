@@ -32,7 +32,7 @@ export default {
             .get(`/article/likesort`)
             .then(({ data }) => {
             this.items = data;
-            console.dir(data);
+            // console.dir(data);
             });
     }
 };
