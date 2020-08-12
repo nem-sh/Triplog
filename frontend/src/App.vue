@@ -8,7 +8,7 @@
           </v-list-item-avatar>
           <!-- <v-list-item-avatar :color="ranColor" size="40">
             <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
-          </v-list-item-avatar> -->
+          </v-list-item-avatar>-->
 
           <v-list-item-title class="font-weight-bold">{{this.getProfile}}님</v-list-item-title>
 
@@ -150,7 +150,7 @@
       </template>
     </v-snackbar>
 
-    <div style="position: fixed; right: 20px; bottom: 20px;">{{scroll}}
+    <div style="position: fixed; right: 20px; bottom: 20px;">
       <v-fab-transition>
         <v-btn v-show="hidden" color="cyan darken-2" fab dark @click="$vuetify.goTo(0, 0);">
           <v-icon>mdi-chevron-up</v-icon>
@@ -276,14 +276,14 @@ export default {
     goLoginPage() {
       this.$router.push("/login");
     },
-    detectWindowScrollY () {
-      this.scrolled = window.scrollY > this.headerTop ? true : false
-      if(this.scrolled){
+    detectWindowScrollY() {
+      this.scrolled = window.scrollY > this.headerTop ? true : false;
+      if (this.scrolled) {
         this.hidden = true;
-      }else{
+      } else {
         this.hidden = false;
       }
-    },
+    }
   },
   computed: {
     ...mapGetters([
@@ -312,12 +312,12 @@ export default {
     this.randomColorGenerateor();
     this.handleResize();
     window.addEventListener("resize", this.handleResize);
-    window.addEventListener('scroll', this.detectWindowScrollY);
+    window.addEventListener("scroll", this.detectWindowScrollY);
     this.header = this.$refs.pageHeader;
     this.headerTop = this.header.offsetTop;
   },
   beforeDestory() {
-    window.removeEventListener('scroll', this.detectWindowScrollY)
+    window.removeEventListener("scroll", this.detectWindowScrollY);
   },
   watch: {
     getProfile: function() {

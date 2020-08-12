@@ -57,7 +57,6 @@ export default {
       item: {},
       isMyBlog: false,
       visitCount: 0
-      
     };
   },
   created() {
@@ -72,19 +71,19 @@ export default {
       });
     http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
       this.item = data;
-      // console.dir(data);
+      console.dir(data, 22);
       if (this.getUserNum == this.item.num) {
         this.isMyBlog = true;
       }
     }),
-    http.get(`/blog/visit/${this.$route.params.hostNum}`).then(({data}) => {
-      this.item = data;
-      
-      this.visitCount = data.visitcount;
-      
-    }).catch((err) => {
-      console.log(err)
-    })
+      http
+        .get(`/blog/visit/${this.$route.params.hostNum}`)
+        .then(({ data }) => {
+          this.visitCount = data.visitcount;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     // Axios.get(`/api/blog/visit/${this.$route.params.hostNum}`)
     // .then(response => {
     //   console.log(response.data)
@@ -131,7 +130,7 @@ export default {
     })
   },
   watch: {
-    getUserNum: function(){
+    getUserNum: function() {
       this.$router.go(this.$router.currentRoute);
     }
   }
