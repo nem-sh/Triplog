@@ -35,8 +35,14 @@
               </div>
             </v-col>
           </v-row>
+          <v-list-item-subtitle
+            v-if=" item.comment.paragraph != null"
+            v-html="'@' + item.comment.paragraph"
+          ></v-list-item-subtitle>
           <br />
-          <v-list-item-subtitle v-if="!update" v-html="item.comment.content"></v-list-item-subtitle>
+
+          <br />
+          <v-list-item-subtitle v-if="!update" v-html="item.comment.content" style="color:black"></v-list-item-subtitle>
 
           <v-textarea
             @click.stop
