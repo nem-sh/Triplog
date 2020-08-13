@@ -11,7 +11,7 @@
     <div style="justify-content:center; display:flex; margin-top: 50px;">
       <p>회원가입한 메일로 인증 후 진정한 'TRIPLOGGER'가 되어주세요!</p>
     </div>
-    <div style="justify-content:center; display:flex; margin-top: 50px;">
+    <div style="justify-content:center; display:flex; margin-top: 50px;" v-if="getUserNum != ''">
       <v-btn x-large outlined color="black" @click="sendMail">인증 메일 재발송</v-btn>
     </div>
   </v-container>
