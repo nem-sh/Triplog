@@ -147,7 +147,7 @@
     <v-row 
       class="ma-1"
       align="center"
-      justify="space-between"
+      justify="between"
       >
       <v-btn
         class="ml-6"
@@ -172,7 +172,23 @@
         <v-icon v-else>mdi-heart-outline</v-icon>
       </v-chip>
       </v-btn>
-      views{{articleViews}}
+      
+        <v-chip
+          class="ml-6"
+          color="light-green"
+          text-color="white">
+          <p class="text-align-center ma-0">view</p>
+          <v-avatar
+        right
+        class="green"
+      >
+        {{articleViews}}
+      </v-avatar>
+        </v-chip>
+
+      
+      
+      
       <v-sheet>
           <v-btn
             :to="{ name: 'articleModify', params: { articleNum: articleNum }}"
@@ -290,7 +306,7 @@ export default {
   created() {
     // console.log(this.getUserNum);
     // console.log(this.articleUserNum);
-    console.log(this.articleViews)
+    // console.log(this.articleViews)
     this.openContentFile()
   },
   methods: {

@@ -293,9 +293,11 @@ public class ArticleController {
 			for (long j = 0; j < i; j++) {
 
 				if (commentLength.get((int) j) < commentLength.get((int) (j + 1))) {
+					
 					long temp = commentLength.get((int) j);
 					commentLength.set((int) j, commentLength.get((int) (j + 1)));
 					commentLength.set((int) (j + 1), temp);
+					
 					long temp2 = articleNumList.get((int) j);
 					articleNumList.set((int) j, articleNumList.get((int) (j + 1)));
 					articleNumList.set((int) (j + 1), temp2);

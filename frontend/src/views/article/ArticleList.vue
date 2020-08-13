@@ -61,7 +61,14 @@ export default {
     };
   },
   created() {
-    // console.log(this.$route.params.hostNum)
+    
+    http.get(`/blog/visit/${this.$route.params.hostNum}`).then(({data}) => {
+      console.log('요청보냄')
+      this.visitCount = data.visitcount;
+      console.log(this.visitCount)
+    }).catch((err) => {
+      console.log(err)
+    }),
     http
       .post("/article/getList/", {
         usernum: this.$route.params.hostNum,
@@ -76,21 +83,8 @@ export default {
       if (this.getUserNum == this.item.num) {
         this.isMyBlog = true;
       }
-    }),
-    http.get(`/blog/visit/${this.$route.params.hostNum}`).then(({data}) => {
-      this.item = data;
-      
-      this.visitCount = data.visitcount;
-      
-    }).catch((err) => {
-      console.log(err)
     })
-    // Axios.get(`/api/blog/visit/${this.$route.params.hostNum}`)
-    // .then(response => {
-    //   console.log(response.data)
-    // }).catch(error=>{
-    //   console.log(error)
-    // })
+    
   },
   methods: {
     infiniteHandler($state) {
