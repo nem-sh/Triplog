@@ -131,9 +131,9 @@ export default {
           }
           if (this.titleimg == null) {
             this.titleimg = "adventurealtitude.jpg";
-            console.log(this.titleimg);
+            // console.log(this.titleimg);
           }
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch(error => {
           console.log(error.data);

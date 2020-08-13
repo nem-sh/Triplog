@@ -80,6 +80,7 @@ import { mapGetters, mapState } from "vuex";
 import PersonalMainComp from "@/components/personal/PersonalMainComp.vue";
 import TripPackageComp from "@/components/tripPackage/TripPackageComp.vue";
 import Category from "@/components/tripPackage/Category.vue";
+// import Axios from 'axios';
 
 export default {
   name: "ArticleList",
@@ -97,9 +98,11 @@ export default {
       item: {},
       isMyBlog: false,
       tripList: []
+      visitCount: 0
     };
   },
   created() {
+    // console.log(this.$route.params.hostNum)
     http
       .post("/article/getList/", {
         usernum: this.$route.params.hostNum,
@@ -110,7 +113,7 @@ export default {
       });
     http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
       this.item = data;
-      console.dir(data);
+      console.dir(data, 22);
       if (this.getUserNum == this.item.num) {
         this.isMyBlog = true;
       }
@@ -118,6 +121,20 @@ export default {
     http.get(`/tripPackage/${this.$route.params.hostNum}`).then(({ data }) => {
       this.tripList = data;
     });
+      http
+        .get(`/blog/visit/${this.$route.params.hostNum}`)
+        .then(({ data }) => {
+          this.visitCount = data.visitcount;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    // Axios.get(`/api/blog/visit/${this.$route.params.hostNum}`)
+    // .then(response => {
+    //   console.log(response.data)
+    // }).catch(error=>{
+    //   console.log(error)
+    // })
   },
   methods: {
     infiniteHandler($state) {

@@ -2,8 +2,8 @@
   <div>
     <v-row style="display: flex;
 justify-content:center;">
-      <like-sort-list-item-comp
-        v-for="(item, index) in items"
+      <comment-sort-list-item-comp
+        v-for="(item,index) in items"
         :key="`${index}_items`"
         :num="item.num"
         :user_num="item.user_num"
@@ -16,12 +16,12 @@ justify-content:center;">
 
 <script>
 import http from "@/util/http-common";
-import LikeSortListItemComp from "@/components/Home/LikeSortListItemComp.vue";
+import CommentSortListItemComp from "@/components/Home/CommentSortListItemComp.vue";
 
 export default {
-  name: "LikeSortListComp",
+  name: "CommentSortListComp",
   components: {
-    LikeSortListItemComp
+    CommentSortListItemComp
   },
   data: function() {
     return {
@@ -29,10 +29,13 @@ export default {
     };
   },
   created() {
-    http.get(`/article/likesort`).then(({ data }) => {
+    http.get(`/article/commentsort`).then(({ data }) => {
       this.items = data;
-      // console.dir(data);
+      console.log(data);
     });
   }
 };
 </script>
+
+<style>
+</style>

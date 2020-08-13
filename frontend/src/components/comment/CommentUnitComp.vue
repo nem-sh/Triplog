@@ -35,8 +35,14 @@
               </div>
             </v-col>
           </v-row>
+          <v-list-item-subtitle
+            v-if=" item.comment.paragraph != null && item.comment.paragraph != ''"
+            v-html="'@' + item.comment.paragraph"
+          ></v-list-item-subtitle>
           <br />
-          <v-list-item-subtitle v-if="!update" v-html="item.comment.content"></v-list-item-subtitle>
+
+          <br />
+          <v-list-item-subtitle v-if="!update" v-html="item.comment.content" style="color:black"></v-list-item-subtitle>
 
           <v-textarea
             @click.stop
@@ -91,7 +97,7 @@
               <v-btn class="teal lighten-3" @click="submit">작성</v-btn>
             </v-col>
           </v-row>
-          <div v-for="(coItem, index) in item.cocomments" :key="coItem.createdat">
+          <div v-for="(coItem, index) in item.cocomments" :key="coItem.content">
             <cocomment-unit-comp :item="coItem" :index="index" />
           </div>
         </v-container>
@@ -138,15 +144,28 @@ export default {
       }
     },
     deleteComment() {
+      let removeContent = this.item.comment.content;
+
       this.item.comment.content = "삭제되었습니다.";
-      http
-        .delete(`/comment/${this.item.comment.num}`)
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      if (this.item.comment.num == undefined) {
+        http
+          .delete(`/comment/content/${removeContent}`)
+          .then(({ data }) => {
+            console.log(data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      } else {
+        http
+          .delete(`/comment/${this.item.comment.num}`)
+          .then(({ data }) => {
+            console.log(data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     },
     updateComment() {
       this.update = true;
@@ -222,10 +241,10 @@ export default {
       return this.content.length + "/100";
     },
     getUpdateContentLength: function() {
-      if (this.content.length == 0) {
+      if (this.updateContent.length == 0) {
         return "RE_WRITE";
       }
-      return this.content.length + "/100";
+      return this.updateContent.length + "/100";
     },
     xButton: function() {
       if (this.displayX) {
