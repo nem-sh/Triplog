@@ -87,8 +87,13 @@ public class BlogInfoController {
 	@GetMapping("/blog/visit/{usernum}")
 	public BlogInfo visitBlog(@PathVariable(value="usernum") Long usernum) {
 		BlogInfo blogvisitInfo = blogInfoRepository.findByUsernum(usernum);
-		blogvisitInfo.setVisitcount(blogvisitInfo.getVisitcount()+1);
+		System.out.println(usernum);
+		System.out.println("요청옴, 원래");
+		System.out.println(blogvisitInfo.getVisitcount());
+		int visitcount = blogvisitInfo.getVisitcount();
+		blogvisitInfo.setVisitcount(visitcount+1);
 		blogInfoRepository.save(blogvisitInfo);
+		System.out.println(blogvisitInfo.getVisitcount());
 		return blogvisitInfo;
 	}
 }

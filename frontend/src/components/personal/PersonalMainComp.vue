@@ -116,7 +116,7 @@ export default {
       this.$emit("update-profile");
       console.log("test");
     },
-
+    
     getBlogInfo() {
       http
         .get(`/blog/${this.$route.params.hostNum}`)
@@ -124,8 +124,9 @@ export default {
           this.titleColor = response.data.title.slice(0, 9);
           this.title = response.data.title.slice(9);
           this.visitcount = response.data.visitcount;
+          // console.log(this.visitcount)
           this.titleimg = response.data.titleimg;
-          console.log(this.titleimg);
+          // console.log(this.titleimg);
           if (this.title == "") {
             this.title = this.hostNickName + "'s blog";
           }
