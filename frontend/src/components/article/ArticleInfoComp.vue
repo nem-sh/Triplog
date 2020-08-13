@@ -114,7 +114,7 @@
       <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" />
     </div>
     <br />
-    <div @click="clickThis">
+    <div @click="clickThis" @mouseover="hoverThis" @mouseout="nonHoverThis" :style="cursorStyle">
       <article-content-comp :content="realContent" v-if="realContent" />
     </div>
     <v-divider />
@@ -210,10 +210,12 @@ export default {
     blogMasterName: { type: String },
     articleLikeCount: { type: Number },
     isLoginedUserLikeThisArticle: { type: Boolean },
-    articleViews: { type: Number }
+    articleViews: { type: Number },
+    onOffParagraph: { type: Boolean }
   },
   data: function() {
     return {
+      cursorEventOn: false,
       paragraphInfo: {
         paragraph: "",
         choiceId: null
@@ -275,6 +277,12 @@ export default {
         this.paragraphInfo.choiceId = btn.id;
       }
       this.$emit("send-paragraph-info", this.paragraphInfo);
+    },
+    hoverThis() {
+      this.cursorEventOn = true;
+    },
+    nonHoverThis() {
+      this.cursorEventOn = false;
     },
     goToBlog: function() {
       this.$router.push(`/article/list/${this.articleUserNum}`);
@@ -440,6 +448,13 @@ export default {
     }),
     loading: function() {
       return this.authStatus === "loading" && !this.isAuthenticated;
+    },
+    cursorStyle() {
+      if (this.cursorEventOn && this.onOffParagraph) {
+        return "cursor: pointer;";
+      } else {
+        return "";
+      }
     }
   }
 };

@@ -65,7 +65,7 @@
           <br />
           <v-row>
             <v-col cols="5" class="mb-4" style="display: flex; justify-content:flex-end;">
-              <v-list-item-subtitle v-html="item.comment.createdat" />
+              <v-list-item-subtitle v-html="getFormatDate(item.comment.createdat)" />
             </v-col>
             <v-col cols="2" class="pb-0"></v-col>
             <v-col cols="5" style="display: flex; justify-content:flex-end;" :style="button">
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import { mapGetters, mapState } from "vuex";
 import http from "@/util/http-common";
 import CocommentUnitComp from "./CocommentUnitComp.vue";
@@ -218,6 +219,9 @@ export default {
         });
 
       this.content = "";
+    },
+    getFormatDate(regtime) {
+      return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
     }
   },
   computed: {

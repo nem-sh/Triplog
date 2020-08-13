@@ -7,7 +7,7 @@
       <div style="width:200px">
         <v-textarea
           hide-details="false"
-          background-color="white"
+          style="background-color:white; "
           outlined
           color="black"
           v-model="content"
@@ -67,36 +67,40 @@ export default {
   },
   methods: {
     writeComment() {
-      let obj = {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-        usernickname: this.getProfile,
-        useremail: this.getEmail,
-        content: this.content,
-        createdat: new Date(),
-        userimg: this.getUserImg,
-        usernum: this.getUserNum,
-        paragraph: this.paragraphInfo.paragraph
-      };
-      this.$emit("write-comment", obj);
-      // this.items.unshift({ comment: obj, cocomments: [] });
-      http
-        .post(`/comment/`, {
-          content: this.content,
-          createdat: new Date(),
-          articlenum: this.$route.params.articleNum,
-          userimg: this.getUserImg,
-          usernum: this.getUserNum,
+      if (this.content == "") {
+        this.fab = true;
+      } else {
+        let obj = {
+          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
           usernickname: this.getProfile,
           useremail: this.getEmail,
+          content: this.content,
+          createdat: new Date(),
+          userimg: this.getUserImg,
+          usernum: this.getUserNum,
           paragraph: this.paragraphInfo.paragraph
-        })
-        .then(() => {
-          this.content = "";
-          this.fab = false;
-        })
-        .catch(e => {
-          console.log(e);
-        });
+        };
+        this.$emit("write-comment", obj);
+        // this.items.unshift({ comment: obj, cocomments: [] });
+        http
+          .post(`/comment/`, {
+            content: this.content,
+            createdat: new Date(),
+            articlenum: this.$route.params.articleNum,
+            userimg: this.getUserImg,
+            usernum: this.getUserNum,
+            usernickname: this.getProfile,
+            useremail: this.getEmail,
+            paragraph: this.paragraphInfo.paragraph
+          })
+          .then(() => {
+            this.content = "";
+            this.fab = false;
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     }
   },
   computed: {
@@ -130,6 +134,11 @@ export default {
       userNum: state => `${state.user.getUserNum}`,
       userImg: state => `${state.user.getUserImg}`
     })
+  },
+  watch: {
+    fab: function() {
+      this.$emit("on-off-paragraphcomment", this.fab);
+    }
   }
 };
 </script>
