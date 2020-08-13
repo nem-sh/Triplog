@@ -16,21 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class CustomErrorController implements ErrorController {
 	private static final String ErrorPath = "/error";
-	
+
 	@Override
 	public String getErrorPath() {
 		return ErrorPath;
 	}
-	
+
 	@GetMapping("/error")
 	public String handleError(HttpServletRequest request, Model model) {
 		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 		HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(status.toString()));
-		
+
 		model.addAttribute("code", status.toString());
 		model.addAttribute("msg", httpStatus.getReasonPhrase());
 		model.addAttribute("timestamp", new Date());
-		
+
 		return "error/error";
 	}
 }

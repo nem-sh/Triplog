@@ -151,7 +151,6 @@ export default {
         http
           .delete(`/comment/content/${removeContent}`)
           .then(({ data }) => {
-            console.log(data);
           })
           .catch(e => {
             console.log(e);
@@ -160,7 +159,6 @@ export default {
         http
           .delete(`/comment/${this.item.comment.num}`)
           .then(({ data }) => {
-            console.log(data);
           })
           .catch(e => {
             console.log(e);
@@ -186,7 +184,6 @@ export default {
           useremail: this.getEmail
         })
         .then(({ data }) => {
-          console.log(data);
         })
         .catch(e => {
           console.log(e);
@@ -202,15 +199,6 @@ export default {
         userimg: this.getUserImg,
         usernum: this.getUserNum
       };
-      console.log({
-        content: this.content,
-        createdat: new Date(),
-        articlenum: this.$route.params.articleNum,
-        userimg: this.getUserImg,
-        usernum: this.getUserNum,
-        usernickname: this.getProfile,
-        useremail: this.getEmail
-      });
       this.item.cocomments.unshift(obj);
       http
         .post(`/comment/${this.item.comment.content}`, {
@@ -223,7 +211,6 @@ export default {
           useremail: this.getEmail
         })
         .then(({ data }) => {
-          console.log(data);
           this.content = "";
         })
         .catch(e => {

@@ -31,7 +31,6 @@ export default {
   created() {
     http.get(`/article/likesort`).then(({ data }) => {
       this.items = data;
-      // console.dir(data);
     });
   }
 };

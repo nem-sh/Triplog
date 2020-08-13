@@ -29,15 +29,12 @@ export default {
   },
   methods: {
     updateProfile: function() {
-      console.log("zz");
       this.$emit("update-profile");
-      console.log("zz");
     }
   },
   created() {
     http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
       this.item = data;
-      console.dir(data);
       if (this.getUserNum == this.item.num) {
         this.isMyBlog = true;
       }

@@ -114,7 +114,6 @@ export default {
   methods: {
     updateProfile: function() {
       this.$emit("update-profile");
-      console.log("test");
     },
     
     getBlogInfo() {
@@ -124,17 +123,13 @@ export default {
           this.titleColor = response.data.title.slice(0, 9);
           this.title = response.data.title.slice(9);
           this.visitcount = response.data.visitcount;
-          // console.log(this.visitcount)
           this.titleimg = response.data.titleimg;
-          // console.log(this.titleimg);
           if (this.title == "") {
             this.title = this.hostNickName + "'s blog";
           }
           if (this.titleimg == null) {
             this.titleimg = "adventurealtitude.jpg";
-            // console.log(this.titleimg);
           }
-          // console.log(response.data);
         })
         .catch(error => {
           console.log(error.data);

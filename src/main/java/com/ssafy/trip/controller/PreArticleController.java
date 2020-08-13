@@ -37,7 +37,6 @@ public class PreArticleController {
 
             ObjectMapper mapper = new ObjectMapper();
             String jsonInString = mapper.writeValueAsString(params);
-            System.out.println(jsonInString);
             
             /* 발화 처리 부분 * */
             HashMap<String,Object> userRequest =  (HashMap<String,Object>)params.get("userRequest");
