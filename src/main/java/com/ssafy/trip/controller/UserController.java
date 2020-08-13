@@ -149,7 +149,7 @@ public class UserController {
     	  
     	  
     	  
-    	  List<Article> articles = articleRepository.findByUsernum(num);
+    	  List<Article> articles = articleRepository.findByUserNum(num);
     	  for(Article article : articles) {
     		  Long articlenum = article.getNum();
     		 System.out.println("test");
