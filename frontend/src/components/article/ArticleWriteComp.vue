@@ -128,7 +128,6 @@
         prepend-inner-icon="mdi-format-font"
         color="cyan darken-2"
         v-model="fontValue"
-        :style="{fontFamily : fontItems}"
       />
       </v-row>
 
@@ -238,6 +237,7 @@
       </v-dialog>
   </div>
 </template>
+
 <script>
 import http from "@/util/http-common";
 import http3 from "@/util/http-common3";
@@ -271,6 +271,7 @@ export default {
         {text: '고딕', value: 'null'},
         {text: '굴림', value: '굴림'},
         {text: '돋움', value: '돋움'},
+        // {text: '고딕', value: '고딕'},
         {text: '궁서', value: '궁서'},
         {text: 'Nanum Gothic', value: 'Nanum Gothic'},
         {text: 'Gaegu', value: 'Gaegu'},
@@ -450,7 +451,6 @@ export default {
 };
 
 </script>
-
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap');
