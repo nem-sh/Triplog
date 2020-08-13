@@ -102,7 +102,14 @@ export default {
     };
   },
   created() {
-    // console.log(this.$route.params.hostNum)
+    
+    http.get(`/blog/visit/${this.$route.params.hostNum}`).then(({data}) => {
+      console.log('요청보냄')
+      this.visitCount = data.visitcount;
+      console.log(this.visitCount)
+    }).catch((err) => {
+      console.log(err)
+    }),
     http
       .post("/article/getList/", {
         usernum: this.$route.params.hostNum,

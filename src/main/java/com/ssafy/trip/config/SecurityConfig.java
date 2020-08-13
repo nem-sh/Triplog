@@ -111,6 +111,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     	.permitAll()
                     .antMatchers("/api/neighbor/**")
                     	.permitAll()
+                    .antMatchers("/api/chatbot/**")
+                        .permitAll()
                     .antMatchers("/api/tripPackage/**")
                     	.permitAll()
                     .anyRequest()

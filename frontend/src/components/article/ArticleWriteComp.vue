@@ -128,6 +128,7 @@
         prepend-inner-icon="mdi-format-font"
         color="cyan darken-2"
         v-model="fontValue"
+        :style="{fontFamily : fontItems}"
       />
       </v-row>
 
