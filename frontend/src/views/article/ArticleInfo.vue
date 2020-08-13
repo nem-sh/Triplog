@@ -16,11 +16,16 @@
       :articleLikeCount="item.likeCount"
       :isLoginedUserLikeThisArticle="isLike"
       :articleViews="item.views"
+      :onOffParagraph="onOffParagraph"
       v-on:userSnackBar="userSnackBar"
       v-if="likeLoaded & itemLoaded"
       @send-paragraph-info="sendParagraphInfo"
     />
-    <comment-paragraph-comp :paragraphInfo="paragraphInfo" @write-comment="writeParagraphComment" />
+    <comment-paragraph-comp
+      :paragraphInfo="paragraphInfo"
+      @on-off-paragraphcomment="onOffParagraphcomment"
+      @write-comment="writeParagraphComment"
+    />
     <comment-comp
       :items="comments"
       :writedParagraphComment="writedParagraphComment"
@@ -55,10 +60,14 @@ export default {
       itemLoaded: false,
       commentLoaded: false,
       comments: [],
-      writedParagraphComment: {}
+      writedParagraphComment: {},
+      onOffParagraph: false
     };
   },
   methods: {
+    onOffParagraphcomment(value) {
+      this.onOffParagraph = value;
+    },
     sendParagraphInfo(paragraphInfo) {
       this.paragraphInfo.paragraph = paragraphInfo.paragraph;
       this.paragraphInfo.choiceId = paragraphInfo.choiceId;

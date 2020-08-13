@@ -60,33 +60,35 @@ export default {
   },
   methods: {
     writeComment() {
-      let obj = {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-        usernickname: this.getProfile,
-        useremail: this.getEmail,
-        content: this.content,
-        createdat: new Date(),
-        userimg: this.getUserImg,
-        usernum: this.getUserNum
-      };
-      this.items.unshift({ comment: obj, cocomments: [] });
-      http
-        .post(`/comment/`, {
+      if (this.content != "") {
+        let obj = {
+          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+          usernickname: this.getProfile,
+          useremail: this.getEmail,
           content: this.content,
           createdat: new Date(),
-          articlenum: this.$route.params.articleNum,
           userimg: this.getUserImg,
-          usernum: this.getUserNum,
-          usernickname: this.getProfile,
-          useremail: this.getEmail
-        })
-        .then(({ data }) => {
-          console.log(data);
-          this.content = "";
-        })
-        .catch(e => {
-          console.log(e);
-        });
+          usernum: this.getUserNum
+        };
+        this.items.unshift({ comment: obj, cocomments: [] });
+        http
+          .post(`/comment/`, {
+            content: this.content,
+            createdat: new Date(),
+            articlenum: this.$route.params.articleNum,
+            userimg: this.getUserImg,
+            usernum: this.getUserNum,
+            usernickname: this.getProfile,
+            useremail: this.getEmail
+          })
+          .then(({ data }) => {
+            console.log(data);
+            this.content = "";
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     }
   },
   computed: {

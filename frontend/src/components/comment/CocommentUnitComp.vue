@@ -32,7 +32,7 @@
         <br />
         <v-row>
           <v-col cols="5" class="mb-4" style="display: flex; justify-content:flex-end;">
-            <v-list-item-subtitle v-html="item.createdat" />
+            <v-list-item-subtitle v-html="getFormatDate(item.createdat)" />
           </v-col>
           <v-col cols="2" class="pb-0"></v-col>
         </v-row>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import http from "@/util/http-common";
 
 import { mapGetters, mapState } from "vuex";
@@ -114,6 +115,9 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+    getFormatDate(regtime) {
+      return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
     }
   },
   created() {
