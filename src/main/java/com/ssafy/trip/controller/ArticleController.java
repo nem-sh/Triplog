@@ -29,6 +29,7 @@ import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.Comment;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.model.Paging;
+import com.ssafy.trip.model.TripPackage;
 import com.ssafy.trip.repository.ArticleRepository;
 import com.ssafy.trip.repository.CommentRepository;
 import com.ssafy.trip.repository.UserRepository;
@@ -120,7 +121,7 @@ public class ArticleController {
 
 	@GetMapping("/getList/{hostNum}")
 	public List<Article> findArticlesByHostNum(@PathVariable(value = "hostNum") Long hostNum) {
-		List<Article> list = articleRepository.findByUsernum(hostNum);
+		List<Article> list = articleRepository.findByUserNum(hostNum);
 		return list;
 	}
 
@@ -272,6 +273,31 @@ public class ArticleController {
 	public List<Article> getViewSortedListArticle() {
 		List<Article> list = articleRepository.findTop4ByOrderByViewsDesc();
 		return list;
+	}
+	
+	@GetMapping("tripPackage/{trippackageNum}")
+	public List<Article> getTripPackage(@PathVariable(value = "trippackageNum") Long trippackageNum) {
+		List<Article> list = articleRepository.findByTrippackageNum(trippackageNum);
+		
+		return list;
+	}
+	
+	@GetMapping("tripPackage/default/{userNum}")
+	public List<Article> getTripPackageDefault(@PathVariable(value = "userNum") Long userNum) {
+		List<Article> list = articleRepository.findByUserNumAndTrippackageNumIsNull(userNum);
+		
+		return list;
+	}
+	
+	@PutMapping("tripPackage/{tripNum}/{articleNum}")
+	public ResponseEntity<String> updateTripPackage(@PathVariable(value = "tripNum") Long tripNum,
+			@PathVariable(value = "articleNum") Long articleNum) {
+		if(tripNum == 0)
+			articleRepository.updateTripPackage(null, articleNum);
+		else
+			articleRepository.updateTripPackage(tripNum, articleNum);
+
+		return ResponseEntity.ok(SUCCESS);
 	}
 
 	@GetMapping("/commentsort")
