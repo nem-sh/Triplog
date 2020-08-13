@@ -97,7 +97,7 @@ export default {
       limit: 0,
       item: {},
       isMyBlog: false,
-      tripList: []
+      tripList: [],
       visitCount: 0
     };
   },
