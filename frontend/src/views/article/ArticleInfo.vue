@@ -68,8 +68,10 @@ export default {
     }
   },
   created() {
-    http.get(`/article/${this.$route.params.articleNum}`).then(({ data }) => {
+    
+    http.get(`/article/${this.$route.params.articleNum}/${this.getUserNum}`).then(({ data }) => {
       this.item = data;
+      
       this.itemLoaded = true;
     });
     if (this.getUserNum != "") {

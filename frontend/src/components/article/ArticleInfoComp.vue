@@ -140,7 +140,7 @@
         {{articleViews}}
       </v-avatar>
         </v-chip>
-
+    <v-spacer></v-spacer>
       
       
       
