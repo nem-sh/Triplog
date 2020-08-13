@@ -87,10 +87,7 @@ export default {
           .catch(e => {
             console.log(e);
           });
-          usernum: this.getUserNum,
-          usernickname: this.getProfile,
-          useremail: this.getEmail
-        })
+      }
     }
   },
   computed: {
