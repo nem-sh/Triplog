@@ -90,7 +90,7 @@ export default {
           useremail: this.getEmail,
           paragraph: this.paragraphInfo.paragraph
         })
-        .then(({ data }) => {
+        .then(() => {
           this.content = "";
           this.fab = false;
         })

@@ -150,7 +150,7 @@ export default {
       if (this.item.comment.num == undefined) {
         http
           .delete(`/comment/content/${removeContent}`)
-          .then(({ data }) => {
+          .then(() => {
           })
           .catch(e => {
             console.log(e);
@@ -158,7 +158,7 @@ export default {
       } else {
         http
           .delete(`/comment/${this.item.comment.num}`)
-          .then(({ data }) => {
+          .then(() => {
           })
           .catch(e => {
             console.log(e);
@@ -183,7 +183,7 @@ export default {
           usernickname: this.getProfile,
           useremail: this.getEmail
         })
-        .then(({ data }) => {
+        .then(() => {
         })
         .catch(e => {
           console.log(e);
@@ -210,7 +210,7 @@ export default {
           usernickname: this.getProfile,
           useremail: this.getEmail
         })
-        .then(({ data }) => {
+        .then(() => {
           this.content = "";
         })
         .catch(e => {

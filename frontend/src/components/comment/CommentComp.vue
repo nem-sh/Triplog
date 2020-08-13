@@ -80,7 +80,7 @@ export default {
           usernickname: this.getProfile,
           useremail: this.getEmail
         })
-        .then(({ data }) => {
+        .then(() => {
           this.content = "";
         })
         .catch(e => {

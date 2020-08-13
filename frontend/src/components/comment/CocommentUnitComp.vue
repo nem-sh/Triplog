@@ -108,7 +108,7 @@ export default {
       this.isDelete = true;
       http
         .delete(`/comment/${this.item.num}`)
-        .then(({ data }) => {
+        .then(() => {
         })
         .catch(e => {
           console.log(e);
