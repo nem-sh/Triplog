@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-bottom: 80px;">
     <div id="app">
       <v-app id="inspire">
         <v-card width="800px">
@@ -8,7 +8,7 @@
           </v-toolbar>
           <v-tabs centered grow color="cyan darken-2">
             <v-tab>
-              <v-icon left >mdi-account</v-icon>My Account
+              <v-icon left>mdi-account</v-icon>My Account
             </v-tab>
             <v-tab>
               <v-icon left>mdi-cogs</v-icon>Blog Setting
@@ -27,9 +27,7 @@
               />
             </v-tab-item>
             <v-tab-item>
-              <SetBlogComp
-                v-if="userInfo.email"
-              />
+              <SetBlogComp v-if="userInfo.email" />
             </v-tab-item>
           </v-tabs>
         </v-card>
@@ -47,7 +45,7 @@ export default {
   name: "UsetSetting",
   components: {
     UserInfoComp,
-    SetBlogComp,
+    SetBlogComp
   },
   data: function() {
     return {
