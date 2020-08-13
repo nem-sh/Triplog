@@ -298,15 +298,13 @@ export default {
       this.$router.push("noticeList");
     },
     moveBlog() {
-      console.log("test");
-
-      console.log(this.getValid);
+      
       if (this.getValid) {
-        console.log(this.getValid);
+        
         this.$router.push(`/article/list/${this.getUserNum}`);
         this.$router.go(this.$router.currentRoute);
       } else {
-        console.log(this.getValid);
+        
         this.$router.push(`/emailAuth`);
       }
     },

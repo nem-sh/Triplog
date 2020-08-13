@@ -102,7 +102,12 @@ export default {
     };
   },
   created() {
-    // console.log(this.$route.params.hostNum)
+    
+    http.get(`/blog/visit/${this.$route.params.hostNum}`).then(({data}) => {
+      this.visitCount = data.visitcount;
+    }).catch((err) => {
+      console.log(err)
+    }),
     http
       .post("/article/getList/", {
         usernum: this.$route.params.hostNum,
@@ -113,7 +118,6 @@ export default {
       });
     http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
       this.item = data;
-      console.dir(data, 22);
       if (this.getUserNum == this.item.num) {
         this.isMyBlog = true;
       }
@@ -129,12 +133,6 @@ export default {
         .catch(err => {
           console.log(err);
         });
-    // Axios.get(`/api/blog/visit/${this.$route.params.hostNum}`)
-    // .then(response => {
-    //   console.log(response.data)
-    // }).catch(error=>{
-    //   console.log(error)
-    // })
   },
   methods: {
     infiniteHandler($state) {
@@ -147,7 +145,6 @@ export default {
           setTimeout(() => {
             if (response.data.length) {
               this.items = this.items.concat(response.data);
-              console.log(this.items);
               $state.loaded();
               this.limit += 10;
               if (this.items.length / 10 == 0) {
@@ -163,9 +160,7 @@ export default {
         });
     },
     updateProfile: function() {
-      console.log("zz");
       this.$emit("update-profile");
-      console.log("zz");
     }
   },
   computed: {

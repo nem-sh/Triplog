@@ -145,15 +145,10 @@ export default {
       http
         .get(`/blog/${this.getUserNum}`)
         .then(response => {
-          console.log(this.getUserNum)
-          console.log(response.data.visitcount)
           this.visitCount = response.data.visitcount;
           this.titleColor = response.data.title.slice(0, 9);
           this.title = response.data.title.slice(9);
-          
-          // console.log(this.visitCount)
           this.num = response.data.num;
-          // console.log(this.num)
           this.titleimg = response.data.titleimg;
           
         })
@@ -169,7 +164,6 @@ export default {
         http3
           .put(`/blog/img`, formData)
           .then(({ data }) => {
-            // console.log(data, "이미지");
             http
               .put(`/blog/`, {
                 usernum: this.getUserNum,

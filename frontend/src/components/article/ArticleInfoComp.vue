@@ -118,7 +118,7 @@
       <article-content-comp :content="realContent" v-if="realContent" />
     </div>
     <v-divider />
-    <v-row class="ma-1" align="center" justify="space-between">
+    <v-row class="ma-1" align="center" justify="between">
       <v-btn class="ml-6" icon :disabled="likeBtnFlag" :loading="likeBtnFlag">
         <v-chip @click="likeBtnClick" color="pink" text-color="white">
           <v-avatar left class="pink darken-4">{{articleLikeCount}}</v-avatar>
@@ -127,7 +127,23 @@
           <v-icon v-else>mdi-heart-outline</v-icon>
         </v-chip>
       </v-btn>
-      views{{articleViews}}
+      
+        <v-chip
+          class="ml-6"
+          color="light-green"
+          text-color="white">
+          <p class="text-align-center ma-0">view</p>
+          <v-avatar
+        right
+        class="green"
+      >
+        {{articleViews}}
+      </v-avatar>
+        </v-chip>
+
+      
+      
+      
       <v-sheet>
         <v-btn
           :to="{ name: 'articleModify', params: { articleNum: articleNum }}"
@@ -250,10 +266,7 @@ export default {
     this.$refs.calendar.checkChange();
   },
   created() {
-    // console.log(this.getUserNum);
-    // console.log(this.articleUserNum);
-    console.log(this.articleViews);
-    this.openContentFile();
+    this.openContentFile()
   },
   methods: {
     clickThis() {
@@ -368,14 +381,11 @@ export default {
             msg = "삭제가 완료되었습니다.";
           }
           this.alertMsg = msg;
-          // this.alert = true;
           this.dialog = false;
           this.$emit("useSnackBar", this.alertMsg);
           this.$router.push(`/article/list/${this.getUserNum}`);
         })
         .catch(() => {
-          // this.alertMsg = "삭제 처리시 에러가 발생했습니다.";
-          // this.alert = true;
         });
     },
     likeBtnClick: function() {
@@ -414,7 +424,6 @@ export default {
           this.alertMsg = msg;
           this.alert = true;
           this.likeBtnFlag = false;
-          //   this.moveList();
         })
         .catch(() => {
           this.alertMsg = "수정 처리시 에러가 발생했습니다.";

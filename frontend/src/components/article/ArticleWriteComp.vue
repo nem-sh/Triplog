@@ -272,7 +272,6 @@ export default {
         {text: '고딕', value: 'null'},
         {text: '굴림', value: '굴림'},
         {text: '돋움', value: '돋움'},
-        // {text: '고딕', value: '고딕'},
         {text: '궁서', value: '궁서'},
         {text: 'Nanum Gothic', value: 'Nanum Gothic'},
         {text: 'Gaegu', value: 'Gaegu'},
@@ -376,12 +375,10 @@ export default {
    registHandler() {
      var contentFile = this.createFileByInnerEditorText();
      var formData = new FormData();
-     console.log(contentFile);
      formData.append('files', contentFile);
      formData.append('files', this.fileInfo);
      http3
       .post(`/article/files`, formData).then(({ data }) => {
-        console.log(data);
         http
           .post(`/article`, {
             thumbnail : data[1],

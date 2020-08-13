@@ -55,9 +55,7 @@ export default {
   created() {
     http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
       this.userInfo = data;
-      console.dir(data);
       this.userInfoCompKey += 1;
-      // this.userInfoModalToggle = true;
     });
   }
 };

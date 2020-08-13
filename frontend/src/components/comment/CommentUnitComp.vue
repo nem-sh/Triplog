@@ -151,8 +151,7 @@ export default {
       if (this.item.comment.num == undefined) {
         http
           .delete(`/comment/content/${removeContent}`)
-          .then(({ data }) => {
-            console.log(data);
+          .then(() => {
           })
           .catch(e => {
             console.log(e);
@@ -160,8 +159,7 @@ export default {
       } else {
         http
           .delete(`/comment/${this.item.comment.num}`)
-          .then(({ data }) => {
-            console.log(data);
+          .then(() => {
           })
           .catch(e => {
             console.log(e);
@@ -186,8 +184,7 @@ export default {
           usernickname: this.getProfile,
           useremail: this.getEmail
         })
-        .then(({ data }) => {
-          console.log(data);
+        .then(() => {
         })
         .catch(e => {
           console.log(e);
@@ -203,15 +200,6 @@ export default {
         userimg: this.getUserImg,
         usernum: this.getUserNum
       };
-      console.log({
-        content: this.content,
-        createdat: new Date(),
-        articlenum: this.$route.params.articleNum,
-        userimg: this.getUserImg,
-        usernum: this.getUserNum,
-        usernickname: this.getProfile,
-        useremail: this.getEmail
-      });
       this.item.cocomments.unshift(obj);
       http
         .post(`/comment/${this.item.comment.content}`, {
@@ -223,8 +211,7 @@ export default {
           usernickname: this.getProfile,
           useremail: this.getEmail
         })
-        .then(({ data }) => {
-          console.log(data);
+        .then(() => {
           this.content = "";
         })
         .catch(e => {

@@ -73,14 +73,12 @@ export default {
       this.paragraphInfo.choiceId = paragraphInfo.choiceId;
     },
     writeParagraphComment(obj) {
-      console.log(obj);
       this.writedParagraphComment = obj;
     }
   },
   created() {
     http.get(`/article/${this.$route.params.articleNum}`).then(({ data }) => {
       this.item = data;
-      console.log(this.item.views);
       this.itemLoaded = true;
     });
     if (this.getUserNum != "") {

@@ -37,7 +37,6 @@ export default {
 
   methods: {
     getLikeList: function() {
-      console.log();
       http
         .post("/article/likelist/", {
           usernum: this.getUserNum,

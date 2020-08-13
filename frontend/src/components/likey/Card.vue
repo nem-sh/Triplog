@@ -150,8 +150,6 @@ export default {
           )
           .then(response => {
             this.like = response.data;
-
-            console.log("취소");
             this.like = false;
           })
           .catch(error => {
@@ -165,9 +163,6 @@ export default {
           )
           .then(response => {
             this.like = response.data;
-
-            console.log("다시");
-
             this.like = true;
           })
           .catch(error => {
@@ -182,7 +177,6 @@ export default {
     },
 
     movePackage: function() {
-      console.log("구현 아직 ㅎㅎ");
     },
 
     setTime: function() {

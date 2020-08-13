@@ -254,9 +254,8 @@ export default {
   methods: {
     updateProfile: function() {
       this.$emit("update-profile");
-      console.log("test");
     },
-
+    
     getBlogInfo() {
       http
         .get(`/blog/${this.$route.params.hostNum}`)
@@ -265,15 +264,12 @@ export default {
           this.title = response.data.title.slice(9);
           this.visitcount = response.data.visitcount;
           this.titleimg = response.data.titleimg;
-          console.log(this.titleimg);
           if (this.title == "") {
             this.title = this.hostNickName + "'s blog";
           }
           if (this.titleimg == null) {
             this.titleimg = "adventurealtitude.jpg";
-            // console.log(this.titleimg);
           }
-          // console.log(response.data);
         })
         .catch(error => {
           console.log(error.data);

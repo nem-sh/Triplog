@@ -220,10 +220,6 @@ export default {
           console.log(e.request.status)
           
         });
-        // .catch(() => {
-        //   this.alertMsg = "로그인에 실패하였습니다. 이메일과 비밀번호를 확인하세요.";
-        //   this.alert = true;
-        // });
     },
     registryMyself() {
       if (this.customer.email == "") {
@@ -274,7 +270,6 @@ export default {
           password: this.customer.password
         })
         .then(response => {
-          //console.log(response.data);
           if (
             response.data.success == true ||
             response.data.success == "true"
@@ -303,13 +298,6 @@ export default {
           }
           console.log(e.request.status)
         });
-        // .catch(() => {
-        //   this.alertMsg = "회원가입에 실패하였습니다.";
-        //   this.alert = true;
-        //   this.visablelogin = false;
-        //   this.submitted = false;
-        //   this.newCustomer();
-        // });
     },
     newCustomer() {
       this.customer = {

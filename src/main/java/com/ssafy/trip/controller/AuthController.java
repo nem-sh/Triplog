@@ -45,74 +45,67 @@ import com.ssafy.trip.service.EmailValidationService;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+	@Autowired
+	AuthenticationManager authenticationManager;
 
-    @Autowired
-    UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
-    @Autowired
-    RoleRepository roleRepository;
+	@Autowired
+	RoleRepository roleRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
-    @Autowired
-    JwtTokenProvider tokenProvider;
-    
-    @Autowired
-    EmailValidationService emailValidationService;
-    
-    public static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-	
-    @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-    	logger.info("1-------------authenticateUser-----------------------------"+loginRequest);
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        loginRequest.getPassword()
-                )
-        );
+	@Autowired
+	JwtTokenProvider tokenProvider;
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+	@Autowired
+	EmailValidationService emailValidationService;
 
-        String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResult(jwt));
-    }
+	public static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser( @RequestBody SignUpRequest signUpRequest) {
-    	logger.info("1-------------registerUser-----------------------------"+signUpRequest);
-    	if(userRepository.existsByNickname(signUpRequest.getNickname())) {
-            return new ResponseEntity(new ApiResult(false, "사용자 별명이 이미 존재합니다!"),
-                    HttpStatus.ACCEPTED);
-        }
-    	logger.info("2-------------registerUser-----------------------------"+signUpRequest);
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return new ResponseEntity(new ApiResult(false, "이메일이 이미 존재합니다!"),
-                    HttpStatus.ACCEPTED);
-        }
-        logger.info("3-------------registerUser-----------------------------"+signUpRequest);
-        // Creating user's account
-        MemberUser user = new MemberUser(null, signUpRequest.getName(), signUpRequest.getNickname(),
-                signUpRequest.getEmail(), signUpRequest.getPassword(), null, null, null, 0, false);
-        logger.info("4-------------registerUser-----------------------------"+user);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+	@PostMapping("/signin")
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+		logger.info("1-------------authenticateUser-----------------------------" + loginRequest);
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                .orElseThrow(() -> new AppException("User Role not set."));
-        //logger.info("4-------------registerUser-----------------------------"+userRole);
-        user.setRoles(Collections.singleton(userRole));
-       
-        MemberUser result = userRepository.save(user);
-        //logger.info("5-------------registerUser-----------------------------"+result);
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/users/{username}")
-                .buildAndExpand(result.getNickname()).toUri();
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        emailValidationService.sendEmail(signUpRequest.getEmail());
-        
-        return ResponseEntity.created(location).body(new ApiResult(true, "성공적으로 등록되었습니다."));
-    }
+		String jwt = tokenProvider.generateToken(authentication);
+		return ResponseEntity.ok(new JwtAuthenticationResult(jwt));
+	}
+
+	@PostMapping("/signup")
+	public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
+		logger.info("1-------------registerUser-----------------------------" + signUpRequest);
+		if (userRepository.existsByNickname(signUpRequest.getNickname())) {
+			return new ResponseEntity(new ApiResult(false, "사용자 별명이 이미 존재합니다!"), HttpStatus.ACCEPTED);
+		}
+		logger.info("2-------------registerUser-----------------------------" + signUpRequest);
+		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+			return new ResponseEntity(new ApiResult(false, "이메일이 이미 존재합니다!"), HttpStatus.ACCEPTED);
+		}
+		logger.info("3-------------registerUser-----------------------------" + signUpRequest);
+		// Creating user's account
+		MemberUser user = new MemberUser(null, signUpRequest.getName(), signUpRequest.getNickname(),
+				signUpRequest.getEmail(), signUpRequest.getPassword(), null, null, null, 0, false);
+		logger.info("4-------------registerUser-----------------------------" + user);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+		Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+				.orElseThrow(() -> new AppException("User Role not set."));
+		// logger.info("4-------------registerUser-----------------------------"+userRole);
+		user.setRoles(Collections.singleton(userRole));
+
+		MemberUser result = userRepository.save(user);
+		// logger.info("5-------------registerUser-----------------------------"+result);
+		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/{username}")
+				.buildAndExpand(result.getNickname()).toUri();
+
+		emailValidationService.sendEmail(signUpRequest.getEmail());
+
+		return ResponseEntity.created(location).body(new ApiResult(true, "성공적으로 등록되었습니다."));
+	}
 }

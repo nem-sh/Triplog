@@ -133,9 +133,7 @@ public class ArticleController {
 
 	@GetMapping("/searchArticle/{keyword}")
 	public List<Article> searchArticle(@PathVariable(value = "keyword") String keyword) {
-		System.out.println("11");
 		List<Article> searchArticle = articleRepository.findByTitleContaining(keyword);
-		System.out.println(keyword);
 
 		return searchArticle;
 	}
@@ -274,25 +272,25 @@ public class ArticleController {
 		List<Article> list = articleRepository.findTop4ByOrderByViewsDesc();
 		return list;
 	}
-	
+
 	@GetMapping("tripPackage/{trippackageNum}")
 	public List<Article> getTripPackage(@PathVariable(value = "trippackageNum") Long trippackageNum) {
 		List<Article> list = articleRepository.findByTrippackageNum(trippackageNum);
-		
+
 		return list;
 	}
-	
+
 	@GetMapping("tripPackage/default/{userNum}")
 	public List<Article> getTripPackageDefault(@PathVariable(value = "userNum") Long userNum) {
 		List<Article> list = articleRepository.findByUserNumAndTrippackageNumIsNull(userNum);
-		
+
 		return list;
 	}
-	
+
 	@PutMapping("tripPackage/{tripNum}/{articleNum}")
 	public ResponseEntity<String> updateTripPackage(@PathVariable(value = "tripNum") Long tripNum,
 			@PathVariable(value = "articleNum") Long articleNum) {
-		if(tripNum == 0)
+		if (tripNum == 0)
 			articleRepository.updateTripPackage(null, articleNum);
 		else
 			articleRepository.updateTripPackage(tripNum, articleNum);
@@ -319,9 +317,11 @@ public class ArticleController {
 			for (long j = 0; j < i; j++) {
 
 				if (commentLength.get((int) j) < commentLength.get((int) (j + 1))) {
+
 					long temp = commentLength.get((int) j);
 					commentLength.set((int) j, commentLength.get((int) (j + 1)));
 					commentLength.set((int) (j + 1), temp);
+
 					long temp2 = articleNumList.get((int) j);
 					articleNumList.set((int) j, articleNumList.get((int) (j + 1)));
 					articleNumList.set((int) (j + 1), temp2);
@@ -333,13 +333,12 @@ public class ArticleController {
 
 		ArrayList<Optional<Article>> commentSort = new ArrayList<Optional<Article>>();
 		for (long i = 0; i < 4; i++) {
-			Optional<Article> article = articleRepository.findByNum(articleNumList.get((int) i)+1);
-					
+			Optional<Article> article = articleRepository.findByNum(articleNumList.get((int) i) + 1);
+
 			commentSort.add(article);
-	    	
-	    	
+
 		}
-		
+
 		return commentSort;
 	}
 }
