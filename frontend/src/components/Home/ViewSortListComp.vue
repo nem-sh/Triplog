@@ -30,7 +30,6 @@ export default {
   created() {
     http.get(`/article/viewsort`).then(({ data }) => {
       this.items = data;
-      console.log(this.items);
     });
   }
 };

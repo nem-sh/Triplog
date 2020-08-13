@@ -91,7 +91,6 @@ export default {
           paragraph: this.paragraphInfo.paragraph
         })
         .then(({ data }) => {
-          console.log(data);
           this.content = "";
           this.fab = false;
         })

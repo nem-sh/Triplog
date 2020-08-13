@@ -81,7 +81,6 @@ export default {
           useremail: this.getEmail
         })
         .then(({ data }) => {
-          console.log(data);
           this.content = "";
         })
         .catch(e => {

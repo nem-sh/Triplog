@@ -66,36 +66,11 @@ public class UserController {
 
     @GetMapping("/users/{email}")
     public UserProfile getUserProfile(@PathVariable(value = "email") String email) {
-    	System.out.println(email);
         MemberUser user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
-
-        System.out.println(user);
         UserProfile userProfile = new UserProfile(user.getNum(), user.getEmail(), user.getNickname(), user.getName(), user.getCreatedAt(), user.getImageSrc(), user.getIntro(), user.isValid());
         return userProfile;
     }
-    
-//    @GetMapping("/users/get/{num}")
-//    public UserProfile getUserProfileByNum(@PathVariable(value = "num") Long num) {
-//        MemberUser user = userRepository.findByNum(num)
-//                .orElseThrow(() -> new ResourceNotFoundException("User", "num", num));
-//
-//        UserProfile userProfile = new UserProfile(user.getNum(), user.getEmail(), user.getNickname(), user.getName(), user.getCreatedAt(), user.getImageSrc(), user.getIntro(), user.isValid());
-//        
-////        if (blogInfoRepository.existsByUsernum(num) ==false) {
-////        	BlogInfo blogInfo = new BlogInfo();
-////			blogInfo.setUsernum(num);
-////			blogInfo.setVisitcount(0);
-////			blogInfoRepository.save(blogInfo);
-////        } else {
-////        	BlogInfo blogInfo = blogInfoRepository.findByUsernum(num);
-////            int count = blogInfo.getVisitcount() +1;
-////            blogInfo.setVisitcount(count);
-////            blogInfoRepository.save(blogInfo);
-////        }
-//        
-//        return userProfile;
-//    }
     @GetMapping("/users/get/{num}")
     public UserProfile getUserProfileByNum(@PathVariable(value = "num") Long num) {
         MemberUser user = userRepository.findByNum(num)
@@ -126,9 +101,7 @@ public class UserController {
         } catch (Exception e) {
         	return null;
         }
-        System.out.println(user);
         MemberUser updateUser = userRepository.save(user); 
-//        UserProfile result = new UserProfile(updateUser.getNum(), updateUser.getEmail(), updateUser.getNickname(), updateUser.getName(), updateUser.getCreatedAt(), updateUser.getImageSrc(), updateUser.getIntro(), updateUser.isValid());
         
         return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
     }
@@ -152,7 +125,6 @@ public class UserController {
     	  List<Article> articles = articleRepository.findByUserNum(num);
     	  for(Article article : articles) {
     		  Long articlenum = article.getNum();
-    		 System.out.println("test");
     		  commentRepository.deleteAllByArticlenumAndReplyIsNotNull(articlenum);
     		  commentRepository.deleteAllByArticlenum(articlenum);
 
@@ -171,14 +143,10 @@ public class UserController {
     			articleRepository.save(article);
     	  }
     	  
-    	  
-    	  
-    	  
     	  BlogInfo blog = blogInfoRepository.findByUsernum(num);
 
     	  blogInfoRepository.delete(blog);
     	  userRepository.delete(user);
-    	  System.out.println("test");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
@@ -194,7 +162,6 @@ public class UserController {
 	public ResponseEntity<String> uploadImgs(@RequestPart MultipartFile img) throws Exception {
 		String baseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\userImage\\";
 		String originalFileName = img.getOriginalFilename();
-		System.out.println(originalFileName);
 		File dest = new File(baseDir + originalFileName);
 		
 		String newName = originalFileName;

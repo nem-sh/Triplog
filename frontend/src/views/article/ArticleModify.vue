@@ -36,7 +36,6 @@ export default {
       .get(`/article/${this.$route.params.articleNum}`)
       .then(({ data }) => {
         this.item = data;
-        console.dir(data);
       });
   }
 };

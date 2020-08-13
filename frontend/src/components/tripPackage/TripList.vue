@@ -64,13 +64,11 @@ export default {
       for (let index = 0; index < this.items.length; index++) {
         if (this.num == 0) {
           if (this.items[index].trippackage_num != null) {
-            console.log("move!");
             http
               .put(`/article/tripPackage/0/${this.items[index].num}`)
           }
         } else {
           if (this.items[index].trippackage_num != this.num) {
-            console.log("move!");
             http
               .put(`/article/tripPackage/${this.num}/${this.items[index].num}`)
           }
