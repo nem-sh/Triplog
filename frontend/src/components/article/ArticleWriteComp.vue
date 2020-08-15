@@ -41,30 +41,6 @@
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-row
-      dense
-      >
-      <v-col
-        cols="12"
-        md="2"
-        align-self="center">
-        <div style="width:100%; text-align:center">
-          <v-btn text @click="onClickImageUpload">이미지 업로드</v-btn>
-        </div>
-      </v-col>
-      <v-col
-        cols="12"
-        md="9"
-      >
-        <v-text-field
-          v-model="imageFileName"
-          label="image file"
-          id="imageFileName"
-          ref="imageFileName"
-          disabled
-        ></v-text-field>
-      </v-col>
-    </v-row>
 
     <v-row
       style="height: 300px;"
@@ -93,6 +69,35 @@
         </v-img>
       </v-sheet>
       </v-col>
+    </v-row>
+
+    <v-row>
+      <v-file-input 
+      multiple 
+      label="Images" 
+      accept="image/*" 
+      prepend-icon="mdi-camera"
+      @change="onChangeMultipleImages"
+      v-model="uploadImgs"
+    ></v-file-input>
+    </v-row>
+    
+    <v-row>
+       <v-sheet
+        class="mx-auto"
+        max-width="1000"
+      >
+        <v-slide-group multiple show-arrows>
+          <v-slide-item
+            v-for="(item, index) in imgPool"
+            :key="index"
+          >
+            <v-card class="ma-4" width="200">
+            <img :src="returnImageURL(item)" @dragend="drag(index)" draggable="true" width="200" height="300">
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
+      </v-sheet>
     </v-row>
 
     <br>
@@ -254,10 +259,13 @@ export default {
       prefix: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
       suffix: '</body></html>',
       showColorPicker: false,
+      uploadImgs: [],
+      imgPool: [],
+      multFlag: false,
     };
   },
   created() {
-      // this.start()
+    // this.start();
   },
   mounted() {
       if(window.localStorage.getItem("isSaved") == "true") {
@@ -265,6 +273,10 @@ export default {
       }
   },
   methods: {
+    drag: function(idx) {
+      this.imgPool.splice(idx, 1)
+    },
+
     createFileByInnerEditorText: function() {
       var innerIframe = document.getElementById('editor').contentWindow.document.body.innerHTML;
       var content = this.prefix + innerIframe + this.suffix;
@@ -381,14 +393,24 @@ export default {
         console.log(e.request.status)
       });
    },
+   onChangeMultipleImages() {
+      this.multFlag = true;
+      for (const key in this.uploadImgs) {
+        this.imgPool.push(this.uploadImgs[key])
+      }
+    },
     onChangeImages(e) {
       const file = e.target.files[0];
       this.fileInfo = file;
       this.imageFileName = file.name;
       this.imageUrl = URL.createObjectURL(file);
+      this.uploadImgURLs.push(file);
     },
     onClickImageUpload() {
       this.$refs.imageInput.click();
+    },
+    returnImageURL(file) {
+      return URL.createObjectURL(file);
     },
  },
  computed: {
