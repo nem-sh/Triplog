@@ -33,12 +33,14 @@
       <v-col
         cols="12"
         md="9">
-        <v-text-field
-          v-model="articlePlace"
-          label="장소를 입력하세요."
-          id="place"
-          ref="place"
-        ></v-text-field>
+        <v-dialog v-model="addressDialog" persistent max-width="500">
+        <template v-slot:activator="{ on, attrs }">
+          <div>
+            <v-btn small v-bind="attrs" v-on="on" >주소 찾기</v-btn> {{ address.address }}
+          </div>
+        </template>
+          <vue-daum-postcode @complete="address = $event; addressDialog = false;" />
+      </v-dialog>
       </v-col>
     </v-row>
 
@@ -106,8 +108,8 @@
 
     <br/>
     <v-sheet class="ma-1">
-      <div>
       <h2>Font</h2>
+      <v-row>
       <v-btn class="mr-1" @click="exec('bold')" label outlined color="cyan darken-2">
         <v-icon>mdi-format-bold</v-icon>
       </v-btn>
@@ -123,13 +125,17 @@
       <v-btn class="mr-1" @click="exec('superscript')" label outlined color="cyan darken-2">
         <v-icon>mdi-format-superscript</v-icon>
       </v-btn>
-      </div>
-      <!-- <v-btn class="mr-1" @click="this.showColorPicker != this.showColorPicker" outlined color="cyan darken-2">
-        <v-icon>mdi-format-color-fill</v-icon>
-      </v-btn> -->
-      <!-- <v-color-picker class="ma-2" mode="hexa" show-swatches v-if="showColorPicker"/> -->
-      
-<!-- exec('foreColor') v-model="titleColor"-->
+      <v-select :items="fontItems"
+        label = "Font Style"
+        dense
+        outlined
+        menu-props="auto"
+        prepend-inner-icon="mdi-format-font"
+        color="cyan darken-2"
+        v-model="fontValue"
+        :style="{fontFamily : fontItems}"
+      />
+      </v-row>
 
       <div>
         <div style="display: inline-block; margin-right: 10px;">
@@ -164,6 +170,9 @@
           <v-chip class="mr-1" @click="exec('outdent')" label outlined color="cyan darken-2">
             <v-icon>mdi-format-indent-decrease</v-icon>
           </v-chip>
+          <!-- <v-chip class="mr-1" @click="exec('enableInlineTableEditing')" label outlined color="cyan darken-2">
+            <v-icon>mdi-format-indent-decrease</v-icon>
+          </v-chip> -->
         </div>
 
         <div style="display: inline-block;">
@@ -239,9 +248,13 @@
 import http from "@/util/http-common";
 import http3 from "@/util/http-common3";
 import { mapGetters, mapState } from 'vuex';
+import { VueDaumPostcode } from "vue-daum-postcode"
 
 export default {
   name: "ArticleWriteComp",
+  components: {
+    VueDaumPostcode,
+  },
   data() {
     return {
       articleContent: "",
@@ -262,6 +275,30 @@ export default {
       uploadImgs: [],
       imgPool: [],
       multFlag: false,
+      fontItems: [
+        {header: 'Korean'},
+        {text: '고딕', value: 'null'},
+        {text: '굴림', value: '굴림'},
+        {text: '돋움', value: '돋움'},
+        {text: '궁서', value: '궁서'},
+        {text: 'Nanum Gothic', value: 'Nanum Gothic'},
+        {text: 'Gaegu', value: 'Gaegu'},
+        {text: 'Nanum Myeongjo', value: 'Nanum Myeongjo'},
+        {text: 'Sunflower', value: 'Sunflower'},
+        {text: 'Poor Story', value: 'Poor Story'},
+        {text: 'Yeon Sung', value: 'Yeon Sung'},
+        {text: 'East Sea Dokdo', value: 'East Sea Dokdo'},
+        {text: 'Hi Melody', value: 'Hi Melody'},
+        {text: 'Nanum Pen Script', value: 'Nanum Pen Script'},
+        {header: 'English'},
+        {text: 'Arial', value: 'Arial'},
+        {text: 'Georgia', value: 'Georgia'},
+        {text: 'Times New Roman', value: 'Times New Roman'},
+        {text: 'Verdana', value: 'Verdana'},
+      ],
+      fontValue: "null",
+      address: {},
+      addressDialog: false,
     };
   },
   created() {
@@ -288,6 +325,9 @@ export default {
     },
     exec: function(option) {
       this.editorDocument().execCommand(option, false, true);
+    },
+    execValue: function(option, showUI, arg) {
+      this.editorDocument().execCommand(option, showUI, arg);
     },
     editorDocument: function() {
 		  return document.getElementById('editor').contentDocument || document.getElementById('editor').contentWindow.document;
@@ -347,12 +387,10 @@ export default {
    registHandler() {
      var contentFile = this.createFileByInnerEditorText();
      var formData = new FormData();
-     console.log(contentFile);
      formData.append('files', contentFile);
      formData.append('files', this.fileInfo);
      http3
       .post(`/article/files`, formData).then(({ data }) => {
-        console.log(data);
         http
           .post(`/article`, {
             thumbnail : data[1],
@@ -361,7 +399,7 @@ export default {
             created_at: new Date(),
             user_num: this.getUserNum,
             userNickname: this.getProfile,
-            place: this.articlePlace,
+            place: this.address.address,
           }).then(({ data }) => {
             let msg = "등록 처리시 문제가 발생했습니다.";
             if (data === "success") {
@@ -423,8 +461,17 @@ export default {
     }),
     loading: function () {
       return this.authStatus === 'loading' && !this.isAuthenticated
+    },
+  },
+  watch: {
+    fontValue: function (newVal) {
+      this.execValue('fontName', false, newVal);
     }
   },
 };
 
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap');
+</style>

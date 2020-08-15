@@ -1,14 +1,44 @@
 <template>
   <v-app>
+    <v-footer fixed padless class="d-flex d-sm-none">
+      <v-card flat tile width="100%" class="lighten-1 text-center">
+        <v-card-text>
+          <v-btn class="mx-4" icon @click="info">
+            <v-icon size="24px">mdi-account</v-icon>
+          </v-btn>
+          <v-btn class="mx-4" icon @click="$router.push('/like')">
+            <v-icon size="24px">mdi-charity</v-icon>
+          </v-btn>
+          <v-btn class="mx-4" icon @click="moveBlog">
+            <v-icon size="24px">mdi-blogger</v-icon>
+          </v-btn>
+          <v-btn class="mx-4" icon @click="goWrite">
+            <v-icon size="24px">mdi-file-edit</v-icon>
+          </v-btn>
+          <v-btn class="mx-4" icon @click="logout" v-if="getUserNum !=''">
+            <v-icon size="24px">fas fa-unlock</v-icon>
+          </v-btn>
+        </v-card-text>
+
+        <v-divider></v-divider>
+      </v-card>
+    </v-footer>
     <div>
-      <v-navigation-drawer :mini-variant.sync="mini" clipped app permanent v-if="this.getProfile">
+      <v-navigation-drawer
+        class="d-none d-sm-flex"
+        :mini-variant.sync="mini"
+        clipped
+        app
+        permanent
+        v-if="this.getProfile"
+      >
         <v-list-item class="px-2 mb-6" style="padding: 10px;">
           <v-list-item-avatar>
             <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
           </v-list-item-avatar>
           <!-- <v-list-item-avatar :color="ranColor" size="40">
             <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
-          </v-list-item-avatar> -->
+          </v-list-item-avatar>-->
 
           <v-list-item-title class="font-weight-bold">{{this.getProfile}}님</v-list-item-title>
 
@@ -87,7 +117,7 @@
       </v-navigation-drawer>
 
       <v-app-bar app dense color="cyan darken-2" dark clipped-left>
-        <v-toolbar-title style="font-size: 40px;">
+        <v-toolbar-title style="font-size: 40px;" @click="$router.push('/')">
           TRIPLOG
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
@@ -150,9 +180,16 @@
       </template>
     </v-snackbar>
 
-    <div style="position: fixed; right: 20px; bottom: 20px;">{{scroll}}
+    <div style="position: fixed; right: 20px; bottom: 20px;" class="d-none d-sm-flex">
       <v-fab-transition>
         <v-btn v-show="hidden" color="cyan darken-2" fab dark @click="$vuetify.goTo(0, 0);">
+          <v-icon>mdi-chevron-up</v-icon>
+        </v-btn>
+      </v-fab-transition>
+    </div>
+    <div style="position: fixed; right: 20px; bottom: 80px;" class="d-sm-none d-flex">
+      <v-fab-transition>
+        <v-btn v-show="hidden" color="cyan darken-2" small fab dark @click="$vuetify.goTo(0, 0);">
           <v-icon>mdi-chevron-up</v-icon>
         </v-btn>
       </v-fab-transition>
@@ -261,29 +298,27 @@ export default {
       this.$router.push("noticeList");
     },
     moveBlog() {
-      console.log("test");
-
-      console.log(this.getValid);
+      
       if (this.getValid) {
-        console.log(this.getValid);
+        
         this.$router.push(`/article/list/${this.getUserNum}`);
         this.$router.go(this.$router.currentRoute);
       } else {
-        console.log(this.getValid);
+        
         this.$router.push(`/emailAuth`);
       }
     },
     goLoginPage() {
       this.$router.push("/login");
     },
-    detectWindowScrollY () {
-      this.scrolled = window.scrollY > this.headerTop ? true : false
-      if(this.scrolled){
+    detectWindowScrollY() {
+      this.scrolled = window.scrollY > this.headerTop ? true : false;
+      if (this.scrolled) {
         this.hidden = true;
-      }else{
+      } else {
         this.hidden = false;
       }
-    },
+    }
   },
   computed: {
     ...mapGetters([
@@ -312,12 +347,12 @@ export default {
     this.randomColorGenerateor();
     this.handleResize();
     window.addEventListener("resize", this.handleResize);
-    window.addEventListener('scroll', this.detectWindowScrollY);
+    window.addEventListener("scroll", this.detectWindowScrollY);
     this.header = this.$refs.pageHeader;
     this.headerTop = this.header.offsetTop;
   },
   beforeDestory() {
-    window.removeEventListener('scroll', this.detectWindowScrollY)
+    window.removeEventListener("scroll", this.detectWindowScrollY);
   },
   watch: {
     getProfile: function() {

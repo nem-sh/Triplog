@@ -25,10 +25,10 @@
     </v-row>
 
     <v-list three-line>
-      <CommentUnitComp v-if="items[0]" :item="header" />
-      <div v-for="(item, index) in items" :key="item.comment.createdat">
+      <CommentAsistUnitComp v-if="items[0]" :item="header" />
+      <div v-for="(item, index) in items" :key="item.comment.content">
         <CommentUnitComp :item="item" :index="index" />
-        <CommentUnitComp :item="{ divider: true, inset: true }" />
+        <CommentAsistUnitComp :item="{ divider: true, inset: true }" />
       </div>
     </v-list>
   </v-container>
@@ -38,10 +38,13 @@
 import { mapGetters, mapState } from "vuex";
 import http from "@/util/http-common";
 import CommentUnitComp from "./CommentUnitComp";
+
+import CommentAsistUnitComp from "./CommentAsistUnitComp";
 export default {
   name: "CommentComp",
   components: {
-    CommentUnitComp
+    CommentUnitComp,
+    CommentAsistUnitComp
   },
   data: function() {
     return {
@@ -52,37 +55,39 @@ export default {
     };
   },
   props: {
-    items: Array
+    items: Array,
+    writedParagraphComment: Object
   },
   methods: {
     writeComment() {
-      let obj = {
-        avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-        usernickname: this.getProfile,
-        useremail: this.getEmail,
-        content: this.content,
-        createdat: new Date(),
-        userimg: this.getUserImg,
-        usernum: this.getUserNum
-      };
-      this.items.unshift({ comment: obj, cocomments: [] });
-      http
-        .post(`/comment/`, {
+      if (this.content != "") {
+        let obj = {
+          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+          usernickname: this.getProfile,
+          useremail: this.getEmail,
           content: this.content,
           createdat: new Date(),
-          articlenum: this.$route.params.articleNum,
           userimg: this.getUserImg,
-          usernum: this.getUserNum,
-          usernickname: this.getProfile,
-          useremail: this.getEmail
-        })
-        .then(({ data }) => {
-          console.log(data);
-          this.content = "";
-        })
-        .catch(e => {
-          console.log(e);
-        });
+          usernum: this.getUserNum
+        };
+        this.items.unshift({ comment: obj, cocomments: [] });
+        http
+          .post(`/comment/`, {
+            content: this.content,
+            createdat: new Date(),
+            articlenum: this.$route.params.articleNum,
+            userimg: this.getUserImg,
+            usernum: this.getUserNum,
+            usernickname: this.getProfile,
+            useremail: this.getEmail
+          })
+          .then(() => {
+            this.content = "";
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     }
   },
   computed: {
@@ -92,6 +97,7 @@ export default {
       }
       return this.content.length + "/100";
     },
+
     ...mapGetters([
       "isAuthenticated",
       "isProfileLoaded",
@@ -108,6 +114,16 @@ export default {
       userNum: state => `${state.user.getUserNum}`,
       userImg: state => `${state.user.getUserImg}`
     })
+  },
+  watch: {
+    writedParagraphComment: function() {
+      if (this.writedParagraphComment != null) {
+        this.items.unshift({
+          comment: this.writedParagraphComment,
+          cocomments: []
+        });
+      }
+    }
   },
   created() {}
 };

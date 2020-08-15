@@ -23,17 +23,16 @@ public class Article {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long num;
-	@Column(name="user_num")
-	private Long usernum;
-	private Long trippackage_num;
+	private Long userNum;
+	private Long trippackageNum;
 	private String title;
 	private String place;
 	private String content;
 	private String thumbnail;
 	private Boolean temp;
-	private Date created_at;
-	private Date date_start;
-	private Date date_end;
+	private Date createdAt;
+	private Date dateStart;
+	private Date dateEnd;
 	private int likeCount;
 	private String userNickname;
 	private Long views;
@@ -52,16 +51,16 @@ public class Article {
 			String userNickname, List<MemberUser> likearticle) {
 		super();
 		this.num = num;
-		this.usernum = usernum;
-		this.trippackage_num = trippackage_num;
+		this.userNum = usernum;
+		this.trippackageNum = trippackage_num;
 		this.title = title;
 		this.place = place;
 		this.content = content;
 		this.thumbnail = thumbnail;
 		this.temp = temp;
-		this.created_at = created_at;
-		this.date_start = date_start;
-		this.date_end = date_end;
+		this.createdAt = created_at;
+		this.dateStart = date_start;
+		this.dateEnd = date_end;
 		this.likeCount = likeCount;
 		this.userNickname = userNickname;
 		this.likearticle = likearticle;
@@ -76,19 +75,19 @@ public class Article {
 	}
 
 	public Long getUser_num() {
-		return usernum;
+		return userNum;
 	}
 
 	public void setUser_num(Long user_num) {
-		this.usernum = user_num;
+		this.userNum = user_num;
 	}
 
 	public Long getTrippackage_num() {
-		return trippackage_num;
+		return trippackageNum;
 	}
 
 	public void setTrippackage_num(Long tripPackage_num) {
-		this.trippackage_num = tripPackage_num;
+		this.trippackageNum = tripPackage_num;
 	}
 
 	public String getTitle() {
@@ -132,27 +131,27 @@ public class Article {
 	}
 
 	public Date getCreated_at() {
-		return created_at;
+		return createdAt;
 	}
 
 	public void setCreated_at(Date create_at) {
-		this.created_at = create_at;
+		this.createdAt = create_at;
 	}
 
 	public Date getDate_start() {
-		return date_start;
+		return dateStart;
 	}
 
 	public void setDate_start(Date date_start) {
-		this.date_start = date_start;
+		this.dateStart = date_start;
 	}
 
 	public Date getDate_end() {
-		return date_end;
+		return dateEnd;
 	}
 
 	public void setDate_end(Date date_end) {
-		this.date_end = date_end;
+		this.dateEnd = date_end;
 	}
 
 	public int getLikeCount() {
@@ -190,9 +189,9 @@ public class Article {
 	
 	@Override
 	public String toString() {
-		return "Article [num=" + num + ", usernum=" + usernum + ", trippackage_num=" + trippackage_num + ", title="
+		return "Article [num=" + num + ", usernum=" + userNum + ", trippackage_num=" + trippackageNum + ", title="
 				+ title + ", place=" + place + ", content=" + content + ", thumbnail=" + thumbnail + ", temp=" + temp
-				+ ", created_at=" + created_at + ", date_start=" + date_start + ", date_end=" + date_end
+				+ ", created_at=" + createdAt + ", date_start=" + dateStart + ", date_end=" + dateEnd
 				+ ", likeCount=" + likeCount + ", userNickname=" + userNickname + ", likearticle=" + likearticle + ",views="+views +"]";
 	}
 
