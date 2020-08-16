@@ -13,7 +13,7 @@ import ArticleModify from "../views/article/ArticleModify.vue"
 import Like from "../views/likey/Like.vue"
 
 import Login from "../components/account/Login.vue";
-
+import SocialLogin from "../views/SocialLogin.vue";
 import temp from "../views/temporaryArticle/temp.vue"
 import PersonalMain from "../views/personal/MainPage.vue"
 import UserSetting from "../views/personal/UserSetting.vue"
@@ -27,9 +27,14 @@ const routes = [
     component: Home
   },
   {
-    path:"/login",
-    name:"Login",
-    component:Login
+    path: "/login",
+    name: "Login",
+    component: Login
+  },
+  {
+    path: "/login/social/:site",
+    name: "SocialLogin",
+    component: SocialLogin
   },
   {
     path: "/emailauth",

@@ -2,7 +2,8 @@ import {
   AUTH_REQUEST,
   AUTH_ERROR,
   AUTH_SUCCESS,
-  AUTH_LOGOUT
+  AUTH_LOGOUT,
+  AUTH_REQUEST_SOCIAL,
 } from "../actions/auth";
 import { USER_REQUEST } from "../actions/user";
 import apiCall from "../../util/api";
@@ -28,8 +29,11 @@ const actions = {
           // console.log("------------"+resp.accessToken)
           localStorage.setItem("user-token", resp.accessToken);
           commit(AUTH_SUCCESS, resp);
+
           dispatch(USER_REQUEST, user);
           resolve(resp);
+
+          // console.log("resp:", resp, "user", user)
         })
         .catch(err => {
           commit(AUTH_ERROR, err);
@@ -40,6 +44,18 @@ const actions = {
           localStorage.removeItem("userNum");
           reject(err);
         });
+    });
+  },
+  [AUTH_REQUEST_SOCIAL]: ({ commit, dispatch }, resp) => {
+    return new Promise((resolve) => {
+      commit(AUTH_REQUEST);
+      // console.log("------------"+resp.accessToken)
+      localStorage.setItem("user-token", resp.token.accessToken);
+      commit(AUTH_SUCCESS, resp.token);
+      dispatch(USER_REQUEST, resp);
+      resolve(resp.token);
+      // console.log(resp.email, 11, resp.token)
+
     });
   },
   [AUTH_LOGOUT]: ({ commit }) => {
@@ -57,6 +73,9 @@ const actions = {
 
 const mutations = {
   [AUTH_REQUEST]: state => {
+    state.status = "loading";
+  },
+  [AUTH_REQUEST_SOCIAL]: state => {
     state.status = "loading";
   },
   [AUTH_SUCCESS]: (state, resp) => {
