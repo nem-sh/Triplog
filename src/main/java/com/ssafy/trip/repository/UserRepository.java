@@ -28,4 +28,10 @@ public interface UserRepository extends JpaRepository<MemberUser, Long> {
     Boolean existsByEmail(String email);
 
     String findByPassword(String password);
+    
+    Boolean existsByChatbotid(String chatbotId);
+    
+    
+	MemberUser findByChatbotid(String chatbotId);
+
 }

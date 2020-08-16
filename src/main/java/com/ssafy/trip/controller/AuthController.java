@@ -90,7 +90,7 @@ public class AuthController {
 		logger.info("3-------------registerUser-----------------------------" + signUpRequest);
 		// Creating user's account
 		MemberUser user = new MemberUser(null, signUpRequest.getName(), signUpRequest.getNickname(),
-				signUpRequest.getEmail(), signUpRequest.getPassword(), null, null, null, 0, false);
+				signUpRequest.getEmail(), signUpRequest.getPassword(), null, null, null, 0, false, null);
 		logger.info("4-------------registerUser-----------------------------" + user);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
