@@ -64,18 +64,18 @@ public class AuthController {
 	EmailValidationService emailValidationService;
 
 	public static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 		logger.info("1-------------authenticateUser-----------------------------" + loginRequest);
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		String jwt = tokenProvider.generateToken(authentication);
+		System.out.println(new JwtAuthenticationResult(jwt));
 		return ResponseEntity.ok(new JwtAuthenticationResult(jwt));
-	}
+}	
+	
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
@@ -90,7 +90,7 @@ public class AuthController {
 		logger.info("3-------------registerUser-----------------------------" + signUpRequest);
 		// Creating user's account
 		MemberUser user = new MemberUser(null, signUpRequest.getName(), signUpRequest.getNickname(),
-				signUpRequest.getEmail(), signUpRequest.getPassword(), null, null, null, 0, false);
+				signUpRequest.getEmail(), signUpRequest.getPassword(), null, null, null, 0, false, null);
 		logger.info("4-------------registerUser-----------------------------" + user);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -98,7 +98,11 @@ public class AuthController {
 				.orElseThrow(() -> new AppException("User Role not set."));
 		// logger.info("4-------------registerUser-----------------------------"+userRole);
 		user.setRoles(Collections.singleton(userRole));
-
+		
+		if (signUpRequest.getValid() == true) {
+			user.setValid(true);
+		}
+		
 		MemberUser result = userRepository.save(user);
 		// logger.info("5-------------registerUser-----------------------------"+result);
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/users/{username}")

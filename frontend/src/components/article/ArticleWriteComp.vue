@@ -43,30 +43,6 @@
       </v-dialog>
       </v-col>
     </v-row>
-    <v-row
-      dense
-      >
-      <v-col
-        cols="12"
-        md="2"
-        align-self="center">
-        <div style="width:100%; text-align:center">
-          <v-btn text @click="onClickImageUpload">이미지 업로드</v-btn>
-        </div>
-      </v-col>
-      <v-col
-        cols="12"
-        md="9"
-      >
-        <v-text-field
-          v-model="imageFileName"
-          label="image file"
-          id="imageFileName"
-          ref="imageFileName"
-          disabled
-        ></v-text-field>
-      </v-col>
-    </v-row>
 
     <v-row
       style="height: 300px;"
@@ -97,44 +73,103 @@
       </v-col>
     </v-row>
 
+    <v-row>
+      <v-file-input 
+      multiple 
+      label="Images" 
+      accept="image/*" 
+      prepend-icon="mdi-camera"
+      @change="onChangeMultipleImages"
+      v-model="uploadImgs"
+    ></v-file-input>
+    </v-row>
+    
+    <v-row>
+       <v-sheet
+        class="mx-auto"
+        max-width="1000"
+      >
+        <v-slide-group multiple show-arrows>
+          <v-slide-item
+            v-for="(item, index) in imgPool"
+            :key="index"
+          >
+            <v-card class="ma-4" width="200">
+            <img :src="returnImageURL(item)" @dragend="drag(index)" draggable="true" width="200" height="300">
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
+      </v-sheet>
+    </v-row>
+
     <br>
 
     <input ref="imageInput" type="file" accept="image/*" hidden @change="onChangeImages">
 
     <br/>
     <v-sheet class="ma-1">
-      <h2>Font</h2>
-      <v-row>
-      <v-btn class="mr-1" @click="exec('bold')" label outlined color="cyan darken-2">
-        <v-icon>mdi-format-bold</v-icon>
-      </v-btn>
-      <v-btn class="mr-1" @click="exec('italic')" label outlined color="cyan darken-2">
-        <v-icon>mdi-format-italic</v-icon>
-      </v-btn>
-      <v-btn class="mr-1" @click="exec('underline')" label outlined color="cyan darken-2">
-        <v-icon>mdi-format-underline</v-icon>
-      </v-btn>
-      <v-btn class="mr-1" @click="exec('subscript')" label outlined color="cyan darken-2">
-        <v-icon>mdi-format-subscript</v-icon>
-      </v-btn>
-      <v-btn class="mr-1" @click="exec('superscript')" label outlined color="cyan darken-2">
-        <v-icon>mdi-format-superscript</v-icon>
-      </v-btn>
-      <v-select :items="fontItems"
-        label = "Font Style"
-        dense
-        outlined
-        menu-props="auto"
-        prepend-inner-icon="mdi-format-font"
-        color="cyan darken-2"
-        v-model="fontValue"
-        :style="{fontFamily : fontItems}"
-      />
-      </v-row>
+      <h2 :style="{fontFamily : 'Hi Melody'}">Font</h2>
+      <v-container>
+        <v-row no-gutters>
+          <v-col>
+            <v-btn @click="exec('bold')" label outlined color="cyan darken-2">
+              <v-icon>mdi-format-bold</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn @click="exec('italic')" label outlined color="cyan darken-2">
+              <v-icon>mdi-format-italic</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn @click="exec('underline')" label outlined color="cyan darken-2">
+              <v-icon>mdi-format-underline</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn @click="exec('subscript')" label outlined color="cyan darken-2">
+              <v-icon>mdi-format-subscript</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn @click="exec('superscript')" label outlined color="cyan darken-2">
+              <v-icon>mdi-format-superscript</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-btn @click="exec('foreColor')" label outlined color="cyan darken-2">
+              <v-icon>mdi-format-superscript</v-icon>
+            </v-btn>
+          </v-col>
+          <v-col>
+            <v-select :items="fontSizeItems"
+            label = "Font Size"
+            dense
+            outlined
+            menu-props="auto"
+            prepend-inner-icon="mdi-format-size"
+            color="cyan darken-2"
+            v-model="fontSizeValue"
+            />
+          </v-col>
+          <v-col>
+            <v-select :items="fontItems"
+            label = "Font Style"
+            dense
+            outlined
+            menu-props="auto"
+            prepend-inner-icon="mdi-format-font"
+            color="cyan darken-2"
+            v-model="fontValue"
+            :style="{fontFamily : fontValue}"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
 
       <div>
         <div style="display: inline-block; margin-right: 10px;">
-          <h2>Paragraph</h2>
+          <h2 :style="{fontFamily : 'Hi Melody'}">Paragraph</h2>
           <v-chip class="mr-1" @click="exec('justifyLeft')" label outlined color="cyan darken-2">
             <v-icon>mdi-format-align-left</v-icon>
           </v-chip>
@@ -267,8 +302,10 @@ export default {
       prefix: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
       suffix: '</body></html>',
       showColorPicker: false,
+      uploadImgs: [],
+      imgPool: [],
+      multFlag: false,
       fontItems: [
-        {header: 'Korean'},
         {text: '고딕', value: 'null'},
         {text: '굴림', value: '굴림'},
         {text: '돋움', value: '돋움'},
@@ -282,19 +319,28 @@ export default {
         {text: 'East Sea Dokdo', value: 'East Sea Dokdo'},
         {text: 'Hi Melody', value: 'Hi Melody'},
         {text: 'Nanum Pen Script', value: 'Nanum Pen Script'},
-        {header: 'English'},
         {text: 'Arial', value: 'Arial'},
         {text: 'Georgia', value: 'Georgia'},
         {text: 'Times New Roman', value: 'Times New Roman'},
         {text: 'Verdana', value: 'Verdana'},
       ],
+      fontSizeItems: [
+        {text: 'xsmall', value: '1'},
+        {text: 'small', value: '2'},
+        {text: 'medium', value: '3'},
+        {text: 'large', value: '4'},
+        {text: 'xlarge', value: '5'},
+        {text: '2xlarge', value: '6'},
+        {text: 'big', value: '7'},
+      ],
+      fontSizeValue: "3",
       fontValue: "null",
       address: {},
       addressDialog: false,
     };
   },
   created() {
-      // this.start()
+    // this.start();
   },
   mounted() {
       if(window.localStorage.getItem("isSaved") == "true") {
@@ -302,6 +348,10 @@ export default {
       }
   },
   methods: {
+    drag: function(idx) {
+      this.imgPool.splice(idx, 1)
+    },
+
     createFileByInnerEditorText: function() {
       var innerIframe = document.getElementById('editor').contentWindow.document.body.innerHTML;
       var content = this.prefix + innerIframe + this.suffix;
@@ -419,14 +469,24 @@ export default {
         console.log(e.request.status)
       });
    },
+   onChangeMultipleImages() {
+      this.multFlag = true;
+      for (const key in this.uploadImgs) {
+        this.imgPool.push(this.uploadImgs[key])
+      }
+    },
     onChangeImages(e) {
       const file = e.target.files[0];
       this.fileInfo = file;
       this.imageFileName = file.name;
       this.imageUrl = URL.createObjectURL(file);
+      this.uploadImgURLs.push(file);
     },
     onClickImageUpload() {
       this.$refs.imageInput.click();
+    },
+    returnImageURL(file) {
+      return URL.createObjectURL(file);
     },
  },
  computed: {
@@ -444,6 +504,9 @@ export default {
   watch: {
     fontValue: function (newVal) {
       this.execValue('fontName', false, newVal);
+    },
+    fontSizeValue: function(newVal) {
+      this.execValue('fontSize', false, newVal);
     }
   },
 };
