@@ -99,6 +99,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     	.permitAll()
                     .antMatchers("/api/article/**")
                         .permitAll()
+                    .antMatchers("/api/social/**")
+                        .permitAll()
                     .antMatchers("/api/blog/**")
                         .permitAll()
                     .antMatchers("/api/comment/**")

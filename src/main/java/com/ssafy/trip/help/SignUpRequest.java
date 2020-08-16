@@ -20,6 +20,17 @@ public class SignUpRequest {
     @NotBlank
     @Size(min = 6, max = 20)
     private String password;
+    
+
+    public Boolean getValid() {
+		return valid;
+	}
+
+	public void setValid(Boolean valid) {
+		this.valid = valid;
+	}
+
+	private Boolean valid;
 
     public String getName() {
         return name;

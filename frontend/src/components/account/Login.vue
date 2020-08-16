@@ -37,14 +37,31 @@
                         placeholder="패스워드를 입력하세요"
                         title="패스워드"></v-text-field>
                       </v-col>
-                       <v-col class="d-flex" cols="12" sm="6" xsm="12">
-                        </v-col>
-                      <v-spacer></v-spacer>
-                      <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
+
+                        <v-col class="d-flex" cols="12" align-center>
                         <v-btn type="submit" x-large block color="cyan darken-4"><p style="color:white; margin-bottom:0px;"> Login</p></v-btn>
                       </v-col>
+                   
                     </v-row>
-
+                 
+                    <hr class="mb-5 mt-5">
+                  
+                    <v-row>
+                      <v-col class="d-flex" cols="12"  style="justify-content:center;">
+                        <a style="width:100%" href='https://kauth.kakao.com/oauth/authorize?client_id=4b566a63a487519e52bcd20aec5f9326&redirect_uri=http://localhost:8080/api/social/kakao/code&response_type=code'>
+                            <v-img :src="require('@/assets/kakao.png')"  />
+                        </a>
+                         </v-col>
+                    </v-row>
+                     <v-row>
+                      <v-col class="d-flex" cols="12"  style="justify-content:center;">
+                        <a  style="width:100%" href="https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile%20openid&access_type=offline&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8080/api/social/google/code&response_type=code&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com"
+                        ><v-img :src="require('@/assets/google.png')"  />
+                        </a>
+                     
+                         </v-col>
+                    </v-row>
+                      
                   </v-form>
                 </v-card-text>
               </v-card>
@@ -162,11 +179,12 @@
    
   </v-container>
 </template>
-<script>
 
+<script>
 import { mapGetters, mapState } from "vuex";
 import { AUTH_REQUEST } from "@/store/actions/auth";
 import http2 from "@/util/http-common2.js";
+
 export default {
   name: "login",
   data() {
@@ -196,6 +214,7 @@ export default {
   },
  
   methods: {
+
     login: function() {
       //model에 바인딩된 데이터 모두 ==> this
       const { email, password } = this;
@@ -267,7 +286,8 @@ export default {
           nickname: this.customer.nickname,
           name: this.customer.cname,
           email: this.customer.email,
-          password: this.customer.password
+          password: this.customer.password,
+          valid: false
         })
         .then(response => {
           if (
