@@ -1,5 +1,5 @@
 <template>
-  <div id="main_wrap" style="min-width: 1000px;">
+  <div id="main_wrap">
     <v-row
       dense
       >
@@ -7,7 +7,7 @@
         cols="12"
         md="2"
         align-self="center">
-        <div style="width:100%; text-align:center">제목</div>
+        <div style="width:100%; text-align:center" :style="{fontFamily : 'SunFlower'}">제목</div>
       </v-col>
       <v-col
         cols="12"
@@ -28,7 +28,7 @@
         cols="12"
         md="2"
         align-self="center">
-        <div style="width:100%; text-align:center">장소</div>
+        <div style="width:100%; text-align:center" :style="{fontFamily : 'SunFlower'}">장소</div>
       </v-col>
       <v-col
         cols="12"
@@ -36,7 +36,7 @@
         <v-dialog v-model="addressDialog" persistent max-width="500">
         <template v-slot:activator="{ on, attrs }">
           <div>
-            <v-btn small v-bind="attrs" v-on="on" >주소 찾기</v-btn> {{ address.address }}
+            <v-btn small v-bind="attrs" v-on="on" :style="{fontFamily : 'SunFlower'}">주소 찾기</v-btn> {{ address.address }}
           </div>
         </template>
           <vue-daum-postcode @complete="address = $event; addressDialog = false;" />
@@ -73,7 +73,6 @@
       </v-col>
     </v-row>
 
-    <v-row>
       <v-file-input 
       multiple 
       label="Images" 
@@ -82,7 +81,6 @@
       @change="onChangeMultipleImages"
       v-model="uploadImgs"
     ></v-file-input>
-    </v-row>
     
     <v-row>
        <v-sheet
@@ -107,50 +105,95 @@
     <input ref="imageInput" type="file" accept="image/*" hidden @change="onChangeImages">
 
     <br/>
-    <v-sheet class="ma-1">
-      <h2 :style="{fontFamily : 'Hi Melody'}">Font</h2>
-      <v-container>
-        <v-row no-gutters>
+    <v-sheet elevation="3" outlined>
+      <v-sheet class="ma-1">
+        <v-row>
           <v-col>
-            <v-btn @click="exec('bold')" label outlined color="cyan darken-2">
-              <v-icon>mdi-format-bold</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+              <template v-slot:activator="{on, attrs}">
+                <v-btn class="mr-1" @click="exec('bold')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+                  <v-icon>mdi-format-bold</v-icon>
+                </v-btn>
+              </template>
+              <span :style="{fontFamily : 'SunFlower'}">진하게</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{on, attrs}">
+                <v-btn class="mr-1" @click="exec('italic')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+                  <v-icon>mdi-format-italic</v-icon>
+                </v-btn>
+              </template>
+              <span :style="{fontFamily : 'SunFlower'}">기울임</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{on, attrs}">
+                  <v-btn class="mr-1" @click="exec('underline')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+                    <v-icon>mdi-format-underline</v-icon>
+                  </v-btn>
+              </template>
+              <span :style="{fontFamily : 'SunFlower'}">밑줄</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{on, attrs}">
+                <v-btn class="mr-1" @click="exec('subscript')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+                  <v-icon>mdi-format-subscript</v-icon>
+                </v-btn>
+              </template>
+              <span :style="{fontFamily : 'SunFlower'}">아래첨자</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{on, attrs}">
+                <v-btn class="mr-1" @click="exec('superscript')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+                  <v-icon>mdi-format-superscript</v-icon>
+                </v-btn>
+              </template>
+              <span :style="{fontFamily : 'SunFlower'}">윗첨자</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{on, attrs}">
+                <v-btn class="mr-1" @click="showColorPickerHil = ! showColorPickerHil" icon label :style="{color : HiliteColor}" v-on="on" v-bind="attrs">
+                  <v-icon>mdi-marker</v-icon>
+                </v-btn>
+              </template>
+              <span :style="{fontFamily : 'SunFlower'}">글자 배경색</span>
+            </v-tooltip>
+
+            <v-color-picker v-show="showColorPickerHil" hide-inputs show-swatches swatches-max-height="100px" v-model="HiliteColorValue">
+            </v-color-picker>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{on, attrs}">
+                <v-btn class="mr-1" @click="showColorPicker = ! showColorPicker" icon label :style="{color : fontColor}" v-on="on" v-bind="attrs">
+                  <v-icon>mdi-palette</v-icon>
+                </v-btn>
+              </template>
+              <span :style="{fontFamily : 'SunFlower'}">글자색</span>
+            </v-tooltip>
+
+            <v-color-picker v-show="showColorPicker" hide-inputs show-swatches swatches-max-height="100px" v-model="fontColorValue">
+            </v-color-picker>
           </v-col>
           <v-col>
-            <v-btn @click="exec('italic')" label outlined color="cyan darken-2">
-              <v-icon>mdi-format-italic</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col>
-            <v-btn @click="exec('underline')" label outlined color="cyan darken-2">
-              <v-icon>mdi-format-underline</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col>
-            <v-btn @click="exec('subscript')" label outlined color="cyan darken-2">
-              <v-icon>mdi-format-subscript</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col>
-            <v-btn @click="exec('superscript')" label outlined color="cyan darken-2">
-              <v-icon>mdi-format-superscript</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col>
-            <v-btn @click="exec('foreColor')" label outlined color="cyan darken-2">
-              <v-icon>mdi-format-superscript</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col>
-            <v-select :items="fontSizeItems"
-            label = "Font Size"
-            dense
-            outlined
-            menu-props="auto"
-            prepend-inner-icon="mdi-format-size"
-            color="cyan darken-2"
-            v-model="fontSizeValue"
-            />
+            <!-- <v-hover v-slot:default="{hoverSlide}"> -->
+              <!-- <v-btn icon>
+                <v-icon>mdi-format-size</v-icon>
+              </v-btn> -->
+              <v-select :items="fontSizeItems"
+                label = "Font Size"
+                dense
+                outlined
+                menu-props="auto"
+                color="cyan darken-2"
+                prepend-inner-icon="mdi-format-size"
+                v-model="fontSizeValue"
+              />
+
+            <!-- </v-hover> -->
           </v-col>
           <v-col>
             <v-select :items="fontItems"
@@ -165,59 +208,110 @@
             />
           </v-col>
         </v-row>
-      </v-container>
 
-      <div>
-        <div style="display: inline-block; margin-right: 10px;">
-          <h2 :style="{fontFamily : 'Hi Melody'}">Paragraph</h2>
-          <v-chip class="mr-1" @click="exec('justifyLeft')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-align-left</v-icon>
-          </v-chip>
-          <v-chip class="mr-1" @click="exec('justifyCenter')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-align-center</v-icon>
-          </v-chip>
-          <v-chip class="mr-1" @click="exec('justifyRight')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-align-right</v-icon>
-          </v-chip>
-          <v-chip class="mr-1" @click="exec('justifyFull')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-align-justify</v-icon>
-          </v-chip>
-          <v-chip class="mr-1" @click="exec('insertHorizontalRule')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-align-middle</v-icon>
-          </v-chip>
-          <v-chip class="mr-1" @click="exec('insertOrderedList')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-list-numbered</v-icon>
-          </v-chip>
-          <v-chip class="mr-1" @click="exec('insertunorderedList')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-list-bulleted</v-icon>
-          </v-chip>
-          <v-chip class="mr-1" @click="exec('insertParagraph')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-textdirection-l-to-r</v-icon>
-          </v-chip>
-          <v-chip class="mr-1" @click="exec('indent')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-indent-increase</v-icon>
-          </v-chip>
-          <v-chip class="mr-1" @click="exec('outdent')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-indent-decrease</v-icon>
-          </v-chip>
-          <!-- <v-chip class="mr-1" @click="exec('enableInlineTableEditing')" label outlined color="cyan darken-2">
-            <v-icon>mdi-format-indent-decrease</v-icon>
-          </v-chip> -->
-        </div>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('justifyLeft')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-format-align-left</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">왼쪽정렬</span>
+        </v-tooltip>
 
-        <div style="display: inline-block;">
-        <h2>Etc</h2>
-        <v-chip class="mr-1" @click="exec('undo')" label outlined color="cyan darken-2">
-          <v-icon>mdi-keyboard-return</v-icon>
-        </v-chip>
-        </div>
-      </div>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('justifyCenter')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-format-align-center</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">가운데정렬</span>
+        </v-tooltip>
 
-      
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('justifyRight')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-format-align-right</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">오른쪽정렬</span>
+        </v-tooltip>
 
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('justifyFull')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-format-align-justify</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">양쪽정렬</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('insertHorizontalRule')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-format-align-middle</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">구분선</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('insertOrderedList')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-format-list-numbered</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">순서목록</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('insertunorderedList')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-format-list-bulleted</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">목록</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('insertParagraph')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-format-textdirection-l-to-r</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">문단삽입</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('indent')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-format-indent-increase</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">들여쓰기</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('outdent')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-format-indent-decrease</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">내어쓰기</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn class="mr-1" @click="exec('undo')" label icon color="cyan darken-2" v-on="on" v-bind="attrs">
+              <v-icon>mdi-keyboard-return</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">실행취소</span>
+        </v-tooltip>
+        <v-container></v-container>
+
+      <v-divider></v-divider>
     </v-sheet>
     <v-sheet
-      outlined
       height="500"
     >
       <iframe
@@ -229,13 +323,14 @@
       >
       </iframe>
     </v-sheet>
+    </v-sheet>
 
     <v-row>
           <v-col>
-            <v-btn tile outlined @click="temp">임시 저장</v-btn>
+            <v-btn tile outlined @click="temp" :style="{fontFamily : 'SunFlower'}">임시 저장</v-btn>
           </v-col>
           <v-col align="right">
-            <v-btn tile outlined @click="regist">등록</v-btn>
+            <v-btn tile outlined @click="regist" :style="{fontFamily : 'SunFlower'}">등록</v-btn>
           </v-col>
     </v-row>
     <br/><br/>
@@ -301,7 +396,6 @@ export default {
       editorHtmlPath: "./assets/editor/editor.html",
       prefix: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
       suffix: '</body></html>',
-      showColorPicker: false,
       uploadImgs: [],
       imgPool: [],
       multFlag: false,
@@ -337,6 +431,20 @@ export default {
       fontValue: "null",
       address: {},
       addressDialog: false,
+      showColorPicker: false,
+      fontColorValue: {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      },
+      showColorPickerHil: false,
+      HiliteColorValue: {
+        "r": 0,
+        "g": 170,
+        "b": 255,
+        "a": 1
+      },
     };
   },
   created() {
@@ -500,6 +608,12 @@ export default {
     loading: function () {
       return this.authStatus === 'loading' && !this.isAuthenticated
     },
+    fontColor: function () {
+      return 'rgba('+this.fontColorValue.r+','+this.fontColorValue.g+','+this.fontColorValue.b+',1)'
+    },
+    HiliteColor: function() {
+      return 'rgba('+this.HiliteColorValue.r+','+this.HiliteColorValue.g+','+this.HiliteColorValue.b+',1)'
+    }
   },
   watch: {
     fontValue: function (newVal) {
@@ -507,6 +621,12 @@ export default {
     },
     fontSizeValue: function(newVal) {
       this.execValue('fontSize', false, newVal);
+    },
+    fontColorValue: function(newVal) {
+      this.execValue('foreColor', false, 'rgba('+newVal.r+','+newVal.g+','+newVal.b+',1)');
+    },
+    HiliteColorValue: function(newVal) {
+      this.execValue('hiliteColor', false, 'rgba('+newVal.r+','+newVal.g+','+newVal.b+',1)');
     }
   },
 };
@@ -515,4 +635,9 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap');
+
+.v-select--reveal {
+  opacity: .5;
+  bottom: 0;
+}
 </style>

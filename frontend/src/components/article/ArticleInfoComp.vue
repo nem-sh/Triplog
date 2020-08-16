@@ -1,5 +1,5 @@
 <template>
-  <v-container style="min-width: 1000px;">
+  <v-container>
     <div>
       <h1>{{articleTitle}}</h1>
       <h4 style="color:gray; cursor:pointer" @click="goToBlog">{{blogMasterName}}</h4>
