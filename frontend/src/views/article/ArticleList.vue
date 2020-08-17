@@ -31,7 +31,7 @@
                 <v-row align="stretch" justify="space-around">
                   <ArticleListComp
                     v-for="(item, index) in items"
-                    :key="`${index}_items`"
+                    :key="index"
                     :num="item.num"
                     :user_num="item.user_num"
                     :title="item.title"
@@ -76,6 +76,7 @@ import { mapGetters, mapState } from "vuex";
 import PersonalMainComp from "@/components/personal/PersonalMainComp.vue";
 import TripPackageComp from "@/components/tripPackage/TripPackageComp.vue";
 import Category from "@/components/tripPackage/Category.vue";
+// import Axios from 'axios';
 
 export default {
   name: "ArticleList",
@@ -92,21 +93,29 @@ export default {
       limit: 0,
       item: {},
       isMyBlog: false,
-      tripList: []
+      tripList: [],
+      visitCount: 0
     };
   },
   created() {
     http
-      .post("/article/getList/", {
-        usernum: this.$route.params.hostNum,
-        limit: this.limit
-      })
+      .get(`/blog/visit/${this.$route.params.hostNum}`)
       .then(({ data }) => {
-        this.items = data;
-      });
+        this.visitCount = data.visitcount;
+      })
+      .catch(err => {
+        console.log(err);
+      }),
+      http
+        .post("/article/getList/", {
+          usernum: this.$route.params.hostNum,
+          limit: this.limit
+        })
+        .then(({ data }) => {
+          this.items = data;
+        });
     http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
       this.item = data;
-      console.dir(data);
       if (this.getUserNum == this.item.num) {
         this.isMyBlog = true;
       }
@@ -114,6 +123,14 @@ export default {
     http.get(`/tripPackage/${this.$route.params.hostNum}`).then(({ data }) => {
       this.tripList = data;
     });
+    http
+      .get(`/blog/visit/${this.$route.params.hostNum}`)
+      .then(({ data }) => {
+        this.visitCount = data.visitcount;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   methods: {
     infiniteHandler($state) {
@@ -126,7 +143,6 @@ export default {
           setTimeout(() => {
             if (response.data.length) {
               this.items = this.items.concat(response.data);
-              console.log(this.items);
               $state.loaded();
               this.limit += 10;
               if (this.items.length / 10 == 0) {
@@ -142,9 +158,7 @@ export default {
         });
     },
     updateProfile: function() {
-      console.log("zz");
       this.$emit("update-profile");
-      console.log("zz");
     }
   },
   computed: {

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -70,6 +71,9 @@ public class MemberUser extends DateAudit {
     
     private boolean valid;
     
+    @Size(max = 100)
+    private String chatbotid;
+    
 //    @ManyToMany(mappedBy = "likeArticle")
 //	private
 //    List<Article> likes;
@@ -83,13 +87,15 @@ public class MemberUser extends DateAudit {
 //		this.likes = likes;
 //	}
 
+	
+
 	public MemberUser() {
 
     }
 
 	public MemberUser(Long num, @NotBlank @Size(max = 40) String name, @NotBlank @Size(max = 15) String nickname,
 			@NotBlank @Size(max = 40) @Email String email, @NotBlank @Size(max = 100) String password, Set<Role> roles,
-			@Size(max = 1000) String intro, @Size(max = 500) String imageSrc, int mainPost, boolean valid) {
+			@Size(max = 1000) String intro, @Size(max = 500) String imageSrc, int mainPost, boolean valid, @Size(max=100) String chatbotId) {
 		super();
 		this.num = num;
 		this.name = name;
@@ -101,6 +107,7 @@ public class MemberUser extends DateAudit {
 		this.imagesrc = imageSrc;
 		this.mainpost = mainPost;
 		this.valid = valid;
+		this.chatbotid = chatbotId;
 	}
 
 	public Long getNum() {
@@ -182,12 +189,19 @@ public class MemberUser extends DateAudit {
 	public void setValid(boolean valid) {
 		this.valid = valid;
 	}
+	public String getChatbotId() {
+		return chatbotid;
+	}
+
+	public void setChatbotId(String chatbotId) {
+		this.chatbotid = chatbotId;
+	}
 
 	@Override
 	public String toString() {
 		return "MemberUser [num=" + num + ", name=" + name + ", nickname=" + nickname + ", email=" + email
 				+ ", password=" + password + ", roles=" + roles + ", intro=" + intro + ", imagesrc=" + imagesrc
-				+ ", mainpost=" + mainpost + ", valid=" + valid + "]";
+				+ ", mainpost=" + mainpost + ", valid=" + valid + ", chatbotid=" + chatbotid + "]";
 	}
 	
 }

@@ -35,8 +35,14 @@
               </div>
             </v-col>
           </v-row>
+          <v-list-item-subtitle
+            v-if=" item.comment.paragraph != null && item.comment.paragraph != ''"
+            v-html="'@' + item.comment.paragraph"
+          ></v-list-item-subtitle>
           <br />
-          <v-list-item-subtitle v-if="!update" v-html="item.comment.content"></v-list-item-subtitle>
+
+          <br />
+          <v-list-item-subtitle v-if="!update" v-html="item.comment.content" style="color:black"></v-list-item-subtitle>
 
           <v-textarea
             @click.stop
@@ -59,7 +65,7 @@
           <br />
           <v-row>
             <v-col cols="5" class="mb-4" style="display: flex; justify-content:flex-end;">
-              <v-list-item-subtitle v-html="item.comment.createdat" />
+              <v-list-item-subtitle v-html="getFormatDate(item.comment.createdat)" />
             </v-col>
             <v-col cols="2" class="pb-0"></v-col>
             <v-col cols="5" style="display: flex; justify-content:flex-end;" :style="button">
@@ -91,7 +97,7 @@
               <v-btn class="teal lighten-3" @click="submit">작성</v-btn>
             </v-col>
           </v-row>
-          <div v-for="(coItem, index) in item.cocomments" :key="coItem.createdat">
+          <div v-for="(coItem, index) in item.cocomments" :key="coItem.content">
             <cocomment-unit-comp :item="coItem" :index="index" />
           </div>
         </v-container>
@@ -101,6 +107,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import { mapGetters, mapState } from "vuex";
 import http from "@/util/http-common";
 import CocommentUnitComp from "./CocommentUnitComp.vue";
@@ -138,15 +145,26 @@ export default {
       }
     },
     deleteComment() {
+      let removeContent = this.item.comment.content;
+
       this.item.comment.content = "삭제되었습니다.";
-      http
-        .delete(`/comment/${this.item.comment.num}`)
-        .then(({ data }) => {
-          console.log(data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      if (this.item.comment.num == undefined) {
+        http
+          .delete(`/comment/content/${removeContent}`)
+          .then(() => {
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      } else {
+        http
+          .delete(`/comment/${this.item.comment.num}`)
+          .then(() => {
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     },
     updateComment() {
       this.update = true;
@@ -166,8 +184,7 @@ export default {
           usernickname: this.getProfile,
           useremail: this.getEmail
         })
-        .then(({ data }) => {
-          console.log(data);
+        .then(() => {
         })
         .catch(e => {
           console.log(e);
@@ -183,15 +200,6 @@ export default {
         userimg: this.getUserImg,
         usernum: this.getUserNum
       };
-      console.log({
-        content: this.content,
-        createdat: new Date(),
-        articlenum: this.$route.params.articleNum,
-        userimg: this.getUserImg,
-        usernum: this.getUserNum,
-        usernickname: this.getProfile,
-        useremail: this.getEmail
-      });
       this.item.cocomments.unshift(obj);
       http
         .post(`/comment/${this.item.comment.content}`, {
@@ -203,8 +211,7 @@ export default {
           usernickname: this.getProfile,
           useremail: this.getEmail
         })
-        .then(({ data }) => {
-          console.log(data);
+        .then(() => {
           this.content = "";
         })
         .catch(e => {
@@ -212,6 +219,9 @@ export default {
         });
 
       this.content = "";
+    },
+    getFormatDate(regtime) {
+      return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
     }
   },
   computed: {
@@ -222,10 +232,10 @@ export default {
       return this.content.length + "/100";
     },
     getUpdateContentLength: function() {
-      if (this.content.length == 0) {
+      if (this.updateContent.length == 0) {
         return "RE_WRITE";
       }
-      return this.content.length + "/100";
+      return this.updateContent.length + "/100";
     },
     xButton: function() {
       if (this.displayX) {

@@ -37,6 +37,7 @@ public class Article {
 	private String userNickname;
 	private Float lat;
 	private Float lng;
+	private Long views;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "like_Article", joinColumns = @JoinColumn(name = "article_num"), inverseJoinColumns = @JoinColumn(name = "user_num"))
@@ -180,7 +181,7 @@ public class Article {
 	public void setUserNickname(String userNickname) {
 		this.userNickname = userNickname;
 	}
-
+	
 	public Float getLat() {
 		return lat;
 	}
@@ -197,13 +198,22 @@ public class Article {
 		this.lng = lng;
 	}
 
+	public Long getViews() {
+		return views;
+	}
+
+	public void setViews(Long views) {
+		this.views = views;
+	}
+	
 	@Override
 	public String toString() {
 		return "Article [num=" + num + ", userNum=" + userNum + ", trippackageNum=" + trippackageNum + ", title="
 				+ title + ", place=" + place + ", content=" + content + ", thumbnail=" + thumbnail + ", temp=" + temp
 				+ ", createdAt=" + createdAt + ", dateStart=" + dateStart + ", dateEnd=" + dateEnd + ", likeCount="
 				+ likeCount + ", userNickname=" + userNickname + ", lat=" + lat + ", lng=" + lng + ", likearticle="
-				+ likearticle + "]";
+				+ likearticle + ",views="+views +"]";
 	}
+
 
 }

@@ -1,14 +1,14 @@
 <template>
-  <div id="main_wrap" style="width:800px;">
-    <div id="middle_wrap">
+  <v-container id="main_wrap" class="pa-0" style="max-width:700px;">
+    <v-container id="middle_wrap" class="pa-0">
       
-      <v-container>
-        <div>
-          <v-tabs v-model="tab" show-arrows background-color="cyan darken-2" icons-and-text teal grow>
+      <v-container class="pa-0">
+        <v-container class="pa-0">
+          <v-tabs v-model="tab" show-arrows="mobile" background-color="cyan darken-2" icons-and-text teal grow>
           <v-tabs-slider></v-tabs-slider>
-          <v-tab v-for="i in tabs" :key="i">
+          <v-tab v-for="i in tabs" :key="i.name">
             <v-icon large>{{i.icon}}</v-icon>
-            <div class="caption py-1">{{i.name}}</div> 
+            <v-container class="caption py-1">{{i.name}}</v-container> 
             </v-tab>
             <v-tab-item>
               <v-card class="px-4">
@@ -37,15 +37,36 @@
                         placeholder="패스워드를 입력하세요"
                         title="패스워드"></v-text-field>
                       </v-col>
-                       <v-col class="d-flex" cols="12" sm="6" xsm="12">
-                        </v-col>
-                      <v-spacer></v-spacer>
-                      <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
+
+                        <v-col class="d-flex" cols="12" align-center>
                         <v-btn type="submit" x-large block color="cyan darken-4"><p style="color:white; margin-bottom:0px;"> Login</p></v-btn>
                       </v-col>
+                   
                     </v-row>
-
+                 
+               
+                  
+               
+                 
                   </v-form>
+                       <hr class="mb-5 mt-5">
+                       <v-row>
+                         <v-col cols="1"></v-col>
+                      <v-col class="d-flex pa-0" cols="10" sm="5"  style="justify-content:center; ">
+                        <a style="width:100%" href='https://kauth.kakao.com/oauth/authorize?client_id=4b566a63a487519e52bcd20aec5f9326&redirect_uri=http://localhost:8080/api/social/kakao/code&response_type=code'>
+                            <v-img :src="require('@/assets/kakao.png')"  />
+                        </a>
+                         </v-col>
+                         <v-col cols="1" class="d-sm-none"></v-col>
+                         <v-col cols="1" class="d-sm-none"></v-col>
+                         <v-col class="d-flex pa-0"  cols="10" sm="5"  style="justify-content:center;">
+                        <a  style="width:100%" href="https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile%20openid&access_type=offline&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8080/api/social/google/code&response_type=code&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com"
+                        ><v-img :src="require('@/assets/google.png')"  />
+                        </a>
+                     
+                         </v-col>
+                         <v-col cols="1"></v-col>
+                    </v-row>
                 </v-card-text>
               </v-card>
             </v-tab-item>
@@ -129,10 +150,12 @@
                   </v-form>
                 </v-card-text>
               </v-card>
+              <br>
+                    <br>
             </v-tab-item>
            
       </v-tabs>
-        </div>
+        </v-container>
         <v-snackbar
         v-model="alert"
         timeout="5000"
@@ -156,15 +179,16 @@
       
       
 
-    </div>
+    </v-container>
    
-  </div>
+  </v-container>
 </template>
-<script>
 
+<script>
 import { mapGetters, mapState } from "vuex";
 import { AUTH_REQUEST } from "@/store/actions/auth";
 import http2 from "@/util/http-common2.js";
+
 export default {
   name: "login",
   data() {
@@ -194,6 +218,7 @@ export default {
   },
  
   methods: {
+
     login: function() {
       //model에 바인딩된 데이터 모두 ==> this
       const { email, password } = this;
@@ -218,10 +243,6 @@ export default {
           console.log(e.request.status)
           
         });
-        // .catch(() => {
-        //   this.alertMsg = "로그인에 실패하였습니다. 이메일과 비밀번호를 확인하세요.";
-        //   this.alert = true;
-        // });
     },
     registryMyself() {
       if (this.customer.email == "") {
@@ -269,10 +290,10 @@ export default {
           nickname: this.customer.nickname,
           name: this.customer.cname,
           email: this.customer.email,
-          password: this.customer.password
+          password: this.customer.password,
+          valid: false
         })
         .then(response => {
-          //console.log(response.data);
           if (
             response.data.success == true ||
             response.data.success == "true"
@@ -301,13 +322,6 @@ export default {
           }
           console.log(e.request.status)
         });
-        // .catch(() => {
-        //   this.alertMsg = "회원가입에 실패하였습니다.";
-        //   this.alert = true;
-        //   this.visablelogin = false;
-        //   this.submitted = false;
-        //   this.newCustomer();
-        // });
     },
     newCustomer() {
       this.customer = {

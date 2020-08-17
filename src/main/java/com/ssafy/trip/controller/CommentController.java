@@ -26,57 +26,63 @@ import com.ssafy.trip.repository.CommentRepository;
 public class CommentController {
 	@Autowired
 	private CommentRepository commentRepository;
-	
+
 	@GetMapping("/{articlenum}")
 	public List<CommentResponse> getComment(@PathVariable(value = "articlenum") Long num) {
-		
+
 		List<Comment> comments = commentRepository.findByArticlenumAndReplyOrderByCreatedat(num, null);
-		System.out.println("dd");
-		System.out.println(comments);
 		List<CommentResponse> commentResponses = new ArrayList<CommentResponse>();
-		for(Comment comment : comments) {
+		for (Comment comment : comments) {
 			List<Comment> cocomments = commentRepository.findByReplyOrderByCreatedat(comment);
-			
+
 			commentResponses.add(new CommentResponse(comment, cocomments));
 		}
-		System.out.println(commentResponses);
-		return commentResponses;	
+		return commentResponses;
 	}
-	
+
 	@DeleteMapping("/{num}")
 	public ResponseEntity<?> deleteComment(@PathVariable(value = "num") Long num) {
-		System.out.println(num);
 		Comment comment = commentRepository.findByNum(num);
-		
+		commentRepository.deleteAllByReply(comment);
 
-  	  	commentRepository.deleteAllByReply(comment);
-		
-  	  	commentRepository.delete(comment);
+		commentRepository.delete(comment);
 
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
+
+	@DeleteMapping("/content/{content}")
+	public ResponseEntity<?> deleteContentComment(@PathVariable(value = "content") String content) {
+
+		Comment comment = commentRepository.findByContent(content);
+		commentRepository.deleteAllByReply(comment);
+
+		commentRepository.delete(comment);
+
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
 	@PostMapping("/")
 	public ResponseEntity<?> createComment(@RequestBody Comment comment) {
-		
-	
+
 		commentRepository.save(comment);
 
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+
 	@PostMapping("/{content}")
-	public ResponseEntity<?> createCocomment(@PathVariable(value = "content") String content, @RequestBody Comment comment) {
-		
+	public ResponseEntity<?> createCocomment(@PathVariable(value = "content") String content,
+			@RequestBody Comment comment) {
+
 		Comment reply = commentRepository.findByContent(content);
 		comment.setReply(reply);
 		commentRepository.save(comment);
 
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+
 	@PutMapping("/{num}")
 	public ResponseEntity<?> putCocomment(@PathVariable(value = "num") Long num, @RequestBody Comment comment) {
-		
-		
+
 		Comment saveComment = commentRepository.findByNum(num);
 		saveComment.setContent(comment.getContent());
 
@@ -86,7 +92,7 @@ public class CommentController {
 
 		commentRepository.save(saveComment);
 
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 }

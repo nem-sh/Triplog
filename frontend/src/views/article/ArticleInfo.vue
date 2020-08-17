@@ -15,13 +15,21 @@
       :blogMasterName="item.userNickname"
       :articleLikeCount="item.likeCount"
       :isLoginedUserLikeThisArticle="isLike"
-      v-on:userSnackBar="userSnackBar"
+      :articleViews="item.views"
+      :onOffParagraph="onOffParagraph"
       v-if="likeLoaded & itemLoaded"
+      @send-paragraph-info="sendParagraphInfo"
     />
-    <comment-comp 
+    <comment-paragraph-comp
+      :paragraphInfo="paragraphInfo"
+      @on-off-paragraphcomment="onOffParagraphcomment"
+      @write-comment="writeParagraphComment"
+    />
+    <comment-comp
       :items="comments"
+      :writedParagraphComment="writedParagraphComment"
       v-if="commentLoaded"
-      />
+    />
   </div>
 </template>
 
@@ -29,35 +37,65 @@
 import { mapGetters, mapState } from "vuex";
 import ArticleInfoComp from "@/components/article/ArticleInfoComp.vue";
 import CommentComp from "@/components/comment/CommentComp.vue";
+import CommentParagraphComp from "@/components/comment/CommentParagraphComp.vue";
 import http from "@/util/http-common";
 
 export default {
   name: "ArticleInfo",
   components: {
     ArticleInfoComp,
-    CommentComp
+    CommentComp,
+    CommentParagraphComp
   },
   data: function() {
     return {
+      paragraphInfo: {
+        paragraph: "",
+        choiceId: null
+      },
       item: {},
       isLike: null,
       likeLoaded: false,
       itemLoaded: false,
       commentLoaded: false,
-      comments: []
+      comments: [],
+      writedParagraphComment: {},
+      onOffParagraph: false
     };
   },
+  methods: {
+    onOffParagraphcomment(value) {
+      this.onOffParagraph = value;
+    },
+    sendParagraphInfo(paragraphInfo) {
+      this.paragraphInfo.paragraph = paragraphInfo.paragraph;
+      this.paragraphInfo.choiceId = paragraphInfo.choiceId;
+    },
+    writeParagraphComment(obj) {
+      this.writedParagraphComment = obj;
+    }
+  },
   created() {
-    http.get(`/article/${this.$route.params.articleNum}`).then(({ data }) => {
-      this.item = data;
-      this.itemLoaded = true;
-    });
     http
-      .get(`/article/like/${this.$route.params.articleNum}/${this.getUserNum}`)
+      .get(`/article/${this.$route.params.articleNum}/${this.getUserNum}`)
       .then(({ data }) => {
-        this.isLike = data;
-        this.likeLoaded = true;
+        this.item = data;
+
+        this.itemLoaded = true;
       });
+    if (this.getUserNum != "") {
+      http
+        .get(
+          `/article/like/${this.$route.params.articleNum}/${this.getUserNum}`
+        )
+        .then(({ data }) => {
+          this.isLike = data;
+          this.likeLoaded = true;
+        });
+    } else {
+      this.isLike = false;
+      this.likeLoaded = true;
+    }
     http.get(`/comment/${this.$route.params.articleNum}`).then(({ data }) => {
       this.comments = data;
       this.commentLoaded = true;

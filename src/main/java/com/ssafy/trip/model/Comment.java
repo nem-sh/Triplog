@@ -32,6 +32,14 @@ public class Comment {
 	@Column(name="user_img")
 	private String userimg;
 	
+	private String paragraph;
+	
+	public String getParagraph() {
+		return paragraph;
+	}
+	public void setParagraph(String paragraph) {
+		this.paragraph = paragraph;
+	}
 	public String getUserimg() {
 		return userimg;
 	}
