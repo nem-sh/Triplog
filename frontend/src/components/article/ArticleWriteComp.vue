@@ -337,6 +337,8 @@ export default {
       fontValue: "null",
       address: {},
       addressDialog: false,
+      ImgPath: "",
+      editorHtmlFile: null,
     };
   },
   created() {
@@ -352,14 +354,32 @@ export default {
       this.imgPool.splice(idx, 1)
     },
 
-    createFileByInnerEditorText: function() {
+    createFileByInnerEditorTextAndReturnImgFileArr: async function() {
       var innerIframe = document.getElementById('editor').contentWindow.document.body.innerHTML;
       var content = this.prefix + innerIframe + this.suffix;
+
+      var parsedDoc = new DOMParser().parseFromString(content, 'text/html');
+      var imgTags = parsedDoc.getElementsByTagName('img');
+      var imgFiles = [];
+      var key;
+      for (key = 0; key < imgTags.length; key++) {
+        var imgSrc = imgTags[key].src;
+        let blob = await fetch(imgSrc).then(r => r.blob());
+        var imgFileName = imgSrc.split('/').reverse()[0] + "." + blob.type.split('/').reverse()[0];
+        var newFile = new File([blob], imgFileName, {
+          type: blob.type,
+        });
+        imgTags[key].src = "../../content/img/" + newFile.name;
+        imgFiles.push(newFile);
+      }
+
+      content = parsedDoc.documentElement.innerHTML;
       var fileName = this.getUserNum + "_" + this.articleTitle + ".html";
-      var file = new File([content], fileName, {
+      this.editorHtmlFile = new File([content], fileName, {
         type: "text/html",
       });
-      return file;
+
+      return imgFiles;
     },
     exec: function(option) {
       this.editorDocument().execCommand(option, false, true);
@@ -422,12 +442,14 @@ export default {
       this.registHandler();
     }
    },
-   registHandler() {
-     var contentFile = this.createFileByInnerEditorText();
+   registHandler: async function() {
+     var imgFiles = await this.createFileByInnerEditorTextAndReturnImgFileArr();
      var formData = new FormData();
-     formData.append('files', contentFile);
-     formData.append('files', this.fileInfo);
-     http3
+     formData.append('files', this.editorHtmlFile);
+     for (const key in imgFiles) {
+       formData.append('files', imgFiles[key]);
+     }
+    http3
       .post(`/article/files`, formData).then(({ data }) => {
         http
           .post(`/article`, {
