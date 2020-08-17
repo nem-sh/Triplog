@@ -571,7 +571,7 @@ export default {
     drag: function(idx) {
       this.imgPool.splice(idx, 1);
     },
-    createFileByInnerEditorText: function() {
+    createFileByInnerEditorTextAndReturnImgFileArr: async function() {
       var innerIframe = document.getElementById("editor").contentWindow.document
         .body.innerHTML;
       var content = this.prefix + innerIframe + this.suffix;
@@ -735,6 +735,9 @@ export default {
       this.addressDialog = place.addressDialog;
       this.place = place;
     },
+    returnImageURL(file) {
+      return URL.createObjectURL(file);
+    },
  },
   computed: {
     ...mapGetters([
@@ -776,9 +779,7 @@ export default {
         ",1)"
       );
     },
-    returnImageURL(file) {
-      return URL.createObjectURL(file);
-    }
+    
   },
   watch: {
     fontValue: function(newVal) {
