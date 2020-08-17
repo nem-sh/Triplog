@@ -16,7 +16,7 @@
       <v-tab>
         <v-icon left>mdi-account</v-icon>All Posts
       </v-tab>
-      <v-tab v-for="item in tripList" :key="item">
+      <v-tab v-for="(item, index) in tripList" :key="index">
         <v-icon left>mdi-account</v-icon>
         {{item.name}}
       </v-tab>
@@ -31,7 +31,7 @@
                 <v-row align="stretch" justify="space-around">
                   <ArticleListComp
                     v-for="(item, index) in items"
-                    :key="`${index}_items`"
+                    :key="index"
                     :num="item.num"
                     :user_num="item.user_num"
                     :title="item.title"
@@ -46,12 +46,8 @@
         <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
       </v-tab-item>
 
-      <v-tab-item v-for="item in tripList" :key="item">
-        <Category
-        :num="item.num"
-        :userNum="item.userNum"
-        :name="item.name"
-        />
+      <v-tab-item v-for="(item, index) in tripList" :key="index">
+        <Category :num="item.num" :userNum="item.userNum" :name="item.name" />
         <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
       </v-tab-item>
 
@@ -102,20 +98,22 @@ export default {
     };
   },
   created() {
-    
-    http.get(`/blog/visit/${this.$route.params.hostNum}`).then(({data}) => {
-      this.visitCount = data.visitcount;
-    }).catch((err) => {
-      console.log(err)
-    }),
     http
-      .post("/article/getList/", {
-        usernum: this.$route.params.hostNum,
-        limit: this.limit
-      })
+      .get(`/blog/visit/${this.$route.params.hostNum}`)
       .then(({ data }) => {
-        this.items = data;
-      });
+        this.visitCount = data.visitcount;
+      })
+      .catch(err => {
+        console.log(err);
+      }),
+      http
+        .post("/article/getList/", {
+          usernum: this.$route.params.hostNum,
+          limit: this.limit
+        })
+        .then(({ data }) => {
+          this.items = data;
+        });
     http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
       this.item = data;
       if (this.getUserNum == this.item.num) {
@@ -125,14 +123,14 @@ export default {
     http.get(`/tripPackage/${this.$route.params.hostNum}`).then(({ data }) => {
       this.tripList = data;
     });
-      http
-        .get(`/blog/visit/${this.$route.params.hostNum}`)
-        .then(({ data }) => {
-          this.visitCount = data.visitcount;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+    http
+      .get(`/blog/visit/${this.$route.params.hostNum}`)
+      .then(({ data }) => {
+        this.visitCount = data.visitcount;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   methods: {
     infiniteHandler($state) {

@@ -118,32 +118,22 @@
       <article-content-comp :content="realContent" v-if="realContent" />
     </div>
     <v-divider />
-    <v-row class="ma-1" align="center" justify="between">
+    <v-row class="ma-1" align="center">
       <v-btn class="ml-6" icon :disabled="likeBtnFlag" :loading="likeBtnFlag">
         <v-chip @click="likeBtnClick" color="pink" text-color="white">
-          <v-avatar left class="pink darken-4">{{articleLikeCount}}</v-avatar>
+          <v-avatar left class="pink darken-4">{{likeCount}}</v-avatar>
 
-          <v-icon v-if="isLoginedUserLikeThisArticle">mdi-heart</v-icon>
+          <v-icon v-if="isLoginedUserLikeThisArticleprop">mdi-heart</v-icon>
           <v-icon v-else>mdi-heart-outline</v-icon>
         </v-chip>
       </v-btn>
-      
-        <v-chip
-          class="ml-6"
-          color="light-green"
-          text-color="white">
-          <p class="text-align-center ma-0">view</p>
-          <v-avatar
-        right
-        class="green"
-      >
-        {{articleViews}}
-      </v-avatar>
-        </v-chip>
-    <v-spacer></v-spacer>
-      
-      
-      
+
+      <v-chip class="ml-6" color="light-green" text-color="white">
+        <p class="text-align-center ma-0">view</p>
+        <v-avatar right class="green">{{articleViews}}</v-avatar>
+      </v-chip>
+      <v-spacer></v-spacer>
+
       <v-sheet>
         <v-btn
           :to="{ name: 'articleModify', params: { articleNum: articleNum }}"
@@ -215,6 +205,7 @@ export default {
   },
   data: function() {
     return {
+      isLoginedUserLikeThisArticleprop: this.isLoginedUserLikeThisArticle,
       cursorEventOn: false,
       paragraphInfo: {
         paragraph: "",
@@ -262,11 +253,12 @@ export default {
     };
   },
   mounted() {
-    if (this.getUserNum == this.articleUserNum) this.btnToggle = true;
-    this.$refs.calendar.checkChange();
+    // if (this.getUserNum == this.articleUserNum) this.btnToggle = true;
+    // this.$refs.calendar.checkChange();
   },
-  created() {
-    this.openContentFile()
+  created: function() {
+    this.likeCount = this.articleLikeCount;
+    this.openContentFile();
   },
   methods: {
     clickThis() {
@@ -382,24 +374,24 @@ export default {
           }
           this.alertMsg = msg;
           this.dialog = false;
-          this.$emit("useSnackBar", this.alertMsg);
+          // this.$emit("useSnackBar", this.alertMsg);
           this.$router.push(`/article/list/${this.getUserNum}`);
         })
-        .catch(() => {
-        });
+        .catch(() => {});
     },
     likeBtnClick: function() {
       this.likeBtnFlag = true;
-      if (this.isLoginedUserLikeThisArticle) {
-        this.articleLikeCount--;
+      if (this.isLoginedUserLikeThisArticleprop) {
+        this.likeCount--;
       } else {
-        this.articleLikeCount++;
+        this.likeCount++;
       }
-      this.isLoginedUserLikeThisArticle = !this.isLoginedUserLikeThisArticle;
+      this.isLoginedUserLikeThisArticleprop = !this
+        .isLoginedUserLikeThisArticleprop;
 
       http
         .put(
-          `/article/${this.articleNum}/${this.getUserNum}/${this.isLoginedUserLikeThisArticle}`,
+          `/article/${this.articleNum}/${this.getUserNum}/${this.isLoginedUserLikeThisArticleprop}`,
           {
             num: this.articleNum,
             user_num: this.articleUserNum,
@@ -412,7 +404,7 @@ export default {
             created_at: this.articleCreatedAt,
             date_start: this.articleDateStart,
             date_end: this.articleDateEnd,
-            likeCount: this.articleLikeCount,
+            likeCount: this.likeCount,
             viws: this.articleViews
           }
         )
