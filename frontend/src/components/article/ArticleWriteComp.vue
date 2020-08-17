@@ -12,16 +12,18 @@
       <v-col cols="12" md="2" align-self="center">
         <div style="width:100%; text-align:center" :style="{fontFamily : 'SunFlower'}">장소</div>
       </v-col>
-      <v-col cols="12" md="9">
-        <v-dialog v-model="addressDialog" persistent max-width="500">
-          <template v-slot:activator="{ on, attrs }">
-            <div>
-              <v-btn small v-bind="attrs" v-on="on" :style="{fontFamily : 'SunFlower'}">주소 찾기</v-btn>
-              {{ address.address }}
-            </div>
-          </template>
-          <vue-daum-postcode @complete="address = $event; addressDialog = false;" />
-        </v-dialog>
+      <v-col
+        cols="12"
+        md="9">
+        <v-dialog v-model="addressDialog" max-width="300">
+        <template v-slot:activator="{ on, attrs }">
+          <div>
+            <v-btn small v-bind="attrs" v-on="on" :style="{fontFamily : 'SunFlower'}">장소 찾기</v-btn> {{ place.name }}
+          </div>
+        </template>
+          <FindPlace @childs-event="getPlace" />
+       </v-dialog>
+
       </v-col>
     </v-row>
 
@@ -476,12 +478,14 @@
 <script>
 import http from "@/util/http-common";
 import http3 from "@/util/http-common3";
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapState } from 'vuex';
+import FindPlace from "@/components/GoogleMap/FindPlace.vue";
 import { VueDaumPostcode } from "vue-daum-postcode";
 
 export default {
   name: "ArticleWriteComp",
   components: {
+    FindPlace
     VueDaumPostcode
   },
   data() {
@@ -498,9 +502,14 @@ export default {
       polling: null,
       dialog: false,
       editorHtmlPath: "./assets/editor/editor.html",
-      prefix:
-        '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
-      suffix: "</body></html>",
+      prefix: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
+      suffix: '</body></html>',
+      addressDialog: false,
+      place: {
+        name: "",
+        lat: 0,
+        lng: 0
+        },
       uploadImgs: [],
       imgPool: [],
       multFlag: false,
@@ -534,8 +543,6 @@ export default {
       ],
       fontSizeValue: "3",
       fontValue: "null",
-      address: {},
-      addressDialog: false,
       showColorPicker: false,
       fontColorValue: {
         r: 0,
@@ -653,7 +660,9 @@ export default {
               created_at: new Date(),
               user_num: this.getUserNum,
               userNickname: this.getProfile,
-              place: this.address.address
+              place: this.place.name,
+              lat: this.place.lat,
+              lng: this.place.lng
             })
             .then(({ data }) => {
               let msg = "등록 처리시 문제가 발생했습니다.";
@@ -704,10 +713,11 @@ export default {
     onClickImageUpload() {
       this.$refs.imageInput.click();
     },
-    returnImageURL(file) {
-      return URL.createObjectURL(file);
-    }
-  },
+    getPlace(place){
+      this.addressDialog = place.addressDialog;
+      this.place = place;
+    },
+ },
   computed: {
     ...mapGetters([
       "isAuthenticated",
@@ -747,6 +757,9 @@ export default {
         this.HiliteColorValue.b +
         ",1)"
       );
+    },
+    returnImageURL(file) {
+      return URL.createObjectURL(file);
     }
   },
   watch: {

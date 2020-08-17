@@ -35,6 +35,8 @@ public class Article {
 	private Date dateEnd;
 	private int likeCount;
 	private String userNickname;
+	private Float lat;
+	private Float lng;
 	private Long views;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -45,24 +47,26 @@ public class Article {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Article(Long num, Long usernum, Long trippackage_num, String title, String place, String content,
-			String thumbnail, Boolean temp, Date created_at, Date date_start, Date date_end, int likeCount,
-			String userNickname, List<MemberUser> likearticle) {
+
+	public Article(Long num, Long userNum, Long trippackageNum, String title, String place, String content,
+			String thumbnail, Boolean temp, Date createdAt, Date dateStart, Date dateEnd, int likeCount,
+			String userNickname, Float lat, Float lng, List<MemberUser> likearticle) {
 		super();
 		this.num = num;
-		this.userNum = usernum;
-		this.trippackageNum = trippackage_num;
+		this.userNum = userNum;
+		this.trippackageNum = trippackageNum;
 		this.title = title;
 		this.place = place;
 		this.content = content;
 		this.thumbnail = thumbnail;
 		this.temp = temp;
-		this.createdAt = created_at;
-		this.dateStart = date_start;
-		this.dateEnd = date_end;
+		this.createdAt = createdAt;
+		this.dateStart = dateStart;
+		this.dateEnd = dateEnd;
 		this.likeCount = likeCount;
 		this.userNickname = userNickname;
+		this.lat = lat;
+		this.lng = lng;
 		this.likearticle = likearticle;
 	}
 
@@ -170,13 +174,28 @@ public class Article {
 		this.likearticle = likearticle;
 	}
 
-
 	public String getUserNickname() {
 		return userNickname;
 	}
 
 	public void setUserNickname(String userNickname) {
 		this.userNickname = userNickname;
+	}
+	
+	public Float getLat() {
+		return lat;
+	}
+
+	public void setLat(Float lat) {
+		this.lat = lat;
+	}
+
+	public Float getLng() {
+		return lng;
+	}
+
+	public void setLng(Float lng) {
+		this.lng = lng;
 	}
 
 	public Long getViews() {
@@ -189,10 +208,11 @@ public class Article {
 	
 	@Override
 	public String toString() {
-		return "Article [num=" + num + ", usernum=" + userNum + ", trippackage_num=" + trippackageNum + ", title="
+		return "Article [num=" + num + ", userNum=" + userNum + ", trippackageNum=" + trippackageNum + ", title="
 				+ title + ", place=" + place + ", content=" + content + ", thumbnail=" + thumbnail + ", temp=" + temp
-				+ ", created_at=" + createdAt + ", date_start=" + dateStart + ", date_end=" + dateEnd
-				+ ", likeCount=" + likeCount + ", userNickname=" + userNickname + ", likearticle=" + likearticle + ",views="+views +"]";
+				+ ", createdAt=" + createdAt + ", dateStart=" + dateStart + ", dateEnd=" + dateEnd + ", likeCount="
+				+ likeCount + ", userNickname=" + userNickname + ", lat=" + lat + ", lng=" + lng + ", likearticle="
+				+ likearticle + ",views="+views +"]";
 	}
 
 
