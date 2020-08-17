@@ -14,24 +14,24 @@
 
     <v-tabs centered grow color="cyan darken-2">
       <v-tab>
-        <v-icon left>mdi-account</v-icon>All Posts
+        <v-icon left>mdi-format-list-bulleted</v-icon>All Posts
       </v-tab>
-      <v-tab v-for="item in tripList" :key="item">
-        <v-icon left>mdi-account</v-icon>
-        {{item.name}}
+      <v-tab v-for="(tripTitle,i) in tripList" :key="i">
+        <v-icon left>mdi-airplane-takeoff</v-icon>
+        {{tripTitle.name}}
       </v-tab>
-      <v-tab>
+      <v-tab v-if="isMyBlog">
         <v-icon left>mdi-cogs</v-icon>TripPackage
       </v-tab>
       <v-tab-item>
-        <v-app id="inspire" style="max-width: 970px">
+        <v-app id="inspire" style="max-width: 900px">
           <v-container fluid>
             <v-row>
               <v-col cols="12">
                 <v-row align="stretch" justify="space-around">
                   <ArticleListComp
                     v-for="(item, index) in items"
-                    :key="`${index}_items`"
+                    :key="index"
                     :num="item.num"
                     :user_num="item.user_num"
                     :title="item.title"
@@ -46,17 +46,13 @@
         <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
       </v-tab-item>
 
-      <v-tab-item v-for="item in tripList" :key="item">
-        <Category
-        :num="item.num"
-        :userNum="item.userNum"
-        :name="item.name"
-        />
+      <v-tab-item v-for="(tripItem,i) in tripList" :key="i">
+        <Category :num="tripItem.num" :userNum="tripItem.userNum" :name="tripItem.name" />
         <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
       </v-tab-item>
 
-      <v-tab-item>
-        <v-app id="inspire" style="max-width: 970px">
+      <v-tab-item v-if="isMyBlog">
+        <v-app id="inspire" style="max-width: 900px">
           <v-container fluid>
             <v-row>
               <v-col cols="12">
@@ -102,20 +98,22 @@ export default {
     };
   },
   created() {
-    
-    http.get(`/blog/visit/${this.$route.params.hostNum}`).then(({data}) => {
-      this.visitCount = data.visitcount;
-    }).catch((err) => {
-      console.log(err)
-    }),
     http
-      .post("/article/getList/", {
-        usernum: this.$route.params.hostNum,
-        limit: this.limit
-      })
+      .get(`/blog/visit/${this.$route.params.hostNum}`)
       .then(({ data }) => {
-        this.items = data;
-      });
+        this.visitCount = data.visitcount;
+      })
+      .catch(err => {
+        console.log(err);
+      }),
+      http
+        .post("/article/getList/", {
+          usernum: this.$route.params.hostNum,
+          limit: this.limit
+        })
+        .then(({ data }) => {
+          this.items = data;
+        });
     http.get(`/users/get/${this.$route.params.hostNum}`).then(({ data }) => {
       this.item = data;
       if (this.getUserNum == this.item.num) {
@@ -125,14 +123,14 @@ export default {
     http.get(`/tripPackage/${this.$route.params.hostNum}`).then(({ data }) => {
       this.tripList = data;
     });
-      http
-        .get(`/blog/visit/${this.$route.params.hostNum}`)
-        .then(({ data }) => {
-          this.visitCount = data.visitcount;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+    http
+      .get(`/blog/visit/${this.$route.params.hostNum}`)
+      .then(({ data }) => {
+        this.visitCount = data.visitcount;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   methods: {
     infiniteHandler($state) {
@@ -172,7 +170,7 @@ export default {
   watch: {
     getUserNum: function() {
       this.$router.go(this.$router.currentRoute);
-    }
+    },
   }
 };
 </script>

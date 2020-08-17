@@ -17,7 +17,6 @@
       :isLoginedUserLikeThisArticle="isLike"
       :articleViews="item.views"
       :onOffParagraph="onOffParagraph"
-      v-on:userSnackBar="userSnackBar"
       v-if="likeLoaded & itemLoaded"
       @send-paragraph-info="sendParagraphInfo"
     />
@@ -77,12 +76,13 @@ export default {
     }
   },
   created() {
-    
-    http.get(`/article/${this.$route.params.articleNum}/${this.getUserNum}`).then(({ data }) => {
-      this.item = data;
-      
-      this.itemLoaded = true;
-    });
+    http
+      .get(`/article/${this.$route.params.articleNum}/${this.getUserNum}`)
+      .then(({ data }) => {
+        this.item = data;
+
+        this.itemLoaded = true;
+      });
     if (this.getUserNum != "") {
       http
         .get(

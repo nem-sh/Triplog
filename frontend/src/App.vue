@@ -117,7 +117,7 @@
       </v-navigation-drawer>
 
       <v-app-bar app dense color="cyan darken-2" dark clipped-left>
-        <v-toolbar-title style="font-size: 40px;" @click="$router.push('/')">
+        <v-toolbar-title style="font-size: 40px;" @click="$router.push('/')" class="cursor">
           TRIPLOG
           <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
@@ -298,13 +298,10 @@ export default {
       this.$router.push("noticeList");
     },
     moveBlog() {
-      
       if (this.getValid) {
-        
         this.$router.push(`/article/list/${this.getUserNum}`);
         this.$router.go(this.$router.currentRoute);
       } else {
-        
         this.$router.push(`/emailAuth`);
       }
     },
@@ -349,7 +346,9 @@ export default {
     window.addEventListener("resize", this.handleResize);
     window.addEventListener("scroll", this.detectWindowScrollY);
     this.header = this.$refs.pageHeader;
-    this.headerTop = this.header.offsetTop;
+    if (typeof header != "undefined") {
+      this.headerTop = this.header.offsetTop;
+    }
   },
   beforeDestory() {
     window.removeEventListener("scroll", this.detectWindowScrollY);
@@ -372,3 +371,8 @@ export default {
   }
 };
 </script>
+<style  scoped>
+.cursor:hover {
+  cursor: pointer;
+}
+</style>
