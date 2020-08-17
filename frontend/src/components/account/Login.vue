@@ -1,12 +1,12 @@
 <template>
-  <v-container id="main_wrap" class="pa-0" >
+  <v-container id="main_wrap" class="pa-0" style="max-width:700px;">
     <v-container id="middle_wrap" class="pa-0">
       
       <v-container class="pa-0">
         <v-container class="pa-0">
-          <v-tabs v-model="tab" show-arrows background-color="cyan darken-2" icons-and-text teal grow>
+          <v-tabs v-model="tab" show-arrows="mobile" background-color="cyan darken-2" icons-and-text teal grow>
           <v-tabs-slider></v-tabs-slider>
-          <v-tab v-for="i in tabs" :key="i">
+          <v-tab v-for="i in tabs" :key="i.name">
             <v-icon large>{{i.icon}}</v-icon>
             <v-container class="caption py-1">{{i.name}}</v-container> 
             </v-tab>
@@ -44,25 +44,29 @@
                    
                     </v-row>
                  
-                    <hr class="mb-5 mt-5">
+               
                   
-                    <v-row>
-                      <v-col class="d-flex" cols="12"  style="justify-content:center;">
+               
+                 
+                  </v-form>
+                       <hr class="mb-5 mt-5">
+                       <v-row>
+                         <v-col cols="1"></v-col>
+                      <v-col class="d-flex pa-0" cols="10" sm="5"  style="justify-content:center; ">
                         <a style="width:100%" href='https://kauth.kakao.com/oauth/authorize?client_id=4b566a63a487519e52bcd20aec5f9326&redirect_uri=http://localhost:8080/api/social/kakao/code&response_type=code'>
                             <v-img :src="require('@/assets/kakao.png')"  />
                         </a>
                          </v-col>
-                    </v-row>
-                     <v-row>
-                      <v-col class="d-flex" cols="12"  style="justify-content:center;">
+                         <v-col cols="1" class="d-sm-none"></v-col>
+                         <v-col cols="1" sm="0"></v-col>
+                         <v-col class="d-flex pa-0"  cols="10" sm="5"  style="justify-content:center;">
                         <a  style="width:100%" href="https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile%20openid&access_type=offline&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8080/api/social/google/code&response_type=code&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com"
                         ><v-img :src="require('@/assets/google.png')"  />
                         </a>
                      
                          </v-col>
+                         <v-col cols="1"></v-col>
                     </v-row>
-                      
-                  </v-form>
                 </v-card-text>
               </v-card>
             </v-tab-item>
