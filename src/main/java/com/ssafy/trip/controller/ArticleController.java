@@ -94,34 +94,67 @@ public class ArticleController {
 	}
 
 	@PostMapping("/files")
-	public ResponseEntity<List<String>> uploadFiles(@RequestPart List<MultipartFile> files) throws Exception {
-		String contentBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\content\\registered\\";
-		String imgBaseDir = System.getProperty("user.dir") + "\\frontend\\src\\assets\\articleImage\\";
-		List<String> result = new LinkedList<String>();
+	   public ResponseEntity<List<String>> uploadFiles(@RequestPart List<MultipartFile> files) throws Exception {
+	      String contentBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\content\\registered\\";
+	      String imgPublicBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\content\\img\\";
+	      String imgBaseDir = System.getProperty("user.dir") + "\\frontend\\src\\assets\\articleImage\\";
+	      List<String> result = new LinkedList<String>();
 
-		for (MultipartFile file : files) {
-			String originalFileName = file.getOriginalFilename();
-			String newName = originalFileName;
-			String[] splited = originalFileName.split("\\.");
-			String realName = splited[0];
-			String extension = splited[splited.length - 1];
-			String baseDir = extension.equals("html") ? contentBaseDir : imgBaseDir;
+	      for (MultipartFile file : files) {
+	         String originalFileName = file.getOriginalFilename();
+	         
+	         String[] splited = originalFileName.split("\\.");
+	         String realName = splited[0];
+	         String extension = splited[splited.length - 1];
+	         String baseDir;
+	         if(extension.equals("html")) {
+	            baseDir = contentBaseDir;
+	            String newName = realName + "." + extension;
+	            File dest = new File(baseDir + newName);
+	            
+	            int index = 0;
+	            while (dest.exists()) {
+	               index++;
+	               newName = realName + "(" + index + ")." + extension;
+	               dest = new File(baseDir + newName);
+	            }
+	            
+	            file.transferTo(dest);
+	            result.add(newName);
+	         } else {
+	            baseDir = imgBaseDir;
+	            String newName = realName + "." + extension;
+	            File dest = new File(baseDir + newName);
+	            
+	            int index = 0;
+	            while (dest.exists()) {
+	               index++;
+	               newName = realName + "(" + index + ")." + extension;
+	               dest = new File(baseDir + newName);
+	            }
+	            
+	            file.transferTo(dest);
+	            result.add(newName);
+	            
+	            //img public 저장 부분
+	            baseDir = imgPublicBaseDir;
+	            newName = realName + "." + extension;
+	            dest = new File(baseDir + newName);
+	            
+	            index = 0;
+	            while (dest.exists()) {
+	               index++;
+	               newName = realName + "(" + index + ")." + extension;
+	               dest = new File(baseDir + newName);
+	            }
+	            
+	            file.transferTo(dest);
+	         }
+	         
+	      }
 
-			File dest = new File(baseDir + originalFileName);
-
-			int index = 0;
-			while (dest.exists()) {
-				index++;
-				newName = realName + "(" + index + ")." + extension;
-				dest = new File(baseDir + newName);
-			}
-
-			file.transferTo(dest);
-			result.add(newName);
-		}
-
-		return ResponseEntity.ok(result);
-	}
+	      return ResponseEntity.ok(result);
+	   }
 
 	@GetMapping("/getList/{hostNum}")
 	public List<Article> findArticlesByHostNum(@PathVariable(value = "hostNum") Long hostNum) {

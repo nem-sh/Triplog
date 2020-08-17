@@ -24,7 +24,8 @@ export default {
   data: function() {
     return {
       item: {},
-      isMyBlog: false
+      isMyBlog: false,
+      mediaItem:[],
     };
   },
   methods: {

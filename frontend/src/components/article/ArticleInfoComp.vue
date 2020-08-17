@@ -105,15 +105,6 @@
     </v-tabs>
     <v-divider />
     <br />
-    <div align="center">
-      <v-img
-        v-if="articleThumbnail"
-        :src="require(`@/assets/articleImage/${articleThumbnail}`)"
-        class="img"
-      />
-      <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)" class="img" />
-    </div>
-    <br />
     <div @click="clickThis" @mouseover="hoverThis" @mouseout="nonHoverThis" :style="cursorStyle">
       <article-content-comp :content="realContent" v-if="realContent" />
     </div>

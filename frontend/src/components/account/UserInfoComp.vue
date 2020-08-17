@@ -120,6 +120,37 @@
             <p>{{getFormatDate(joinedAt)}}</p>
           </v-col>
         </v-row>
+        
+         <v-tabs centered grow color="cyan darken-2">
+           <v-tab>Media</v-tab>
+           <v-tab>작성글</v-tab>
+           <v-tab-item>
+          
+
+          
+          
+             <div class="d-flex row">
+             <p class="d-flex col-6" v-for="media in mediaList" :key="media.num">
+               <v-img :src="media.media" ma-0 pa-0>
+                 
+                 <v-btn @click="deleteMedia(media.num)"><v-icon>fas fa-trash</v-icon></v-btn>
+               </v-img>
+
+             </p>
+            </div>
+           
+           </v-tab-item>
+           
+           <v-tab-item>
+             <div v-for="comment in commentList" :key="comment.num">
+             
+               <p>{{comment.comment}}
+               <v-btn @click="deleteComment(comment.num)" x-small><v-icon x-small="">fas fa-trash</v-icon></v-btn>
+               </p>
+             </div>
+           </v-tab-item>
+         </v-tabs>
+        
         <v-row>
           <v-col>
             <v-btn @click="modify" class="cyan darken-3 white--text">수정</v-btn>
@@ -189,8 +220,21 @@ export default {
       alertMsg: "",
       dialog: false,
       fileInfo: null,
-      firstImage: true
+      firstImage: true,
+      commentList: [],
+      mediaList:[],
     };
+  },
+  created () {
+    http.get(`/chatbot/media/${this.$route.params.hostNum}`)
+    .then(({data})=>{
+      this.mediaList = data;
+      
+    }),
+    http.get(`/chatbot/comment/${this.$route.params.hostNum}`)
+    .then(({data})=>{
+      this.commentList = data;
+    })
   },
   computed: {
     computeEmail() {
@@ -357,6 +401,20 @@ export default {
     },
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT);
+    },
+    deleteMedia:function(num) {
+      http.delete(`chatbot/media/${num}`)
+      .then(()=>{
+        
+        this.$router.go(this.$router.currentRoute);
+      })
+    },
+    deleteComment:function(num){
+      http.delete(`chatbot/comment/${num}`)
+      .then(()=> {
+        
+        this.$router.go(this.$router.currentRoute);
+      })
     }
   }
 };
