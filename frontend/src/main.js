@@ -5,15 +5,21 @@ import store from "./store/index.js";
 import Vuex from "vuex";
 import vuetify from "./plugins/vuetify";
 import vueMoment from 'vue-moment';
+import VueGmaps from 'vue-gmaps';
 
 Vue.use(vueMoment)
 Vue.use(Vuex);
+Vue.use(VueGmaps, {
+    key: 'AIzaSyC3JEsAuKanTHq2XVnX2uWx9y-0bFEp9iY',
+    libraries: ['places'],
+    version: '3'
+})
 
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
+    router,
+    store,
+    vuetify,
+    render: h => h(App)
 }).$mount("#app");

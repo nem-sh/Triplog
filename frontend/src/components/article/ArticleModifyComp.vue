@@ -1,5 +1,5 @@
 <template>
-  <div style="min-width: 1000px;">
+  <div>
     <v-simple-table>
       <template v-slot:default borderless>
         <tbody>

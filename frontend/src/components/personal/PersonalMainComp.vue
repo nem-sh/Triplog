@@ -200,7 +200,7 @@
             <v-row>
               <v-col cols="3">
                 <v-list-item-avatar class="ml-1" style="cursor:pointer">
-                  <v-img :src="require(`@/assets/userImage/${hostImg}`)"></v-img>
+                  <v-img v-if="hostImg" :src="require(`@/assets/userImage/${hostImg}`)"></v-img>
                 </v-list-item-avatar>
               </v-col>
               <v-col cols="9">
@@ -255,24 +255,26 @@ export default {
     updateProfile: function() {
       this.$emit("update-profile");
     },
-    
+
     getBlogInfo() {
       http
         .get(`/blog/${this.$route.params.hostNum}`)
         .then(response => {
-          this.titleColor = response.data.title.slice(0, 9);
-          this.title = response.data.title.slice(9);
           this.visitcount = response.data.visitcount;
-          this.titleimg = response.data.titleimg;
-          if (this.title == "") {
+          if (response.data.title == null) {
             this.title = this.hostNickName + "'s blog";
+          } else {
+            this.titleColor = response.data.title.slice(0, 9);
+            this.title = response.data.title.slice(9);
           }
-          if (this.titleimg == null) {
+          if (response.data.titleimg == null) {
             this.titleimg = "adventurealtitude.jpg";
+          } else {
+            this.titleimg = response.data.titleimg;
           }
         })
         .catch(error => {
-          console.log(error.data);
+          alert(error.data);
         });
     },
     addNeighbor() {
@@ -337,16 +339,13 @@ export default {
     },
     ...mapGetters(["isAuthenticated", "isProfileLoaded", "getUserNum"]),
     ...mapState({
-      authLoading: state => state.auth.status === "loading",
-      userNum: state => `${state.user.getUserNum}`
+      authLoading: state => state.auth.status === "loading"
     }),
     loading: function() {
       return this.authStatus === "loading" && !this.isAuthenticated;
     }
   },
-  created() {
-    this.getBlogInfo();
-  },
+  created() {},
   mounted() {
     http
       .get(`/neighbor/${this.getUserNum}`)
@@ -362,6 +361,7 @@ export default {
       .catch(error => {
         console.log(error.data);
       });
+    this.getBlogInfo();
   }
 };
 </script>
