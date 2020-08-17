@@ -10,8 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +37,8 @@ import java.util.Calendar;
 @RequestMapping("/api/chatbot")
 @RestController
 public class PreArticleController {
-
+	private static final String SUCCESS = "success";
+	
 	@Autowired
 	private PreArticleRepository preArticleRepository;
 
@@ -170,5 +175,36 @@ public class PreArticleController {
 		}
 		return resultJson;
 
+	}
+//	챗봇리스트 마이페이지에 보여주기
+	@GetMapping("/{usernum}")
+	public List<PreArticle> getPreArticles(@PathVariable(value="usernum") Long usernum){
+		
+		List<PreArticle> preArticles = preArticleRepository.findByUsernum(usernum);
+		return preArticles;
+	}
+	@GetMapping("/media/{usernum}")
+	public List<PreArticle> getMediaPreArticle(@PathVariable(value="usernum") Long usernum){
+		List<PreArticle> mediaPreArticle = preArticleRepository.findByUsernumAndMediaNotNull(usernum);
+		
+		return mediaPreArticle;
+	}
+	@DeleteMapping("/media/{num}")
+	public ResponseEntity<String> deleteMediaPreArticle(@PathVariable(value="num")Long num){
+		PreArticle preArticle = preArticleRepository.findByNum(num);
+		preArticleRepository.delete(preArticle);
+		return ResponseEntity.ok(SUCCESS);
+	}
+	@GetMapping("/comment/{usernum}")
+	public List<PreArticle> getCommentPreArticle(@PathVariable(value="usernum") Long usernum){
+		List<PreArticle> commentPreArticle = preArticleRepository.findByUsernumAndCommentNotNull(usernum);
+		
+		return commentPreArticle;
+	}
+	@DeleteMapping("/comment/{num}")
+	public ResponseEntity<String> deleteCommentPreArticle(@PathVariable(value="num")Long num){
+		PreArticle preArticle = preArticleRepository.findByNum(num);
+		preArticleRepository.delete(preArticle);
+		return ResponseEntity.ok(SUCCESS);
 	}
 }
