@@ -541,6 +541,8 @@ export default {
       ],
       fontSizeValue: "3",
       fontValue: "null",
+      ImgPath: "",
+      editorHtmlFile: null,
       showColorPicker: false,
       fontColorValue: {
         r: 0,
@@ -569,16 +571,33 @@ export default {
     drag: function(idx) {
       this.imgPool.splice(idx, 1);
     },
-
     createFileByInnerEditorText: function() {
       var innerIframe = document.getElementById("editor").contentWindow.document
         .body.innerHTML;
       var content = this.prefix + innerIframe + this.suffix;
+
+      var parsedDoc = new DOMParser().parseFromString(content, 'text/html');
+      var imgTags = parsedDoc.getElementsByTagName('img');
+      var imgFiles = [];
+      var key;
+      for (key = 0; key < imgTags.length; key++) {
+        var imgSrc = imgTags[key].src;
+        let blob = await fetch(imgSrc).then(r => r.blob());
+        var imgFileName = imgSrc.split('/').reverse()[0] + "." + blob.type.split('/').reverse()[0];
+        var newFile = new File([blob], imgFileName, {
+          type: blob.type,
+        });
+        imgTags[key].src = "../../content/img/" + newFile.name;
+        imgFiles.push(newFile);
+      }
+
+      content = parsedDoc.documentElement.innerHTML;
       var fileName = this.getUserNum + "_" + this.articleTitle + ".html";
-      var file = new File([content], fileName, {
-        type: "text/html"
+      this.editorHtmlFile = new File([content], fileName, {
+        type: "text/html",
       });
-      return file;
+
+      return imgFiles;
     },
     exec: function(option) {
       this.editorDocument().execCommand(option, false, true);
@@ -627,44 +646,45 @@ export default {
         this.storeInLocal();
       }, 60000);
     },
-    regist() {
-      let err = true;
-      let msg = "";
-      !this.articleTitle &&
-        ((msg = "제목을 입력해주세요"),
-        (err = false),
-        this.$refs.title.focus());
+   regist() {
+    let err = true;
+    let msg = "";
+    !this.articleTitle &&
+      ((msg = "제목을 입력해주세요"),
+      (err = false),
+      this.$refs.title.focus());
 
-      if (!err) {
-        this.alertMsg = msg;
-        this.alert = true;
-      } else {
-        this.registHandler();
-      }
-    },
-    registHandler() {
-      var contentFile = this.createFileByInnerEditorText();
-      var formData = new FormData();
-      formData.append("files", contentFile);
-      formData.append("files", this.fileInfo);
-      http3
-        .post(`/article/files`, formData)
-        .then(({ data }) => {
-          http
-            .post(`/article`, {
-              thumbnail: data[1],
-              title: this.articleTitle,
-              content: data[0],
-              created_at: new Date(),
-              user_num: this.getUserNum,
-              userNickname: this.getProfile,
-              place: this.place.name,
-              lat: this.place.lat,
-              lng: this.place.lng
-            })
-            .then(({ data }) => {
-              let msg = "등록 처리시 문제가 발생했습니다.";
-              if (data === "success") {
+    if (!err) {
+      this.alertMsg = msg;
+      this.alert = true;
+    }
+    else {
+      this.registHandler();
+    }
+   },
+   registHandler: async function() {
+     var imgFiles = await this.createFileByInnerEditorTextAndReturnImgFileArr();
+     var formData = new FormData();
+     formData.append('files', this.editorHtmlFile);
+     for (const key in imgFiles) {
+       formData.append('files', imgFiles[key]);
+     }
+    http3
+      .post(`/article/files`, formData).then(({ data }) => {
+        http
+          .post(`/article`, {
+            thumbnail : data[1],
+            title: this.articleTitle,
+            content: data[0],
+            created_at: new Date(),
+            user_num: this.getUserNum,
+            userNickname: this.getProfile,
+            place: this.place.name,
+            lat: this.place.lat,
+            lng: this.place.lng
+          }).then(({ data }) => {
+            let msg = "등록 처리시 문제가 발생했습니다.";
+            if (data === "success") {
                 this.registSuccess = true;
                 msg = "등록이 완료되었습니다.";
               }
