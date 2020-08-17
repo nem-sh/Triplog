@@ -33,14 +33,14 @@
       <v-col
         cols="12"
         md="9">
-        <v-dialog v-model="addressDialog" persistent max-width="500">
+        <v-dialog v-model="addressDialog" max-width="300">
         <template v-slot:activator="{ on, attrs }">
           <div>
-            <v-btn small v-bind="attrs" v-on="on" >주소 찾기</v-btn> {{ address.address }}
+            <v-btn small v-bind="attrs" v-on="on" >장소 찾기</v-btn> {{ place.name }}
           </div>
         </template>
-          <vue-daum-postcode @complete="address = $event; addressDialog = false;" />
-      </v-dialog>
+          <FindPlace @childs-event="getPlace" />
+       </v-dialog>
       </v-col>
     </v-row>
     <v-row
@@ -236,12 +236,12 @@
 import http from "@/util/http-common";
 import http3 from "@/util/http-common3";
 import { mapGetters, mapState } from 'vuex';
-import { VueDaumPostcode } from "vue-daum-postcode"
+import FindPlace from "@/components/GoogleMap/FindPlace.vue";
 
 export default {
   name: "ArticleWriteComp",
   components: {
-    VueDaumPostcode,
+    FindPlace
   },
   data() {
     return {
@@ -260,8 +260,12 @@ export default {
       prefix: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
       suffix: '</body></html>',
       showColorPicker: false,
-      address: {},
       addressDialog: false,
+      place: {
+        name: "",
+        lat: 0,
+        lng: 0
+      }
     };
   },
   created() {
@@ -357,7 +361,9 @@ export default {
             created_at: new Date(),
             user_num: this.getUserNum,
             userNickname: this.getProfile,
-            place: this.address.address,
+            place: this.place.name,
+            lat: this.place.lat,
+            lng: this.place.lng
           }).then(({ data }) => {
             let msg = "등록 처리시 문제가 발생했습니다.";
             if (data === "success") {
@@ -397,6 +403,10 @@ export default {
     },
     onClickImageUpload() {
       this.$refs.imageInput.click();
+    },
+    getPlace(place){
+      this.addressDialog = place.addressDialog;
+      this.place = place;
     },
  },
  computed: {

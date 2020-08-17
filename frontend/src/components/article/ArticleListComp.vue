@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-hover v-slot:default="{ hover }">
-      <v-card :class="{ 'on-hover': hover }" width="300px" style="background: white;">
+      <v-card :class="{ 'on-hover': hover }" width="280px" style="background: white;">
         <v-img
           v-if="thumbnail"
           :src="require(`@/assets/articleImage/${thumbnail}`)"
@@ -59,10 +59,10 @@ export default {
   width: 300px;
   height: 300px;
 }
-.v-card:hover {
-  /* filter: drop-shadow(3px 3px 5px rgb(136, 136, 136)); */
-  transition: opacity 0.4s ease-in-out;
-}
+/* .v-card:hover {
+   filter: drop-shadow(3px 3px 5px rgb(136, 136, 136)); 
+   transition: opacity 0.4s ease-in-out; 
+} */
 .v-card--reveal {
   align-items: center;
   bottom: 0;

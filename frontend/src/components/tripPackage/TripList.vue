@@ -1,27 +1,37 @@
 <template>
   <div>
-    <v-row>
-      <v-col>
-        <v-flex xs4 class="elevation-1 pa-3 ma-2">
-          <v-list two-line width="800px">
-            <v-subheader>{{name}}</v-subheader>
-            <draggable v-model="items" :options="{group:'people'}" style="min-height: 10px">
-              <template>
-                <TripPost
-                  v-for="(item, index) in items"
-                  :key="`${index}_items`"
-                  :num="item.num"
-                  :user_num="item.user_num"
-                  :title="item.title"
-                  :thumbnail="item.thumbnail"
-                  :created_at="item.created_at"
-                />
-              </template>
-            </draggable>
-          </v-list>
-        </v-flex>
-      </v-col>
-    </v-row>
+    <v-card width="280px">
+      <v-list two-line>
+        <v-subheader>
+          {{name}}
+          <v-spacer></v-spacer>
+          <v-btn icon v-if="this.num != 0" @click="deleteTrip">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+        </v-subheader>
+        <draggable v-model="items" group="posts" style="min-height: 10px">
+          <template>
+            <TripPost
+              v-for="(item, index) in items"
+              :key="`${index}_items`"
+              :num="item.num"
+              :user_num="item.user_num"
+              :title="item.title"
+              :thumbnail="item.thumbnail"
+              :created_at="item.created_at"
+            />
+          </template>
+        </draggable>
+      </v-list>
+    </v-card>
+
+    <v-snackbar v-model="alert" timeout="5000">
+      <v-icon color="deep-orange darken-3">mdi-home</v-icon>
+      {{alertMsg}}
+      <template v-slot:action="{ attrs }">
+        <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -43,7 +53,9 @@ export default {
   },
   data: function() {
     return {
-      items: []
+      items: [],
+      alert: false,
+      alertMsg: ""
     };
   },
   created() {
@@ -64,19 +76,33 @@ export default {
       for (let index = 0; index < this.items.length; index++) {
         if (this.num == 0) {
           if (this.items[index].trippackage_num != null) {
-            console.log("move!");
-            http
-              .put(`/article/tripPackage/0/${this.items[index].num}`)
+            http.put(`/article/tripPackage/0/${this.items[index].num}`);
           }
         } else {
           if (this.items[index].trippackage_num != this.num) {
-            console.log("move!");
-            http
-              .put(`/article/tripPackage/${this.num}/${this.items[index].num}`)
+            http.put(
+              `/article/tripPackage/${this.num}/${this.items[index].num}`
+            );
           }
         }
       }
     }
+  },
+  methods: {
+    deleteTrip() {
+      if (this.items.length == 0) {
+        http.delete(`/tripPackage/${this.num}`).then(({ data }) => {
+          this.alertMsg = "삭제 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            this.alertMsg = "삭제가 완료되었습니다.";
+            this.alert = true;
+          }
+        });
+      } else {
+        this.alertMsg = "여행을 비워야 삭제가 가능합니다!";
+        this.alert = true;
+      }
+    },
   }
 };
 </script>
