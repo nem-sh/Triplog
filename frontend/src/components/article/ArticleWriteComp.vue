@@ -571,7 +571,7 @@ export default {
     drag: function(idx) {
       this.imgPool.splice(idx, 1);
     },
-    createFileByInnerEditorText:async function() {
+    createFileByInnerEditorText: function() {
       var innerIframe = document.getElementById("editor").contentWindow.document
         .body.innerHTML;
       var content = this.prefix + innerIframe + this.suffix;
