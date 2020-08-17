@@ -480,13 +480,11 @@ import http from "@/util/http-common";
 import http3 from "@/util/http-common3";
 import { mapGetters, mapState } from 'vuex';
 import FindPlace from "@/components/GoogleMap/FindPlace.vue";
-import { VueDaumPostcode } from "vue-daum-postcode";
 
 export default {
   name: "ArticleWriteComp",
   components: {
-    FindPlace
-    VueDaumPostcode
+    FindPlace,
   },
   data() {
     return {
