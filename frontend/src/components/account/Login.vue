@@ -58,7 +58,7 @@
                         </a>
                          </v-col>
                          <v-col cols="1" class="d-sm-none"></v-col>
-                         <v-col cols="1" sm="0"></v-col>
+                         <v-col cols="1" class="d-sm-none"></v-col>
                          <v-col class="d-flex pa-0"  cols="10" sm="5"  style="justify-content:center;">
                         <a  style="width:100%" href="https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile%20openid&access_type=offline&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8080/api/social/google/code&response_type=code&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com"
                         ><v-img :src="require('@/assets/google.png')"  />
