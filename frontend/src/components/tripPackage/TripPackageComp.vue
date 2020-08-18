@@ -64,7 +64,8 @@ export default {
       tripList: [],
       userNum: 0,
       alert: false,
-      alertMsg: ""
+      alertMsg: "",
+      refresh: false,
     };
   },
   created() {
@@ -85,19 +86,22 @@ export default {
         });
       this.alertMsg = "추가가 완료되었습니다.";
       this.alert = true;
+      this.refresh = true;
     },
     deleteTrip() {
       this.alertMsg = "삭제가 완료되었습니다.";
       this.alert = true;
+      this.refresh = true;
     }
   },
   watch: {
-    alert() {
+    refresh() {
       http
         .get(`/tripPackage/${this.$route.params.hostNum}`)
         .then(({ data }) => {
           this.tripList = data;
         });
+      this.refresh = false;
       this.$emit("childs-event", true);
     }
   }
