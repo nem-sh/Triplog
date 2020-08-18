@@ -2,7 +2,7 @@
   <div id="main_wrap">
     <v-row dense>
       <v-col cols="12" md="2" align-self="center">
-        <div style="width:100%; text-align:center" :style="{fontFamily : 'SunFlower'}">제목</div>
+        <div style="width:100%; text-align:center" :style="{fontFamily : 'Nanum Gothic'}">제목</div>
       </v-col>
       <v-col cols="12" md="9">
         <v-text-field v-model="articleTitle" label="제목" id="title" ref="title"></v-text-field>
@@ -10,7 +10,7 @@
     </v-row>
     <v-row dense>
       <v-col cols="12" md="2" align-self="center">
-        <div style="width:100%; text-align:center" :style="{fontFamily : 'SunFlower'}">장소</div>
+        <div style="width:100%; text-align:center" :style="{fontFamily : 'Nanum Gothic'}">장소</div>
       </v-col>
       <v-col
         cols="12"
@@ -18,7 +18,7 @@
         <v-dialog v-model="addressDialog" max-width="300">
         <template v-slot:activator="{ on, attrs }">
           <div>
-            <v-btn small v-bind="attrs" v-on="on" :style="{fontFamily : 'SunFlower'}">장소 찾기</v-btn> {{ place.name }}
+            <v-btn small v-bind="attrs" v-on="on" :style="{fontFamily : 'Nanum Gothic'}">장소 찾기</v-btn> {{ place.name }}
           </div>
         </template>
           <FindPlace @childs-event="getPlace" />
@@ -444,10 +444,10 @@
 
     <v-row>
       <v-col>
-        <v-btn tile outlined @click="temp" :style="{fontFamily : 'SunFlower'}">임시 저장</v-btn>
+        <v-btn tile outlined @click="temp" :style="{fontFamily : 'Nanum Gothic'}">임시 저장</v-btn>
       </v-col>
       <v-col align="right">
-        <v-btn tile outlined @click="regist" :style="{fontFamily : 'SunFlower'}">등록</v-btn>
+        <v-btn tile outlined @click="regist" :style="{fontFamily : 'Nanum Gothic'}">등록</v-btn>
       </v-col>
     </v-row>
     <br />
