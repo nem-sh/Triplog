@@ -34,7 +34,7 @@
             align="center"
             justify="center"
             >
-            <div style="text-align:center;">
+            <div style="text-align:center; font-family: 'Nanum Gothic'">
                 <h1>TRIPLOG는 사용자 친화적인 블로그입니다.</h1>
                 <br>
                 <!-- <v-divider></v-divider> -->
@@ -46,11 +46,11 @@
         align="center"
         justify="center"
         >
-        <h2>많은 좋아요를 받은 게시물들</h2>
+        <h2 style="font-family: 'Nanum Gothic'">많은 좋아요를 받은 게시물들</h2>
         <like-sort-list-comp></like-sort-list-comp>
-        <h2>많은 사람들이 본 게시물들</h2>
+        <h2 style="font-family: 'Nanum Gothic'">많은 사람들이 본 게시물들</h2>
         <view-sort-list-comp></view-sort-list-comp>
-        <h2>많은 댓글이 달린 게시물들</h2>
+        <h2 style="font-family: 'Nanum Gothic'">많은 댓글이 달린 게시물들</h2>
         <comment-sort-list-comp></comment-sort-list-comp>
     </v-container>
 </v-container>
@@ -91,3 +91,6 @@ export default {
     }
 };
 </script>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
+</style>

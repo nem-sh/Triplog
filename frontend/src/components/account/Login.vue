@@ -4,7 +4,7 @@
       
       <v-container class="pa-0">
         <v-container class="pa-0">
-          <v-tabs v-model="tab" show-arrows="mobile" background-color="cyan darken-2" icons-and-text teal grow>
+          <v-tabs v-model="tab" show-arrows="mobile" background-color="teal" color="white" icons-and-text grow>
           <v-tabs-slider></v-tabs-slider>
           <v-tab v-for="i in tabs" :key="i.name">
             <v-icon large>{{i.icon}}</v-icon>
@@ -39,7 +39,7 @@
                       </v-col>
 
                         <v-col class="d-flex" cols="12" align-center>
-                        <v-btn type="submit" x-large block color="cyan darken-4"><p style="color:white; margin-bottom:0px;"> Login</p></v-btn>
+                        <v-btn type="submit" x-large block color="teal"><p style="color:white; margin-bottom:0px;"> Login</p></v-btn>
                       </v-col>
                    
                     </v-row>
