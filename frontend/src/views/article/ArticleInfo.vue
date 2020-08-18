@@ -76,13 +76,18 @@ export default {
     }
   },
   created() {
+    let num = 0;
+    if (this.getUserNum != "") {
+      num = this.getUserNum;
+    }
     http
-      .get(`/article/${this.$route.params.articleNum}/${this.getUserNum}`)
+      .get(`/article/${this.$route.params.articleNum}/${num}`)
       .then(({ data }) => {
         this.item = data;
 
         this.itemLoaded = true;
       });
+
     if (this.getUserNum != "") {
       http
         .get(

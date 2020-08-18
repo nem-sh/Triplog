@@ -217,7 +217,7 @@ export default {
           this.$store
             .dispatch(AUTH_REQUEST_SOCIAL, data)
             .then(() => {
-              this.$router.push(`/`);
+              this.$router.push(`${this.$route.query.state}`);
             })
             .catch(e => {
               alert(e);
