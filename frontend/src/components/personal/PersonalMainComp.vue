@@ -278,25 +278,29 @@ export default {
         });
     },
     addNeighbor() {
-      http
-        .post("/neighbor/", {
-          userNum: this.getUserNum,
-          neighborNum: this.$route.params.hostNum
-        })
-        .then(({ data }) => {
-          let msg = "이웃추가 처리시 문제가 발생했습니다.";
-          if (data === "success") {
-            msg = "이웃추가가 완료되었습니다.";
-          }
-          this.alertMsg = msg;
-          this.alert = true;
-          this.$emit("closeLoginModal", this.alertMsg);
-          this.$router.go(this.$router.currentRoute);
-        })
-        .catch(error => {
-          console.log(error.data);
-        });
-      this.$router.go(this.$router.currentRoute);
+      if (this.getUserNum != "") {
+        http
+          .post("/neighbor/", {
+            userNum: this.getUserNum,
+            neighborNum: this.$route.params.hostNum
+          })
+          .then(({ data }) => {
+            let msg = "이웃추가 처리시 문제가 발생했습니다.";
+            if (data === "success") {
+              msg = "이웃추가가 완료되었습니다.";
+            }
+            this.alertMsg = msg;
+            this.alert = true;
+            this.$emit("closeLoginModal", this.alertMsg);
+            this.$router.go(this.$router.currentRoute);
+          })
+          .catch(error => {
+            console.log(error.data);
+          });
+        this.$router.go(this.$router.currentRoute);
+      } else {
+        alert("먼저 로그인을 진행해주세요");
+      }
     },
     removeNeighbor() {
       http

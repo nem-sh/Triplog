@@ -33,12 +33,12 @@
         v-if="this.getProfile"
       >
         <v-list-item class="px-2 mb-6" style="padding: 10px;">
-          <v-list-item-avatar>
+          <v-list-item-avatar v-if="getUserImg!=null">
             <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
           </v-list-item-avatar>
-          <!-- <v-list-item-avatar :color="ranColor" size="40">
-            <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
-          </v-list-item-avatar>-->
+          <v-list-item-avatar v-else>
+            <v-img :src="require(`@/assets/userImage/profile_init.png`)"></v-img>
+          </v-list-item-avatar>
 
           <v-list-item-title class="font-weight-bold">{{this.getProfile}}님</v-list-item-title>
 
@@ -227,7 +227,7 @@ export default {
       { title: "게시물 목록", icon: "mdi-account-group-outline" }
     ],
     searchtoggle: false,
-    userimg: null,
+    userimg: "profile_init.png",
     hidden: false,
     scrolled: false,
     headerTop: 0
@@ -243,7 +243,7 @@ export default {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
         this.drawer = false;
         const path = "/";
-        if (this.$route.path !== path) this.$router.push(path);
+        // if (this.$route.path !== path) this.$router.push(path);
       });
     },
     info: function() {
@@ -268,10 +268,6 @@ export default {
     },
     handleResize: function() {
       this.clientHeight = document.documentElement.clientHeight;
-    },
-    closeLoginModal: function() {
-      this.loginModalToggle = false;
-      this.$router.push("/");
     },
 
     gitPage: function() {
@@ -306,7 +302,8 @@ export default {
       }
     },
     goLoginPage() {
-      this.$router.push("/login");
+      var para = document.location.href.split("http://localhost:8081");
+      this.$router.push(`/login?redirect=${para[1]}`);
     },
     detectWindowScrollY() {
       this.scrolled = window.scrollY > this.headerTop ? true : false;
@@ -338,6 +335,13 @@ export default {
     }),
     loading: function() {
       return this.authStatus === "loading" && !this.isAuthenticated;
+    },
+    updateUserImg: function() {
+      if (this.getUserImg != "") {
+        return "require(`@/assets/userImage/profile_init.png`)";
+      } else {
+        return "require(`@/assets/userImage/" + this.getUserImg + "`)";
+      }
     }
   },
   mounted() {
@@ -362,7 +366,7 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     if (this.getUserImg == "null") {
       this.userimg = "profile_init.png";
     } else {

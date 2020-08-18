@@ -59,7 +59,7 @@ public class ArticleController {
 		if (article.getViews() == null) {
 			article.setViews((long) 0);
 		}
-		if (article.getUser_num() != usernum) {
+		if (article.getUser_num() != usernum && usernum != 0) {
 			
 			article.setViews(article.getViews()+1);
 			
