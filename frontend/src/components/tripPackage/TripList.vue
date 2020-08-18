@@ -95,14 +95,23 @@ export default {
           this.alertMsg = "삭제 처리시 문제가 발생했습니다.";
           if (data === "success") {
             this.alertMsg = "삭제가 완료되었습니다.";
-            this.alert = true;
+            // this.alert = true;
           }
         });
       } else {
-        this.alertMsg = "여행을 비워야 삭제가 가능합니다!";
-        this.alert = true;
+        for (let index = 0; index < this.items.length; index++) {
+          http.put(`/article/tripPackage/0/${this.items[index].num}`);
+        }
+        http.delete(`/tripPackage/${this.num}`).then(({ data }) => {
+          this.alertMsg = "삭제 처리시 문제가 발생했습니다.";
+          if (data === "success") {
+            this.alertMsg = "삭제가 완료되었습니다.";
+            // this.alert = true;
+          }
+        });
       }
-    },
+      this.$emit('childs-event', true);
+    }
   }
 };
 </script>

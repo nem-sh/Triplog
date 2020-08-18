@@ -4,19 +4,19 @@
       <v-card flat tile width="100%" class="lighten-1 text-center">
         <v-card-text>
           <v-btn class="mx-4" icon @click="info">
-            <v-icon size="24px">mdi-account</v-icon>
+            <v-icon color="teal" size="24px">mdi-account</v-icon>
           </v-btn>
           <v-btn class="mx-4" icon @click="$router.push('/like')">
-            <v-icon size="24px">mdi-charity</v-icon>
+            <v-icon color="teal" size="24px">mdi-charity</v-icon>
           </v-btn>
           <v-btn class="mx-4" icon @click="moveBlog">
-            <v-icon size="24px">mdi-blogger</v-icon>
+            <v-icon color="teal" size="24px">mdi-blogger</v-icon>
           </v-btn>
           <v-btn class="mx-4" icon @click="goWrite">
-            <v-icon size="24px">mdi-file-edit</v-icon>
+            <v-icon color="teal" size="24px">mdi-file-edit</v-icon>
           </v-btn>
           <v-btn class="mx-4" icon @click="logout" v-if="getUserNum !=''">
-            <v-icon size="24px">fas fa-unlock</v-icon>
+            <v-icon color="teal" size="24px">fas fa-unlock</v-icon>
           </v-btn>
         </v-card-text>
 
@@ -26,75 +26,72 @@
     <div>
       <v-navigation-drawer
         class="d-none d-sm-flex"
-        :mini-variant.sync="mini"
         clipped
         app
         permanent
         v-if="this.getProfile"
+        expand-on-hover
+        floating
+        color="teal"
       >
         <v-list-item class="px-2 mb-6" style="padding: 10px;">
-          <v-list-item-avatar v-if="getUserImg!=null">
+          <v-list-item-avatar>
             <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
           </v-list-item-avatar>
-          <v-list-item-avatar v-else>
-            <v-img :src="require(`@/assets/userImage/profile_init.png`)"></v-img>
-          </v-list-item-avatar>
 
-          <v-list-item-title class="font-weight-bold">{{this.getProfile}}님</v-list-item-title>
-
-          <v-btn icon @click.stop="mini = !mini">
-            <v-icon color="teal">mdi-arrow-left-drop-circle-outline</v-icon>
-          </v-btn>
+          <v-list-item-title class="white--text" style="font-size: 25px; font-family: 'Poor Story'">{{this.getProfile}}님</v-list-item-title>
         </v-list-item>
+        <v-divider color="white"></v-divider>
 
         <v-list>
           <v-list-item to="/" @click.stop class="mb-5">
             <v-list-item-icon>
-              <v-icon color="green">mdi-home-city</v-icon>
+              <v-icon color="white">mdi-home-city</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title class="font-weight-bold teal--text">Home</v-list-item-title>
+              <v-list-item-title style="font-size: 20px; font-family: 'Sunflower'"
+               class="white--text">Home</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-list-item @click.stop="info" class="mb-5">
             <v-list-item-icon>
-              <v-icon color="indigo">mdi-account</v-icon>
+              <v-icon color="white">mdi-account</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title class="font-weight-bold teal--text">My Account</v-list-item-title>
+              <v-list-item-title style="font-size: 20px; font-family: 'Sunflower'" class="white--text">My Account</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-list-item to="/like" @click.stop class="mb-5">
             <v-list-item-icon>
-              <v-icon color="pink">mdi-charity</v-icon>
+              <v-icon color="white">mdi-charity</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title class="font-weight-bold teal--text">좋아요 목록</v-list-item-title>
+              <v-list-item-title style="font-size: 20px; font-family: 'Sunflower'" class="white--text">Like</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-list-item class="mb-5" @click.stop="moveBlog">
             <v-list-item-icon>
-              <v-icon color="green darken-4">mdi-blogger</v-icon>
+              <v-icon color="white">mdi-blogger</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title class="font-weight-bold teal--text">My Blog</v-list-item-title>
+              <v-list-item-title style="font-size: 20px; font-family: 'Sunflower'" class="white--text">My Blog</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-list-item class="mb-5" @click.stop="goWrite">
             <v-list-item-icon>
-              <v-icon color="green darken-4">mdi-file-edit</v-icon>
+              <v-icon color="white">mdi-file-edit</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title class="font-weight-bold teal--text">Posting</v-list-item-title>
+              <v-list-item-title style="font-size: 20px; font-family: 'Sunflower'" class="white--text">Posting</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -103,49 +100,44 @@
 
             <v-list-item-content>
               <div class="pa-2">
-                <v-btn @click.stop="logout" class="teal lighten-1 white--text">LOGOUT</v-btn>
+                <v-btn @click.stop="logout" class="white teal--text" style=" font-family: 'Poor Story'; font-weight: bold">LOGOUT</v-btn>
               </div>
             </v-list-item-content>
-          </v-list-item>
-
-          <v-list-item>
-            <v-btn icon v-if="mini">
-              <v-icon color="teal">mdi-arrow-right-drop-circle</v-icon>
-            </v-btn>
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
 
-      <v-app-bar app dense color="cyan darken-2" dark clipped-left>
-        <v-toolbar-title style="font-size: 40px;" @click="$router.push('/')" class="cursor">
+      <v-app-bar app dense clipped-left>
+          <v-toolbar-title style="font-size: 56px; font-family: 'Poor Story'" @click="$router.push('/')" class="cursor ml-10 teal--text">
           TRIPLOG
-          <v-icon color="teal lighten-4">mdi-compass-outline</v-icon>
         </v-toolbar-title>
+        <!-- <v-icon color="teal darken-2">mdi-compass-outline</v-icon> -->
         <v-spacer></v-spacer>
 
         <v-form action="/article/ArticleSearch">
           <v-expand-transition style="display: flex;">
             <v-text-field
-              label="Search"
-              background-color="cyan darken-1"
-              color="white"
+              placeholder="Search"
+              background-color="white"
+              color="teal"
               outlined
+              single-line
               v-show="searchtoggle"
               class="mt-6 shrink"
-              rounded
               dense
               clearable
               name="keyword"
+              style="font-size: 20px; font-family: 'Poor Story'"
             />
           </v-expand-transition>
         </v-form>
 
-        <v-btn x-large icon @click="searchtoggle = !searchtoggle">
-          <v-icon>mdi-text-search</v-icon>
+        <v-btn x-large icon @click="searchtoggle = !searchtoggle" v-if="(isAuthenticated && isProfileLoaded)">
+          <v-icon color="teal">mdi-text-search</v-icon>
         </v-btn>
 
         <v-btn @click="goLoginPage()" v-if="!(isAuthenticated && isProfileLoaded)" icon>
-          <v-icon>mdi-account-arrow-right</v-icon>
+          <v-icon color="teal">mdi-account-arrow-right</v-icon>
         </v-btn>
       </v-app-bar>
     </div>
@@ -157,39 +149,39 @@
       </v-container>
     </v-main>
 
-    <v-snackbar v-model="loginSuccess" timeout="5000">
-      <v-icon color="deep-orange darken-3">mdi-home</v-icon>
+    <v-snackbar shaped color="teal" elevation="24" v-model="loginSuccess" timeout="5000">
+      <v-icon color="white">mdi-home</v-icon>
       {{ getProfile + "님 반갑습니다." }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="red" text v-bind="attrs" @click="loginSuccess = false">Close</v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="loginSuccess = false">Close</v-btn>
       </template>
     </v-snackbar>
 
-    <v-snackbar v-model="logoutSuccess" timeout="5000">
-      <v-icon color="deep-orange darken-3">mdi-home</v-icon>정상적으로 로그아웃 되었습니다.
+    <v-snackbar shaped color="teal" elevation="24" v-model="logoutSuccess" timeout="5000">
+      정상적으로 로그아웃 되었습니다.
       <template v-slot:action="{ attrs }">
-        <v-btn color="red" text v-bind="attrs" @click="logoutSuccess = false">Close</v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="logoutSuccess = false">Close</v-btn>
       </template>
     </v-snackbar>
 
-    <v-snackbar v-model="alert" timeout="5000">
-      <v-icon color="deep-orange darken-3">mdi-home</v-icon>
+    <v-snackbar shaped color="teal" elevation="24" v-model="alert" timeout="5000">
+      <v-icon color="white">mdi-home</v-icon>
       {{alertMsg}}
       <template v-slot:action="{ attrs }">
-        <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="alert = false">Close</v-btn>
       </template>
     </v-snackbar>
 
     <div style="position: fixed; right: 20px; bottom: 20px;" class="d-none d-sm-flex">
       <v-fab-transition>
-        <v-btn v-show="hidden" color="cyan darken-2" fab dark @click="$vuetify.goTo(0, 0);">
+        <v-btn v-show="hidden" color="teal" fab dark @click="$vuetify.goTo(0, 0);">
           <v-icon>mdi-chevron-up</v-icon>
         </v-btn>
       </v-fab-transition>
     </div>
     <div style="position: fixed; right: 20px; bottom: 80px;" class="d-sm-none d-flex">
       <v-fab-transition>
-        <v-btn v-show="hidden" color="cyan darken-2" small fab dark @click="$vuetify.goTo(0, 0);">
+        <v-btn v-show="hidden" color="teal" small fab dark @click="$vuetify.goTo(0, 0);">
           <v-icon>mdi-chevron-up</v-icon>
         </v-btn>
       </v-fab-transition>
@@ -219,7 +211,6 @@ export default {
     items: ["제목", "작성자"],
     titleSearch: "",
     title: "UnTitled",
-    mini: true,
     navitems: [
       { title: "Home", icon: "mdi-home-city" },
       { title: "My Account", icon: "mdi-account" },
@@ -335,13 +326,6 @@ export default {
     }),
     loading: function() {
       return this.authStatus === "loading" && !this.isAuthenticated;
-    },
-    updateUserImg: function() {
-      if (this.getUserImg != "") {
-        return "require(`@/assets/userImage/profile_init.png`)";
-      } else {
-        return "require(`@/assets/userImage/" + this.getUserImg + "`)";
-      }
     }
   },
   mounted() {
@@ -359,23 +343,23 @@ export default {
   },
   watch: {
     getProfile: function() {
+      if (this.getUserImg != null) {
+        this.userimg = this.getUserImg;
+      } else {
+        this.userimg = "profile_init.png";
+      }
       if (this.getProfile == "") {
         this.logoutSuccess = true;
       } else {
         this.loginSuccess = true;
       }
     }
-  },
-  mounted() {
-    if (this.getUserImg == "null") {
-      this.userimg = "profile_init.png";
-    } else {
-      this.userimg = this.getUserImg;
-    }
   }
 };
 </script>
 <style  scoped>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
+
 .cursor:hover {
   cursor: pointer;
 }
