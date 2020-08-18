@@ -74,7 +74,7 @@
     <input ref="imageInput" type="file" accept="image/*" hidden @change="onChangeImages" />
 
     <br />
-    <v-sheet elevation="3" outlined>
+    <v-sheet elevation="3" outlined >
       <v-sheet class="ma-1">
         <v-row>
           <v-col>
