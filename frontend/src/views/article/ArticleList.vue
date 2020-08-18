@@ -123,14 +123,7 @@ export default {
     http.get(`/tripPackage/${this.$route.params.hostNum}`).then(({ data }) => {
       this.tripList = data;
     });
-    http
-      .get(`/blog/visit/${this.$route.params.hostNum}`)
-      .then(({ data }) => {
-        this.visitCount = data.visitcount;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    
   },
   methods: {
     infiniteHandler($state) {
