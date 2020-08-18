@@ -18,7 +18,7 @@
           </v-list>
         </v-row>
       </v-card>
-      <v-app id="inspire" style="min-width: 900px">
+      <v-app id="inspire" style="max-width: 900px">
         <v-container fluid>
           <v-row>
             <v-col cols="12">
@@ -30,6 +30,7 @@
                   :num="item.num"
                   :userNum="item.userNum"
                   :name="item.name"
+                  @childs-event="deleteTrip"
                 />
               </v-row>
             </v-col>
@@ -63,7 +64,7 @@ export default {
       tripList: [],
       userNum: 0,
       alert: false,
-      alertMsg: "",
+      alertMsg: ""
     };
   },
   created() {
@@ -84,6 +85,20 @@ export default {
         });
       this.alertMsg = "추가가 완료되었습니다.";
       this.alert = true;
+    },
+    deleteTrip() {
+      this.alertMsg = "삭제가 완료되었습니다.";
+      this.alert = true;
+    }
+  },
+  watch: {
+    alert() {
+      http
+        .get(`/tripPackage/${this.$route.params.hostNum}`)
+        .then(({ data }) => {
+          this.tripList = data;
+        });
+      this.$emit("childs-event", true);
     }
   }
 };

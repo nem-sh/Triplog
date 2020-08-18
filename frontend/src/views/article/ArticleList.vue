@@ -25,6 +25,23 @@
       </v-tab>
       <v-tab-item>
         <v-app id="inspire" style="max-width: 900px">
+          <v-card>
+            <GoogleMapLoader
+              class="travel-map"
+              :mapConfig="mapConfig"
+              apiKey="AIzaSyC3JEsAuKanTHq2XVnX2uWx9y-0bFEp9iY"
+            >
+              <template slot-scope="{ google, map }">
+                <GoogleMapMarker
+                  v-for="marker in markers"
+                  :key="marker.id"
+                  :marker="marker"
+                  :google="google"
+                  :map="map"
+                />
+              </template>
+            </GoogleMapLoader>
+          </v-card>
           <v-container fluid>
             <v-row>
               <v-col cols="12">
@@ -57,7 +74,7 @@
             <v-row>
               <v-col cols="12">
                 <v-row align="stretch" justify="space-around">
-                  <TripPackageComp />
+                  <TripPackageComp @childs-event="reTripList" />
                 </v-row>
               </v-col>
             </v-row>
@@ -76,6 +93,9 @@ import { mapGetters, mapState } from "vuex";
 import PersonalMainComp from "@/components/personal/PersonalMainComp.vue";
 import TripPackageComp from "@/components/tripPackage/TripPackageComp.vue";
 import Category from "@/components/tripPackage/Category.vue";
+import GoogleMapLoader from "@/components/GoogleMap/GoogleMapLoader.vue";
+import GoogleMapMarker from "@/components/GoogleMap/GoogleMapMarker.vue";
+import { mapSettings } from "@/constants/mapSettings";
 // import Axios from 'axios';
 
 export default {
@@ -85,7 +105,9 @@ export default {
     InfiniteLoading,
     PersonalMainComp,
     TripPackageComp,
-    Category
+    Category,
+    GoogleMapLoader,
+    GoogleMapMarker
   },
   data: function() {
     return {
@@ -94,7 +116,10 @@ export default {
       item: {},
       isMyBlog: false,
       tripList: [],
-      visitCount: 0
+      visitCount: 0,
+      markers: [],
+      mapCenter: { lat: 0, lng: 0 },
+      zoom: 0
     };
   },
   created() {
@@ -122,6 +147,35 @@ export default {
     });
     http.get(`/tripPackage/${this.$route.params.hostNum}`).then(({ data }) => {
       this.tripList = data;
+      for (let index = 0; index < this.tripList.length; index++) {
+        http
+          .get(`/article/tripPackage/${this.tripList[index].num}`)
+          .then(({ data }) => {
+            var items = data;
+            var y = new Array(items.length);
+            var x = new Array(items.length);
+
+            for (let i = 0; i < items.length; i++) {
+              y[i] = items[i].lat;
+              x[i] = items[i].lng;
+            }
+
+            var x1 = Math.min.apply(null, x);
+            var x2 = Math.max.apply(null, x);
+            var y1 = Math.min.apply(null, y);
+            var y2 = Math.max.apply(null, y);
+
+            var marker = {
+              id: this.tripList[index].name,
+              position: {
+                lat: parseInt(y1 + (y2 - y1) / 2),
+                lng: parseInt(x1 + (x2 - x1) / 2)
+              }
+            };
+            this.markers.push(marker);
+          });
+      }
+      this.zoom = 0;
     });
     http
       .get(`/blog/visit/${this.$route.params.hostNum}`)
@@ -159,21 +213,38 @@ export default {
     },
     updateProfile: function() {
       this.$emit("update-profile");
+    },
+    reTripList() {
+      http
+        .get(`/tripPackage/${this.$route.params.hostNum}`)
+        .then(({ data }) => {
+          this.tripList = data;
+        });
     }
   },
   computed: {
     ...mapGetters(["getUserNum"]),
     ...mapState({
       userNum: state => `${state.user.getUserNum}`
-    })
+    }),
+    mapConfig() {
+      return {
+        ...mapSettings,
+        center: this.mapCenter,
+        zoom: this.zoom
+      };
+    }
   },
   watch: {
     getUserNum: function() {
       this.$router.go(this.$router.currentRoute);
-    },
+    }
   }
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.travel-map {
+  height: 400px;
+}
 </style>
