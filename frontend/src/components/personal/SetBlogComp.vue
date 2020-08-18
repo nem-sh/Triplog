@@ -143,7 +143,7 @@ export default {
   methods: {
     getBlogInfo() {
       http
-        .get(`/blog/${this.getUserNum}`)
+        .get(`/blog/${this.$route.params.hostNum}`)
         .then(response => {
           this.visitCount = response.data.visitcount;
           this.titleColor = response.data.title.slice(0, 9);

@@ -53,14 +53,14 @@
                        <v-row>
                          <v-col cols="1"></v-col>
                       <v-col class="d-flex pa-0" cols="10" sm="5"  style="justify-content:center; ">
-                        <a style="width:100%" href='https://kauth.kakao.com/oauth/authorize?client_id=4b566a63a487519e52bcd20aec5f9326&redirect_uri=http://localhost:8080/api/social/kakao/code&response_type=code'>
+                        <a style="width:100%" :href="kakaoUrl">
                             <v-img :src="require('@/assets/kakao.png')"  />
                         </a>
                          </v-col>
                          <v-col cols="1" class="d-sm-none"></v-col>
                          <v-col cols="1" class="d-sm-none"></v-col>
                          <v-col class="d-flex pa-0"  cols="10" sm="5"  style="justify-content:center;">
-                        <a  style="width:100%" href="https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile%20openid&access_type=offline&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8080/api/social/google/code&response_type=code&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com"
+                        <a  style="width:100%" :href="googleUrl"
                         ><v-img :src="require('@/assets/google.png')"  />
                         </a>
                      
@@ -214,6 +214,8 @@ export default {
       alert: false,
       alertMsg: "",
       password_confirm: "",
+      kakaoUrl:`https://kauth.kakao.com/oauth/authorize?client_id=4b566a63a487519e52bcd20aec5f9326&redirect_uri=http://i3b207.p.ssafy.io:8080/api/social/kakao/code&response_type=code&state=${this.$route.query.redirect}`,
+      googleUrl:`https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile%20openid&access_type=offline&include_granted_scopes=true&state=${this.$route.query.redirect}&redirect_uri=http://localhost:8080/api/social/google/code&response_type=code&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com`
     };
   },
  
@@ -228,8 +230,8 @@ export default {
           this.email = "";
           this.password = "";
           this.nowlogin = !this.nowlogin
-          
-            this.$router.push(`/`)
+          console.log(this.$route.query.redirect)
+          this.$router.push(`${this.$route.query.redirect}`)
             
         })
         .catch((e) => {

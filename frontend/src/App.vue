@@ -36,9 +36,6 @@
           <v-list-item-avatar>
             <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
           </v-list-item-avatar>
-          <!-- <v-list-item-avatar :color="ranColor" size="40">
-            <span class="white--text headline">{{avatarName(this.getProfile)}}</span>
-          </v-list-item-avatar>-->
 
           <v-list-item-title class="font-weight-bold">{{this.getProfile}}님</v-list-item-title>
 
@@ -227,7 +224,7 @@ export default {
       { title: "게시물 목록", icon: "mdi-account-group-outline" }
     ],
     searchtoggle: false,
-    userimg: null,
+    userimg: "profile_init.png",
     hidden: false,
     scrolled: false,
     headerTop: 0
@@ -243,7 +240,7 @@ export default {
       this.$store.dispatch(AUTH_LOGOUT).then(() => {
         this.drawer = false;
         const path = "/";
-        if (this.$route.path !== path) this.$router.push(path);
+        // if (this.$route.path !== path) this.$router.push(path);
       });
     },
     info: function() {
@@ -268,10 +265,6 @@ export default {
     },
     handleResize: function() {
       this.clientHeight = document.documentElement.clientHeight;
-    },
-    closeLoginModal: function() {
-      this.loginModalToggle = false;
-      this.$router.push("/");
     },
 
     gitPage: function() {
@@ -306,7 +299,8 @@ export default {
       }
     },
     goLoginPage() {
-      this.$router.push("/login");
+      var para = document.location.href.split("http://localhost:8081");
+      this.$router.push(`/login?redirect=${para[1]}`);
     },
     detectWindowScrollY() {
       this.scrolled = window.scrollY > this.headerTop ? true : false;
@@ -355,18 +349,16 @@ export default {
   },
   watch: {
     getProfile: function() {
+      if (this.getUserImg != null) {
+        this.userimg = this.getUserImg;
+      } else {
+        this.userimg = "profile_init.png";
+      }
       if (this.getProfile == "") {
         this.logoutSuccess = true;
       } else {
         this.loginSuccess = true;
       }
-    }
-  },
-  created() {
-    if (this.getUserImg == "null") {
-      this.userimg = "profile_init.png";
-    } else {
-      this.userimg = this.getUserImg;
     }
   }
 };

@@ -371,47 +371,51 @@ export default {
         .catch(() => {});
     },
     likeBtnClick: function() {
-      this.likeBtnFlag = true;
-      if (this.isLoginedUserLikeThisArticleprop) {
-        this.likeCount--;
-      } else {
-        this.likeCount++;
-      }
-      this.isLoginedUserLikeThisArticleprop = !this
-        .isLoginedUserLikeThisArticleprop;
+      if (this.getUserNum != "") {
+        this.likeBtnFlag = true;
+        if (this.isLoginedUserLikeThisArticleprop) {
+          this.likeCount--;
+        } else {
+          this.likeCount++;
+        }
+        this.isLoginedUserLikeThisArticleprop = !this
+          .isLoginedUserLikeThisArticleprop;
 
-      http
-        .put(
-          `/article/${this.articleNum}/${this.getUserNum}/${this.isLoginedUserLikeThisArticleprop}`,
-          {
-            num: this.articleNum,
-            user_num: this.articleUserNum,
-            trippackage_num: this.articleTripPackageNum,
-            title: this.articleTitle,
-            place: this.articlePlace,
-            content: this.articleContent,
-            thumbnail: this.articleThumbnail,
-            temp: this.articleTemp,
-            created_at: this.articleCreatedAt,
-            date_start: this.articleDateStart,
-            date_end: this.articleDateEnd,
-            likeCount: this.likeCount,
-            viws: this.articleViews
-          }
-        )
-        .then(({ data }) => {
-          let msg = "수정 처리시 문제가 발생했습니다.";
-          if (data === "success") {
-            msg = "수정이 완료되었습니다.";
-          }
-          this.alertMsg = msg;
-          this.alert = true;
-          this.likeBtnFlag = false;
-        })
-        .catch(() => {
-          this.alertMsg = "수정 처리시 에러가 발생했습니다.";
-          this.alert = true;
-        });
+        http
+          .put(
+            `/article/${this.articleNum}/${this.getUserNum}/${this.isLoginedUserLikeThisArticleprop}`,
+            {
+              num: this.articleNum,
+              user_num: this.articleUserNum,
+              trippackage_num: this.articleTripPackageNum,
+              title: this.articleTitle,
+              place: this.articlePlace,
+              content: this.articleContent,
+              thumbnail: this.articleThumbnail,
+              temp: this.articleTemp,
+              created_at: this.articleCreatedAt,
+              date_start: this.articleDateStart,
+              date_end: this.articleDateEnd,
+              likeCount: this.likeCount,
+              viws: this.articleViews
+            }
+          )
+          .then(({ data }) => {
+            let msg = "수정 처리시 문제가 발생했습니다.";
+            if (data === "success") {
+              msg = "수정이 완료되었습니다.";
+            }
+            this.alertMsg = msg;
+            this.alert = true;
+            this.likeBtnFlag = false;
+          })
+          .catch(() => {
+            this.alertMsg = "수정 처리시 에러가 발생했습니다.";
+            this.alert = true;
+          });
+      } else {
+        alert("먼저 로그인을 진행해주세요");
+      }
     }
   },
   computed: {
