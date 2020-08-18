@@ -33,11 +33,8 @@
         v-if="this.getProfile"
       >
         <v-list-item class="px-2 mb-6" style="padding: 10px;">
-          <v-list-item-avatar v-if="getUserImg!=null">
+          <v-list-item-avatar>
             <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
-          </v-list-item-avatar>
-          <v-list-item-avatar v-else>
-            <v-img :src="require(`@/assets/userImage/profile_init.png`)"></v-img>
           </v-list-item-avatar>
 
           <v-list-item-title class="font-weight-bold">{{this.getProfile}}님</v-list-item-title>
@@ -335,13 +332,6 @@ export default {
     }),
     loading: function() {
       return this.authStatus === "loading" && !this.isAuthenticated;
-    },
-    updateUserImg: function() {
-      if (this.getUserImg != "") {
-        return "require(`@/assets/userImage/profile_init.png`)";
-      } else {
-        return "require(`@/assets/userImage/" + this.getUserImg + "`)";
-      }
     }
   },
   mounted() {
@@ -359,18 +349,16 @@ export default {
   },
   watch: {
     getProfile: function() {
+      if (this.getUserImg != null) {
+        this.userimg = this.getUserImg;
+      } else {
+        this.userimg = "profile_init.png";
+      }
       if (this.getProfile == "") {
         this.logoutSuccess = true;
       } else {
         this.loginSuccess = true;
       }
-    }
-  },
-  mounted() {
-    if (this.getUserImg == "null") {
-      this.userimg = "profile_init.png";
-    } else {
-      this.userimg = this.getUserImg;
     }
   }
 };
