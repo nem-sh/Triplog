@@ -63,7 +63,6 @@
               <v-btn small type="button" @click="onClickImageUpload">프로필 이미지 변경</v-btn>
             </div>
           </v-col>
-          
         </v-row>
 
         <v-row>
@@ -120,8 +119,7 @@
             <p>{{getFormatDate(joinedAt)}}</p>
           </v-col>
         </v-row>
-        
-         
+
         <v-row>
           <v-col>
             <v-btn @click="modify" class="cyan darken-3 white--text">수정</v-btn>
@@ -166,6 +164,8 @@ import http3 from "@/util/http-common3";
 import moment from "moment";
 import { AUTH_LOGOUT } from "@/store/actions/auth";
 
+import { USER_UPDATE } from "@/store/actions/user";
+
 export default {
   name: "userInfoComp",
   props: {
@@ -193,11 +193,11 @@ export default {
       fileInfo: null,
       firstImage: true,
       commentList: [],
-      mediaList:[],
+      mediaList: []
     };
   },
-  created () {
-    
+  created() {
+    this.$store.dispatch(USER_UPDATE, this.getEmail).then(() => {});
   },
   computed: {
     computeEmail() {
@@ -265,7 +265,7 @@ export default {
         this.alert = true;
       } else this.modifyHandler();
     },
-    modifyHandler() {
+    modifyHandler: function() {
       if (this.fileInfo != null) {
         console.log("asdasd");
         var formData = new FormData();
@@ -284,10 +284,10 @@ export default {
                 let msg = "수정 처리시 문제가 발생했습니다.";
                 if (data === "success") {
                   msg = "수정이 완료되었습니다.";
+                  this.$router.go();
                 }
                 this.alertMsg = msg;
                 this.alert = true;
-                this.$emit("closeUserInfoModal", this.alertMsg, this.nickName);
               })
               .catch(e => {
                 if (e.request.status === 404) {
@@ -321,10 +321,10 @@ export default {
             let msg = "수정 처리시 문제가 발생했습니다.";
             if (data === "success") {
               msg = "수정이 완료되었습니다.";
+              this.$store.dispatch(USER_UPDATE, this.getEmail).then(() => {});
             }
             this.alertMsg = msg;
             this.alert = true;
-            this.$emit("closeUserInfoModal", this.alertMsg, this.nickName);
           })
           .catch(e => {
             if (e.request.status === 404) {
@@ -364,9 +364,7 @@ export default {
     },
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT);
-    },
-    
-  
+    }
   }
 };
 </script>

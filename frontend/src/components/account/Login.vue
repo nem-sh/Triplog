@@ -230,7 +230,6 @@ export default {
           this.email = "";
           this.password = "";
           this.nowlogin = !this.nowlogin
-          console.log(this.$route.query.redirect)
           this.$router.push(`${this.$route.query.redirect}`)
             
         })
