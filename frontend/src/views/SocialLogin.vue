@@ -103,7 +103,6 @@
 // import http from "@/util/http-common";
 
 import localHttp from "@/util/http-common-local";
-
 import { AUTH_REQUEST_SOCIAL } from "@/store/actions/auth";
 export default {
   name: "SocialLogin",
