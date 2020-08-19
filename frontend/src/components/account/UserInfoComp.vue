@@ -353,9 +353,9 @@ export default {
           let msg = "탈퇴가 완료되었습니다.";
           this.alertMsg = msg;
           this.alert = true;
-          this.logout();
           this.dialog = false;
-          this.$emit("closeUserInfoModal", this.alertMsg);
+          this.logout();
+          this.$router.push(`/`);
         })
         .catch(e => {
           if (e.request.status === 404) {
@@ -372,8 +372,8 @@ export default {
     },
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT);
-    }
-  }
+    },
+  },
 };
 </script>
 
