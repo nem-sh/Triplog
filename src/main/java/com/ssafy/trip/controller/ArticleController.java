@@ -102,8 +102,8 @@ public class ArticleController {
 			}
 			workspacePath = newPath;
 		}
-		String contentBaseDir = workspacePath + "\\frontend\\public\\content\\registered\\";
-		String imgPublicBaseDir = workspacePath + "\\frontend\\public\\articleImage\\";
+		String contentBaseDir = workspacePath + "/frontend/public/content/registered/";
+		String imgPublicBaseDir = workspacePath + "/frontend/public/articleImage/";
 		List<String> result = new LinkedList<String>();
 
 		for (MultipartFile file : files) {
