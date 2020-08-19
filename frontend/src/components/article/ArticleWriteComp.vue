@@ -55,14 +55,13 @@
       <v-sheet class="mx-auto" max-width="1000">
         <v-slide-group multiple show-arrows="mobile">
           <v-slide-item v-for="(item, index) in imgPool" :key="index">
-            <v-card class="ma-4" width="200">
-              <img
-                :src="returnImageURL(item)"
-                @dragend="drag(index)"
-                draggable="true"
-                width="200"
-                height="300"
-              />
+            <v-card class="ma-4" width="200" :id="index">
+                <img
+                  :src="returnImageURL(item)"
+                  width="200"
+                  height="300"
+                  @dragend="dragEnd"
+                />
             </v-card>
           </v-slide-item>
         </v-slide-group>
@@ -561,8 +560,10 @@ export default {
     }
   },
   methods: {
-    drag: function(idx) {
-      this.imgPool.splice(idx, 1);
+    dragEnd: function(event) {
+      if(event.dataTransfer.dropEffect == "copy") {
+        this.imgPool.splice(event.target.parentElement.getAttribute("id"), 1);
+      }
     },
     createFileByInnerEditorTextAndReturnImgFileArr: async function() {
       var innerIframe = document.getElementById("editor").contentWindow.document
@@ -582,6 +583,11 @@ export default {
         });
         imgTags[key].src = "../../content/img/" + newFile.name;
         imgFiles.push(newFile);
+      }
+
+      var imgWrappers = parsedDoc.getElementsByClassName("resizable");
+      for (key = 0; key < imgWrappers.length; key++) {
+        imgWrappers[key].style.resize = "none";
       }
 
       content = parsedDoc.documentElement.innerHTML;
