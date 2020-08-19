@@ -375,11 +375,6 @@ export default {
   },
   watch: {
     getProfile: function() {
-      if (this.getUserImg != null) {
-        this.userimg = this.getUserImg;
-      } else {
-        this.userimg = "profile_init.png";
-      }
       if (this.getProfile == "") {
         this.logoutSuccess = true;
       } else {

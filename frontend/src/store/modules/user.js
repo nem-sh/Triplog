@@ -1,4 +1,4 @@
-import { USER_REQUEST, USER_ERROR, USER_SUCCESS } from "../actions/user";
+import { USER_REQUEST, USER_ERROR, USER_SUCCESS, USER_UPDATE } from "../actions/user";
 import apiCall2 from "../../util/api2";
 import Vue from "vue";
 import { AUTH_LOGOUT } from "../actions/auth";
@@ -32,6 +32,15 @@ const actions = {
       .catch(() => {
         commit(USER_ERROR);
         dispatch(AUTH_LOGOUT);
+      });
+  },
+  [USER_UPDATE]: ({ commit }, resp) => {
+    apiCall2(resp)
+      .then(resp => {
+        commit(USER_SUCCESS, resp);
+      })
+      .catch(() => {
+        commit(USER_ERROR);
       });
   }
 };
