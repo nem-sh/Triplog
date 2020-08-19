@@ -293,7 +293,7 @@ export default {
       }
     },
     goLoginPage() {
-      var para = document.location.href.split("http://localhost:8081");
+      var para = document.location.href.split("http://i3b207.p.ssafy.io");
       this.$router.push(`/login?redirect=${para[1]}`);
     },
     detectWindowScrollY() {
