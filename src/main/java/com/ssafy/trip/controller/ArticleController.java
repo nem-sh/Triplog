@@ -334,48 +334,54 @@ public class ArticleController {
 
 		return ResponseEntity.ok(SUCCESS);
 	}
-
 	@GetMapping("/commentsort")
-	public ArrayList<Optional<Article>> getCommentsortedListArticle() {
+	public List<Article> getCommentsortedListArticle() {
 		List<Long> commentLength = new ArrayList<>();
 		List<Long> articleNumList = new ArrayList<>();
-
+		
 		List<Article> list = articleRepository.findAll();
 		for (long i = 0; i < list.size(); i++) {
-			articleNumList.add(i);
+			articleNumList.add(list.get((int) i).getNum());
 		}
-		for (long i = 0; i < list.size(); i++) {
-			Long articlenum = list.get((int) i).getNum();
-			List<Comment> commentList = commentRepository.findByArticlenumAndReplyOrderByCreatedat(articlenum, null);
-			commentLength.add((long) commentList.size());
+		
+		List<Long> comment = new ArrayList<>();
+		for (long i=0; i<articleNumList.size();i++) {
+			
+			commentLength.add((long) commentRepository.findByArticlenum(articleNumList.get((int) i)).size());
+			
 		}
-		int size = commentLength.size();
-		for (long i = (size - 1); i > 0; i--) {
-			for (long j = 0; j < i; j++) {
-
-				if (commentLength.get((int) j) < commentLength.get((int) (j + 1))) {
-
-					long temp = commentLength.get((int) j);
-					commentLength.set((int) j, commentLength.get((int) (j + 1)));
-					commentLength.set((int) (j + 1), temp);
-
-					long temp2 = articleNumList.get((int) j);
-					articleNumList.set((int) j, articleNumList.get((int) (j + 1)));
-					articleNumList.set((int) (j + 1), temp2);
+		
+		for (long i = 0; i < list.size()-1; i++) {
+			for (long j = 1; j < list.size() - i; j++) {
+				if (commentLength.get((int) j-1) < commentLength.get((int) j)) {
+					
+					long tmp = commentLength.get((int) (j-1));
+					commentLength.set((int) (j-1), commentLength.get((int) j));
+					commentLength.set((int)j, tmp);
+					
+					long tmp2 = articleNumList.get((int) j-1);
+					articleNumList.set((int) (j-1),articleNumList.get((int) j));
+					articleNumList.set((int) j, tmp2);
 				}
-
 			}
-
+			
 		}
-
-		ArrayList<Optional<Article>> commentSort = new ArrayList<Optional<Article>>();
+		List<Article> commentSort = new ArrayList<>();
 		for (long i = 0; i < 4; i++) {
-			Optional<Article> article = articleRepository.findByNum(articleNumList.get((int) i) + 1);
+			Article article = articleRepository.findByNumAndNumNotNull(articleNumList.get((int) i));
+				
 
 			commentSort.add(article);
-
 		}
+		
 
 		return commentSort;
 	}
+	@GetMapping("/recentSort")
+	public List<Article> recentArticle(){
+		List<Article> recent = articleRepository.findTop4ByOrderByNumDesc();
+		
+		return recent;
+	}
+
 }

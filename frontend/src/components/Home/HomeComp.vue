@@ -52,6 +52,9 @@
         <view-sort-list-comp></view-sort-list-comp>
         <h2>많은 댓글이 달린 게시물들</h2>
         <comment-sort-list-comp></comment-sort-list-comp>
+        <h2>최근 쓰여진 게시물들</h2>
+        <recent-sort-list-comp></recent-sort-list-comp>
+
     </v-container>
 </v-container>
 </template>
@@ -60,13 +63,14 @@
 import LikeSortListComp from "@/components/Home/LikeSortListComp.vue";
 import ViewSortListComp from "@/components/Home/ViewSortListComp.vue";
 import CommentSortListComp from "@/components/Home/CommentSortListComp.vue";
-
+import RecentSortListComp from "@/components/Home/RecentSortListComp.vue"
 export default {
     name: "HomeComp",
     components: {
         LikeSortListComp,
         ViewSortListComp,
         CommentSortListComp,
+        RecentSortListComp,
     },
     data () {
         return {
