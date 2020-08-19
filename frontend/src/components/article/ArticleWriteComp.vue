@@ -433,7 +433,7 @@
     <v-sheet height="500">
       <iframe
         id="editor"
-        src="../editor.html"
+        :src="editorSrc"
         frameborder="0"
         scrolling="auto"
         style="width:100%; height:100%"
@@ -493,9 +493,63 @@ export default {
       fileInfo: "",
       polling: null,
       dialog: false,
-      editorHtmlPath: "./assets/editor/editor.html",
       prefix: '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" /><title>Editor</title></head><body>',
       suffix: '</body></html>',
+      tempPrefix: '<html>\
+    <head>\
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />\
+        <title>Editor</title>\
+        <script type="text/javascript">\
+\
+            window.onload = function() {\
+                if (document.body && document.body.contentEditable != undefined && window.ActiveXObject) {\
+                    document.body.contentEditable = "true";\
+                } else {\
+                    document.designMode = "on";\
+                }\
+\
+                const config = { attributes: false, childList: true, subtree: true };\
+\
+                const callback = function(mutationsList, observer) {\
+                    for(let mutation of mutationsList) {\
+                        if (mutation.type === "childList") {\
+                            if((mutation.addedNodes.length > 0) && (mutation.addedNodes[0].tagName == "IMG")) {\
+                                var imgNode = mutation.addedNodes[0];\
+                                var parent = imgNode.parentElement;\
+                                var newDiv = document.createElement("div");\
+                                newDiv.setAttribute("class", "resizable");\
+                                newDiv.setAttribute("contentEditable", "false");\
+                                newDiv.setAttribute("draggable", "true");\
+                                var newImgNode = document.createElement("img");\
+                                newImgNode.setAttribute("src", imgNode.src);\
+                                newImgNode.setAttribute("style", "width:100%; height:100%");\
+                                newImgNode.setAttribute("draggable", "false");\
+                                newDiv.appendChild(newImgNode);\
+                                if(parent == null) {\
+                                    imgNode.remove();\
+                                    mutation.previousSibling.appendChild(newDiv);\
+                                    newDiv.remove();\
+                                }\
+                                else {\
+                                    parent.replaceChild(newDiv, imgNode);\
+                                }\
+                            }\
+                        }\
+                    }\
+                };\
+\
+                const observer = new MutationObserver(callback);\
+\
+                observer.observe(document, config);\
+            }\
+    </sc', 
+      tempPrefix2 : 'ript>\
+        <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap"\
+        rel="stylesheet">\
+    </head>\
+    <body id="editorBody">',
+      editorSrc: "../editor.html",
       addressDialog: false,
       place: {
         name: "",
@@ -577,7 +631,12 @@ export default {
       for (key = 0; key < imgTags.length; key++) {
         var imgSrc = imgTags[key].src;
         let blob = await fetch(imgSrc).then(r => r.blob());
-        var imgFileName = imgSrc.split('/').reverse()[0] + "." + blob.type.split('/').reverse()[0];
+        var imgFileName;
+        if(imgSrc.split('/').reverse()[0].split('.').length > 1) {
+          imgFileName = imgSrc.split('/').reverse()[0];
+        }else{
+          imgFileName = imgSrc.split('/').reverse()[0] + "." + blob.type.split('/').reverse()[0];
+        }
         var newFile = new File([blob], imgFileName, {
           type: blob.type,
         });
@@ -588,6 +647,34 @@ export default {
       var imgWrappers = parsedDoc.getElementsByClassName("resizable");
       for (key = 0; key < imgWrappers.length; key++) {
         imgWrappers[key].style.resize = "none";
+      }
+
+      content = parsedDoc.documentElement.innerHTML;
+      var fileName = this.getUserNum + "_" + this.articleTitle + ".html";
+      this.editorHtmlFile = new File([content], fileName, {
+        type: "text/html",
+      });
+
+      return imgFiles;
+    },
+    createTempFileByInnerEditorTextAndReturnImgFileArr: async function() {
+      var innerIframe = document.getElementById("editor").contentWindow.document
+        .body.innerHTML;
+      var content = this.tempPrefix + this.tempPrefix2 + innerIframe + this.suffix;
+
+      var parsedDoc = new DOMParser().parseFromString(content, 'text/html');
+      var imgTags = parsedDoc.getElementsByTagName('img');
+      var imgFiles = [];
+      var key;
+      for (key = 0; key < imgTags.length; key++) {
+        var imgSrc = imgTags[key].src;
+        let blob = await fetch(imgSrc).then(r => r.blob());
+        var imgFileName = imgSrc.split('/').reverse()[0] + "." + blob.type.split('/').reverse()[0];
+        var newFile = new File([blob], imgFileName, {
+          type: blob.type,
+        });
+        imgTags[key].src = "../../articleImage/" + newFile.name;
+        imgFiles.push(newFile);
       }
 
       content = parsedDoc.documentElement.innerHTML;
@@ -616,12 +703,10 @@ export default {
     },
     storeClean() {
       window.localStorage.removeItem("isSaved");
-      window.localStorage.removeItem("textval");
-      window.localStorage.removeItem("articleTitle");
+      window.localStorage.removeItem("tempHtmlFileName");
     },
     loadData() {
-      this.articleContent = window.localStorage.getItem("textval");
-      this.articleTitle = window.localStorage.getItem("articleTitle");
+      this.editorSrc = "../../content/temp/" + window.localStorage.getItem("tempHtmlFileName");
       this.dialog = false;
     },
     confirmLoadData() {
@@ -630,20 +715,35 @@ export default {
     storeInLocal() {
       if (window.localStorage && (this.articleContent || this.articleTitle)) {
         window.localStorage.setItem("isSaved", "true");
-        window.localStorage.setItem("textval", this.articleContent);
-        window.localStorage.setItem("articleTitle", this.articleTitle);
+        this.tempRegistHandler();
       } else if (!window.localStorage) {
         console.log("Error" + ": Your browser not support");
       }
     },
     temp() {
       this.storeInLocal();
-      this.$router.push(`/article/list/${this.getUserNum}`);
     },
-    start: function() {
-      this.polling = setInterval(() => {
-        this.storeInLocal();
-      }, 60000);
+    tempRegistHandler: async function() {
+     var imgFiles = await this.createTempFileByInnerEditorTextAndReturnImgFileArr();
+     var formData = new FormData();
+     formData.append('files', this.editorHtmlFile);
+     for (const key in imgFiles) {
+       formData.append('files', imgFiles[key]);
+     }
+    http3
+      .post(`/article/tempFiles`, formData).then(({ data }) => {
+        window.localStorage.setItem("tempHtmlFileName", data[0]);
+        this.$router.push(`/article/list/${this.getUserNum}`);
+        })
+        .catch(e => {
+          if (e.request.status === 404) {
+            this.alertMsg = "등록 처리시 에러가 발생했습니다.";
+            this.alert = true;
+          } else {
+            this.$router.push(`/apierror/${e.request.status}/`);
+          }
+          console.log(e.request.status);
+        });
     },
    regist() {
     let err = true;
@@ -691,7 +791,7 @@ export default {
               this.alert = true;
               this.registSuccess = true;
               // clearInterval(this.polling);
-              // this.storeClean();
+              this.storeClean();
               this.$router.push(`/article/list/${this.getUserNum}`);
             })
             .catch(e => {
