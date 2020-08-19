@@ -348,6 +348,7 @@ export default {
           this.logout();
           this.dialog = false;
           this.$emit("closeUserInfoModal", this.alertMsg);
+          this.$router.push("/");
         })
         .catch(e => {
           if (e.request.status === 404) {
