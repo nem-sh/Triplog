@@ -267,6 +267,7 @@ export default {
         const path = "/";
         // if (this.$route.path !== path) this.$router.push(path);
       });
+      this.$router.push("/");
     },
     info: function() {
       this.$router.push(`/userSetting/${this.getUserNum}`);

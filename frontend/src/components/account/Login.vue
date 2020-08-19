@@ -230,8 +230,7 @@ export default {
           this.email = "";
           this.password = "";
           this.nowlogin = !this.nowlogin
-          console.log(this.$route.query.redirect)
-          this.$router.push(`${this.$route.query.redirect}`)
+          this.$router.push("/");
             
         })
         .catch((e) => {
@@ -242,7 +241,6 @@ export default {
             this.$emit("closeLoginModal");
             this.$router.push(`/apierror/${e.request.status}/`)
           }
-          console.log(e.request.status)
           
         });
     },
