@@ -147,6 +147,63 @@ public class ArticleController {
 
 		return ResponseEntity.ok(result);
 	}
+	
+	@PostMapping("/tempFiles")
+	public ResponseEntity<List<String>> uploadTempFiles(@RequestPart List<MultipartFile> files) throws Exception {
+		String workspacePath = System.getProperty("user.dir");
+		String[] pathSplited = workspacePath.split("/");
+		if (pathSplited[pathSplited.length - 1].equals("target")) {
+			String newPath = pathSplited[0];
+			for (int i = 1; i < pathSplited.length - 1; i++) {
+				newPath += "/" + pathSplited[i];
+			}
+			workspacePath = newPath;
+		}
+		String contentBaseDir = workspacePath + "/frontend/public/content/temp/";
+		String imgPublicBaseDir = workspacePath + "/frontend/public/articleImage/";
+		List<String> result = new LinkedList<String>();
+
+		for (MultipartFile file : files) {
+			String originalFileName = file.getOriginalFilename();
+
+			String[] splited = originalFileName.split("\\.");
+			String realName = splited[0];
+			String extension = splited[splited.length - 1];
+			String baseDir;
+			if (extension.equals("html")) {
+				baseDir = contentBaseDir;
+				String newName = realName + "." + extension;
+				File dest = new File(baseDir + newName);
+
+				int index = 0;
+				while (dest.exists()) {
+					index++;
+					newName = realName + "(" + index + ")." + extension;
+					dest = new File(baseDir + newName);
+				}
+				System.out.println(baseDir + newName);
+				file.transferTo(dest);
+				result.add(newName);
+			} else {
+				baseDir = imgPublicBaseDir;
+				String newName = realName + "." + extension;
+				File dest = new File(baseDir + newName);
+
+				int index = 0;
+				while (dest.exists()) {
+					index++;
+					newName = realName + "(" + index + ")." + extension;
+					dest = new File(baseDir + newName);
+				}
+
+				file.transferTo(dest);
+				result.add(newName);
+			}
+
+		}
+
+		return ResponseEntity.ok(result);
+	}
 
 	@GetMapping("/getList/{hostNum}")
 	public List<Article> findArticlesByHostNum(@PathVariable(value = "hostNum") Long hostNum) {
