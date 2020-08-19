@@ -39,7 +39,10 @@
             <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
           </v-list-item-avatar>
 
-          <v-list-item-title class="white--text" style="font-size: 25px; font-family: 'Poor Story'">{{this.getProfile}}님</v-list-item-title>
+          <v-list-item-title
+            class="white--text"
+            style="font-size: 25px; font-family: 'Poor Story'"
+          >{{this.getProfile}}님</v-list-item-title>
         </v-list-item>
         <v-divider color="white"></v-divider>
 
@@ -50,8 +53,10 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title style="font-size: 20px; font-family: 'Sunflower'"
-               class="white--text">Home</v-list-item-title>
+              <v-list-item-title
+                style="font-size: 20px; font-family: 'Sunflower'"
+                class="white--text"
+              >Home</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -61,7 +66,10 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title style="font-size: 20px; font-family: 'Sunflower'" class="white--text">My Account</v-list-item-title>
+              <v-list-item-title
+                style="font-size: 20px; font-family: 'Sunflower'"
+                class="white--text"
+              >My Account</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -71,7 +79,10 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title style="font-size: 20px; font-family: 'Sunflower'" class="white--text">Like</v-list-item-title>
+              <v-list-item-title
+                style="font-size: 20px; font-family: 'Sunflower'"
+                class="white--text"
+              >Like</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -81,7 +92,10 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title style="font-size: 20px; font-family: 'Sunflower'" class="white--text">My Blog</v-list-item-title>
+              <v-list-item-title
+                style="font-size: 20px; font-family: 'Sunflower'"
+                class="white--text"
+              >My Blog</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -91,7 +105,10 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title style="font-size: 20px; font-family: 'Sunflower'" class="white--text">Posting</v-list-item-title>
+              <v-list-item-title
+                style="font-size: 20px; font-family: 'Sunflower'"
+                class="white--text"
+              >Posting</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -100,7 +117,11 @@
 
             <v-list-item-content>
               <div class="pa-2">
-                <v-btn @click.stop="logout" class="white teal--text" style=" font-family: 'Poor Story'; font-weight: bold">LOGOUT</v-btn>
+                <v-btn
+                  @click.stop="logout"
+                  class="white teal--text"
+                  style=" font-family: 'Poor Story'; font-weight: bold"
+                >LOGOUT</v-btn>
               </div>
             </v-list-item-content>
           </v-list-item>
@@ -108,9 +129,11 @@
       </v-navigation-drawer>
 
       <v-app-bar app dense clipped-left>
-          <v-toolbar-title style="font-size: 56px; font-family: 'Poor Story'" @click="$router.push('/')" class="cursor ml-10 teal--text">
-          TRIPLOG
-        </v-toolbar-title>
+        <v-toolbar-title
+          style="font-size: 56px; font-family: 'Poor Story'"
+          @click="$router.push('/')"
+          class="cursor ml-10 teal--text"
+        >TRIPLOG</v-toolbar-title>
         <!-- <v-icon color="teal darken-2">mdi-compass-outline</v-icon> -->
         <v-spacer></v-spacer>
 
@@ -132,7 +155,12 @@
           </v-expand-transition>
         </v-form>
 
-        <v-btn x-large icon @click="searchtoggle = !searchtoggle" v-if="(isAuthenticated && isProfileLoaded)">
+        <v-btn
+          x-large
+          icon
+          @click="searchtoggle = !searchtoggle"
+          v-if="(isAuthenticated && isProfileLoaded)"
+        >
           <v-icon color="teal">mdi-text-search</v-icon>
         </v-btn>
 
@@ -353,6 +381,20 @@ export default {
       } else {
         this.loginSuccess = true;
       }
+    },
+    getUserImg: function() {
+      if (this.getUserImg != "null" && this.getUserImg != null) {
+        this.userimg = this.getUserImg;
+      } else {
+        this.userimg = "profile_init.png";
+      }
+    }
+  },
+  created() {
+    if (this.getUserImg != "null" && this.getUserImg != null) {
+      this.userimg = this.getUserImg;
+    } else {
+      this.userimg = "profile_init.png";
     }
   }
 };
