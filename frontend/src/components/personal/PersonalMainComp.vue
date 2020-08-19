@@ -7,7 +7,7 @@
         style="position: relative; z-index: 1; width: 900px;height: 375px; border-radius: 10px;"
         alt
       />
-      <v-container style=" opacity:1; position: relative; z-index: 2;    top: -325px;">
+      <v-container style="height: 100%; opacity:1; position: relative; z-index: 2;    top: -325px;">
         <v-row style="height: 100%; width: 100%;  margin :0;">
           <v-col
             cols="3"
@@ -78,87 +78,8 @@
           >{{title}}</h1>
         </v-row>
       </v-container>
-    </div>
-    <div class="mx-auto bg-sm d-none d-sm-block d-md-none">
-      <v-img
-        :src="`../../blogImage/${titleimg}`"
-        style="position: relative; z-index: 1; width: 500px;height: 375px; border-radius: 10px;"
-        alt
-      />
-      <v-container style="height: 100%; opacity:1; position: relative; z-index: 2;    top: -375px;">
-        <v-row style="height: 100%; width: 100%;  margin :0;">
-          <v-col
-            cols="5"
-            style="height : 100%; back; background-color: rgba( 255, 255, 255, 0.85 ); border-radius:10px;"
-          >
-            <v-hover v-slot:default="{ hover }">
-              <div class="mx-auto" width="100%" height="100%">
-                <v-img
-                  v-if="hostImg"
-                  :aspect-ratio="10/10"
-                  :src="`../../userImage/${hostImg}`"
-                  style="align-items:flex-end; display : flex;"
-                >
-                  <div
-                    v-if="hover & isMyBlog"
-                    class="black white--text"
-                    style="height : 50px; opacity: 0.5; text-align: center; line-height: 50px; cursor:pointer;"
-                    @click="updateProfile"
-                  >프로필 수정</div>
-                </v-img>
-                <v-img
-                  v-else
-                  :aspect-ratio="10/10"
-                  :src="`../../blogImage/profile_init.png`"
-                  style="align-items:flex-end; display : flex;"
-                >
-                  <div
-                    v-if="hover & isMyBlog"
-                    class="black white--text"
-                    style="height : 50px; opacity: 0.5; text-align: center; line-height: 50px; cursor:pointer;"
-                    @click="updateProfile"
-                  >프로필 수정</div>
-                </v-img>
-                <v-card-text class="pt-6" style="position: relative;">
-                  <h3 class="orange--text mb-2">{{hostNickName}}</h3>
-                  <!-- <div class="font-weight-light mb-2">{{hostEmail}}</div> -->
-                  <div v-if="hostIntro" class="font-weight-light mb-2">{{hostIntro}}</div>
-                  <br v-else />
-                </v-card-text>
-              </div>
-            </v-hover>
-          </v-col>
-          <v-col>
-            <div style="height:80%;">
-              <div v-if="isMyBlog" class="font-weight-light mb-2">
-                <v-btn small @click="getNeighborList">팔로우 목록</v-btn>
-              </div>
-              <div v-else class="font-weight-light mb-2">
-                <v-btn small v-if="isMyNeighbor" @click="removeNeighbor">팔로우 해제</v-btn>
-                <v-btn small v-else @click="addNeighbor">팔로우 추가</v-btn>
-              </div>
-              <v-card v-if="showNeighborList" width="100px">
-                <v-simple-table>
-                  <tbody>
-                    <NeighborListComp
-                      v-for="(neighbor, index) in neighbors"
-                      :key="`${index}_neighbors`"
-                      :userNum="neighbor.userNum"
-                      :neighborNum="neighbor.neighborNum"
-                      :neighborNickname="neighbor.neighborNickname"
-                    />
-                  </tbody>
-                </v-simple-table>
-              </v-card>
-            </div>
-            <h3
-              style=" display:flex; justify-content:flex-end; align-items:flex-end;"
-              :style="getColor"
-            >{{title}}</h3>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
+    </v-container>
+    
     <div class="mx-auto bg d-block d-sm-none">
       <v-img
         :src="`../../blogImage/${titleimg}`"
@@ -217,7 +138,6 @@
         </v-container>
       </v-container>
     </div>
-    <!-- </v-container> -->
   </v-container>
 </template>
 
@@ -331,13 +251,13 @@ export default {
   },
   computed: {
     getImg: function() {
-      return `@/assets/blogImage/${this.titleimg}`;
+      return `../../blogImage/${this.titleimg}`;
     },
     getUserImg: function() {
       if (this.hostImg == null) {
-        return `@/assets/userImage/${this.titleimg}`;
+        return `../../userImage/${this.titleimg}`;
       } else {
-        return `@/assets/userImage/${this.hostImg}`;
+        return `../../userImage/${this.hostImg}`;
       }
     },
     getColor: function() {

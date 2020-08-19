@@ -94,7 +94,7 @@ public class ArticleController {
 	@PostMapping("/files")
 	   public ResponseEntity<List<String>> uploadFiles(@RequestPart List<MultipartFile> files) throws Exception {
 	      String contentBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\content\\registered\\";
-	      String imgPublicBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\articleImg\\";
+	      String imgPublicBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\articleImage\\";
 	      List<String> result = new LinkedList<String>();
 
 	      for (MultipartFile file : files) {

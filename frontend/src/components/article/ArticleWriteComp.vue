@@ -581,7 +581,7 @@ export default {
         var newFile = new File([blob], imgFileName, {
           type: blob.type,
         });
-        imgTags[key].src = "../../content/img/" + newFile.name;
+        imgTags[key].src = "../../articleImage/" + newFile.name;
         imgFiles.push(newFile);
       }
 
