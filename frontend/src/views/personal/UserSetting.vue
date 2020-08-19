@@ -89,8 +89,7 @@ export default {
   methods: {
     deleteChatbotCard: function(num) {
       http.delete(`chatbot/${num}`)
-      .then(({data})=>{
-        console.log(data)
+      .then(()=>{
         this.$router.go(this.$router.currentRoute);
       })
     }
