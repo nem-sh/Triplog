@@ -1,62 +1,50 @@
 <template>
-  <v-container>
+  <v-container class="pa-0" style="min-width:0px ; ">
+    <v-container class="pb-0" style="justify-content:flex-end; display:flex;">
+      <v-list-item-avatar>
+        <v-img :src="require(`@/assets/userImage/${hostImg}`)"></v-img>
+      </v-list-item-avatar>
+
+      <p
+        class="mt-2"
+        style=" font-size: 25px; font-family: 'Poor Story'"
+      >{{this.hostNickName}}' Blog</p>
+    </v-container>
+    <v-container class="pt-0 pb-0">
+      <hr style="border: solid 1.5px; color: aliceblue;" />
+    </v-container>
     <!-- <v-container class="border pa-0" style> -->
-    <v-container class="d-none d-sm-block" style="height:350px">
+    <v-container style="height:350px">
       <v-img
         :src="require(`@/assets/blogImage/${titleimg}`)"
-        style="position: relative; z-index: 1; width: 852px; height: 325px; opacity:0.7;"
+        style="position: relative; z-index: 1; width: 852px; height: 325px; opacity:0.5;"
         alt
       />
-      <v-container style=" opacity:1; position: relative; z-index: 2;    top: -325px;">
+      <v-container
+        style=" opacity:1; position: relative; z-index: 2;   height: 325px; top: -325px; display:flex;  flex-direction:column; justify-content:space-between;"
+      >
         <v-row style="height: 100%; width: 100%;  margin :0;">
-          <v-col
-            cols="3"
-            style="height : 100%; back; background-color: rgba( 255, 255, 255, 0.85 ); border-radius: 10px; "
-          >
-            <v-hover v-slot:default="{ hover }">
-              <div class="mx-auto" width="100%" height="100%">
-                <v-img
-                  v-if="hostImg"
-                  :aspect-ratio="10/10"
-                  :src="require(`@/assets/userImage/${hostImg}`)"
-                  style="align-items:flex-end; display : flex;"
-                >
-                  <div
-                    v-if="hover & isMyBlog"
-                    class="black white--text"
-                    style="height : 50px; opacity: 0.5; text-align: center; line-height: 50px; cursor:pointer;"
-                    @click="updateProfile"
-                  >프로필 수정</div>
-                </v-img>
-                <v-img
-                  v-else
-                  :aspect-ratio="10/10"
-                  :src="require(`@/assets/blogImage/profile_init.png`)"
-                  style="align-items:flex-end; display : flex;"
-                >
-                  <div
-                    v-if="hover & isMyBlog"
-                    class="black white--text"
-                    style="height : 50px; opacity: 0.5; text-align: center; line-height: 50px; cursor:pointer;"
-                    @click="updateProfile"
-                  >프로필 수정</div>
-                </v-img>
-                <v-card-text class="pt-6" style="position: relative;">
-                  <h3 class="orange--text mb-2">{{hostNickName}}</h3>
-                  <!-- <div class="font-weight-light mb-2">{{hostEmail}}</div> -->
-                  <div v-if="hostIntro" class="font-weight-light mb-2">{{hostIntro}}</div>
-                  <br v-else />
-                </v-card-text>
-              </div>
-            </v-hover>
-          </v-col>
           <v-col>
             <div v-if="isMyBlog" class="font-weight-light mb-2">
-              <v-btn small @click="getNeighborList">팔로우 목록</v-btn>
+              <v-btn class="mx-4" fab small dark color="teal" @click="getNeighborList">
+                <v-icon color="white" size="24px">mdi-account-multiple</v-icon>
+              </v-btn>
             </div>
             <div v-else class="font-weight-light mb-2">
-              <v-btn small v-if="isMyNeighbor" @click="removeNeighbor">팔로우 해제</v-btn>
-              <v-btn small v-else @click="addNeighbor">팔로우 추가</v-btn>
+              <v-btn
+                class="mx-4"
+                fab
+                small
+                dark
+                color="teal"
+                v-if="isMyNeighbor"
+                @click="removeNeighbor"
+              >
+                <v-icon color="white" size="24px">mdi-account-multiple-minus</v-icon>
+              </v-btn>
+              <v-btn class="mx-4" fab small dark color="teal" v-else @click="addNeighbor">
+                <v-icon color="white" size="24px">mdi-account-multiple-plus</v-icon>
+              </v-btn>
             </div>
             <v-card v-if="showNeighborList" width="100px">
               <v-simple-table>
@@ -72,72 +60,22 @@
               </v-simple-table>
             </v-card>
           </v-col>
-          <h1
-            style="height : 100%; display:flex; justify-content:flex-end; align-items:flex-end;"
-            :style="getColor"
-          >{{title}}</h1>
+        </v-row>
+        <v-row>
+          <v-col>
+            <h1
+              class="pa-3"
+              style="display:flex; justify-content:center; align-items:flex-end;"
+              :style="getColor"
+            >{{title}}</h1>
+            <h5
+              style="margin-bottom : 30px; display:flex; justify-content:center; align-items:flex-end;"
+            >{{hostIntro}}</h5>
+          </v-col>
         </v-row>
       </v-container>
     </v-container>
 
-    <div class="mx-auto bg d-block d-sm-none">
-      <v-img
-        :src="require(`@/assets/blogImage/${titleimg}`)"
-        style="position: relative; z-index: 1; width: 300px;height: 325px; border-radius: 10px;"
-        alt
-      />
-      <v-container style=" opacity:1; position: relative; z-index: 2;    top: -325px;">
-        <v-row style="height:200px;">
-          <v-col>
-            <div v-if="isMyBlog" class="font-weight-light mb-2">
-              <v-btn small @click="getNeighborList">팔로우 목록</v-btn>
-            </div>
-            <div v-else class="font-weight-light mb-2">
-              <v-btn small v-if="isMyNeighbor" @click="removeNeighbor">팔로우 해제</v-btn>
-              <v-btn small v-else @click="addNeighbor">팔로우 추가</v-btn>
-            </div>
-            <v-card v-if="showNeighborList" width="100px">
-              <v-simple-table>
-                <tbody>
-                  <NeighborListComp
-                    v-for="(neighbor, index) in neighbors"
-                    :key="`${index}_neighbors`"
-                    :userNum="neighbor.userNum"
-                    :neighborNum="neighbor.neighborNum"
-                    :neighborNickname="neighbor.neighborNickname"
-                  />
-                </tbody>
-              </v-simple-table>
-            </v-card>
-          </v-col>
-          <h3
-            style="height : 100%; display:flex; justify-content:flex-end; align-items:flex-end;"
-            :style="getColor"
-          >{{title}}</h3>
-        </v-row>
-        <v-container>
-          <div
-            style="height:80px;  background-color: rgba( 255, 255, 255, 0.85 ); border-radius:10px;"
-          >
-            <v-row>
-              <v-col cols="3">
-                <v-list-item-avatar class="ml-1" style="cursor:pointer">
-                  <v-img v-if="hostImg" :src="require(`@/assets/userImage/${hostImg}`)"></v-img>
-                </v-list-item-avatar>
-              </v-col>
-              <v-col cols="9">
-                <v-row>
-                  <v-col class="pa-0">
-                    <h3 v-html="hostNickName" style="cursor:pointer"></h3>
-                  </v-col>
-                </v-row>
-                <h5 v-html="hostIntro"></h5>
-              </v-col>
-            </v-row>
-          </div>
-        </v-container>
-      </v-container>
-    </div>
     <!-- </v-container> -->
   </v-container>
 </template>
@@ -262,7 +200,7 @@ export default {
       }
     },
     getColor: function() {
-      return `margin-bottom: 20px; margin-right: 20px; color : ${this.titleColor};`;
+      return `color : ${this.titleColor};`;
     },
     ...mapGetters(["isAuthenticated", "isProfileLoaded", "getUserNum"]),
     ...mapState({
@@ -295,8 +233,7 @@ export default {
 
 <style>
 .border {
-  border-style: groove;
-  border-color: rgb(247, 243, 243);
+  color: aliceblue;
 }
 .bg::after {
   width: 100%;
