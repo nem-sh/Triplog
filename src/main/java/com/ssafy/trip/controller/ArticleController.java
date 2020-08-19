@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -115,7 +114,7 @@ public class ArticleController {
 	               newName = realName + "(" + index + ")." + extension;
 	               dest = new File(baseDir + newName);
 	            }
-	            
+	            System.out.println(baseDir + newName);
 	            file.transferTo(dest);
 	            result.add(newName);
 	         } else {
