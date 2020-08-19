@@ -48,7 +48,7 @@ public class AuthSocialController {
 	@GetMapping("/kakao/code")
 	public ModelAndView kakaoLogin(@RequestParam("code") String code , @RequestParam("state") String state) {
 
-	    String url = "http://i3b207.p.ssafy.io:8081/login/social/kakao/?code=" + code + "&state=" + state;
+	    String url = "http://i3b207.p.ssafy.io/login/social/kakao/?code=" + code + "&state=" + state;
 	    return new ModelAndView("redirect:" + url);
 	}
 	@GetMapping("/google/code")
@@ -56,7 +56,7 @@ public class AuthSocialController {
 	    
 
 
-	    String url = "http://i3b207.p.ssafy.io:8081/login/social/google/?code=" + code + "&state=" + state;
+	    String url = "http://i3b207.p.ssafy.io/login/social/google/?code=" + code + "&state=" + state;
 	    return new ModelAndView("redirect:" + url);
 	}
     @GetMapping("/google/login")

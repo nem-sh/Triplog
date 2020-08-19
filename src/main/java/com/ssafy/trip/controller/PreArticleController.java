@@ -45,69 +45,76 @@ public class PreArticleController {
 	@Autowired
 	private UserRepository userRepository;
 
+	private int status = 1;
+	private String tmp = "";
 	@RequestMapping(value = "/kakao", method = { RequestMethod.POST, RequestMethod.GET }, headers = {
 			"Accept=application/json" })
 	public HashMap<String, Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request,
 			HttpServletResponse response, PreArticle preArticle) {
-
+		
 		HashMap<String, Object> resultJson = new HashMap<>();
-
+		
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			String jsonInString = mapper.writeValueAsString(params);
 
 			/* 발화 처리 부분 * */
 			HashMap<String, Object> userRequest = (HashMap<String, Object>) params.get("userRequest");
-			List<HashMap<String, Object>> outputs = new ArrayList<>();
-			HashMap<String, Object> template = new HashMap<>();
-			HashMap<String, Object> simpleText = new HashMap<>();
-			HashMap<String, Object> text = new HashMap<>();
+			
+			
 
 			String utter = userRequest.get("utterance").toString().replace("\n", "");
 
 			String media = "";
 
+			List<HashMap<String, Object>> outputs = new ArrayList<>();
+			HashMap<String, Object> template = new HashMap<>();
+			HashMap<String, Object> simpleText = new HashMap<>();
+			HashMap<String, Object> text = new HashMap<>();
 			
 			HashMap<String, Object> user = (HashMap<String, Object>) userRequest.get("user");
-
+			
 			String userId = user.get("id").toString();
 			Boolean existId = userRepository.existsByChatbotid(userId);
-			if(existId) {
-				if ((utter.length() > 4) && (utter.substring(0, 4).equals("http"))) {
-
-					media = utter;
-					preArticle.setMedia(media);
-					text.put("text", "미디어가 저장 되었습니다");
-				} else {
-
+			
+			if(existId) { // 있는 id면
+				// 사진(미디어)가 들어올 차례라면
+				if ((utter.length() > 4) && (utter.substring(0, 4).equals("http")) && status==1) {
+//					미디어(사진) 들어왔을때 (status == 1)
+					tmp = utter;
+					status += 1;
+					text.put("text","미디어가 등록되었습니다");
+					
+				} else if(status == 2){
+					
+					preArticle.setMedia(tmp);
 					preArticle.setComment(utter);
-					text.put("text", utter + " 이(가) 저장되었습니다");
+					
+					MemberUser member = userRepository.findByChatbotid(userId);
+//					유저정보
+					preArticle.setUsernum(member.getNum());
+
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					Calendar cal = Calendar.getInstance();
+					String today = null;
+					today = formatter.format(cal.getTime());
+					Timestamp ts = Timestamp.valueOf(today);
+//						날짜정보
+					preArticle.setDate(ts);
+
+					preArticleRepository.save(preArticle);
+					status = 1;
+					text.put("text"," 저장되었습니다.");
+				}else {
+					text.put("text", "사진이후 코멘트를 입력해야합니다.");
 				}
-				
-				MemberUser member = userRepository.findByChatbotid(userId);
-//				유저정보
-				preArticle.setUsernum(member.getNum());
-
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-				Calendar cal = Calendar.getInstance();
-				String today = null;
-				today = formatter.format(cal.getTime());
-				Timestamp ts = Timestamp.valueOf(today);
-//					날짜정보
-				preArticle.setDate(ts);
-
-				preArticleRepository.save(preArticle);
-
+		
 			}else {
-				text.put("text","등록되지 않은 사용자입니다.");
+				text.put("text","등록되지 않은 사용자니다.");
 			}
 			
-			/* 발화 처리 끝 */
-
-//            String CompleteMsg = "저장돼었습니다";
-
-//            text.put("text",CompleteMsg);
-
+			
+			
 			simpleText.put("simpleText", text);
 			outputs.add(simpleText);
 			template.put("outputs", outputs);
@@ -176,35 +183,21 @@ public class PreArticleController {
 		return resultJson;
 
 	}
-//	챗봇리스트 마이페이지에 보여주기
 	@GetMapping("/{usernum}")
 	public List<PreArticle> getPreArticles(@PathVariable(value="usernum") Long usernum){
 		
 		List<PreArticle> preArticles = preArticleRepository.findByUsernum(usernum);
+		
 		return preArticles;
 	}
-	@GetMapping("/media/{usernum}")
-	public List<PreArticle> getMediaPreArticle(@PathVariable(value="usernum") Long usernum){
-		List<PreArticle> mediaPreArticle = preArticleRepository.findByUsernumAndMediaNotNull(usernum);
-		
-		return mediaPreArticle;
-	}
-	@DeleteMapping("/media/{num}")
-	public ResponseEntity<String> deleteMediaPreArticle(@PathVariable(value="num")Long num){
+	@DeleteMapping("/{num}")
+	public ResponseEntity<String> deleteChatbotCard(@PathVariable(value="num") Long num){
 		PreArticle preArticle = preArticleRepository.findByNum(num);
 		preArticleRepository.delete(preArticle);
-		return ResponseEntity.ok(SUCCESS);
-	}
-	@GetMapping("/comment/{usernum}")
-	public List<PreArticle> getCommentPreArticle(@PathVariable(value="usernum") Long usernum){
-		List<PreArticle> commentPreArticle = preArticleRepository.findByUsernumAndCommentNotNull(usernum);
 		
-		return commentPreArticle;
-	}
-	@DeleteMapping("/comment/{num}")
-	public ResponseEntity<String> deleteCommentPreArticle(@PathVariable(value="num")Long num){
-		PreArticle preArticle = preArticleRepository.findByNum(num);
-		preArticleRepository.delete(preArticle);
 		return ResponseEntity.ok(SUCCESS);
 	}
+//	챗봇리스트 마이페이지에 보여주기
+
+	
 }

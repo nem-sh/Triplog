@@ -139,6 +139,7 @@
           <v-icon left>mdi-delete</v-icon>삭제
         </v-btn>
       </v-sheet>
+
     </v-row>
     <v-row justify="end" class="ma-1">
       <v-btn tile outlined class="mr-2" @click="goBack">
@@ -244,7 +245,7 @@ export default {
     };
   },
   mounted() {
-    // if (this.getUserNum == this.articleUserNum) this.btnToggle = true;
+    if (this.getUserNum == this.articleUserNum) this.btnToggle = true;
     // this.$refs.calendar.checkChange();
   },
   created: function() {

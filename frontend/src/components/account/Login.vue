@@ -215,7 +215,7 @@ export default {
       alertMsg: "",
       password_confirm: "",
       kakaoUrl:`https://kauth.kakao.com/oauth/authorize?client_id=4b566a63a487519e52bcd20aec5f9326&redirect_uri=http://i3b207.p.ssafy.io:8080/api/social/kakao/code&response_type=code&state=${this.$route.query.redirect}`,
-      googleUrl:`https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile%20openid&access_type=offline&include_granted_scopes=true&state=${this.$route.query.redirect}&redirect_uri=http://localhost:8080/api/social/google/code&response_type=code&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com`
+      googleUrl:`https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile%20openid&access_type=offline&include_granted_scopes=true&state=${this.$route.query.redirect}&redirect_uri=http://i3b207.p.ssafy.io:8080/api/social/google/code&response_type=code&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com`
     };
   },
  

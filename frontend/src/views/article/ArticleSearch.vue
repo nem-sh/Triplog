@@ -1,15 +1,15 @@
 <template>
     <div>
-        <h2> "{{this.keyword}}" 의 검색 결과 입니다.</h2>
+        <h2 style="font-family: 'Nanum Gothic'"> "{{this.keyword}}" 의 검색 결과 입니다.</h2>
         <br>
         <div>
-            <h3>제목 검색결과</h3>
+            <h3 style="font-family: 'Nanum Gothic'">제목 검색결과</h3>
             <article-search-table-comp
             :propKeyword="this.keyword"
             :propOption="title"
             />
         <br>
-        <h3>작성자 검색결과</h3>
+        <h3 style="font-family: 'Nanum Gothic'">작성자 검색결과</h3>
             <article-search-table-comp
             :propKeyword="this.keyword"
             :propOption="writer"
