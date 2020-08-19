@@ -31,6 +31,7 @@ import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.repository.ArticleRepository;
 import com.ssafy.trip.repository.BlogInfoRepository;
 import com.ssafy.trip.repository.CommentRepository;
+import com.ssafy.trip.repository.NeighborRepository;
 import com.ssafy.trip.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
@@ -49,6 +50,9 @@ public class UserController {
     
     @Autowired
     private BlogInfoRepository blogInfoRepository;
+    
+    @Autowired
+    private NeighborRepository neighborRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -119,8 +123,8 @@ public class UserController {
     			  commentRepository.delete(comment);
     	  }
     	  
-    	  
-    	  
+    	  neighborRepository.deleteByUserNum(num);
+    	  neighborRepository.deleteByNeighborNum(num);
     	  
     	  List<Article> articles = articleRepository.findByUserNum(num);
     	  for(Article article : articles) {
@@ -142,10 +146,8 @@ public class UserController {
     			article.setLikearticle(users);
     			articleRepository.save(article);
     	  }
-    	  
-    	  BlogInfo blog = blogInfoRepository.findByUsernum(num);
 
-    	  blogInfoRepository.delete(blog);
+    	  blogInfoRepository.deleteByUsernum(num);
     	  userRepository.delete(user);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       } catch (Exception e) {

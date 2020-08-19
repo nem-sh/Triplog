@@ -2,7 +2,7 @@
   <div>
     <v-row style="display: flex;
 justify-content:center;">
-      <comment-sort-list-item-comp
+      <recent-sort-list-item-comp
         v-for="(item,index) in items"
         :key="`${index}_items`"
         :num="item.num"
@@ -16,12 +16,12 @@ justify-content:center;">
 
 <script>
 import http from "@/util/http-common";
-import CommentSortListItemComp from "@/components/Home/CommentSortListItemComp.vue";
+import RecentSortListItemComp from "@/components/Home/RecentSortListItemComp.vue";
 
 export default {
-  name: "CommentSortListComp",
+  name: "RecentSortListComp",
   components: {
-    CommentSortListItemComp
+    RecentSortListItemComp
   },
   data: function() {
     return {
@@ -29,7 +29,7 @@ export default {
     };
   },
   created() {
-    http.get(`/article/commentsort`).then(({ data }) => {
+    http.get(`/article/recentSort`).then(({ data }) => {
       this.items = data;
       
     });

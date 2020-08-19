@@ -75,6 +75,7 @@
               <v-card class="px-4">
                 <v-card-text>
                   <v-form action
+                    v-model="mValid"
                     method="post"
                     id="_frmForm"
                     name="frmForm"
@@ -93,6 +94,8 @@
                       <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 별명 :  </p></v-col>
                       <v-col cols="10">
                         <v-text-field v-model="customer.nickname"
+                          :counter="5"
+                          :rules="nickNameRules"
                           data-msg="별명"
                           outlined
                           name="nickname"
@@ -143,7 +146,7 @@
                       </v-col>
                       <v-spacer></v-spacer>
                       <v-col class="d-flex ml-auto" cols="12">
-                          <v-btn type="submit" x-large block color="cyan darken-4"><p style="color:white; margin-bottom:0px;">SignUp</p> </v-btn>
+                          <v-btn :disabled="!mValid" type="submit" x-large block color="cyan darken-4"><p style="color:white; margin-bottom:0px;">SignUp</p> </v-btn>
                       </v-col>
                     </v-row>
 
@@ -215,7 +218,11 @@ export default {
       alertMsg: "",
       password_confirm: "",
       kakaoUrl:`https://kauth.kakao.com/oauth/authorize?client_id=4b566a63a487519e52bcd20aec5f9326&redirect_uri=http://i3b207.p.ssafy.io:8080/api/social/kakao/code&response_type=code&state=${this.$route.query.redirect}`,
-      googleUrl:`https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile%20openid&access_type=offline&include_granted_scopes=true&state=${this.$route.query.redirect}&redirect_uri=http://i3b207.p.ssafy.io:8080/api/social/google/code&response_type=code&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com`
+      googleUrl:`https://accounts.google.com/o/oauth2/v2/auth?scope=email%20profile%20openid&access_type=offline&include_granted_scopes=true&state=${this.$route.query.redirect}&redirect_uri=http://i3b207.p.ssafy.io:8080/api/social/google/code&response_type=code&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com`,
+      mValid: true,
+      nickNameRules: [
+        v => (v && v.length <= 5) || "별명은 5글자 이내만 가능합니다."
+      ],
     };
   },
  
@@ -230,7 +237,7 @@ export default {
           this.email = "";
           this.password = "";
           this.nowlogin = !this.nowlogin
-          this.$router.push(`${this.$route.query.redirect}`)
+          this.$router.push("/");
             
         })
         .catch((e) => {
@@ -241,7 +248,6 @@ export default {
             this.$emit("closeLoginModal");
             this.$router.push(`/apierror/${e.request.status}/`)
           }
-          console.log(e.request.status)
           
         });
     },
