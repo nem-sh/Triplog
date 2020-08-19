@@ -2,6 +2,7 @@
   <div>
     <div id="app">
       <v-container style="max-width: 700px;">
+        <v-form ref="form" v-model="valid">
         <v-row>
           <v-col>
             <p class="teal--text">블로그 이미지</p>
@@ -72,6 +73,8 @@
               <v-row>
                 <v-col cols="10">
                   <v-textarea
+                    :counter="16"
+                    :rules="blogNameRules"
                     auto-grow
                     outlined
                     rows="1"
@@ -97,12 +100,13 @@
 
         <v-row>
           <v-col>
-            <v-btn inline-block @click="regist" class="cyan darken-3 white--text">수정</v-btn>
+            <v-btn inline-block :disabled="!valid" @click="regist" class="cyan darken-3 white--text">수정</v-btn>
           </v-col>
           <v-col class="text-right">
             <v-btn inline-block @click="closeSetBlogMadal2" class="cyan darken-3 white--text">취소</v-btn>
           </v-col>
         </v-row>
+        </v-form>
       </v-container>
     </div>
 
@@ -137,7 +141,10 @@ export default {
       dialog: false,
       firstImage: true,
       fileInfo: null,
-      
+      valid: true,
+      blogNameRules: [
+        v => (v && v.length <= 16) || "블로그 이름은 16글자 이내만 가능합니다."
+      ],
     };
   },
   methods: {

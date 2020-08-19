@@ -2,41 +2,42 @@
   <div>
     <div id="app">
       <v-container style="max-width: 700px;">
-        <v-row>
-          <v-col>
-            <p class="teal--text">Email (ID)</p>
-            <p>{{email}}</p>
-          </v-col>
-          <v-col class="teal--text">
-            <div align="center">
-              <div v-if="firstImage">
-                <v-img
-                  v-if="imagesrc"
-                  :src="`../../userImage/${imagesrc}`"
-                  class="img"
-                  width="200"
-                  height="100"
-                >
-                  <template v-slot:placeholder>
-                    <v-row class="fill-height ma-0" align="center" justify="center">
-                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-                <v-img
-                  v-else
-                  :src="`../../articleImage/noimage.png`"
-                  class="img"
-                  width="200"
-                  height="100"
-                >
-                  <template v-slot:placeholder>
-                    <v-row class="fill-height ma-0" align="center" justify="center">
-                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </div>
+        <v-form ref="form" v-model="mValid">
+          <v-row>
+            <v-col>
+              <p class="teal--text">Email (ID)</p>
+              <p>{{email}}</p>
+            </v-col>
+            <v-col class="teal--text">
+              <div align="center">
+                <div v-if="firstImage">
+                  <v-img
+                    v-if="imagesrc"
+                    :src="`../../userImage/${imagesrc}`"
+                    class="img"
+                    width="200"
+                    height="100"
+                  >
+                    <template v-slot:placeholder>
+                      <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                  <v-img
+                    v-else
+                    :src="`../../articleImage/noimage.png`"
+                    class="img"
+                    width="200"
+                    height="100"
+                  >
+                    <template v-slot:placeholder>
+                      <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </div>
               <div v-else>
                 <v-img v-if="imageUrl" :src="imageUrl" class="img" width="200" height="100">
                   <template v-slot:placeholder>
@@ -63,48 +64,49 @@
               <v-btn small type="button" @click="onClickImageUpload">프로필 이미지 변경</v-btn>
             </div>
           </v-col>
-          
         </v-row>
 
-        <v-row>
-          <v-col>
-            <p class="teal--text">Name</p>
-            <v-textarea
-              auto-grow
-              outlined
-              rows="1"
-              row-height="15"
-              label="이름을 입력하세요"
-              v-model="name"
-            ></v-textarea>
-          </v-col>
-          <v-col>
-            <p class="teal--text">NickName</p>
-            <v-textarea
-              auto-grow
-              outlined
-              rows="1"
-              row-height="15"
-              label="별명을 입력하세요"
-              v-model="nickName"
-            ></v-textarea>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <p class="teal--text">Self-introduction</p>
-            <v-textarea
-              :counter="50"
-              auto-grow
-              outlined
-              rows="2"
-              row-height="30"
-              label="자신을 소개하세요"
-              v-model="intro"
-            >></v-textarea>
-          </v-col>
-        </v-row>
+          <v-row>
+            <v-col>
+              <p class="teal--text">Name</p>
+              <v-textarea
+                auto-grow
+                outlined
+                rows="1"
+                row-height="15"
+                label="이름을 입력하세요"
+                v-model="name"
+              ></v-textarea>
+            </v-col>
+            <v-col>
+              <p class="teal--text">NickName</p>
+              <v-textarea
+                :counter="5"
+                :rules="nickNameRules"
+                auto-grow
+                outlined
+                rows="1"
+                row-height="15"
+                label="별명을 입력하세요"
+                v-model="nickName"
+              ></v-textarea>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <p class="teal--text">Self-introduction</p>
+              <v-textarea
+                :counter="44"
+                :rules="introRules"
+                auto-grow
+                outlined
+                rows="2"
+                row-height="30"
+                label="자신을 소개하세요"
+                v-model="intro"
+              >></v-textarea>
+            </v-col>
+          </v-row>
 
         <v-row>
           <v-col>
@@ -120,16 +122,16 @@
             <p>{{getFormatDate(joinedAt)}}</p>
           </v-col>
         </v-row>
-        
-         
-        <v-row>
-          <v-col>
-            <v-btn @click="modify" class="cyan darken-3 white--text">수정</v-btn>
-          </v-col>
-          <v-col class="text-right">
-            <v-btn @click="confirmSignOut" class="cyan darken-3 white--text">탈퇴</v-btn>
-          </v-col>
-        </v-row>
+
+          <v-row>
+            <v-col>
+              <v-btn :disabled="!mValid" @click="modify" class="cyan darken-3 white--text">수정</v-btn>
+            </v-col>
+            <v-col class="text-right">
+              <v-btn @click="confirmSignOut" class="cyan darken-3 white--text">탈퇴</v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
       </v-container>
     </div>
 
@@ -166,6 +168,8 @@ import http3 from "@/util/http-common3";
 import moment from "moment";
 import { AUTH_LOGOUT } from "@/store/actions/auth";
 
+import { USER_UPDATE } from "@/store/actions/user";
+
 export default {
   name: "userInfoComp",
   props: {
@@ -193,11 +197,18 @@ export default {
       fileInfo: null,
       firstImage: true,
       commentList: [],
-      mediaList:[],
+      mediaList: [],
+      mValid: true,
+      nickNameRules: [
+        v => (v && v.length <= 5) || "별명은 5글자 이내만 가능합니다."
+      ],
+      introRules: [
+        v => (v && v.length <= 44) || "자기소개는 44글자 이내만 가능합니다."
+      ]
     };
   },
-  created () {
-    
+  created() {
+    this.$store.dispatch(USER_UPDATE, this.getEmail).then(() => {});
   },
   computed: {
     computeEmail() {
@@ -265,9 +276,8 @@ export default {
         this.alert = true;
       } else this.modifyHandler();
     },
-    modifyHandler() {
+    modifyHandler: function() {
       if (this.fileInfo != null) {
-        console.log("asdasd");
         var formData = new FormData();
         formData.append("img", this.fileInfo);
         http3
@@ -284,10 +294,10 @@ export default {
                 let msg = "수정 처리시 문제가 발생했습니다.";
                 if (data === "success") {
                   msg = "수정이 완료되었습니다.";
+                  this.$router.go();
                 }
                 this.alertMsg = msg;
                 this.alert = true;
-                this.$emit("closeUserInfoModal", this.alertMsg, this.nickName);
               })
               .catch(e => {
                 if (e.request.status === 404) {
@@ -321,10 +331,10 @@ export default {
             let msg = "수정 처리시 문제가 발생했습니다.";
             if (data === "success") {
               msg = "수정이 완료되었습니다.";
+              this.$store.dispatch(USER_UPDATE, this.getEmail).then(() => {});
             }
             this.alertMsg = msg;
             this.alert = true;
-            this.$emit("closeUserInfoModal", this.alertMsg, this.nickName);
           })
           .catch(e => {
             if (e.request.status === 404) {
@@ -345,9 +355,9 @@ export default {
           let msg = "탈퇴가 완료되었습니다.";
           this.alertMsg = msg;
           this.alert = true;
-          this.logout();
           this.dialog = false;
-          this.$emit("closeUserInfoModal", this.alertMsg);
+          this.logout();
+          this.$router.push(`/`);
         })
         .catch(e => {
           if (e.request.status === 404) {
@@ -365,9 +375,7 @@ export default {
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT);
     },
-    
-  
-  }
+  },
 };
 </script>
 

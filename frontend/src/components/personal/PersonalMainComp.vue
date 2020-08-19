@@ -1,16 +1,17 @@
 <template>
-  <div>
-    <div class="mx-auto bg-md d-none d-md-block">
+  <v-container>
+    <!-- <v-container class="border pa-0" style> -->
+    <v-container class="d-none d-sm-block" style="height:350px">
       <v-img
         :src="`../../blogImage/${titleimg}`"
         style="position: relative; z-index: 1; width: 900px;height: 375px; border-radius: 10px;"
         alt
       />
-      <v-container style="height: 100%; opacity:1; position: relative; z-index: 2;    top: -375px;">
+      <v-container style=" opacity:1; position: relative; z-index: 2;    top: -325px;">
         <v-row style="height: 100%; width: 100%;  margin :0;">
           <v-col
             cols="3"
-            style="height : 100%; back; background-color: rgba( 255, 255, 255, 0.85 ); border-radius:10px;"
+            style="height : 100%; back; background-color: rgba( 255, 255, 255, 0.85 ); border-radius: 10px; "
           >
             <v-hover v-slot:default="{ hover }">
               <div class="mx-auto" width="100%" height="100%">
@@ -216,7 +217,8 @@
         </v-container>
       </v-container>
     </div>
-  </div>
+    <!-- </v-container> -->
+  </v-container>
 </template>
 
 <script>
@@ -371,6 +373,10 @@ export default {
 </script>
 
 <style>
+.border {
+  border-style: groove;
+  border-color: rgb(247, 243, 243);
+}
 .bg::after {
   width: 100%;
   height: 100%;
@@ -385,7 +391,7 @@ export default {
 }
 .bg-md {
   color: var(--c-olor);
-  width: 900px;
+  width: 852px;
   height: 375px;
   border-radius: 10px;
   position: relative;

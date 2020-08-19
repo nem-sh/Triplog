@@ -11,77 +11,82 @@
         @update-profile="updateProfile"
       />
     </div>
+    <div>
+      <v-container>
+        <v-container>
+          <v-tabs centered grow color="cyan darken-2">
+            <v-tab>
+              <v-icon left>mdi-format-list-bulleted</v-icon>All Posts
+            </v-tab>
+            <v-tab v-for="(tripTitle,i) in tripList" :key="i">
+              <v-icon left>mdi-airplane-takeoff</v-icon>
+              {{tripTitle.name}}
+            </v-tab>
+            <v-tab v-if="isMyBlog">
+              <v-icon left>mdi-cogs</v-icon>TripPackage
+            </v-tab>
+            <v-tab-item>
+              <v-app id="inspire" style="max-width: 900px">
+                <v-card>
+                  <GoogleMapLoader
+                    class="travel-map"
+                    :mapConfig="mapConfig"
+                    apiKey="AIzaSyC3JEsAuKanTHq2XVnX2uWx9y-0bFEp9iY"
+                  >
+                    <template slot-scope="{ google, map }">
+                      <GoogleMapMarker
+                        v-for="marker in markers"
+                        :key="marker.id"
+                        :marker="marker"
+                        :google="google"
+                        :map="map"
+                      />
+                    </template>
+                  </GoogleMapLoader>
+                </v-card>
+                <v-container fluid>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-row align="stretch" justify="space-around">
+                        <ArticleListComp
+                          v-for="(item, index) in items"
+                          :key="index"
+                          :num="item.num"
+                          :user_num="item.user_num"
+                          :title="item.title"
+                          :thumbnail="item.thumbnail"
+                          :created_at="item.created_at"
+                        />
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-app>
+              <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
+            </v-tab-item>
 
-    <v-tabs centered grow color="cyan darken-2">
-      <v-tab>
-        <v-icon left>mdi-format-list-bulleted</v-icon>All Posts
-      </v-tab>
-      <v-tab v-for="(tripTitle,i) in tripList" :key="i">
-        <v-icon left>mdi-airplane-takeoff</v-icon>
-        {{tripTitle.name}}
-      </v-tab>
-      <v-tab v-if="isMyBlog">
-        <v-icon left>mdi-cogs</v-icon>TripPackage
-      </v-tab>
-      <v-tab-item>
-        <v-app id="inspire" style="max-width: 900px">
-          <v-card>
-            <GoogleMapLoader
-              class="travel-map"
-              :mapConfig="mapConfig"
-              apiKey="AIzaSyC3JEsAuKanTHq2XVnX2uWx9y-0bFEp9iY"
-            >
-              <template slot-scope="{ google, map }">
-                <GoogleMapMarker
-                  v-for="marker in markers"
-                  :key="marker.id"
-                  :marker="marker"
-                  :google="google"
-                  :map="map"
-                />
-              </template>
-            </GoogleMapLoader>
-          </v-card>
-          <v-container fluid>
-            <v-row>
-              <v-col cols="12">
-                <v-row align="stretch" justify="space-around">
-                  <ArticleListComp
-                    v-for="(item, index) in items"
-                    :key="index"
-                    :num="item.num"
-                    :user_num="item.user_num"
-                    :title="item.title"
-                    :thumbnail="item.thumbnail"
-                    :created_at="item.created_at"
-                  />
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-app>
-        <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
-      </v-tab-item>
+            <v-tab-item v-for="(tripItem,i) in tripList" :key="i">
+              <Category :num="tripItem.num" :userNum="tripItem.userNum" :name="tripItem.name" />
+              <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
+            </v-tab-item>
 
-      <v-tab-item v-for="(tripItem,i) in tripList" :key="i">
-        <Category :num="tripItem.num" :userNum="tripItem.userNum" :name="tripItem.name" />
-        <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
-      </v-tab-item>
-
-      <v-tab-item v-if="isMyBlog">
-        <v-app id="inspire" style="max-width: 900px">
-          <v-container fluid>
-            <v-row>
-              <v-col cols="12">
-                <v-row align="stretch" justify="space-around">
-                  <TripPackageComp @childs-event="reTripList" />
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-app>
-      </v-tab-item>
-    </v-tabs>
+            <v-tab-item v-if="isMyBlog">
+              <v-app id="inspire" style="max-width: 900px">
+                <v-container fluid>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-row align="stretch" justify="space-around">
+                        <TripPackageComp @childs-event="reTripList" />
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-app>
+            </v-tab-item>
+          </v-tabs>
+        </v-container>
+      </v-container>
+    </div>
   </div>
 </template>
 
@@ -177,7 +182,6 @@ export default {
       }
       this.zoom = 0;
     });
-    
   },
   methods: {
     infiniteHandler($state) {
@@ -239,5 +243,9 @@ export default {
 <style lang="scss" scoped>
 .travel-map {
   height: 400px;
+}
+.border {
+  border-style: groove;
+  border-color: gainsboro;
 }
 </style>

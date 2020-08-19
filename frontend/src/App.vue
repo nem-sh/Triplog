@@ -129,12 +129,15 @@
       </v-navigation-drawer>
 
       <v-app-bar app dense clipped-left>
+        <v-app-bar-nav-icon class="mx-0">
+          <v-img src="/icons8-around-the-globe-100.png" width="15px"></v-img>
+        </v-app-bar-nav-icon>
+        
         <v-toolbar-title
           style="font-size: 56px; font-family: 'Poor Story'"
           @click="$router.push('/')"
-          class="cursor ml-10 teal--text"
+          class="cursor teal--text"
         >TRIPLOG</v-toolbar-title>
-        <!-- <v-icon color="teal darken-2">mdi-compass-outline</v-icon> -->
         <v-spacer></v-spacer>
 
         <v-form action="/article/ArticleSearch">
@@ -264,6 +267,7 @@ export default {
         const path = "/";
         // if (this.$route.path !== path) this.$router.push(path);
       });
+      this.$router.push("/");
     },
     info: function() {
       this.$router.push(`/userSetting/${this.getUserNum}`);
@@ -371,11 +375,6 @@ export default {
   },
   watch: {
     getProfile: function() {
-      if (this.getUserImg != null) {
-        this.userimg = this.getUserImg;
-      } else {
-        this.userimg = "profile_init.png";
-      }
       if (this.getProfile == "") {
         this.logoutSuccess = true;
       } else {

@@ -24,4 +24,12 @@ public interface NeighborRepository extends JpaRepository<Neighbor, Long>{
 	@Transactional
     @Modifying
 	void deleteByUserNumAndNeighborNum(Long user_num, Long neighbor_num);
+	
+	@Transactional
+    @Modifying
+	void deleteByUserNum(Long user_num);
+	
+	@Transactional
+    @Modifying
+	void deleteByNeighborNum(Long neighbor_num);
 }
