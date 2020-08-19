@@ -35,6 +35,7 @@
                                 if(parent == null) {
                                     imgNode.remove();
                                     mutation.previousSibling.appendChild(newDiv);
+                                    newDiv.remove();
                                 }
                                 else {
                                     parent.replaceChild(newDiv, imgNode);
