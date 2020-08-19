@@ -1,78 +1,80 @@
 <template>
-  <v-container class="pa-0" style="min-width:0px ; ">
-    <v-container class="pb-0" style="justify-content:flex-end; display:flex;">
-      <v-list-item-avatar>
-        <v-img :src="require(`@/assets/userImage/${hostImg}`)"></v-img>
-      </v-list-item-avatar>
+  <v-container class="pa-0" style="display:flex; justify-content:center;">
+    <v-container class="pa-0" style="min-width:300px ;   ">
+      <v-container class="pb-0" style="display:flex; justify-content:flex-end;">
+        <v-list-item-avatar>
+          <v-img :src="require(`@/assets/userImage/${hostImg}`)"></v-img>
+        </v-list-item-avatar>
 
-      <p
-        class="mt-2"
-        style=" font-size: 25px; font-family: 'Poor Story'"
-      >{{this.hostNickName}}' Blog</p>
-    </v-container>
-    <v-container class="pt-0 pb-0">
-      <hr style="border: solid 1.5px; color: aliceblue;" />
-    </v-container>
-    <!-- <v-container class="border pa-0" style> -->
-    <v-container style="height:350px">
-      <v-img
-        :src="require(`@/assets/blogImage/${titleimg}`)"
-        style="position: relative; z-index: 1; width: 852px; height: 325px; opacity:0.5;"
-        alt
-      />
-      <v-container
-        style=" opacity:1; position: relative; z-index: 2;   height: 325px; top: -325px; display:flex;  flex-direction:column; justify-content:space-between;"
-      >
-        <v-row style="height: 100%; width: 100%;  margin :0;">
-          <v-col>
-            <div v-if="isMyBlog" class="font-weight-light mb-2">
-              <v-btn class="mx-4" fab small dark color="teal" @click="getNeighborList">
-                <v-icon color="white" size="24px">mdi-account-multiple</v-icon>
-              </v-btn>
-            </div>
-            <div v-else class="font-weight-light mb-2">
-              <v-btn
-                class="mx-4"
-                fab
-                small
-                dark
-                color="teal"
-                v-if="isMyNeighbor"
-                @click="removeNeighbor"
-              >
-                <v-icon color="white" size="24px">mdi-account-multiple-minus</v-icon>
-              </v-btn>
-              <v-btn class="mx-4" fab small dark color="teal" v-else @click="addNeighbor">
-                <v-icon color="white" size="24px">mdi-account-multiple-plus</v-icon>
-              </v-btn>
-            </div>
-            <v-card v-if="showNeighborList" width="100px">
-              <v-simple-table>
-                <tbody>
-                  <NeighborListComp
-                    v-for="(neighbor, index) in neighbors"
-                    :key="`${index}_neighbors`"
-                    :userNum="neighbor.userNum"
-                    :neighborNum="neighbor.neighborNum"
-                    :neighborNickname="neighbor.neighborNickname"
-                  />
-                </tbody>
-              </v-simple-table>
-            </v-card>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <h1
-              class="pa-3"
-              style="display:flex; justify-content:center; align-items:flex-end;"
-              :style="getColor"
-            >{{title}}</h1>
-            <h5
-              style="margin-bottom : 30px; display:flex; justify-content:center; align-items:flex-end;"
-            >{{hostIntro}}</h5>
-          </v-col>
-        </v-row>
+        <p
+          class="mt-2"
+          style=" font-size: 25px; font-family: 'Poor Story'"
+        >{{this.hostNickName}}' Blog</p>
+      </v-container>
+      <v-container class="pt-0 pb-0">
+        <hr style="border: solid 1.5px; color: aliceblue;" />
+      </v-container>
+      <!-- <v-container class="border pa-0" style> -->
+      <v-container style="height:350px">
+        <v-img
+          :src="require(`@/assets/blogImage/${titleimg}`)"
+          style="position: relative; z-index: 1; width: 852px; height: 325px; opacity:0.5;"
+          alt
+        />
+        <v-container
+          style=" opacity:1; position: relative; z-index: 2;   height: 325px; top: -325px; display:flex;  flex-direction:column; justify-content:space-between;"
+        >
+          <v-row style="height: 100%; width: 100%;  margin :0;">
+            <v-col>
+              <div v-if="isMyBlog" class="font-weight-light mb-2">
+                <v-btn class="mx-4" fab small dark color="teal" @click="getNeighborList">
+                  <v-icon color="white" size="24px">mdi-account-multiple</v-icon>
+                </v-btn>
+              </div>
+              <div v-else class="font-weight-light mb-2">
+                <v-btn
+                  class="mx-4"
+                  fab
+                  small
+                  dark
+                  color="teal"
+                  v-if="isMyNeighbor"
+                  @click="removeNeighbor"
+                >
+                  <v-icon color="white" size="24px">mdi-account-multiple-minus</v-icon>
+                </v-btn>
+                <v-btn class="mx-4" fab small dark color="teal" v-else @click="addNeighbor">
+                  <v-icon color="white" size="24px">mdi-account-multiple-plus</v-icon>
+                </v-btn>
+              </div>
+              <v-card v-if="showNeighborList" width="100px">
+                <v-simple-table>
+                  <tbody>
+                    <NeighborListComp
+                      v-for="(neighbor, index) in neighbors"
+                      :key="`${index}_neighbors`"
+                      :userNum="neighbor.userNum"
+                      :neighborNum="neighbor.neighborNum"
+                      :neighborNickname="neighbor.neighborNickname"
+                    />
+                  </tbody>
+                </v-simple-table>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <h1
+                class="pa-3"
+                style="display:flex; justify-content:center; align-items:flex-end;"
+                :style="getColor"
+              >{{title}}</h1>
+              <h5
+                style="margin-bottom : 30px; display:flex; justify-content:center; align-items:flex-end;"
+              >{{hostIntro}}</h5>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-container>
     </v-container>
 
