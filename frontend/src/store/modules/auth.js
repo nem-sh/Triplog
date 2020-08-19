@@ -66,6 +66,10 @@ const actions = {
       localStorage.removeItem("realname");
       localStorage.removeItem("email");
       localStorage.removeItem("userNum");
+
+      localStorage.removeItem("valid");
+
+      localStorage.removeItem("userImg");
       resolve();
     });
   }
