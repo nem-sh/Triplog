@@ -36,7 +36,7 @@
       >
         <v-list-item class="px-2 mb-6" style="padding: 10px;">
           <v-list-item-avatar>
-            <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
+            <v-img :src="`../../userImage/${userimg}`"></v-img>
           </v-list-item-avatar>
 
           <v-list-item-title

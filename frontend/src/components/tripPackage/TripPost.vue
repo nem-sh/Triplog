@@ -1,7 +1,7 @@
 <template>
   <v-list-item>
     <v-list-item-avatar>
-      <v-img :src="require(`@/assets/articleImage/${thumbnail}`)" />
+      <v-img :src="`../../articleImage/${thumbnail}`" />
     </v-list-item-avatar>
     <v-list-item-content>
       <v-list-item-title>{{title}}</v-list-item-title>

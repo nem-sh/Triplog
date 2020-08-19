@@ -9,7 +9,7 @@
                 <div v-if="firstImage">
                 <v-img
                   v-if="titleimg"
-                  :src="require(`@/assets/blogImage/${titleimg}`)"
+                  :src="`../../blogImage/${titleimg}`"
                   class="img"
                   width="200"
                   height="100"
@@ -22,7 +22,7 @@
                 </v-img>
                 <v-img
                   v-else
-                  :src="require(`@/assets/articleImage/noimage.png`)"
+                  :src="`../../articleImage/noimage.png`"
                   class="img"
                   width="200"
                   height="100"
@@ -44,7 +44,7 @@
                 </v-img>
                 <v-img
                   v-else
-                  :src="require(`@/assets/articleImage/noimage.png`)"
+                  :src="`../../articleImage/noimage.png`"
                   class="img"
                   width="200"
                   height="100"

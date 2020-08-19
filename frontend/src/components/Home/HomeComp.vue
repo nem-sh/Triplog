@@ -9,7 +9,7 @@
       <v-carousel-item
         v-for="(item,i) in items"
         :key="i"
-        :src="require(`@/assets/mainImage/${item.src}`)"
+        :src="`../../mainImage/${item.src}`"
         >
         <v-row
             class="fill-height"

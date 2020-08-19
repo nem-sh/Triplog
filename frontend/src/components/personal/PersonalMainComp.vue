@@ -2,7 +2,7 @@
   <div>
     <div class="mx-auto bg-md d-none d-md-block">
       <v-img
-        :src="require(`@/assets/blogImage/${titleimg}`)"
+        :src="`../../blogImage/${titleimg}`"
         style="position: relative; z-index: 1; width: 900px;height: 375px; border-radius: 10px;"
         alt
       />
@@ -17,7 +17,7 @@
                 <v-img
                   v-if="hostImg"
                   :aspect-ratio="10/10"
-                  :src="require(`@/assets/userImage/${hostImg}`)"
+                  :src="`../../userImage/${hostImg}`"
                   style="align-items:flex-end; display : flex;"
                 >
                   <div
@@ -30,7 +30,7 @@
                 <v-img
                   v-else
                   :aspect-ratio="10/10"
-                  :src="require(`@/assets/blogImage/profile_init.png`)"
+                  :src="`../../blogImage/profile_init.png`"
                   style="align-items:flex-end; display : flex;"
                 >
                   <div
@@ -80,7 +80,7 @@
     </div>
     <div class="mx-auto bg-sm d-none d-sm-block d-md-none">
       <v-img
-        :src="require(`@/assets/blogImage/${titleimg}`)"
+        :src="`../../blogImage/${titleimg}`"
         style="position: relative; z-index: 1; width: 500px;height: 375px; border-radius: 10px;"
         alt
       />
@@ -95,7 +95,7 @@
                 <v-img
                   v-if="hostImg"
                   :aspect-ratio="10/10"
-                  :src="require(`@/assets/userImage/${hostImg}`)"
+                  :src="`../../userImage/${hostImg}`"
                   style="align-items:flex-end; display : flex;"
                 >
                   <div
@@ -108,7 +108,7 @@
                 <v-img
                   v-else
                   :aspect-ratio="10/10"
-                  :src="require(`@/assets/blogImage/profile_init.png`)"
+                  :src="`../../blogImage/profile_init.png`"
                   style="align-items:flex-end; display : flex;"
                 >
                   <div
@@ -160,7 +160,7 @@
     </div>
     <div class="mx-auto bg d-block d-sm-none">
       <v-img
-        :src="require(`@/assets/blogImage/${titleimg}`)"
+        :src="`../../blogImage/${titleimg}`"
         style="position: relative; z-index: 1; width: 300px;height: 325px; border-radius: 10px;"
         alt
       />
@@ -200,7 +200,7 @@
             <v-row>
               <v-col cols="3">
                 <v-list-item-avatar class="ml-1" style="cursor:pointer">
-                  <v-img v-if="hostImg" :src="require(`@/assets/userImage/${hostImg}`)"></v-img>
+                  <v-img v-if="hostImg" :src="`../../userImage/${hostImg}`"></v-img>
                 </v-list-item-avatar>
               </v-col>
               <v-col cols="9">
