@@ -4,7 +4,7 @@
           <v-card @click="goDetail">
               <v-img
               v-if="thumbnail"
-              :src="require(`@/assets/articleImage/${thumbnail}`)"
+              :src="`../../articleImage/${thumbnail}`"
               height="200"
               width="250"
               lazy-src="http://picsum.photos/id/11/100/60"
@@ -21,7 +21,7 @@
 
                 </template>
               </v-img>
-              <v-img v-else :src="require(`@/assets/noimage.png`)"
+              <v-img v-else :src="`../../noimage.png`"
                 height="200"
                 width="250"
                 lazy-src="https://picsum.photos/id/11/100/60"

@@ -4,7 +4,7 @@
       <v-card :class="{ 'on-hover': hover }" width="280px" style="background: white;">
         <v-img
           v-if="thumbnail"
-          :src="require(`@/assets/articleImage/${thumbnail}`)"
+          :src="`../../articleImage/${thumbnail}`"
           class="thumb"
           @click="moveDetail"
         >

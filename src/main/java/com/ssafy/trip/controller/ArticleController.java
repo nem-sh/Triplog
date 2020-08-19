@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +28,6 @@ import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.Comment;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.model.Paging;
-import com.ssafy.trip.model.TripPackage;
 import com.ssafy.trip.repository.ArticleRepository;
 import com.ssafy.trip.repository.CommentRepository;
 import com.ssafy.trip.repository.UserRepository;
@@ -96,8 +94,7 @@ public class ArticleController {
 	@PostMapping("/files")
 	   public ResponseEntity<List<String>> uploadFiles(@RequestPart List<MultipartFile> files) throws Exception {
 	      String contentBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\content\\registered\\";
-	      String imgPublicBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\content\\img\\";
-	      String imgBaseDir = System.getProperty("user.dir") + "\\frontend\\src\\assets\\articleImage\\";
+	      String imgPublicBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\articleImg\\";
 	      List<String> result = new LinkedList<String>();
 
 	      for (MultipartFile file : files) {
@@ -122,7 +119,7 @@ public class ArticleController {
 	            file.transferTo(dest);
 	            result.add(newName);
 	         } else {
-	            baseDir = imgBaseDir;
+	            baseDir = imgPublicBaseDir;
 	            String newName = realName + "." + extension;
 	            File dest = new File(baseDir + newName);
 	            
@@ -135,20 +132,6 @@ public class ArticleController {
 	            
 	            file.transferTo(dest);
 	            result.add(newName);
-	            
-	            //img public 저장 부분
-	            baseDir = imgPublicBaseDir;
-	            newName = realName + "." + extension;
-	            dest = new File(baseDir + newName);
-	            
-	            index = 0;
-	            while (dest.exists()) {
-	               index++;
-	               newName = realName + "(" + index + ")." + extension;
-	               dest = new File(baseDir + newName);
-	            }
-	            
-	            file.transferTo(dest);
 	         }
 	         
 	      }
