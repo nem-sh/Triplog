@@ -97,7 +97,7 @@
       <!-- <v-container class="border pa-0" style> -->
       <v-container class="pa-0" style="height:350px">
         <v-img
-          :src="`../../blogImage/${titleImg}`"
+          :src="`../../blogImage/${titleimg}`"
           style="position: relative; z-index: 1; width: 852px; height: 325px; opacity:0.5;"
           alt
         />
@@ -177,7 +177,7 @@ export default {
       title: "",
       titleColor: "#000000FF",
       visitcount: 0,
-      titleimg: "adventurealtitude.jpg",
+      titleimg: "noimage.png",
       isMyNeighbor: false,
       neighbors: [],
       alertMsg: "",
