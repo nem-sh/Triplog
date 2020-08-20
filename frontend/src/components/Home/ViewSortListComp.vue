@@ -9,6 +9,8 @@ justify-content:center;">
         :user_num="item.user_num"
         :title="item.title"
         :thumbnail="item.thumbnail"
+        :rank="index"
+        :views="item.views"
       />
     </v-row>
   </div>

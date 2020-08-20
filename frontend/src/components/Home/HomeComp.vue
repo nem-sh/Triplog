@@ -26,13 +26,20 @@
       </v-row>
     </v-sheet>
     <v-container align="center" justify="center" style="max-width:1096px">
-      <h2 style="font-family: 'Nanum Gothic'">많은 좋아요를 받은 게시물들</h2>
+      <div><h2 style="font-family: 'Nanum Gothic'; left:0;" class="font-weight-bolder">Most Liked Articles <v-icon color="teal">fas fa-heart</v-icon></h2></div>
+      <br>
       <like-sort-list-comp></like-sort-list-comp>
-      <h2 style="font-family: 'Nanum Gothic'">많은 사람들이 본 게시물들</h2>
+      <br>
+      <h2 style="font-family: 'Nanum Gothic'">Most View <v-icon color="teal">fas fa-eye</v-icon></h2>
+      <br>
       <view-sort-list-comp></view-sort-list-comp>
-      <h2 style="font-family: 'Nanum Gothic'">많은 댓글이 달린 게시물들</h2>
+      <br>
+      <h2 style="font-family: 'Nanum Gothic'">Most Comment Num <v-icon color="teal">fas fa-comment-alt</v-icon></h2>
+      <br>
       <comment-sort-list-comp></comment-sort-list-comp>
-      <h2>최근 쓰여진 게시물들</h2>
+      <br>
+      <h2 style="font-family: 'Nanum Gothic'">Recent Articles <v-icon color="teal">fas fa-pencil-alt</v-icon></h2>
+    <br>
       <recent-sort-list-comp></recent-sort-list-comp>
     </v-container>
   </v-container>
@@ -43,6 +50,7 @@ import LikeSortListComp from "@/components/Home/LikeSortListComp.vue";
 import ViewSortListComp from "@/components/Home/ViewSortListComp.vue";
 import CommentSortListComp from "@/components/Home/CommentSortListComp.vue";
 import RecentSortListComp from "@/components/Home/RecentSortListComp.vue";
+
 export default {
   name: "HomeComp",
   components: {
@@ -71,9 +79,11 @@ export default {
           h2msg:
             "많은 조회수를 기록한 게시물들에서 TRIPLOGGER들의 발자취를 따라가보세요. 새로운 여행을 발견할 수도 있을 것입니다."
         }
-      ]
+      ],
+      
+
     };
-  }
+  },
 };
 </script>
 <style scoped>

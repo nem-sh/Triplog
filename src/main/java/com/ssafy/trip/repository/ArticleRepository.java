@@ -42,8 +42,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	void deleteAllByUserNum(Long usernum);
 	List<Article> findByLikearticle(MemberUser user);
 	
-	List<Article> findTop4ByOrderByLikeCountDesc();
-	List<Article>findTop4ByOrderByViewsDesc();
+	List<Article> findTop3ByOrderByLikeCountDesc();
+	List<Article>findTop3ByOrderByViewsDesc();
 	Boolean existsByNum(Long num);
-	List<Article> findTop4ByOrderByNumDesc();
+	List<Article> findTop3ByOrderByNumDesc();
 }

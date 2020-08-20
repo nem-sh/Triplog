@@ -9,6 +9,8 @@ justify-content:center;">
         :user_num="item.user_num"
         :title="item.title"
         :thumbnail="item.thumbnail"
+        :rank="index"
+        :likeCount="item.likeCount"
       />
     </v-row>
   </div>
@@ -31,6 +33,7 @@ export default {
   created() {
     http.get(`/article/likesort`).then(({ data }) => {
       this.items = data;
+      
     });
   }
 };
