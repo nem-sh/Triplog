@@ -13,7 +13,7 @@
                 <div v-if="firstImage">
                   <v-img
                     v-if="imagesrc"
-                    :src="require(`@/assets/userImage/${imagesrc}`)"
+                    :src="`../../userImage/${imagesrc}`"
                     class="img"
                     width="200"
                     height="100"
@@ -26,7 +26,7 @@
                   </v-img>
                   <v-img
                     v-else
-                    :src="require(`@/assets/articleImage/noimage.png`)"
+                    :src="`../../articleImage/noimage.png`"
                     class="img"
                     width="200"
                     height="100"
@@ -38,33 +38,33 @@
                     </template>
                   </v-img>
                 </div>
-                <div v-else>
-                  <v-img v-if="imageUrl" :src="imageUrl" class="img" width="200" height="100">
-                    <template v-slot:placeholder>
-                      <v-row class="fill-height ma-0" align="center" justify="center">
-                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
-                  <v-img
-                    v-else
-                    :src="require(`@/assets/articleImage/noimage.png`)"
-                    class="img"
-                    width="200"
-                    height="100"
-                  >
-                    <template v-slot:placeholder>
-                      <v-row class="fill-height ma-0" align="center" justify="center">
-                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
-                </div>
-                <input ref="imageInput" type="file" hidden @change="onChangeImages" />
-                <v-btn small type="button" @click="onClickImageUpload">프로필 이미지 변경</v-btn>
+              <div v-else>
+                <v-img v-if="imageUrl" :src="imageUrl" class="img" width="200" height="100">
+                  <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+                <v-img
+                  v-else
+                  :src="`../../articleImage/noimage.png`"
+                  class="img"
+                  width="200"
+                  height="100"
+                >
+                  <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0" align="center" justify="center">
+                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
               </div>
-            </v-col>
-          </v-row>
+              <input ref="imageInput" type="file" hidden @change="onChangeImages" />
+              <v-btn small type="button" @click="onClickImageUpload">프로필 이미지 변경</v-btn>
+            </div>
+          </v-col>
+        </v-row>
 
           <v-row>
             <v-col>
@@ -92,7 +92,6 @@
               ></v-textarea>
             </v-col>
           </v-row>
-
           <v-row>
             <v-col>
               <p class="teal--text">Self-introduction</p>
@@ -109,20 +108,20 @@
             </v-col>
           </v-row>
 
-          <v-row>
-            <v-col>
-              <p class="teal--text">Authority</p>
-              <p v-if="!valid">
-                권한이 없습니다.
-                이메일 인증을 통해 권한을 얻으세요!
-              </p>
-              <p v-else>인증된 사용자입니다.</p>
-            </v-col>
-            <v-col>
-              <p class="teal--text">Joined At</p>
-              <p>{{getFormatDate(joinedAt)}}</p>
-            </v-col>
-          </v-row>
+        <v-row>
+          <v-col>
+            <p class="teal--text">Authority</p>
+            <p v-if="!valid">
+              권한이 없습니다.
+              이메일 인증을 통해 권한을 얻으세요!
+            </p>
+            <p v-else>인증된 사용자입니다.</p>
+          </v-col>
+          <v-col>
+            <p class="teal--text">Joined At</p>
+            <p>{{getFormatDate(joinedAt)}}</p>
+          </v-col>
+        </v-row>
 
           <v-row>
             <v-col>
@@ -169,6 +168,8 @@ import http3 from "@/util/http-common3";
 import moment from "moment";
 import { AUTH_LOGOUT } from "@/store/actions/auth";
 
+import { USER_UPDATE } from "@/store/actions/user";
+
 export default {
   name: "userInfoComp",
   props: {
@@ -206,7 +207,9 @@ export default {
       ]
     };
   },
-  created() {},
+  created() {
+    this.$store.dispatch(USER_UPDATE, this.getEmail).then(() => {});
+  },
   computed: {
     computeEmail() {
       return this.propEmail;
@@ -273,9 +276,8 @@ export default {
         this.alert = true;
       } else this.modifyHandler();
     },
-    modifyHandler() {
+    modifyHandler: function() {
       if (this.fileInfo != null) {
-        console.log("asdasd");
         var formData = new FormData();
         formData.append("img", this.fileInfo);
         http3
@@ -292,10 +294,10 @@ export default {
                 let msg = "수정 처리시 문제가 발생했습니다.";
                 if (data === "success") {
                   msg = "수정이 완료되었습니다.";
+                  this.$router.go();
                 }
                 this.alertMsg = msg;
                 this.alert = true;
-                this.$emit("closeUserInfoModal", this.alertMsg, this.nickName);
               })
               .catch(e => {
                 if (e.request.status === 404) {
@@ -329,10 +331,10 @@ export default {
             let msg = "수정 처리시 문제가 발생했습니다.";
             if (data === "success") {
               msg = "수정이 완료되었습니다.";
+              this.$store.dispatch(USER_UPDATE, this.getEmail).then(() => {});
             }
             this.alertMsg = msg;
             this.alert = true;
-            this.$emit("closeUserInfoModal", this.alertMsg, this.nickName);
           })
           .catch(e => {
             if (e.request.status === 404) {
@@ -354,6 +356,7 @@ export default {
           this.alertMsg = msg;
           this.alert = true;
           this.dialog = false;
+          this.$emit("closeUserInfoModal", this.alertMsg);
           this.logout();
           this.$router.push(`/`);
         })

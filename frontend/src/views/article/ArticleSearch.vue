@@ -1,20 +1,23 @@
 <template>
     <div>
-        <h2 style="font-family: 'Nanum Gothic'">
-            "{{this.keyword}}" 의 검색결과 입니다.
-        </h2>
-        <br>
-        <h3 style="font-family: 'Nanum Gothic'">제목 검색결과</h3>
+        <v-toolbar color="teal lighten-2" dark rounded dense flat width="1000px">
+            <v-toolbar-title style="font-family: 'Nanum Gothic'">"{{this.keyword}}" 의 검색결과 입니다.</v-toolbar-title>
+        </v-toolbar>
+        <v-card elevation="3">
+        <v-card-subtitle outlined style="font-family: 'Nanum Gothic'" single-line>제목 검색결과
+        </v-card-subtitle>
             <article-search-table-comp
             :propKeyword="this.keyword"
             :propOption="title"
             />
-        <br>
-        <h3 style="font-family: 'Nanum Gothic'">작성자 검색결과</h3>
+        <v-divider></v-divider>
+        <v-card-subtitle outlined style="font-family: 'Nanum Gothic'" single-line>작성자 검색결과
+        </v-card-subtitle>
             <article-search-table-comp
             :propKeyword="this.keyword"
             :propOption="writer"
             />
+            </v-card>
     </div>
 </template>
 

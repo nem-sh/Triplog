@@ -162,7 +162,16 @@ public class UserController {
     
     @PostMapping("/user/img")
 	public ResponseEntity<String> uploadImgs(@RequestPart MultipartFile img) throws Exception {
-		String baseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\userImage\\";
+    	String workspacePath = System.getProperty("user.dir");
+		String[] pathSplited = workspacePath.split("/");
+		if (pathSplited[pathSplited.length - 1].equals("target")) {
+			String newPath = pathSplited[0];
+			for (int i = 1; i < pathSplited.length - 1; i++) {
+				newPath += "/" + pathSplited[i];
+			}
+			workspacePath = newPath;
+		}
+		String baseDir = workspacePath+ "/frontend/public/userImage/";
 		String originalFileName = img.getOriginalFilename();
 		File dest = new File(baseDir + originalFileName);
 		

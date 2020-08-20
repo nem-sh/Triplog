@@ -4,14 +4,14 @@
       <v-card :class="{ 'on-hover': hover }" width="280px" style="background: white;">
         <v-img
           v-if="thumbnail"
-          :src="require(`@/assets/articleImage/${thumbnail}`)"
+          :src="`../../articleImage/${thumbnail}`"
           class="thumb"
           @click="moveDetail"
         >
           <v-expand-transition>
             <div
               v-if="hover"
-              class="d-flex transition-fast-in-fast-out cyan darken-2 v-card--reveal display-0 white--text"
+              class="d-flex transition-fast-in-fast-out teal v-card--reveal display-0 white--text"
               style="height: 100%;"
             >
               <div align="center">

@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +27,6 @@ import com.ssafy.trip.model.Article;
 import com.ssafy.trip.model.Comment;
 import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.model.Paging;
-import com.ssafy.trip.model.TripPackage;
 import com.ssafy.trip.repository.ArticleRepository;
 import com.ssafy.trip.repository.CommentRepository;
 import com.ssafy.trip.repository.UserRepository;
@@ -61,20 +58,21 @@ public class ArticleController {
 	}
 	
 	@GetMapping("/{num}/{usernum}")
-	public ResponseEntity<Article> getArticleByNum(@PathVariable(value = "num") Long num, @PathVariable(value="usernum") Long usernum) {
+	public ResponseEntity<Article> getArticleByNum(@PathVariable(value = "num") Long num,
+			@PathVariable(value = "usernum") Long usernum) {
 		Article article = articleRepository.findByNum(num)
 				.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
-		
+
 		if (article.getViews() == null) {
 			article.setViews((long) 0);
 		}
 		if (article.getUser_num() != usernum && usernum != 0) {
-			
-			article.setViews(article.getViews()+1);
-			
+
+			article.setViews(article.getViews() + 1);
+
 			articleRepository.save(article);
 		}
-		
+
 		return ResponseEntity.ok(article);
 	}
 
@@ -103,67 +101,118 @@ public class ArticleController {
 	}
 
 	@PostMapping("/files")
-	   public ResponseEntity<List<String>> uploadFiles(@RequestPart List<MultipartFile> files) throws Exception {
-	      String contentBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\content\\registered\\";
-	      String imgPublicBaseDir = System.getProperty("user.dir") + "\\frontend\\public\\content\\img\\";
-	      String imgBaseDir = System.getProperty("user.dir") + "\\frontend\\src\\assets\\articleImage\\";
-	      List<String> result = new LinkedList<String>();
+	public ResponseEntity<List<String>> uploadFiles(@RequestPart List<MultipartFile> files) throws Exception {
+		String workspacePath = System.getProperty("user.dir");
+		String[] pathSplited = workspacePath.split("/");
+		if (pathSplited[pathSplited.length - 1].equals("target")) {
+			String newPath = pathSplited[0];
+			for (int i = 1; i < pathSplited.length - 1; i++) {
+				newPath += "/" + pathSplited[i];
+			}
+			workspacePath = newPath;
+		}
+		String contentBaseDir = workspacePath + "/frontend/public/content/registered/";
+		String imgPublicBaseDir = workspacePath + "/frontend/public/articleImage/";
+		List<String> result = new LinkedList<String>();
 
-	      for (MultipartFile file : files) {
-	         String originalFileName = file.getOriginalFilename();
-	         
-	         String[] splited = originalFileName.split("\\.");
-	         String realName = splited[0];
-	         String extension = splited[splited.length - 1];
-	         String baseDir;
-	         if(extension.equals("html")) {
-	            baseDir = contentBaseDir;
-	            String newName = realName + "." + extension;
-	            File dest = new File(baseDir + newName);
-	            
-	            int index = 0;
-	            while (dest.exists()) {
-	               index++;
-	               newName = realName + "(" + index + ")." + extension;
-	               dest = new File(baseDir + newName);
-	            }
-	            
-	            file.transferTo(dest);
-	            result.add(newName);
-	         } else {
-	            baseDir = imgBaseDir;
-	            String newName = realName + "." + extension;
-	            File dest = new File(baseDir + newName);
-	            
-	            int index = 0;
-	            while (dest.exists()) {
-	               index++;
-	               newName = realName + "(" + index + ")." + extension;
-	               dest = new File(baseDir + newName);
-	            }
-	            
-	            file.transferTo(dest);
-	            result.add(newName);
-	            
-	            //img public 저장 부분
-	            baseDir = imgPublicBaseDir;
-	            newName = realName + "." + extension;
-	            dest = new File(baseDir + newName);
-	            
-	            index = 0;
-	            while (dest.exists()) {
-	               index++;
-	               newName = realName + "(" + index + ")." + extension;
-	               dest = new File(baseDir + newName);
-	            }
-	            
-	            file.transferTo(dest);
-	         }
-	         
-	      }
+		for (MultipartFile file : files) {
+			String originalFileName = file.getOriginalFilename();
 
-	      return ResponseEntity.ok(result);
-	   }
+			String[] splited = originalFileName.split("\\.");
+			String realName = splited[0];
+			String extension = splited[splited.length - 1];
+			String baseDir;
+			if (extension.equals("html")) {
+				baseDir = contentBaseDir;
+				String newName = realName + "." + extension;
+				File dest = new File(baseDir + newName);
+
+				int index = 0;
+				while (dest.exists()) {
+					index++;
+					newName = realName + "(" + index + ")." + extension;
+					dest = new File(baseDir + newName);
+				}
+				System.out.println(baseDir + newName);
+				file.transferTo(dest);
+				result.add(newName);
+			} else {
+				baseDir = imgPublicBaseDir;
+				String newName = realName + "." + extension;
+				File dest = new File(baseDir + newName);
+
+				int index = 0;
+				while (dest.exists()) {
+					index++;
+					newName = realName + "(" + index + ")." + extension;
+					dest = new File(baseDir + newName);
+				}
+
+				file.transferTo(dest);
+				result.add(newName);
+			}
+
+		}
+
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("/tempFiles")
+	public ResponseEntity<List<String>> uploadTempFiles(@RequestPart List<MultipartFile> files) throws Exception {
+		String workspacePath = System.getProperty("user.dir");
+		String[] pathSplited = workspacePath.split("/");
+		if (pathSplited[pathSplited.length - 1].equals("target")) {
+			String newPath = pathSplited[0];
+			for (int i = 1; i < pathSplited.length - 1; i++) {
+				newPath += "/" + pathSplited[i];
+			}
+			workspacePath = newPath;
+		}
+		String contentBaseDir = workspacePath + "/frontend/public/content/temp/";
+		String imgPublicBaseDir = workspacePath + "/frontend/public/articleImage/";
+		List<String> result = new LinkedList<String>();
+
+		for (MultipartFile file : files) {
+			String originalFileName = file.getOriginalFilename();
+
+			String[] splited = originalFileName.split("\\.");
+			String realName = splited[0];
+			String extension = splited[splited.length - 1];
+			String baseDir;
+			if (extension.equals("html")) {
+				baseDir = contentBaseDir;
+				String newName = realName + "." + extension;
+				File dest = new File(baseDir + newName);
+
+				int index = 0;
+				while (dest.exists()) {
+					index++;
+					newName = realName + "(" + index + ")." + extension;
+					dest = new File(baseDir + newName);
+				}
+				System.out.println(baseDir + newName);
+				file.transferTo(dest);
+				result.add(newName);
+			} else {
+				baseDir = imgPublicBaseDir;
+				String newName = realName + "." + extension;
+				File dest = new File(baseDir + newName);
+
+				int index = 0;
+				while (dest.exists()) {
+					index++;
+					newName = realName + "(" + index + ")." + extension;
+					dest = new File(baseDir + newName);
+				}
+
+				file.transferTo(dest);
+				result.add(newName);
+			}
+
+		}
+
+		return ResponseEntity.ok(result);
+	}
 
 	@GetMapping("/getList/{hostNum}")
 	public List<Article> findArticlesByHostNum(@PathVariable(value = "hostNum") Long hostNum) {
@@ -345,46 +394,52 @@ public class ArticleController {
 	}
 
 	@GetMapping("/commentsort")
-	public ArrayList<Optional<Article>> getCommentsortedListArticle() {
+	public List<Article> getCommentsortedListArticle() {
 		List<Long> commentLength = new ArrayList<>();
 		List<Long> articleNumList = new ArrayList<>();
 
 		List<Article> list = articleRepository.findAll();
 		for (long i = 0; i < list.size(); i++) {
-			articleNumList.add(i);
+			articleNumList.add(list.get((int) i).getNum());
 		}
-		for (long i = 0; i < list.size(); i++) {
-			Long articlenum = list.get((int) i).getNum();
-			List<Comment> commentList = commentRepository.findByArticlenumAndReplyOrderByCreatedat(articlenum, null);
-			commentLength.add((long) commentList.size());
+
+		List<Long> comment = new ArrayList<>();
+		for (long i = 0; i < articleNumList.size(); i++) {
+
+			commentLength.add((long) commentRepository.findByArticlenum(articleNumList.get((int) i)).size());
+
 		}
-		int size = commentLength.size();
-		for (long i = (size - 1); i > 0; i--) {
-			for (long j = 0; j < i; j++) {
 
-				if (commentLength.get((int) j) < commentLength.get((int) (j + 1))) {
+		for (long i = 0; i < list.size() - 1; i++) {
+			for (long j = 1; j < list.size() - i; j++) {
+				if (commentLength.get((int) j - 1) < commentLength.get((int) j)) {
 
-					long temp = commentLength.get((int) j);
-					commentLength.set((int) j, commentLength.get((int) (j + 1)));
-					commentLength.set((int) (j + 1), temp);
+					long tmp = commentLength.get((int) (j - 1));
+					commentLength.set((int) (j - 1), commentLength.get((int) j));
+					commentLength.set((int) j, tmp);
 
-					long temp2 = articleNumList.get((int) j);
-					articleNumList.set((int) j, articleNumList.get((int) (j + 1)));
-					articleNumList.set((int) (j + 1), temp2);
+					long tmp2 = articleNumList.get((int) j - 1);
+					articleNumList.set((int) (j - 1), articleNumList.get((int) j));
+					articleNumList.set((int) j, tmp2);
 				}
-
 			}
 
 		}
-
-		ArrayList<Optional<Article>> commentSort = new ArrayList<Optional<Article>>();
+		List<Article> commentSort = new ArrayList<>();
 		for (long i = 0; i < 4; i++) {
-			Optional<Article> article = articleRepository.findByNum(articleNumList.get((int) i) + 1);
+			Article article = articleRepository.findByNumAndNumNotNull(articleNumList.get((int) i));
 
 			commentSort.add(article);
-
 		}
 
 		return commentSort;
 	}
+
+	@GetMapping("/recentSort")
+	public List<Article> recentArticle() {
+		List<Article> recent = articleRepository.findTop4ByOrderByNumDesc();
+
+		return recent;
+	}
+
 }

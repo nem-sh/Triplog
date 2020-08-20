@@ -1,24 +1,25 @@
 <template>
     <div>
-        <v-container v-if="items.length == 0">
-            <h2> (*≧∀≦*) </h2>
-            <h5>검색 결과가 없습니다.</h5>
+        <v-container v-if="items.length == 0" style="text-align: center;">
+            <br>
+            <h1 style="color: gray; font-family: 'Nanum Gothic'"> (*≧∀≦*) </h1>
+            <br>
+            <h5 style="color: gray; font-family: 'Nanum Gothic'">해당하는 검색 결과가 없습니다.</h5>
         </v-container>
-        <v-row>
-            <v-sheet class="mx-auto" max-width="900">
-                <v-slide-group class="pa-4">
-                    <v-slide-item v-for="item in items" :key="item.num">
-                        <article-search-comp
-                        :propTitle="item.title"
-                        :propUserNickname="item.userNickname"
-                        :propThumbnail="item.thumbnail"
-                        :propCreated_at="item.created_at"
-                        :propNum="item.num"
-                        />
-                    </v-slide-item>
-                </v-slide-group>
-            </v-sheet>
-        </v-row>
+        <v-sheet v-else class="mx-auto" max-width="900">
+            <h5 style="color: gray; font-family: 'Nanum Gothic'">{{items.length}} 개의 검색결과가 있습니다.</h5>
+            <v-slide-group class="pa-4">
+                <v-slide-item v-for="item in items" :key="item.num">
+                    <article-search-comp
+                    :propTitle="item.title"
+                    :propUserNickname="item.userNickname"
+                    :propThumbnail="item.thumbnail"
+                    :propCreated_at="item.created_at"
+                    :propNum="item.num"
+                    />
+                </v-slide-item>
+            </v-slide-group>
+        </v-sheet>
     </div>
 </template>
 
