@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container fluid style="width:1000px;">
     <article-info-comp
       :articleNum="item.num"
       :articleUserNum="item.user_num"
@@ -17,20 +17,24 @@
       :isLoginedUserLikeThisArticle="isLike"
       :articleViews="item.views"
       :onOffParagraph="onOffParagraph"
+      :commentNum="commentNum"
       v-if="likeLoaded & itemLoaded"
+      @open-comment="openComment"
       @send-paragraph-info="sendParagraphInfo"
     />
     <comment-paragraph-comp
       :paragraphInfo="paragraphInfo"
       @on-off-paragraphcomment="onOffParagraphcomment"
-      @write-comment="writeParagraphComment"
+      @para-write-comment="writeParagraphComment"
     />
+
     <comment-comp
       :items="comments"
-      :writedParagraphComment="writedParagraphComment"
-      v-if="commentLoaded"
+      @write-comment="commentNum = commentNum +1"
+      @delete-comment="commentNum = commentNum -1"
+      v-if="commentLoaded && isOpenComment"
     />
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -49,6 +53,8 @@ export default {
   },
   data: function() {
     return {
+      commentNum: 0,
+      isOpenComment: false,
       paragraphInfo: {
         paragraph: "",
         choiceId: null
@@ -59,11 +65,13 @@ export default {
       itemLoaded: false,
       commentLoaded: false,
       comments: [],
-      writedParagraphComment: {},
       onOffParagraph: false
     };
   },
   methods: {
+    openComment(value) {
+      this.isOpenComment = value;
+    },
     onOffParagraphcomment(value) {
       this.onOffParagraph = value;
     },
@@ -72,7 +80,13 @@ export default {
       this.paragraphInfo.choiceId = paragraphInfo.choiceId;
     },
     writeParagraphComment(obj) {
-      this.writedParagraphComment = obj;
+      if (obj != null) {
+        this.comments.unshift({
+          comment: obj,
+          cocomments: []
+        });
+        this.commentNum = this.commentNum + 1;
+      }
     }
   },
   created() {
@@ -104,8 +118,10 @@ export default {
     http.get(`/comment/${this.$route.params.articleNum}`).then(({ data }) => {
       this.comments = data;
       this.commentLoaded = true;
+      this.commentNum = this.comments.length;
     });
   },
+
   computed: {
     ...mapGetters([
       "isAuthenticated",

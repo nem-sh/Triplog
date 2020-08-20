@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid style="width:5000px;">
+  <v-container>
     <v-form>
       <v-row>
         <v-col cols="12">
@@ -27,8 +27,11 @@
     </v-form>
     <v-list three-line>
       <CommentAsistUnitComp v-if="items[0]" :item="header" />
-      <div v-for="(item, index) in items" :key="item.comment.createdat">
-        <CommentUnitComp :item="item" :index="index" />
+      <div
+        v-for="(item, index) in items"
+        :key="item.comment.content + item.comment.usernickname + index"
+      >
+        <CommentUnitComp :item="item" :index="index" @delete-comment="$emit('delete-comment')" />
         <CommentAsistUnitComp :item="{ divider: true, inset: true }" />
       </div>
     </v-list>
@@ -55,8 +58,7 @@ export default {
     };
   },
   props: {
-    items: Array,
-    writedParagraphComment: Object
+    items: Array
   },
   methods: {
     writeComment() {
@@ -64,16 +66,6 @@ export default {
         alert("로그인 먼저 진행해주세요");
       } else {
         if (this.content != "") {
-          let obj = {
-            avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-            usernickname: this.getProfile,
-            useremail: this.getEmail,
-            content: this.content,
-            createdat: String(new Date()),
-            userimg: this.getUserImg,
-            usernum: this.getUserNum
-          };
-          this.items.unshift({ comment: obj, cocomments: [] });
           http
             .post(`/comment/`, {
               content: this.content,
@@ -85,6 +77,17 @@ export default {
               useremail: this.getEmail
             })
             .then(() => {
+              let obj = {
+                avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+                usernickname: this.getProfile,
+                useremail: this.getEmail,
+                content: this.content,
+                createdat: String(new Date()),
+                userimg: this.getUserImg,
+                usernum: this.getUserNum
+              };
+              this.items.unshift({ comment: obj, cocomments: [] });
+              this.$emit("write-comment");
               this.content = "";
             })
             .catch(e => {
@@ -118,16 +121,6 @@ export default {
       userNum: state => `${state.user.getUserNum}`,
       userImg: state => `${state.user.getUserImg}`
     })
-  },
-  watch: {
-    writedParagraphComment: function() {
-      if (this.writedParagraphComment != null) {
-        this.items.unshift({
-          comment: this.writedParagraphComment,
-          cocomments: []
-        });
-      }
-    }
   },
   created() {}
 };

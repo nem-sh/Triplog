@@ -1,12 +1,8 @@
 <template>
-<v-container>
-  <v-carousel
-    cycle
-    interval="6000"
-    height="400"
-    hide-delimiters
-    >
+  <v-container>
+    <v-carousel cycle interval="6000" height="400" hide-delimiters>
       <v-carousel-item
+        style="max-width:1100px"
         v-for="(item,i) in items"
         :key="i"
         :src="`../../mainImage/${item.src}`"
@@ -22,29 +18,21 @@
             </div>
         </v-row>
       </v-carousel-item>
-      
     </v-carousel>
-    <v-sheet
-        height="180"
-        align="center"
-        justify="center"
-        >
-        <v-row 
-            class="fill-height"
-            align="center"
-            justify="center"
-            >
-            <div style="text-align:center; font-family: 'Nanum Gothic'">
-                <h1>TRIPLOG는 사용자 친화적인 블로그입니다.</h1>
-                <br>
-                <!-- <v-divider></v-divider> -->
-                <h3>당신은 여러 에디터를 상황, 취향에 맞게 제공받을 수 있고 이를 통해 손쉽게 글을 작성할 수 있습니다.</h3>
-            </div>
-        </v-row>
+    <v-sheet height="180" align="center" justify="center">
+      <v-row class="fill-height" align="center" justify="center">
+        <div style="text-align:center; font-family: 'Nanum Gothic'">
+          <h1>TRIPLOG는 사용자 친화적인 블로그입니다.</h1>
+          <br />
+          <!-- <v-divider></v-divider> -->
+          <h3>당신은 여러 에디터를 상황, 취향에 맞게 제공받을 수 있고 이를 통해 손쉽게 글을 작성할 수 있습니다.</h3>
+        </div>
+      </v-row>
     </v-sheet>
     <v-container
         align="center"
         justify="center"
+        style="max-width:1096px"
         >
         <h2 style="font-family: 'Nanum Gothic'">많은 좋아요를 받은 게시물들</h2>
         <like-sort-list-comp></like-sort-list-comp>
@@ -54,9 +42,8 @@
         <comment-sort-list-comp></comment-sort-list-comp>
         <h2>최근 쓰여진 게시물들</h2>
         <recent-sort-list-comp></recent-sort-list-comp>
-
     </v-container>
-</v-container>
+  </v-container>
 </template>
 
 <script>
@@ -92,7 +79,7 @@ export default {
                 },
             ],
         }
-    }
+    };
 };
 </script>
 <style scoped>

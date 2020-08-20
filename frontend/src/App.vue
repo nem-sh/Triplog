@@ -135,8 +135,8 @@
         
         <v-toolbar-title
           style="font-size: 56px; font-family: 'Poor Story'"
+          class="cursor ml-10 teal--text"
           @click="$router.push('/')"
-          class="cursor teal--text"
         >TRIPLOG</v-toolbar-title>
         <v-spacer></v-spacer>
 
@@ -176,7 +176,9 @@
     <v-sheet height="50"></v-sheet>
     <v-main style="padding: 50px; margin:0 auto;">
       <v-container>
-        <router-view @update-profile="info"></router-view>
+        <div>
+          <router-view @update-profile="info"></router-view>
+        </div>
       </v-container>
     </v-main>
 
@@ -258,6 +260,14 @@ export default {
     Login
   },
   methods: {
+    goMain: function() {
+      var para = document.location.href.split("http://localhost:8081/");
+      if (para[1] == "") {
+        this.$router.go();
+      } else {
+        this.$router.push("/");
+      }
+    },
     goToMyBlog: function() {
       this.$router.push(`/${this.getUserNum}`);
     },

@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import APIError from "../components/error/APIError.vue";
+
+import error from "../components/error/error.vue";
 import EmailAuth from "../components/error/EmailAuth.vue";
 import EmailAuthSuccess from "../components/error/EmailAuthSuccess.vue";
 import ArticleWrite from "../views/article/ArticleWrite.vue"
@@ -15,7 +17,6 @@ import Like from "../views/likey/Like.vue"
 import Login from "../components/account/Login.vue";
 import SocialLogin from "../views/SocialLogin.vue";
 import temp from "../views/temporaryArticle/temp.vue"
-import PersonalMain from "../views/personal/MainPage.vue"
 import UserSetting from "../views/personal/UserSetting.vue"
 // import { component } from "vue/types/umd";
 Vue.use(VueRouter);
@@ -96,15 +97,16 @@ const routes = [
     name: "tempArticle",
     component: temp
   },
-  {
-    path: "/:hostNum",
-    name: "PersonalMain",
-    component: PersonalMain
-  },
+
   {
     path: "/userSetting/:hostNum",
     name: "UserSetting",
     component: UserSetting
+  },
+  {
+    path: "/**",
+    name: "error",
+    component: error
   },
 ];
 
