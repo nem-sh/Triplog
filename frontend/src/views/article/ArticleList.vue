@@ -45,7 +45,7 @@
                         @click="moveCategory(m.id)"
                       />
                     </GmapMap>
-                  </v-card>
+                  </v-card><br/>
                   <v-container fluid v-if="items.length != 0">
                     <v-row>
                       <v-col cols="12">
@@ -58,6 +58,7 @@
                             :title="item.title"
                             :thumbnail="item.thumbnail"
                             :created_at="item.created_at"
+                            :views="item.views"
                           />
                         </v-row>
                       </v-col>

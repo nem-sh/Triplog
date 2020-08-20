@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-hover v-slot:default="{ hover }">
-      <v-card :class="{ 'on-hover': hover }" width="280px" style="background: white;">
+      <v-card :class="{ 'on-hover': hover }" width="310px" style="background: white;">
         <v-img
           v-if="thumbnail"
           :src="`../../articleImage/${thumbnail}`"
@@ -20,7 +20,7 @@
               </div>
             </div>
           </v-expand-transition>
-          <v-card-subtitle>{{title}}</v-card-subtitle>
+          <!-- <v-card-subtitle>{{title}}</v-card-subtitle> -->
         </v-img>
         <v-img v-else :src="`../../articleImage/noimage.jpg`" class="thumb" @click="moveDetail">
         <v-layout column align-center justify-center class="white--text" fill-height>
@@ -41,7 +41,10 @@
         </v-img>
       </v-card>
     </v-hover>
-    <br />
+    <div class="aInfo">
+      <b>{{title}}</b>
+      <p>{{view}} views · {{date}}</p>
+    </div>
   </div>
 </template>
 
@@ -55,7 +58,25 @@ export default {
     user_num: { type: Number },
     title: { type: String },
     thumbnail: { type: String },
-    created_at: { type: String }
+    created_at: { type: String },
+    views: { type: Number }
+  },
+  data: function() {
+    return {
+      view: "",
+      date: "",
+    };
+  },
+  created(){
+    if(this.views == null){
+      this.view = 0;
+    }else{
+      this.view = this.views;
+    }
+    this.date = this.setTime();
+    if(this.title.length > 20){
+      this.title = this.title.substring(0,19)+"...";
+    }
   },
   methods: {
     moveDetail: function() {
@@ -63,6 +84,38 @@ export default {
     },
     getFormatDate(regtime) {
       return moment(new Date(regtime)).format("YY.MM.DD");
+    },
+    setTime: function() {
+      let today = new Date();
+      let timeValue = new Date(
+        Number(this.created_at.slice(0, 4)),
+        Number(this.created_at.slice(5, 7) - 1),
+        Number(this.created_at.slice(8, 10)),
+        Number(this.created_at.slice(11, 13)),
+        Number(this.created_at.slice(14, 16)),
+        Number(this.created_at.slice(17, 19)),
+        0
+      );
+
+      timeValue.setHours(timeValue.getHours() + 9);
+      let betweenTime = Math.floor(
+        (today.getTime() - timeValue.getTime()) / 1000 / 60
+      );
+      if (betweenTime < 1) return "방금전";
+      if (betweenTime < 60) {
+        return `${betweenTime}분전`;
+      }
+
+      const betweenTimeHour = Math.floor(betweenTime / 60);
+      if (betweenTimeHour < 24) {
+        return `${betweenTimeHour}시간전`;
+      }
+
+      const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+      if (betweenTimeDay < 365) {
+        return `${betweenTimeDay}일전`;
+      }
+      return this.created_at;
     }
   }
 };
@@ -73,8 +126,8 @@ export default {
   width: 300px;
 }
 .thumb {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 200px;
 }
 /* .v-card:hover {
    filter: drop-shadow(3px 3px 5px rgb(136, 136, 136)); 
@@ -87,5 +140,9 @@ export default {
   opacity: 0.5;
   position: absolute;
   width: 100%;
+}
+.aInfo {
+  margin-top: 5px;
+  margin-left: 10px;
 }
 </style>

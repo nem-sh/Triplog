@@ -18,7 +18,7 @@
       <v-container style="height:350px">
         <v-img
           :src="`../../blogImage/${titleimg}`"
-          style="position: relative; z-index: 1; width: 852px; height: 325px; opacity:0.5;"
+          style="position: relative; z-index: 1; width: 100%; height: 100%; opacity:0.5;"
           alt
         />
         <v-container
