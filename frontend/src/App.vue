@@ -136,7 +136,7 @@
         <v-toolbar-title
           style="font-size: 56px; font-family: 'Poor Story'"
           class="cursor ml-10 teal--text"
-          @click="$router.push('/')"
+          @click="goMain"
         >TRIPLOG</v-toolbar-title>
         <v-spacer></v-spacer>
 
@@ -263,7 +263,9 @@ export default {
     goMain: function() {
       var para = document.location.href.split("http://localhost:8081");
       // 8081 뒤에 / 붙이면 안되요!
-      if (para[1] == "") {
+
+      console.log(para[1]);
+      if (para[1] == "/") {
         this.$router.go();
       } else {
         this.$router.push("/");
