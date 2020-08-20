@@ -20,25 +20,27 @@
                 <v-btn color="teal" dark @click="clickTableRow()">READMORE</v-btn>
             </div>
         </v-img>
-        <v-img v-else :src="`../../articleImage/noimage.png`" height="300"
+        <v-img v-else :src="`../../articleImage/noimage.jpg`" height="300"
         >
+        
             <v-card-title style="font-family: 'Nanum Gothic'" class="title black--text">
                 <v-row class="fill-height flex-column" justify="space-between">
                     <p class="text-left ma-2 subheading black--text" style="font-family: 'Nanum Gothic'">{{this.title}}</p>
 
                     <div>
                         <p class="ml-2 body-1 text-left black--text" style="font-family: 'Nanum Gothic'">by {{this.userNickname}}</p>
-                        <br>
+                        <v-layout column align-center justify-center class="white--text">
+                            <h1 class="grey--text font-weight-bold text-center">No Image</h1>
+                        </v-layout>
                         <p class="ml-2 caption text-left black--text">{{this.created_at | moment('YYYY-MM-DD')}}</p>
                     </div>
                 </v-row>
             </v-card-title>
             <br>
-            <br>
-            <br>
             <div class="text-right ma-2">
                 <v-btn color="teal" dark @click="clickTableRow()">READMORE</v-btn>
             </div>
+            
         </v-img>
         <template v-slot:placeholder>
             <v-row
