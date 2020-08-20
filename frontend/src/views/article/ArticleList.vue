@@ -64,7 +64,7 @@
                     </v-row>
                   </v-container>
                   <div v-else style="text-align: center;" class="mt-5">
-                    <h1 style="color: gray; font-family: 'Nanum Gothic'"> (*≧∀≦*) </h1>
+                    <h1 class="teal--text" style="font-family: 'Nanum Gothic'"> (*≧∀≦*) </h1>
                     <br>
                     <h3 style="color: gray; font-family: 'Nanum Gothic'">나의 게시물 목록이 텅! 비었습니다.</h3>
                     <h5 style="color: gray; font-family: 'Nanum Gothic'">게시물을 작성하면서 인기있는 TRIPLOGGER가 되어보세요!</h5>
