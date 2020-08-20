@@ -173,8 +173,7 @@
       </v-app-bar>
     </div>
 
-    <v-sheet height="50"></v-sheet>
-    <v-main style="padding: 50px; margin:0 auto;">
+    <v-main style="margin:0 auto;">
       <v-container>
         <div>
           <router-view @update-profile="info"></router-view>
