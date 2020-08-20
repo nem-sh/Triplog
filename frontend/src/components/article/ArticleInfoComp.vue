@@ -61,18 +61,19 @@
 
     <br />
     <br />
-    <v-dialog v-model="dialog" max-width="350">
+    <v-dialog color="teal" dark v-model="dialog" max-width="400">
       <v-card>
-        <v-card-title class="headline">정말 삭제하시겠습니까?</v-card-title>
+        <v-card-title style="font-family: 'Nanum Gothic';" class="headline">
+          <v-icon class="mr-2" color="red">mdi-information</v-icon>정말 삭제하시겠습니까?</v-card-title>
 
-        <v-card-text>삭제하면 게시글 복구가 불가능합니다.</v-card-text>
+        <v-card-text style="font-family: 'Nanum Gothic';">삭제하면 게시글 복구가 불가능합니다.</v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic';" class="white--text" text @click="dialog = false">취소</v-btn>
 
-          <v-btn color="blue darken-1" text @click="deleteArticle">확인</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic'; font-weight: bold;" class="teal--text" text @click="deleteArticle">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

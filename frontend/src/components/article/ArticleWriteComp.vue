@@ -572,18 +572,18 @@
     </v-row>
     <br />
     <br />
-    <v-dialog v-model="dialog" max-width="350">
+    <v-dialog color="teal" dark v-model="dialog" max-width="400">
       <v-card>
-        <v-card-title class="headline">임시 저장된 게시글이 있습니다.</v-card-title>
+        <v-card-title style="font-family: 'Nanum Gothic';" class="headline">임시 저장된 게시글이 있습니다.</v-card-title>
 
-        <v-card-text>불러오시겠습니까?</v-card-text>
+        <v-card-text style="font-family: 'Nanum Gothic';">불러오시겠습니까?</v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="blue darken-1" text @click="deleteData">취소</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic';" class="white--text" text @click="deleteData">취소</v-btn>
 
-          <v-btn color="blue darken-1" text @click="loadData">확인</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic'; font-weight: bold;" class="teal--text" text @click="loadData">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
