@@ -21,7 +21,7 @@ import SocialLogin from "../views/SocialLogin.vue";
 import temp from "../views/temporaryArticle/temp.vue"
 import UserSetting from "../views/personal/UserSetting.vue"
 // import { component } from "vue/types/umd";
-import PersonalMain from "@/components/personal/PersonalMainComp.vue";
+// import PersonalMain from "@/components/personal/PersonalMainComp.vue";
 Vue.use(VueRouter);
 
 const routes = [{
