@@ -5,7 +5,7 @@
         <slot />
       </v-col>
       <div v-if="likeArticle == 0" style="text-align: center; width: 400px">
-        <h1 style="color: gray; font-family: 'Nanum Gothic'"> (*≧∀≦*) </h1>
+        <h1 class="teal--text" style="font-family: 'Nanum Gothic'"> (*≧∀≦*) </h1>
         <br>
         <h3 style="color: gray; font-family: 'Nanum Gothic'">좋아요 게시물 목록이 텅! 비었습니다.</h3>
         <h5 style="color: gray; font-family: 'Nanum Gothic'">TRIPLOGGER 들의 게시물들을 보면서 좋아요 버튼을 눌러보세요!</h5>
