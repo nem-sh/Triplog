@@ -31,6 +31,7 @@ import com.ssafy.trip.model.MemberUser;
 import com.ssafy.trip.repository.ArticleRepository;
 import com.ssafy.trip.repository.BlogInfoRepository;
 import com.ssafy.trip.repository.CommentRepository;
+import com.ssafy.trip.repository.NeighborRepository;
 import com.ssafy.trip.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
@@ -49,6 +50,9 @@ public class UserController {
     
     @Autowired
     private BlogInfoRepository blogInfoRepository;
+    
+    @Autowired
+    private NeighborRepository neighborRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -119,8 +123,8 @@ public class UserController {
     			  commentRepository.delete(comment);
     	  }
     	  
-    	  
-    	  
+    	  neighborRepository.deleteByUserNum(num);
+    	  neighborRepository.deleteByNeighborNum(num);
     	  
     	  List<Article> articles = articleRepository.findByUserNum(num);
     	  for(Article article : articles) {
@@ -142,10 +146,8 @@ public class UserController {
     			article.setLikearticle(users);
     			articleRepository.save(article);
     	  }
-    	  
-    	  BlogInfo blog = blogInfoRepository.findByUsernum(num);
 
-    	  blogInfoRepository.delete(blog);
+    	  blogInfoRepository.deleteByUsernum(num);
     	  userRepository.delete(user);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       } catch (Exception e) {
@@ -160,7 +162,16 @@ public class UserController {
     
     @PostMapping("/user/img")
 	public ResponseEntity<String> uploadImgs(@RequestPart MultipartFile img) throws Exception {
-		String baseDir = System.getProperty("user.dir")+ "\\frontend\\src\\assets\\userImage\\";
+    	String workspacePath = System.getProperty("user.dir");
+		String[] pathSplited = workspacePath.split("/");
+		if (pathSplited[pathSplited.length - 1].equals("target")) {
+			String newPath = pathSplited[0];
+			for (int i = 1; i < pathSplited.length - 1; i++) {
+				newPath += "/" + pathSplited[i];
+			}
+			workspacePath = newPath;
+		}
+		String baseDir = workspacePath+ "/frontend/public/userImage/";
 		String originalFileName = img.getOriginalFilename();
 		File dest = new File(baseDir + originalFileName);
 		
