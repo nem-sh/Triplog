@@ -73,7 +73,7 @@
               <v-row>
                 <v-col cols="10">
                   <v-textarea
-                    :counter="16"
+                    :counter="20"
                     :rules="blogNameRules"
                     auto-grow
                     outlined
@@ -153,7 +153,7 @@ export default {
       fileInfo: null,
       valid: true,
       blogNameRules: [
-        v => (v && v.length <= 16) || "블로그 이름은 16글자 이내만 가능합니다."
+        v => (v && v.length <= 20) || "블로그 이름은 20글자 이내만 가능합니다."
       ],
     };
   },

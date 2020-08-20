@@ -1,18 +1,22 @@
 <template>
   <v-container fluid style="width:1000px;">
     <div>
-      <h1>{{articleTitle}}</h1>
-      <h4 style="color:gray; cursor:pointer" @click="goToBlog">{{blogMasterName}}</h4>
-      <h4 style="color:gray">{{getFormatDate(articleCreatedAt)}}</h4>
-      <h4 style="color:gary">{{ articlePlace }}</h4>
+      <h1 class="text-center" style="font-family: 'Nanum Gothic';">{{articleTitle}}</h1>
+      <div style="width:100%; text-align:right;">
+        <h4 style="display: inline-block; font-family: 'Nanum Gothic'; cursor:pointer" @click="goToBlog">by {{blogMasterName}}
+        </h4>
+      </div>
+      <h4 v-if="articlePlace" class="text-right" style="font-family: 'Nanum Gothic';">장소 : {{ articlePlace }}</h4>
+      <h4 class="text-right" style="font-family: 'Nanum Gothic'; color:gray">{{getFormatDate(articleCreatedAt)}}</h4>
     </div>
     <br />
-    <v-divider />
-    <br />
-    <div @click="clickThis" @mouseover="hoverThis" @mouseout="nonHoverThis" :style="cursorStyle">
-      <article-content-comp :content="realContent" v-if="realContent" />
-    </div>
-    <v-divider />
+    <v-sheet class="pa-3" >
+      <div @click="clickThis" @mouseover="hoverThis" @mouseout="nonHoverThis" :style="cursorStyle">
+        <article-content-comp :content="realContent" v-if="realContent" />
+      </div>
+    </v-sheet>
+    <hr>
+    
     <v-row class="ma-1" align="center">
       <v-btn class="ml-6" icon :disabled="likeBtnFlag" :loading="likeBtnFlag">
         <v-chip @click="likeBtnClick" outlined color="pink">
@@ -61,18 +65,19 @@
 
     <br />
     <br />
-    <v-dialog v-model="dialog" max-width="350">
+    <v-dialog color="teal" dark v-model="dialog" max-width="400">
       <v-card>
-        <v-card-title class="headline">정말 삭제하시겠습니까?</v-card-title>
+        <v-card-title style="font-family: 'Nanum Gothic';" class="headline">
+          <v-icon class="mr-2" color="red">mdi-information</v-icon>정말 삭제하시겠습니까?</v-card-title>
 
-        <v-card-text>삭제하면 게시글 복구가 불가능합니다.</v-card-text>
+        <v-card-text style="font-family: 'Nanum Gothic';">삭제하면 게시글 복구가 불가능합니다.</v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic';" class="white--text" text @click="dialog = false">취소</v-btn>
 
-          <v-btn color="blue darken-1" text @click="deleteArticle">확인</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic'; font-weight: bold;" class="teal--text" text @click="deleteArticle">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -240,7 +245,7 @@ export default {
       this.dialog = true;
     },
     getFormatDate(regtime) {
-      return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
+      return moment(new Date(regtime)).format("YYYY년MM월DD일 HH시mm분ss초");
     },
     deleteArticle: function() {
       http
@@ -335,6 +340,8 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
+
 .img {
   max-width: 500px;
 }

@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-form>
-      <v-row>
-        <v-col cols="12">
+      <v-row justify="center" no-gutters>
+        <v-col cols="9">
           <v-textarea
             :label="getContentLength"
             auto-grow
@@ -12,19 +12,20 @@
             maxlength="100"
             v-model="content"
             hide-details="false"
-            color="teal lighten-3"
+            color="teal"
           ></v-textarea>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="6">
-          <v-checkbox class="mt-0" color="teal lighten-3" v-model="secret" label="비밀글" />
+      <v-row justify="center">
+        <v-col lg="5" md="auto" class="pa-0">
+          <v-checkbox style="font-family: 'Nanum Gothic';" color="teal" v-model="secret" label="비밀글" />
         </v-col>
-        <v-col cols="6" style="display: flex; justify-content:flex-end;">
-          <v-btn class="teal lighten-3" @click="writeComment">작성</v-btn>
+        <v-col lg="4" md="auto" class="text-right">
+          <v-btn style="font-family: 'Nanum Gothic';" class="teal" dark @click="writeComment">작성</v-btn>
         </v-col>
       </v-row>
     </v-form>
+    
     <v-list three-line>
       <CommentAsistUnitComp v-if="items[0]" :item="header" />
       <div
@@ -141,4 +142,5 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
 </style>

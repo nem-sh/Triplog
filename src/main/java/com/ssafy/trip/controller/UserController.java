@@ -2,6 +2,7 @@ package com.ssafy.trip.controller;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -189,4 +190,13 @@ public class UserController {
 	
 		return ResponseEntity.ok(newName);
 	}
+    @GetMapping("/{num}/avatarimage")
+    public String image(@PathVariable(value="num")Long usernum ) {
+    	MemberUser user = userRepository.findByNum(usernum)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "email", usernum));
+    	
+    	String img = user.getImageSrc();
+    	
+    	return img;
+    }
 }

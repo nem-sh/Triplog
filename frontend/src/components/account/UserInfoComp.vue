@@ -100,7 +100,7 @@
             <v-col>
               <p style="font-family: 'Sunflower'; font-weight: bold;" class="teal--text">Self-introduction</p>
               <v-textarea
-                :counter="30"
+                :counter="40"
                 :rules="introRules"
                 auto-grow
                 outlined
@@ -152,7 +152,7 @@
     <v-dialog color="teal" dark v-model="dialog" max-width="400">
       <v-card class="pa-0">
         <v-card-title style="font-family: 'Nanum Gothic';" class="headline">
-          <v-icon color="red" class="mr-2">mdi-close-octagon</v-icon>정말 탈퇴하시겠습니까?</v-card-title>
+          <v-icon color="red" class="mr-2">mdi-information</v-icon>정말 탈퇴하시겠습니까?</v-card-title>
 
         <v-card-text style="font-family: 'Nanum Gothic';">탈퇴하면 계정 정보의 복구가 불가능합니다.</v-card-text>
 
@@ -161,7 +161,7 @@
 
           <v-btn style="font-family: 'Nanum Gothic';" color="white" text @click="dialog = false">취소</v-btn>
 
-          <v-btn style="font-family: 'Nanum Gothic';" color="teal" text @click="signOut">확인</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic'; font-weight: bold;" color="teal" text @click="signOut">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -210,7 +210,7 @@ export default {
         v => (v && v.length <= 5) || "별명은 5글자 이내만 가능합니다."
       ],
       introRules: [
-        v => (v && v.length <= 44) || "자기소개는 44글자 이내만 가능합니다."
+        v => (v && v.length <= 40) || "소개글은 40글자 이내만 가능합니다."
       ]
     };
   },

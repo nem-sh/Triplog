@@ -9,6 +9,8 @@ justify-content:center;">
         :user_num="item.user_num"
         :title="item.title"
         :thumbnail="item.thumbnail"
+        :rank="index"
+        :commentNum="comment[index]"
       />
     </v-row>
   </div>
@@ -25,12 +27,17 @@ export default {
   },
   data: function() {
     return {
-      items: []
+      items: [],
+      comment: [],
     };
   },
   created() {
     http.get(`/article/commentsort`).then(({ data }) => {
-      this.items = data;
+      
+      for(var i=0; i < 6; i+=2) {
+        this.items.push(data[i]);
+        this.comment.push(data[i+1]);
+      }
       
     });
   }
