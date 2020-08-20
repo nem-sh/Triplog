@@ -135,7 +135,7 @@
 
         <v-toolbar-title
           style="font-size: 56px; font-family: 'Poor Story'"
-          class="cursor ml-10 teal--text"
+          class="cursor teal--text"
           @click="goMain"
         >TRIPLOG</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -261,7 +261,7 @@ export default {
   },
   methods: {
     goMain: function() {
-      var para = document.location.href.split("http://localhost:8081");
+      var para = document.location.href.split("http://i3b207.p.ssafy.io");
       // 8081 뒤에 / 붙이면 안되요!
 
       if (para[1] == "/") {

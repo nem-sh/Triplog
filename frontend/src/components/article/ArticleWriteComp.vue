@@ -12,75 +12,89 @@
       <v-col cols="12" md="2" align-self="center">
         <div style="width:100%; text-align:center" :style="{fontFamily : 'Nanum Gothic'}">장소</div>
       </v-col>
-      <v-col
-        cols="12"
-        md="9">
-        <v-dialog v-model="addressDialog" max-width="300">
-        <template v-slot:activator="{ on, attrs }">
-          <div>
-            <v-btn small v-bind="attrs" v-on="on" :style="{fontFamily : 'Nanum Gothic'}">장소 찾기</v-btn> {{ place.name }}
-          </div>
-        </template>
-          <FindPlace @childs-event="getPlace" />
-       </v-dialog>
-
-      </v-col>
-    </v-row>
-
-    <v-row style="height: 300px;" v-if="imageUrl">
-      <v-col cols="12" md="2" align-self="center"></v-col>
       <v-col cols="12" md="9">
-        <v-sheet outlined height="300" align="center">
-          <v-img v-if="imageUrl" :src="imageUrl" class="img" aspect-ratio="1.7" contain>
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-        </v-sheet>
+        <v-dialog v-model="addressDialog" max-width="300">
+          <template v-slot:activator="{ on, attrs }">
+            <div>
+              <v-btn small v-bind="attrs" v-on="on" :style="{fontFamily : 'Nanum Gothic'}">장소 찾기</v-btn>
+              {{ place.name }}
+            </div>
+          </template>
+          <FindPlace @childs-event="getPlace" />
+        </v-dialog>
       </v-col>
     </v-row>
 
-    <v-file-input
-      multiple
-      label="Images"
-      accept="image/*"
-      prepend-icon="mdi-camera"
-      @change="onChangeMultipleImages"
-      v-model="uploadImgs"
-    ></v-file-input>
-
-    <v-row>
-      <v-sheet class="mx-auto" max-width="1000">
-        <v-slide-group multiple show-arrows="mobile">
-          <v-slide-item v-for="(item, index) in imgPool" :key="index">
-            <v-card class="ma-4" width="200" :id="index">
-                <img
-                  :src="returnImageURL(item)"
-                  width="200"
-                  height="300"
-                  @dragend="dragEnd"
-                />
-            </v-card>
-          </v-slide-item>
-        </v-slide-group>
-      </v-sheet>
-    </v-row>
-    <v-btn v-if="existChatbot && hidden" @click="useChatbot"><v-icon>fas fa-robot</v-icon></v-btn>
+    <div class="text-center">
+      <v-bottom-sheet v-model="sheet" hide-overlay>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="teal"
+            dark
+            v-bind="attrs"
+            v-on="on"
+            bottom
+            fixed
+          >
+            이미지풀 열기
+          </v-btn>
+        </template>
+        <v-sheet class="text-center" height="320px">
+          <v-row>
+            <v-col cols="3">
+              <v-file-input
+                class="ml-12"
+                dense
+                label="이미지 업로드"
+                multiple
+                accept="image/*"
+                prepend-icon="mdi-camera"
+                @change="onChangeMultipleImages"
+                v-model="uploadImgs"
+              ></v-file-input>
+            </v-col>
+            <v-spacer></v-spacer>
+          <v-btn
+            class="mr-12 mt-4"
+            text
+            color="teal"
+            @click="sheet = !sheet"
+          >close</v-btn>
+          </v-row>
+          <v-row class="fill-height" v-if="imgPool.length == 0" justify="center" align="center">
+          <h3>이미지를 업로드 한 후 에디터로 끌어다 놓으세요.</h3>
+          </v-row>
+          <v-row>
+            <v-sheet class="mx-auto" max-width="1300">
+              <v-slide-group multiple show-arrows="mobile">
+                <v-slide-item v-for="(item, index) in imgPool" :key="index">
+                  <v-card class="ma-4" width="150" :id="index" elevation="0">
+                      <img
+                        :src="returnImageURL(item)"
+                        width="150"
+                        height="200"
+                        @dragend="dragEnd"
+                      />
+                  </v-card>
+                </v-slide-item>
+              </v-slide-group>
+            </v-sheet>
+          </v-row>
+        </v-sheet>
+    </v-bottom-sheet>
+    </div>
+    
+    <v-btn v-if="existChatbot && hidden" @click="useChatbot">
+      <v-icon>fas fa-robot</v-icon>
+    </v-btn>
     <v-btn v-if="!hidden" @click="useChatbot">접기</v-btn>
     <v-row v-if="useChatbotImg">
       <v-sheet class="mx-auto" max-width="1000">
         <v-slide-group multiple show-arrows="mobile">
           <v-slide-item v-for="(item, index) in chatbotImg" :key="index">
             <v-card class="ma-4" width="200" :id="index">
-                <img
-                  :src="item.media"
-                  width="200"
-                  height="300"
-                  @dragend="dragEnd"
-                />
-                <p>{{item.comment}}</p>
+              <img :src="item.media" width="200" height="300" @dragend="dragEnd" />
+              <p>{{item.comment}}</p>
             </v-card>
           </v-slide-item>
         </v-slide-group>
@@ -93,32 +107,99 @@
     <br />
     <v-sheet elevation="3" class="pa-0">
       <v-toolbar dense color="elevation-0">
-
-        <v-col>
+        <v-col cols="2">
           <v-select
-          :items="fontSizeItems"
-          v-model="fontSizeValue"
-          dense
-          menu-props="auto"
-          prepend-inner-icon="mdi-format-size"
-          class="mt-3 mr-2"
-          color="cyan darken-2"
+            :items="fontSizeItems"
+            v-model="fontSizeValue"
+            dense
+            menu-props="auto"
+            prepend-inner-icon="mdi-format-size"
+            class="mt-3 mr-2"
+            color="cyan darken-2"
           />
         </v-col>
 
-        <v-col>
+        <v-col cols="2">
           <v-select
-          :items="fontItems"
-          v-model="fontValue"
-          dense
-          prepend-inner-icon="mdi-format-font"
-          class="mt-3 ml-2"
-          menu-props="auto"
-          :style="{fontFamily : fontValue}"
-          color="cyan darken-2"
+            :items="fontItems"
+            v-model="fontValue"
+            dense
+            prepend-inner-icon="mdi-format-font"
+            class="mt-3 ml-2"
+            menu-props="auto"
+            :style="{fontFamily : fontValue}"
+            color="cyan darken-2"
           />
         </v-col>
-        
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="addQuoteIntoEditor"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-quote-open</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">인용구</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="execValue('formatBlock', true, '<blockquote>')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-quote-open</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">문단으로 감싸기</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('strikeThrough')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-quote-open</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">가로줄 추가</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('removeFormat')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-quote-open</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">포멧 제거</span>
+        </v-tooltip>
+
         <v-tooltip bottom>
           <template v-slot:activator="{on, attrs}">
             <v-btn
@@ -205,17 +286,17 @@
         </v-tooltip>
 
         <v-menu open-on-hover offset-y>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            label
-            :style="{backgroundColor : HiliteColor, color : fontColor}"
-            v-on="on"
-            v-bind="attrs"
-            icon
-          > 
-            <v-icon>mdi-marker</v-icon>
-          </v-btn>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              label
+              :style="{backgroundColor : HiliteColor, color : fontColor}"
+              v-on="on"
+              v-bind="attrs"
+              icon
+            >
+              <v-icon>mdi-marker</v-icon>
+            </v-btn>
           </template>
 
           <v-list>
@@ -448,23 +529,45 @@
     </v-toolbar>
     <br>
     <v-divider></v-divider>
-    <v-sheet height="500">
-      <iframe
-        id="editor"
-        :src="editorSrc"
-        frameborder="0"
-        scrolling="auto"
-        style="width:100%; height:100%"
-      ></iframe>
-    </v-sheet>
+    <v-sheet height="650">
+        <iframe
+          v-if="!$route.params.articleNum"
+          id="editor"
+          :src="editorSrc"
+          frameborder="0"
+          scrolling="auto"
+          style="width:100%; height:100%"
+        ></iframe>
+        <iframe
+          v-if="realContent"
+          id="editor"
+          :srcdoc="realContent"
+          frameborder="0"
+          scrolling="auto"
+          style="width:100%; height:100%"
+        ></iframe>
+      </v-sheet>
     </v-sheet>
 
     <v-row>
       <v-col>
-        <v-btn tile outlined @click="temp" :style="{fontFamily : 'Nanum Gothic'}">임시 저장</v-btn>
+        <v-btn
+          v-if="!$route.params.articleNum"
+          tile
+          outlined
+          @click="temp"
+          :style="{fontFamily : 'Nanum Gothic'}"
+        >임시 저장</v-btn>
       </v-col>
       <v-col align="right">
-        <v-btn tile outlined @click="regist" :style="{fontFamily : 'Nanum Gothic'}">등록</v-btn>
+        <v-btn
+          v-if="!$route.params.articleNum"
+          tile
+          outlined
+          @click="regist"
+          :style="{fontFamily : 'Nanum Gothic'}"
+        >등록</v-btn>
+        <v-btn v-else tile outlined @click="regist" :style="{fontFamily : 'Nanum Gothic'}">수정</v-btn>
       </v-col>
     </v-row>
     <br />
@@ -621,10 +724,13 @@ export default {
         b: 255,
         a: 1
       },
+      sheet: false,
       chatbotImg:[],
       existChatbot: false,
       useChatbotImg:false,
       hidden:true,
+      realContent: "",
+      article: {},
     };
   },
   created() {
@@ -634,6 +740,20 @@ export default {
       this.chatbotImg = data;
       this.existChatbot = true;
     })
+    if(this.$route.params.articleNum){
+      http
+        .get(`/article/update/${this.$route.params.articleNum}`)
+        .then(({ data }) => {
+          this.articleTitle = data.title;
+          this.articleContent = data.content;
+          this.place.name = data.place;
+          this.place.lat = data.lat;
+          this.place.lng = data.lng;  
+          this.article = data;
+          console.log(this.article);
+          this.openContentFile();
+        });
+    }
   },
   mounted() {
     if (window.localStorage.getItem("isSaved") == "true") {
@@ -641,6 +761,24 @@ export default {
     }
   },
   methods: {
+    addQuoteIntoEditor: function() {
+      var quoteDiv = 
+      '<div style = "width:100%; display:block;">\
+        <div style = "width:100%; text-align:center;">\
+          <img src="../../template/image/quote-open.png">\
+        </div>\
+        <div style = "width:100%; text-align:center;">\
+          <h1 class="textH" data-text="내용을 입력하세요."></div>\
+        </div>\
+        <div style = "width:100%; text-align:center;">\
+          <h5 class="textH" data-text="출처" style="color:gray;"></div>\
+        </div>\
+        <div style = "width:100%; text-align:center;">\
+          <img src="../../template/image/quote-close.png">\
+        </div>\
+      </div>';
+      this.execValue("insertHTML", false, quoteDiv);
+    },
     dragEnd: function(event) {
       if(event.dataTransfer.dropEffect == "copy") {
         this.imgPool.splice(event.target.parentElement.getAttribute("id"), 1);
@@ -785,7 +923,7 @@ export default {
       this.alert = true;
     }
     else {
-      this.registHandler();
+      this.$route.params.articleNum == null ? this.registHandler() : this.updateHandler();
     }
    },
    registHandler: async function() {
@@ -840,6 +978,80 @@ export default {
           }
           console.log(e.request.status);
         });
+    },
+    updateHandler: async function() {
+      var imgFiles = await this.createFileByInnerEditorTextAndReturnImgFileArr();
+      var formData = new FormData();
+      formData.append('files', this.editorHtmlFile);
+      for (const key in imgFiles) {
+        formData.append('files', imgFiles[key]);
+      }
+      http3
+      .post(`/article/files`, formData).then(({ data }) => {
+        http
+          .put(`/article/${this.article.num}`, {
+            num: this.article.num,
+            user_num: this.article.user_num,
+            trippackage_num: this.article.trippackage_num,
+            title: this.articleTitle,
+            place: this.place.name,
+            content: data[0],
+            thumbnail: data[1],
+            temp: this.article.temp,
+            created_at: this.article.created_at,
+            date_start: this.article.date_start,
+            date_end: this.article.date_end,
+            likeCount: this.article.likeCount,
+            views: this.article.views,
+            userNickname: this.article.userNickname,
+            lat: this.place.lat,
+            lng: this.place.lng,
+          })
+          .then(({ data }) => {
+            let msg = "수정 처리시 문제가 발생했습니다.";
+            if (data === "success") {
+              this.registSuccess = true;
+              msg = "수정이 완료되었습니다.";
+            }
+            this.alertMsg = msg;
+            this.alert = true;
+            this.registSuccess = true;
+            this.storeClean();
+            this.$router.push(`/article/list/${this.getUserNum}`);
+          })
+          .catch(() => {
+            this.alertMsg = "수정 처리시 에러가 발생했습니다.";
+            this.alert = true;
+            });
+          })
+        .catch(e => {
+          if (e.request.status === 404) {
+            this.alertMsg = "등록 처리시 에러가 발생했습니다.";
+            this.alert = true;
+          } else {
+            this.$router.push(`/apierror/${e.request.status}/`);
+          }
+          console.log(e.request.status);
+        });
+    },
+    openContentFile: function() {
+      var url = "../../content/registered/" + this.articleContent;
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = "text";
+
+      var setRealContent = val => {
+        var body = val.split('<body>');
+        var content = this.tempPrefix + this.tempPrefix2 + body[1];
+        this.realContent = (content);
+      };
+      
+      xhr.onload = function(e) {
+        var resp = xhr.responseText || e.target.responseText;
+        setRealContent(resp);
+      };
+
+      xhr.open("GET", url);
+      xhr.send();
     },
     onChangeMultipleImages() {
       this.multFlag = true;

@@ -5,15 +5,15 @@
         <v-form ref="form" v-model="valid">
         <v-row>
           <v-col>
-            <p class="teal--text">블로그 이미지</p>
+            <p style="font-family: 'Sunflower'; font-weight: bold;" class="teal--text">Blog Image</p>
             <div align="center">
                 <div v-if="firstImage">
                 <v-img
                   v-if="titleimg"
                   :src="`../../blogImage/${titleimg}`"
                   class="img"
-                  width="200"
-                  height="100"
+                  width="250"
+                  height="130"
                 >
                   <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center">
@@ -25,8 +25,8 @@
                   v-else
                   :src="`../../articleImage/noimage.png`"
                   class="img"
-                  width="200"
-                  height="100"
+                  width="250"
+                  height="130"
                 >
                   <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center">
@@ -36,7 +36,7 @@
                 </v-img>
               </div>
               <div v-else>
-                <v-img v-if="imageUrl" :src="imageUrl" class="img" width="200" height="100">
+                <v-img v-if="imageUrl" :src="imageUrl" class="img" width="150" height="120">
                   <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center">
                       <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -47,8 +47,8 @@
                   v-else
                   :src="`../../articleImage/noimage.png`"
                   class="img"
-                  width="200"
-                  height="100"
+                  width="250"
+                  height="130"
                 >
                   <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center">
@@ -58,17 +58,17 @@
                 </v-img>
               </div>
               <input ref="imageInput" type="file" hidden @change="onChangeImages" />
-              <v-btn type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
+              <v-btn color="teal" class="mt-2" dark style="font-family: 'Nanum Gothic';" type="button" @click="onClickImageUpload">이미지 업로드</v-btn>
             </div>
           </v-col>
           <v-col >
-            <p class="teal--text">방문자 수</p>
-            <p>{{visitCount}} 명이 다녀갔습니다.</p>
+            <p style="font-family: 'Sunflower'; font-weight: bold;" class="teal--text">Visited</p>
+            <p style="font-family: 'Nanum Gothic';">{{visitCount}} 명이 다녀갔습니다.</p>
           </v-col>
         </v-row>
         <v-row>
-          <v-col class="teal--text">
-            블로그 명
+          <v-col>
+            <p style="font-family: 'Sunflower'; font-weight: bold;" class="teal--text">Blog Title</p>
             <v-container fluid class="pa-0">
               <v-row>
                 <v-col cols="10">
@@ -81,40 +81,50 @@
                     row-height="15"
                     label="블로그 명을 입력하세요"
                     v-model="title"
+                    style="font-family: 'Nanum Gothic';"
+                    color="teal"
                   ></v-textarea>
                 </v-col>
                 <v-col cols="2">
-                  <h1>
-                    <i class="fas fa-square mt-5" :style="getColor" @click="onOffDialog" />
-                  </h1>
+                  <v-btn
+                    label
+                    :style="getColor"
+                    v-on="on"
+                    v-bind="attrs"
+                    icon
+                    @click="onOffDialog"
+                  >
+                    <v-icon>fas fa-square</v-icon>
+                  </v-btn>
                 </v-col>
+                <v-list v-if="dialog">
+                  <v-list-item>
+                    <v-color-picker
+                      hide-inputs
+                      v-model="titleColor"
+                    ></v-color-picker>
+                  </v-list-item>
+                </v-list>
               </v-row>
-              <v-row v-if="dialog">
-                <v-col>
-                  <v-color-picker class="ma-2" mode="hexa" v-model="titleColor" hide-inputs />
-                </v-col>
-              </v-row>
+
             </v-container>
           </v-col>
         </v-row>
 
         <v-row>
-          <v-col>
-            <v-btn inline-block :disabled="!valid" @click="regist" class="cyan darken-3 white--text">수정</v-btn>
-          </v-col>
           <v-col class="text-right">
-            <v-btn inline-block @click="closeSetBlogMadal2" class="cyan darken-3 white--text">취소</v-btn>
+            <v-btn inline-block :disabled="!valid" @click="regist" color="teal" dark style="font-family: 'Nanum Gothic';">수정</v-btn>
           </v-col>
         </v-row>
         </v-form>
       </v-container>
     </div>
 
-    <v-snackbar v-model="alert" timeout="5000">
-      <v-icon color="deep-orange darken-3">mdi-home</v-icon>
+    <v-snackbar shaped color="teal" v-model="alert" timeout="5000">
+      <v-icon color="white">mdi-check-bold</v-icon>
       {{ alertMsg }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="alert = false">Close</v-btn>
       </template>
     </v-snackbar>
   </div>
@@ -284,6 +294,7 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
 th {
   background-color: #eeeeee;
   color: #3e5fba;

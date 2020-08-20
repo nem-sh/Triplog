@@ -23,97 +23,94 @@ import UserSetting from "../views/personal/UserSetting.vue"
 // import { component } from "vue/types/umd";
 Vue.use(VueRouter);
 
-const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home
-  },
-  {
-    path: "/login/",
-    name: "Login",
-    component: Login
-  },
-  {
-    path: "/login/social/:site",
-    name: "SocialLogin",
-    component: SocialLogin
-  },
-  {
-    path: "/emailauth",
-    name: "EmailAuth",
-    component: EmailAuth
-  },
-  {
-    path: "/emailauth/success",
-    name: "EmailAuthSuccess",
-    component: EmailAuthSuccess
-  },
-  {
-    path: "/like",
-    name: "Like",
-    component: Like
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  },
-  {
-    path: "/article/ArticleSearch",
-    name: "ArticleSearch",
-    component: ArticleSearch
-  },
-
-  {
-    path: "/apierror/:errorCode",
-    name: "APIError",
-    component: APIError
-  },
-  {
-    path: "/article/write",
-    name: "articleWrite",
-    component: ArticleWrite
-  },
-  {
-    path: "/article/detail/:articleNum",
-    name: "articleDetail",
-    component: ArticleInfo
-  },
-  {
-    path: "/article/list/:hostNum",
-    name: "articleList",
-    component: ArticleList
-  },
-  // {
-  //   path: "/article/modify/:articleNum",
-  //   name: "articleModify",
-  //   component: ArticleModify
-  // },
-  {
-    path: "/tempArticle",
-    name: "tempArticle",
-    component: temp
-  },
-
-  {
-    path: "/userSetting/:hostNum",
-    name: "UserSetting",
-    component: UserSetting
-  },
+const routes = [{
+        path: "/",
+        name: "Home",
+        component: Home
+    },
+    {
+        path: "/login/",
+        name: "Login",
+        component: Login
+    },
+    {
+        path: "/login/social/:site",
+        name: "SocialLogin",
+        component: SocialLogin
+    },
+    {
+        path: "/emailauth",
+        name: "EmailAuth",
+        component: EmailAuth
+    },
+    {
+        path: "/emailauth/success",
+        name: "EmailAuthSuccess",
+        component: EmailAuthSuccess
+    },
+    {
+        path: "/like",
+        name: "Like",
+        component: Like
+    },
+    {
+        path: "/about",
+        name: "About",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "about" */ "../views/About.vue")
+    },
+    {
+        path: "/article/ArticleSearch",
+        name: "ArticleSearch",
+        component: ArticleSearch
+    },
+    {
+        path: "/apierror/:errorCode",
+        name: "APIError",
+        component: APIError
+    },
+    {
+        path: "/article/write",
+        name: "articleWrite",
+        component: ArticleWrite
+    },
+    {
+        path: "/article/detail/:articleNum",
+        name: "articleDetail",
+        component: ArticleInfo
+    },
+    {
+        path: "/article/list/:hostNum",
+        name: "articleList",
+        component: ArticleList
+    },
+    {
+        path: "/article/modify/:articleNum",
+        name: "articleModify",
+        component: ArticleWrite
+    },
+    {
+        path: "/tempArticle",
+        name: "tempArticle",
+        component: temp
+    },
+    {
+        path: "/userSetting/:hostNum",
+        name: "UserSetting",
+        component: UserSetting
+    },
+    {
+        path: "/**",
+        name: "error",
+        component: error
+    },
   {
     path: "/auth/search/",
     name: "AuthSearch",
     component: AuthSearch
-  },
-  {
-    path: "/**",
-    name: "error",
-    component: error
   },
 ];
 
