@@ -14,6 +14,8 @@ import ArticleList from "../views/article/ArticleList.vue"
 import ArticleModify from "../views/article/ArticleModify.vue"
 import Like from "../views/likey/Like.vue"
 
+
+import AuthSearch from "../components/account/AuthSearch.vue";
 import Login from "../components/account/Login.vue";
 import SocialLogin from "../views/SocialLogin.vue";
 import temp from "../views/temporaryArticle/temp.vue"
@@ -102,6 +104,11 @@ const routes = [
     path: "/userSetting/:hostNum",
     name: "UserSetting",
     component: UserSetting
+  },
+  {
+    path: "/auth/search/",
+    name: "AuthSearch",
+    component: AuthSearch
   },
   {
     path: "/**",
