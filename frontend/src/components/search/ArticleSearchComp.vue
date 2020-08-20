@@ -1,10 +1,10 @@
 <template>
     <v-card class="ma-4" width="200" @click="clickTableRow()">
         <v-scale-transition> 
-            <v-img v-if="thumbnail" :src="require(`@/assets/articleImage/${thumbnail}`)"
+            <v-img v-if="thumbnail" :src="`../../articleImage/${thumbnail}`"
             height="200px">
             </v-img>
-            <v-img v-else :src="require(`@/assets/articleImage/noimage.png`)"
+            <v-img v-else :src="`../../articleImage/noimage.png`"
             class="align-end"
             >
             </v-img>

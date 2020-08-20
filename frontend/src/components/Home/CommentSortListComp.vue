@@ -31,6 +31,7 @@ export default {
   created() {
     http.get(`/article/commentsort`).then(({ data }) => {
       this.items = data;
+      
     });
   }
 };

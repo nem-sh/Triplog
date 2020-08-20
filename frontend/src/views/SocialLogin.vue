@@ -102,8 +102,7 @@
 <script>
 // import http from "@/util/http-common";
 
-import localHttp from "@/util/http-common-local";
-
+import localHttp from "@/util/http-common";
 import { AUTH_REQUEST_SOCIAL } from "@/store/actions/auth";
 export default {
   name: "SocialLogin",

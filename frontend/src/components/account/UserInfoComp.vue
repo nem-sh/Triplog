@@ -2,41 +2,42 @@
   <div>
     <div id="app">
       <v-container style="max-width: 700px;">
-        <v-row>
-          <v-col>
-            <p class="teal--text">Email (ID)</p>
-            <p>{{email}}</p>
-          </v-col>
-          <v-col class="teal--text">
-            <div align="center">
-              <div v-if="firstImage">
-                <v-img
-                  v-if="imagesrc"
-                  :src="require(`@/assets/userImage/${imagesrc}`)"
-                  class="img"
-                  width="200"
-                  height="100"
-                >
-                  <template v-slot:placeholder>
-                    <v-row class="fill-height ma-0" align="center" justify="center">
-                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-                <v-img
-                  v-else
-                  :src="require(`@/assets/articleImage/noimage.png`)"
-                  class="img"
-                  width="200"
-                  height="100"
-                >
-                  <template v-slot:placeholder>
-                    <v-row class="fill-height ma-0" align="center" justify="center">
-                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </div>
+        <v-form ref="form" v-model="mValid">
+          <v-row>
+            <v-col>
+              <p class="teal--text">Email (ID)</p>
+              <p>{{email}}</p>
+            </v-col>
+            <v-col class="teal--text">
+              <div align="center">
+                <div v-if="firstImage">
+                  <v-img
+                    v-if="imagesrc"
+                    :src="`../../userImage/${imagesrc}`"
+                    class="img"
+                    width="200"
+                    height="100"
+                  >
+                    <template v-slot:placeholder>
+                      <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                  <v-img
+                    v-else
+                    :src="`../../articleImage/noimage.png`"
+                    class="img"
+                    width="200"
+                    height="100"
+                  >
+                    <template v-slot:placeholder>
+                      <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </div>
               <div v-else>
                 <v-img v-if="imageUrl" :src="imageUrl" class="img" width="200" height="100">
                   <template v-slot:placeholder>
@@ -47,7 +48,7 @@
                 </v-img>
                 <v-img
                   v-else
-                  :src="require(`@/assets/articleImage/noimage.png`)"
+                  :src="`../../articleImage/noimage.png`"
                   class="img"
                   width="200"
                   height="100"
@@ -65,45 +66,47 @@
           </v-col>
         </v-row>
 
-        <v-row>
-          <v-col>
-            <p class="teal--text">Name</p>
-            <v-textarea
-              auto-grow
-              outlined
-              rows="1"
-              row-height="15"
-              label="이름을 입력하세요"
-              v-model="name"
-            ></v-textarea>
-          </v-col>
-          <v-col>
-            <p class="teal--text">NickName</p>
-            <v-textarea
-              auto-grow
-              outlined
-              rows="1"
-              row-height="15"
-              label="별명을 입력하세요"
-              v-model="nickName"
-            ></v-textarea>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <p class="teal--text">Self-introduction</p>
-            <v-textarea
-              :counter="50"
-              auto-grow
-              outlined
-              rows="2"
-              row-height="30"
-              label="자신을 소개하세요"
-              v-model="intro"
-            >></v-textarea>
-          </v-col>
-        </v-row>
+          <v-row>
+            <v-col>
+              <p class="teal--text">Name</p>
+              <v-textarea
+                auto-grow
+                outlined
+                rows="1"
+                row-height="15"
+                label="이름을 입력하세요"
+                v-model="name"
+              ></v-textarea>
+            </v-col>
+            <v-col>
+              <p class="teal--text">NickName</p>
+              <v-textarea
+                :counter="5"
+                :rules="nickNameRules"
+                auto-grow
+                outlined
+                rows="1"
+                row-height="15"
+                label="별명을 입력하세요"
+                v-model="nickName"
+              ></v-textarea>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <p class="teal--text">Self-introduction</p>
+              <v-textarea
+                :counter="44"
+                :rules="introRules"
+                auto-grow
+                outlined
+                rows="2"
+                row-height="30"
+                label="자신을 소개하세요"
+                v-model="intro"
+              >></v-textarea>
+            </v-col>
+          </v-row>
 
         <v-row>
           <v-col>
@@ -120,14 +123,15 @@
           </v-col>
         </v-row>
 
-        <v-row>
-          <v-col>
-            <v-btn @click="modify" class="cyan darken-3 white--text">수정</v-btn>
-          </v-col>
-          <v-col class="text-right">
-            <v-btn @click="confirmSignOut" class="cyan darken-3 white--text">탈퇴</v-btn>
-          </v-col>
-        </v-row>
+          <v-row>
+            <v-col>
+              <v-btn :disabled="!mValid" @click="modify" class="cyan darken-3 white--text">수정</v-btn>
+            </v-col>
+            <v-col class="text-right">
+              <v-btn @click="confirmSignOut" class="cyan darken-3 white--text">탈퇴</v-btn>
+            </v-col>
+          </v-row>
+        </v-form>
       </v-container>
     </div>
 
@@ -193,7 +197,14 @@ export default {
       fileInfo: null,
       firstImage: true,
       commentList: [],
-      mediaList: []
+      mediaList: [],
+      mValid: true,
+      nickNameRules: [
+        v => (v && v.length <= 5) || "별명은 5글자 이내만 가능합니다."
+      ],
+      introRules: [
+        v => (v && v.length <= 44) || "자기소개는 44글자 이내만 가능합니다."
+      ]
     };
   },
   created() {
@@ -267,7 +278,6 @@ export default {
     },
     modifyHandler: function() {
       if (this.fileInfo != null) {
-        console.log("asdasd");
         var formData = new FormData();
         formData.append("img", this.fileInfo);
         http3
@@ -345,10 +355,10 @@ export default {
           let msg = "탈퇴가 완료되었습니다.";
           this.alertMsg = msg;
           this.alert = true;
-          this.logout();
           this.dialog = false;
           this.$emit("closeUserInfoModal", this.alertMsg);
-          this.$router.push("/");
+          this.logout();
+          this.$router.push(`/`);
         })
         .catch(e => {
           if (e.request.status === 404) {
@@ -365,8 +375,8 @@ export default {
     },
     logout: function() {
       this.$store.dispatch(AUTH_LOGOUT);
-    }
-  }
+    },
+  },
 };
 </script>
 

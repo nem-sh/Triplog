@@ -7,7 +7,7 @@
       v-if="!isDelete"
     >
       <v-list-item-avatar @click="goToBlog" style="cursor:pointer">
-        <v-img :src="require(`@/assets/userImage/${userimg}`)"></v-img>
+        <v-img :src="`../../userImage/${userimg}`"></v-img>
       </v-list-item-avatar>
 
       <v-list-item-content class="pb-0">

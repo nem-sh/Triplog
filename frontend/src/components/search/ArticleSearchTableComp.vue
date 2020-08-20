@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h5 v-if="items.length == 0">검색 결과가 없습니다.</h5>
+        <v-container v-if="items.length == 0">
+            <h2> (*≧∀≦*) </h2>
+            <h5>검색 결과가 없습니다.</h5>
+        </v-container>
         <v-row>
             <v-sheet class="mx-auto" max-width="900">
                 <v-slide-group class="pa-4">

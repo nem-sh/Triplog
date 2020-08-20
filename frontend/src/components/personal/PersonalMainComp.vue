@@ -3,7 +3,7 @@
     <v-container class="pa-0 d-none d-sm-block" style="min-width:300px ;   ">
       <v-container class="pb-0" style="display:flex; justify-content:flex-end;">
         <v-list-item-avatar>
-          <v-img :src="require(`@/assets/userImage/${hostImg}`)"></v-img>
+          <v-img :src=`../../userImage/${hostImg}`"></v-img>
         </v-list-item-avatar>
 
         <p
@@ -17,7 +17,7 @@
       <!-- <v-container class="border pa-0" style> -->
       <v-container style="height:350px">
         <v-img
-          :src="require(`@/assets/blogImage/${titleimg}`)"
+          :src="`../../blogImage/${titleimg}`"
           style="position: relative; z-index: 1; width: 852px; height: 325px; opacity:0.5;"
           alt
         />
@@ -40,6 +40,7 @@
                   color="teal"
                   v-if="isMyNeighbor"
                   @click="removeNeighbor"
+
                 >
                   <v-icon color="white" size="24px">mdi-account-multiple-minus</v-icon>
                 </v-btn>
@@ -276,13 +277,13 @@ export default {
       return `width: ${size}px;`;
     },
     getImg: function() {
-      return `@/assets/blogImage/${this.titleimg}`;
+      return `../../blogImage/${this.titleimg}`;
     },
     getUserImg: function() {
       if (this.hostImg == null) {
-        return `@/assets/userImage/${this.titleimg}`;
+        return `../../userImage/${this.titleimg}`;
       } else {
-        return `@/assets/userImage/${this.hostImg}`;
+        return `../../userImage/${this.hostImg}`;
       }
     },
     getColor: function() {

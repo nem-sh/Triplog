@@ -12,7 +12,7 @@
         href="#!"
       >
         <v-img
-          :src="require(`@/assets/articleImage/${value.article.thumbnail}`)"
+          :src="`../../articleImage/${value.article.thumbnail}`"
           height="100%"
           @click.stop="dialog = true"
         >
@@ -40,7 +40,7 @@
               </v-list-item>
 
               <v-img
-                :src="require(`@/assets/articleImage/${value.article.thumbnail}`)"
+                :src="`../../articleImage/${value.article.thumbnail}`"
                 height="388"
               ></v-img>
               <br />
