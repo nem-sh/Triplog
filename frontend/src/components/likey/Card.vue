@@ -27,7 +27,9 @@
           <v-dialog v-model="dialog" max-width="688">
             <v-card @click="dialog = false" class="mx-auto" style="opacity: 1; ">
               <v-list-item>
-                <v-list-item-avatar color="grey"></v-list-item-avatar>
+                <v-list-item-avatar color="grey">
+                  <v-img :src="require(`@/assets/userImage/${value.writer.imageSrc}`)"></v-img>
+                </v-list-item-avatar>
                 <v-list-item-content>
                   <v-list-item-title class="headline">
                     {{value.article.title}}
@@ -176,8 +178,7 @@ export default {
       this.$router.push(`/article/detail/${this.value.article.num}`);
     },
 
-    movePackage: function() {
-    },
+    movePackage: function() {},
 
     setTime: function() {
       let today = new Date();
