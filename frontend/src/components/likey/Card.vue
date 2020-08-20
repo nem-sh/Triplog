@@ -28,7 +28,7 @@
             <v-card @click="dialog = false" class="mx-auto" style="opacity: 1; ">
               <v-list-item>
                 <v-list-item-avatar color="grey">
-                  <v-img :src="require(`@/assets/userImage/${value.writer.imageSrc}`)"></v-img>
+                  <v-img :src="`../../userImage/${value.writer.imageSrc}`"></v-img>
                 </v-list-item-avatar>
                 <v-list-item-content>
                   <v-list-item-title class="headline">
@@ -39,10 +39,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-img
-                :src="`../../articleImage/${value.article.thumbnail}`"
-                height="388"
-              ></v-img>
+              <v-img :src="`../../articleImage/${value.article.thumbnail}`" height="388"></v-img>
               <br />
               <v-card-text class="skipText">{{value.article.place}}</v-card-text>
               <br />

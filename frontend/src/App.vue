@@ -132,7 +132,7 @@
         <v-app-bar-nav-icon class="mx-0">
           <v-img src="/icons8-around-the-globe-100.png" width="15px"></v-img>
         </v-app-bar-nav-icon>
-        
+
         <v-toolbar-title
           style="font-size: 56px; font-family: 'Poor Story'"
           class="cursor ml-10 teal--text"
@@ -261,7 +261,8 @@ export default {
   },
   methods: {
     goMain: function() {
-      var para = document.location.href.split("http://localhost:8081/");
+      var para = document.location.href.split("http://localhost:8081");
+      // 8081 뒤에 / 붙이면 안되요!
       if (para[1] == "") {
         this.$router.go();
       } else {

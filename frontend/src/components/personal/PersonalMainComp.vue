@@ -3,7 +3,7 @@
     <v-container class="pa-0 d-none d-sm-block" style="min-width:300px ;   ">
       <v-container class="pb-0" style="display:flex; justify-content:flex-end;">
         <v-list-item-avatar>
-          <v-img :src=`../../userImage/${hostImg}`"></v-img>
+          <v-img :src="`../../userImage/${hostImg}`"></v-img>
         </v-list-item-avatar>
 
         <p
@@ -40,7 +40,6 @@
                   color="teal"
                   v-if="isMyNeighbor"
                   @click="removeNeighbor"
-
                 >
                   <v-icon color="white" size="24px">mdi-account-multiple-minus</v-icon>
                 </v-btn>
@@ -84,7 +83,7 @@
     <v-container class="pa-0 d-block d-sm-none" :style="mobileSize">
       <v-container class="pb-0" style="display:flex; justify-content:flex-end;">
         <v-list-item-avatar>
-          <v-img :src="require(`@/assets/userImage/${hostImg}`)"></v-img>
+          <v-img :src="`../../userImage/${hostImg}`"></v-img>
         </v-list-item-avatar>
 
         <p
@@ -98,7 +97,7 @@
       <!-- <v-container class="border pa-0" style> -->
       <v-container class="pa-0" style="height:350px">
         <v-img
-          :src="require(`@/assets/blogImage/${titleimg}`)"
+          :src="`../../blogImage/${titleImg}`"
           style="position: relative; z-index: 1; width: 852px; height: 325px; opacity:0.5;"
           alt
         />

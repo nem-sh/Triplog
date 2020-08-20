@@ -87,7 +87,6 @@ public class AuthSocialService {
 	            sb.append("&client_id=692091835929-e5bhto8anq0j3v7k21kb4f87gfn2gt6s.apps.googleusercontent.com");
 	            sb.append("&client_secret=OMDDhDy00GIuETkIrQRiTuGl");
 	            sb.append("&redirect_uri=http://i3b207.p.ssafy.io:8080/api/social/google/code");
-	            sb.append("&redirect_uri=http://i3b207.p.ssafy.io:8080/api/social/kakao/code");
 	            sb.append("&code=" + authorize_code);
 	            bw.write(sb.toString());
 	            bw.flush();
