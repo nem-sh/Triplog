@@ -261,7 +261,7 @@ export default {
   },
   methods: {
     goMain: function() {
-      var para = document.location.href.split("http://localhost:8081");
+      var para = document.location.href.split("http://i3b207.p.ssafy.io");
       // 8081 뒤에 / 붙이면 안되요!
 
       console.log(para[1]);
