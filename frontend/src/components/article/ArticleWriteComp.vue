@@ -67,7 +67,25 @@
         </v-slide-group>
       </v-sheet>
     </v-row>
-
+    <v-btn v-if="existChatbot && hidden" @click="useChatbot"><v-icon>fas fa-robot</v-icon></v-btn>
+    <v-btn v-if="!hidden" @click="useChatbot">접기</v-btn>
+    <v-row v-if="useChatbotImg">
+      <v-sheet class="mx-auto" max-width="1000">
+        <v-slide-group multiple show-arrows="mobile">
+          <v-slide-item v-for="(item, index) in chatbotImg" :key="index">
+            <v-card class="ma-4" width="200" :id="index">
+                <img
+                  :src="item.media"
+                  width="200"
+                  height="300"
+                  @dragend="dragEnd"
+                />
+                <p>{{item.comment}}</p>
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
+      </v-sheet>
+    </v-row>
     <br />
 
     <input ref="imageInput" type="file" accept="image/*" hidden @change="onChangeImages" />
@@ -548,11 +566,20 @@ export default {
         g: 255,
         b: 255,
         a: 1
-      }
+      },
+      chatbotImg:[],
+      existChatbot: false,
+      useChatbotImg:false,
+      hidden:true,
     };
   },
   created() {
     // this.start();
+    http.get(`chatbot/${this.getUserNum}`)
+    .then(({data})=>{
+      this.chatbotImg = data;
+      this.existChatbot = true;
+    })
   },
   mounted() {
     if (window.localStorage.getItem("isSaved") == "true") {
@@ -737,6 +764,12 @@ export default {
     returnImageURL(file) {
       return URL.createObjectURL(file);
     },
+    useChatbot(){
+      this.hidden = !this.hidden;
+      this.useChatbotImg = !this.useChatbotImg;
+      console.log(this.hidden)
+      console.log(this.useChatbotImg)
+    }
  },
   computed: {
     ...mapGetters([
