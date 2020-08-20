@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-footer fixed padless class="d-flex d-sm-none">
+    <v-footer fixed padless class="d-flex d-sm-none" v-if="getUserNum">
       <v-card flat tile width="100%" class="lighten-1 text-center">
         <v-card-text>
           <v-btn class="mx-4" icon @click="info">
@@ -135,7 +135,7 @@
 
         <v-toolbar-title
           style="font-size: 56px; font-family: 'Poor Story'"
-          class="cursor ml-10 teal--text"
+          class="cursor teal--text"
           @click="goMain"
         >TRIPLOG</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -182,22 +182,23 @@
       </v-container>
     </v-main>
 
-    <v-snackbar shaped color="teal" elevation="24" v-model="loginSuccess" timeout="5000">
-      <v-icon color="white">mdi-home</v-icon>
+    <v-snackbar style="font-family: 'Nanum Gothic';" shaped color="teal" elevation="24" v-model="loginSuccess" timeout="3000">
+      <v-icon color="white">mdi-emoticon-excited-outline</v-icon>
       {{ getProfile + "님 반갑습니다." }}
       <template v-slot:action="{ attrs }">
         <v-btn color="white" text v-bind="attrs" @click="loginSuccess = false">Close</v-btn>
       </template>
     </v-snackbar>
 
-    <v-snackbar shaped color="teal" elevation="24" v-model="logoutSuccess" timeout="5000">
+    <v-snackbar style="font-family: 'Nanum Gothic';" shaped color="teal" elevation="24" v-model="logoutSuccess" timeout="3000">
+      <v-icon color="white">mdi-check-bold</v-icon>
       정상적으로 로그아웃 되었습니다.
       <template v-slot:action="{ attrs }">
         <v-btn color="white" text v-bind="attrs" @click="logoutSuccess = false">Close</v-btn>
       </template>
     </v-snackbar>
 
-    <v-snackbar shaped color="teal" elevation="24" v-model="alert" timeout="5000">
+    <v-snackbar style="font-family: 'Nanum Gothic';" shaped color="teal" elevation="24" v-model="alert" timeout="3000">
       <v-icon color="white">mdi-home</v-icon>
       {{alertMsg}}
       <template v-slot:action="{ attrs }">
@@ -264,7 +265,6 @@ export default {
       var para = document.location.href.split("http://i3b207.p.ssafy.io");
       // 8081 뒤에 / 붙이면 안되요!
 
-      console.log(para[1]);
       if (para[1] == "/") {
         this.$router.go();
       } else {

@@ -14,6 +14,8 @@ import ArticleList from "../views/article/ArticleList.vue"
 // import ArticleModify from "../views/article/ArticleModify.vue"
 import Like from "../views/likey/Like.vue"
 
+
+import AuthSearch from "../components/account/AuthSearch.vue";
 import Login from "../components/account/Login.vue";
 import SocialLogin from "../views/SocialLogin.vue";
 import temp from "../views/temporaryArticle/temp.vue"
@@ -97,11 +99,6 @@ const routes = [{
         component: temp
     },
     {
-        path: "/:hostNum",
-        name: "PersonalMain",
-        component: PersonalMain
-    },
-    {
         path: "/userSetting/:hostNum",
         name: "UserSetting",
         component: UserSetting
@@ -111,12 +108,17 @@ const routes = [{
         name: "error",
         component: error
     },
+  {
+    path: "/auth/search/",
+    name: "AuthSearch",
+    component: AuthSearch
+  },
 ];
 
 const router = new VueRouter({
-    mode: "history",
-    base: process.env.BASE_URL,
-    routes
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes
 });
 
 export default router;
