@@ -37,6 +37,7 @@
                 </v-row>
             </v-card-title>
             <br>
+            <br>
             <div class="text-right ma-2">
                 <v-btn color="teal" dark @click="clickTableRow()">READMORE</v-btn>
             </div>

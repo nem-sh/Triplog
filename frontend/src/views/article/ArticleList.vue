@@ -30,8 +30,7 @@
         
             <v-tabs-items v-model="tab">
               <v-tab-item :id="`All`">
-                <v-app id="inspire" style="max-width: 900px">
-                  <v-card>
+                  <v-card v-if="items.length != 0">
                     <GmapMap
                       :center="mapCenter"
                       :zoom="zoom"
@@ -47,7 +46,7 @@
                       />
                     </GmapMap>
                   </v-card>
-                  <v-container fluid>
+                  <v-container fluid v-if="items.length != 0">
                     <v-row>
                       <v-col cols="12">
                         <v-row align="stretch" justify="space-around">
@@ -64,7 +63,12 @@
                       </v-col>
                     </v-row>
                   </v-container>
-                </v-app>
+                  <div v-else style="text-align: center;" class="mt-5">
+                    <h1 style="color: gray; font-family: 'Nanum Gothic'"> (*≧∀≦*) </h1>
+                    <br>
+                    <h3 style="color: gray; font-family: 'Nanum Gothic'">나의 게시물 목록이 텅! 비었습니다.</h3>
+                    <h5 style="color: gray; font-family: 'Nanum Gothic'">게시물을 작성하면서 인기있는 TRIPLOGGER가 되어보세요!</h5>
+                  </div>
                 <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
               </v-tab-item>
         
