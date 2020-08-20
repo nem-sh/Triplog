@@ -147,11 +147,12 @@ export default {
     deleteComment() {
       let removeContent = this.item.comment.content;
 
-      this.item.comment.content = "삭제되었습니다.";
       if (this.item.comment.num == undefined) {
         http
           .delete(`/comment/content/${removeContent}`)
           .then(() => {
+            this.$emit("delete-comment");
+            this.item.comment.content = "삭제되었습니다.";
           })
           .catch(e => {
             console.log(e);
@@ -160,6 +161,7 @@ export default {
         http
           .delete(`/comment/${this.item.comment.num}`)
           .then(() => {
+            this.item.comment.content = "삭제되었습니다.";
           })
           .catch(e => {
             console.log(e);
@@ -184,41 +186,44 @@ export default {
           usernickname: this.getProfile,
           useremail: this.getEmail
         })
-        .then(() => {
-        })
+        .then(() => {})
         .catch(e => {
           console.log(e);
         });
     },
     submit() {
-      let obj = {
-        articlenum: this.$route.params.articleNum,
-        usernickname: this.getProfile,
-        content: this.content,
-        createdat: new Date(),
-        useremail: this.getEmail,
-        userimg: this.getUserImg,
-        usernum: this.getUserNum
-      };
-      this.item.cocomments.unshift(obj);
-      http
-        .post(`/comment/${this.item.comment.content}`, {
-          content: this.content,
-          createdat: new Date(),
-          articlenum: this.$route.params.articleNum,
-          userimg: this.getUserImg,
-          usernum: this.getUserNum,
-          usernickname: this.getProfile,
-          useremail: this.getEmail
-        })
-        .then(() => {
-          this.content = "";
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      if (this.getUserNum == "") {
+        alert("먼저 로그인을 진행해주세요");
+      } else {
+        http
+          .post(`/comment/${this.item.comment.content}`, {
+            content: this.content,
+            createdat: new Date(),
+            articlenum: this.$route.params.articleNum,
+            userimg: this.getUserImg,
+            usernum: this.getUserNum,
+            usernickname: this.getProfile,
+            useremail: this.getEmail
+          })
+          .then(() => {
+            let obj = {
+              articlenum: this.$route.params.articleNum,
+              usernickname: this.getProfile,
+              content: this.content,
+              createdat: new Date(),
+              useremail: this.getEmail,
+              userimg: this.getUserImg,
+              usernum: this.getUserNum
+            };
+            this.item.cocomments.unshift(obj);
+            this.content = "";
+          })
+          .catch(e => {
+            console.log(e);
+          });
 
-      this.content = "";
+        this.content = "";
+      }
     },
     getFormatDate(regtime) {
       return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");

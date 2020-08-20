@@ -24,7 +24,7 @@
       </v-btn>
       <v-btn @click="fab=!fab" :color="commentWriteBtnColor" dark fab>
         <v-icon v-if="fab">mdi-close</v-icon>
-        <v-icon v-else>mdi-pencil</v-icon>
+        <v-icon v-else>mdi-comment-edit-outline</v-icon>
       </v-btn>
     </div>
     <div
@@ -67,39 +67,43 @@ export default {
   },
   methods: {
     writeComment() {
-      if (this.content == "") {
-        this.fab = true;
+      if (this.getUserNum == "") {
+        alert("먼저 로그인을 진행해주세요.");
       } else {
-        let obj = {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          usernickname: this.getProfile,
-          useremail: this.getEmail,
-          content: this.content,
-          createdat: new Date(),
-          userimg: this.getUserImg,
-          usernum: this.getUserNum,
-          paragraph: this.paragraphInfo.paragraph
-        };
-        this.$emit("write-comment", obj);
-        // this.items.unshift({ comment: obj, cocomments: [] });
-        http
-          .post(`/comment/`, {
-            content: this.content,
-            createdat: new Date(),
-            articlenum: this.$route.params.articleNum,
-            userimg: this.getUserImg,
-            usernum: this.getUserNum,
-            usernickname: this.getProfile,
-            useremail: this.getEmail,
-            paragraph: this.paragraphInfo.paragraph
-          })
-          .then(() => {
-            this.content = "";
-            this.fab = false;
-          })
-          .catch(e => {
-            console.log(e);
-          });
+        if (this.content == "") {
+          this.fab = true;
+        } else {
+          http
+            .post(`/comment/`, {
+              content: this.content,
+              createdat: new Date(),
+              articlenum: this.$route.params.articleNum,
+              userimg: this.getUserImg,
+              usernum: this.getUserNum,
+              usernickname: this.getProfile,
+              useremail: this.getEmail,
+              paragraph: this.paragraphInfo.paragraph
+            })
+            .then(() => {
+              let obj = {
+                avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+                usernickname: this.getProfile,
+                useremail: this.getEmail,
+                content: this.content,
+                createdat: new Date(),
+                userimg: this.getUserImg,
+                usernum: this.getUserNum,
+                paragraph: this.paragraphInfo.paragraph
+              };
+              this.$emit("para-write-comment", obj);
+              // this.items.unshift({ comment: obj, cocomments: [] });
+              this.content = "";
+              this.fab = false;
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
       }
     }
   },
