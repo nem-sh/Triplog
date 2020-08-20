@@ -33,6 +33,7 @@
               :title="item.title"
               :thumbnail="item.thumbnail"
               :created_at="item.created_at"
+              :views="item.views"
             />
           </v-row>
         </v-col>
