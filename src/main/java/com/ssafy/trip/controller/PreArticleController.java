@@ -85,7 +85,7 @@ public class PreArticleController {
 					status += 1;
 					text.put("text","미디어가 등록되었습니다");
 					
-				} else if(status == 2){
+				} else if(status == 2 &&  (!utter.substring(0,4).equals("http"))){
 					
 					preArticle.setMedia(tmp);
 					preArticle.setComment(utter);
@@ -110,7 +110,7 @@ public class PreArticleController {
 				}
 		
 			}else {
-				text.put("text","등록되지 않은 사용자니다.");
+				text.put("text","등록되지 않은 사용자입니다.");
 			}
 			
 			
@@ -162,7 +162,7 @@ public class PreArticleController {
 
 				memberuser.setChatbotId(userId);
 				userRepository.save(memberuser);
-				String CompleteMsg = "확인되었습니다!";
+				String CompleteMsg = "인증되었습니다!";
 
 				text.put("text", CompleteMsg);
 			}

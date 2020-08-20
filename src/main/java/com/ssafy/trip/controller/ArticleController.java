@@ -357,14 +357,14 @@ public class ArticleController {
 
 	@GetMapping("/likesort")
 	public List<Article> getLikeSortedListArticle() {
-		List<Article> list = articleRepository.findTop4ByOrderByLikeCountDesc();
+		List<Article> list = articleRepository.findTop3ByOrderByLikeCountDesc();
 
 		return list;
 	}
 
 	@GetMapping("/viewsort")
 	public List<Article> getViewSortedListArticle() {
-		List<Article> list = articleRepository.findTop4ByOrderByViewsDesc();
+		List<Article> list = articleRepository.findTop3ByOrderByViewsDesc();
 		return list;
 	}
 
@@ -394,7 +394,7 @@ public class ArticleController {
 	}
 
 	@GetMapping("/commentsort")
-	public List<Article> getCommentsortedListArticle() {
+	public List getCommentsortedListArticle() {
 		List<Long> commentLength = new ArrayList<>();
 		List<Long> articleNumList = new ArrayList<>();
 
@@ -417,19 +417,21 @@ public class ArticleController {
 					long tmp = commentLength.get((int) (j - 1));
 					commentLength.set((int) (j - 1), commentLength.get((int) j));
 					commentLength.set((int) j, tmp);
-
+					
 					long tmp2 = articleNumList.get((int) j - 1);
 					articleNumList.set((int) (j - 1), articleNumList.get((int) j));
 					articleNumList.set((int) j, tmp2);
 				}
 			}
-
+		
 		}
-		List<Article> commentSort = new ArrayList<>();
-		for (long i = 0; i < 4; i++) {
+		
+		List commentSort = new ArrayList<>();
+		for (long i = 0; i < 3; i++) {
 			Article article = articleRepository.findByNumAndNumNotNull(articleNumList.get((int) i));
 
 			commentSort.add(article);
+			commentSort.add(commentLength.get((int) i));
 		}
 
 		return commentSort;
@@ -437,7 +439,7 @@ public class ArticleController {
 
 	@GetMapping("/recentSort")
 	public List<Article> recentArticle() {
-		List<Article> recent = articleRepository.findTop4ByOrderByNumDesc();
+		List<Article> recent = articleRepository.findTop3ByOrderByNumDesc();
 
 		return recent;
 	}

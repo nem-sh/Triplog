@@ -25,14 +25,15 @@ export default {
   },
   data: function() {
     return {
-      items: []
+      items: [],
+      
     };
   },
   created() {
     http.get(`/article/recentSort`).then(({ data }) => {
       this.items = data;
-      
     });
+    
   }
 };
 </script>
