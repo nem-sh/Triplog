@@ -6,16 +6,12 @@
         v-for="(item,i) in items"
         :key="i"
         :src="`../../mainImage/${item.src}`"
-        >
-        <v-row
-            class="fill-height"
-            align="center"
-            justify="center"
-            >
-            <div style="text-align:center; width: 80%">
-                <h1>{{ item.h1msg }}</h1>
-                <h3>{{ item.h2msg }}</h3>
-            </div>
+      >
+        <v-row class="fill-height" align="center" justify="center">
+          <div style="text-align:center; width: 80%">
+            <h1>{{ item.h1msg }}</h1>
+            <h3>{{ item.h2msg }}</h3>
+          </div>
         </v-row>
       </v-carousel-item>
     </v-carousel>
@@ -29,19 +25,15 @@
         </div>
       </v-row>
     </v-sheet>
-    <v-container
-        align="center"
-        justify="center"
-        style="max-width:1096px"
-        >
-        <h2 style="font-family: 'Nanum Gothic'">많은 좋아요를 받은 게시물들</h2>
-        <like-sort-list-comp></like-sort-list-comp>
-        <h2 style="font-family: 'Nanum Gothic'">많은 사람들이 본 게시물들</h2>
-        <view-sort-list-comp></view-sort-list-comp>
-        <h2 style="font-family: 'Nanum Gothic'">많은 댓글이 달린 게시물들</h2>
-        <comment-sort-list-comp></comment-sort-list-comp>
-        <h2>최근 쓰여진 게시물들</h2>
-        <recent-sort-list-comp></recent-sort-list-comp>
+    <v-container align="center" justify="center" style="max-width:1096px">
+      <h2 style="font-family: 'Nanum Gothic'">많은 좋아요를 받은 게시물들</h2>
+      <like-sort-list-comp></like-sort-list-comp>
+      <h2 style="font-family: 'Nanum Gothic'">많은 사람들이 본 게시물들</h2>
+      <view-sort-list-comp></view-sort-list-comp>
+      <h2 style="font-family: 'Nanum Gothic'">많은 댓글이 달린 게시물들</h2>
+      <comment-sort-list-comp></comment-sort-list-comp>
+      <h2>최근 쓰여진 게시물들</h2>
+      <recent-sort-list-comp></recent-sort-list-comp>
     </v-container>
   </v-container>
 </template>
@@ -50,36 +42,38 @@
 import LikeSortListComp from "@/components/Home/LikeSortListComp.vue";
 import ViewSortListComp from "@/components/Home/ViewSortListComp.vue";
 import CommentSortListComp from "@/components/Home/CommentSortListComp.vue";
-import RecentSortListComp from "@/components/Home/RecentSortListComp.vue"
+import RecentSortListComp from "@/components/Home/RecentSortListComp.vue";
 export default {
-    name: "HomeComp",
-    components: {
-        LikeSortListComp,
-        ViewSortListComp,
-        CommentSortListComp,
-        RecentSortListComp,
-    },
-    data () {
-        return {
-            items: [
-                {
-                src: 'beach-2836300_1280.jpg',
-                h1msg: "TRIPLOG에서 당신의 여행을 기록하세요",
-                h2msg: "전세계의 TRIPLOGGER들이 당신의 여행에 함께할 것입니다.",
-                },
-                {
-                src: 'volkswagen-569315_1920.jpg',
-                h1msg: "TRIPLOGGER 사이에서 가장 뜨거운 게시물 보기",
-                h2msg: "많은 사랑을 받고 있는 게시물들을 만나보세요. 많은 사랑을 받고 있는 데는 그럴만한 이유가 있을 거예요. 아주 흥미로울 것입니다.",
-                },
-                {
-                src: 'hiking-1031383_1920.jpg',
-                h1msg: "여러 TRIPLOGGER들이 다녀간 게시물들을 만나보세요",
-                h2msg: "많은 조회수를 기록한 게시물들에서 TRIPLOGGER들의 발자취를 따라가보세요. 새로운 여행을 발견할 수도 있을 것입니다.",
-                },
-            ],
+  name: "HomeComp",
+  components: {
+    LikeSortListComp,
+    ViewSortListComp,
+    CommentSortListComp,
+    RecentSortListComp
+  },
+  data() {
+    return {
+      items: [
+        {
+          src: "beach-2836300_1280.jpg",
+          h1msg: "TRIPLOG에서 당신의 여행을 기록하세요",
+          h2msg: "전세계의 TRIPLOGGER들이 당신의 여행에 함께할 것입니다."
+        },
+        {
+          src: "volkswagen-569315_1920.jpg",
+          h1msg: "TRIPLOGGER 사이에서 가장 뜨거운 게시물 보기",
+          h2msg:
+            "많은 사랑을 받고 있는 게시물들을 만나보세요. 많은 사랑을 받고 있는 데는 그럴만한 이유가 있을 거예요. 아주 흥미로울 것입니다."
+        },
+        {
+          src: "hiking-1031383_1920.jpg",
+          h1msg: "여러 TRIPLOGGER들이 다녀간 게시물들을 만나보세요",
+          h2msg:
+            "많은 조회수를 기록한 게시물들에서 TRIPLOGGER들의 발자취를 따라가보세요. 새로운 여행을 발견할 수도 있을 것입니다."
         }
+      ]
     };
+  }
 };
 </script>
 <style scoped>
