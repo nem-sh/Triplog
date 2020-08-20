@@ -89,21 +89,17 @@ const routes = [
     name: "articleList",
     component: ArticleList
   },
-  {
-    path: "/article/modify/:articleNum",
-    name: "articleModify",
-    component: ArticleModify
-  },
+  // {
+  //   path: "/article/modify/:articleNum",
+  //   name: "articleModify",
+  //   component: ArticleModify
+  // },
   {
     path: "/tempArticle",
     name: "tempArticle",
     component: temp
   },
-  {
-        path: "/:hostNum",
-        name: "PersonalMain",
-        component: PersonalMain
-  },
+
   {
     path: "/userSetting/:hostNum",
     name: "UserSetting",
@@ -122,9 +118,9 @@ const routes = [
 ];
 
 const router = new VueRouter({
-    mode: "history",
-    base: process.env.BASE_URL,
-    routes
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes
 });
 
 export default router;

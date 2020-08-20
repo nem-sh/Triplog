@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-footer fixed padless class="d-flex d-sm-none">
+    <v-footer fixed padless class="d-flex d-sm-none" v-if="getUserNum">
       <v-card flat tile width="100%" class="lighten-1 text-center">
         <v-card-text>
           <v-btn class="mx-4" icon @click="info">
