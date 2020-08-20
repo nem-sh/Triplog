@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid style="width:1000px;">
     <div>
       <h1>{{articleTitle}}</h1>
       <h4 style="color:gray; cursor:pointer" @click="goToBlog">{{blogMasterName}}</h4>
@@ -15,18 +15,27 @@
     <v-divider />
     <v-row class="ma-1" align="center">
       <v-btn class="ml-6" icon :disabled="likeBtnFlag" :loading="likeBtnFlag">
-        <v-chip @click="likeBtnClick" color="pink" text-color="white">
-          <v-avatar left class="pink darken-4">{{likeCount}}</v-avatar>
+        <v-chip @click="likeBtnClick" outlined color="pink">
+          <v-avatar left color="white" class="darken-4">{{likeCount}}</v-avatar>
 
-          <v-icon v-if="isLoginedUserLikeThisArticleprop">mdi-heart</v-icon>
-          <v-icon v-else>mdi-heart-outline</v-icon>
+          <v-icon color="pink" v-if="isLoginedUserLikeThisArticleprop">mdi-heart</v-icon>
+          <v-icon color="pink" v-else>mdi-heart-outline</v-icon>
         </v-chip>
       </v-btn>
 
-      <v-chip class="ml-6" color="light-green" text-color="white">
-        <p class="text-align-center ma-0">view</p>
-        <v-avatar right class="green">{{articleViews}}</v-avatar>
+      <v-chip class="ml-6" color="light-green" outlined>
+        <v-avatar right class="white ml-0 mr-2">{{articleViews}}</v-avatar>
+        <v-icon>mdi-eye-outline</v-icon>
       </v-chip>
+
+      <v-btn class="ml-6" icon>
+        <v-chip @click="commentBtnClick" outlined color="black">
+          <v-avatar left color="white" class="darken-4">{{commentNum}}</v-avatar>
+
+          <v-icon v-if="!openComment">mdi-comment-text-multiple-outline</v-icon>
+          <v-icon v-else>mdi-comment-text-multiple</v-icon>
+        </v-chip>
+      </v-btn>
       <v-spacer></v-spacer>
 
       <v-sheet>
@@ -43,7 +52,6 @@
           <v-icon left>mdi-delete</v-icon>삭제
         </v-btn>
       </v-sheet>
-
     </v-row>
     <v-row justify="end" class="ma-1">
       <v-btn tile outlined class="mr-2" @click="goBack">
@@ -97,10 +105,12 @@ export default {
     articleLikeCount: { type: Number },
     isLoginedUserLikeThisArticle: { type: Boolean },
     articleViews: { type: Number },
-    onOffParagraph: { type: Boolean }
+    onOffParagraph: { type: Boolean },
+    commentNum: { type: Number }
   },
   data: function() {
     return {
+      openComment: false,
       isLoginedUserLikeThisArticleprop: this.isLoginedUserLikeThisArticle,
       cursorEventOn: false,
       paragraphInfo: {
@@ -125,6 +135,10 @@ export default {
     this.openContentFile();
   },
   methods: {
+    commentBtnClick() {
+      this.openComment = !this.openComment;
+      this.$emit("open-comment", this.openComment);
+    },
     clickThis() {
       var e = window.event,
         btn = e.target || e.srcElement;

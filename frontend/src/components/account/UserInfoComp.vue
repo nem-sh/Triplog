@@ -356,6 +356,7 @@ export default {
           this.alertMsg = msg;
           this.alert = true;
           this.dialog = false;
+          this.$emit("closeUserInfoModal", this.alertMsg);
           this.logout();
           this.$router.push(`/`);
         })

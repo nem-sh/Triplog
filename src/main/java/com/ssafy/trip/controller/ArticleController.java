@@ -48,6 +48,15 @@ public class ArticleController {
 	@Autowired
 	private UserRepository userRepository;
 
+	
+	@GetMapping("/update/{num}")
+	public ResponseEntity<Article> getArticleForUpdate(@PathVariable(value = "num") Long num) {
+		Article article = articleRepository.findByNum(num)
+				.orElseThrow(() -> new ResourceNotFoundException("Article", "num", num));
+		
+		return ResponseEntity.ok(article);
+	}
+	
 	@GetMapping("/{num}/{usernum}")
 	public ResponseEntity<Article> getArticleByNum(@PathVariable(value = "num") Long num,
 			@PathVariable(value = "usernum") Long usernum) {

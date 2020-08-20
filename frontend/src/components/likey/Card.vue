@@ -11,7 +11,7 @@
         :elevation="hover ? 12 : 2"
         href="#!"
       >
-        <v-img
+        <v-img v-if="value.article.thumbnail"
           :src="`../../articleImage/${value.article.thumbnail}`"
           height="100%"
           @click.stop="dialog = true"
@@ -27,7 +27,9 @@
           <v-dialog v-model="dialog" max-width="688">
             <v-card @click="dialog = false" class="mx-auto" style="opacity: 1; ">
               <v-list-item>
-                <v-list-item-avatar color="grey"></v-list-item-avatar>
+                <v-list-item-avatar color="grey">
+                  <v-img :src="`../../userImage/${value.writer.imageSrc}`"></v-img>
+                </v-list-item-avatar>
                 <v-list-item-content>
                   <v-list-item-title class="headline">
                     {{value.article.title}}
@@ -37,10 +39,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-img
-                :src="`../../articleImage/${value.article.thumbnail}`"
-                height="388"
-              ></v-img>
+              <v-img :src="`../../articleImage/${value.article.thumbnail}`" height="388"></v-img>
               <br />
               <v-card-text class="skipText">{{value.article.place}}</v-card-text>
               <br />
@@ -88,6 +87,102 @@
               <div class="caption" style="text-shadow: 1px 1px 2px #383838;">{{date}}</div>
             </v-col>
 
+            <v-col align-self="end">
+              <h1 class="mr-1 mb-1">
+                <i
+                  v-if="like"
+                  @click.stop="updateLike"
+                  class="fas fa-heart icon-4x"
+                  style="color : red;"
+                />
+                <i
+                  v-else
+                  @click.stop="updateLike"
+                  class="far fa-heart icon-4x"
+                  style="color : red;"
+                />
+              </h1>
+
+              <v-chip
+                class="text-uppercase ma-0"
+                color="primary"
+                label
+                small
+                style="height : 40px"
+                @click.stop="showDetail"
+              >Read Detail</v-chip>
+            </v-col>
+          </v-row>
+        </v-img>
+
+        <v-img v-else
+          :src="`../../articleImage/noimage.jpg`"
+          height="100%"
+          @click.stop="dialog = true"
+        >
+          
+          <v-dialog v-model="dialog" max-width="688">
+            <v-card @click="dialog = false" class="mx-auto" style="opacity: 1; ">
+              <v-list-item>
+                <v-list-item-avatar color="grey">
+                  <v-img :src="`../../userImage/${value.writer.imageSrc}`"></v-img>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title class="headline">
+                    {{value.article.title}}
+                    <small>by {{value.writer.nickname}}</small>
+                  </v-list-item-title>
+                  <v-list-item-subtitle>{{value.article.created_at}}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-img :src="`../../articleImage/noimage.jpg`" height="388">
+                <v-layout column align-center justify-center class="white--text" fill-height>
+                  <h1 class="grey--text font-weight-bold text-center">No Image</h1>
+                </v-layout>
+              </v-img>
+              <br />
+              <v-card-text class="skipText">{{value.article.place}}</v-card-text>
+              <br />
+              <hr />
+              <v-card-actions>
+                <v-btn text color="deep-purple accent-4" @click="showDetail">Read Detail</v-btn>
+                <v-spacer></v-spacer>
+
+                <i
+                  v-if="like"
+                  @click.stop="updateLike"
+                  class="fas fa-heart icon-4x"
+                  style="color : red;"
+                />
+                <i
+                  v-else
+                  @click.stop="updateLike"
+                  class="far fa-heart icon-4x"
+                  style="color : red;"
+                />
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+          <v-row v-if="!value.prominent" class="fill-height text-right ma-0">
+            <v-col cols="12">
+              <h3
+                class="title font-weight-bold mb-2"
+                style="text-shadow: 1px 1px 2px #383838;"
+              >{{value.article.title}}</h3>
+              <div
+                class="caption"
+                style="text-shadow: 1px 1px 2px #383838;"
+              >{{value.writer.nickname}}</div>
+              <div class="caption" style="text-shadow: 1px 1px 2px #383838;">{{date}}</div>
+              <br>
+              <br>
+              <v-layout column align-center justify-center class="white--text">
+                <h1 class="grey--text font-weight-bold text-center">No Image</h1>
+              </v-layout>
+            </v-col>
+            
             <v-col align-self="end">
               <h1 class="mr-1 mb-1">
                 <i
@@ -176,8 +271,7 @@ export default {
       this.$router.push(`/article/detail/${this.value.article.num}`);
     },
 
-    movePackage: function() {
-    },
+    movePackage: function() {},
 
     setTime: function() {
       let today = new Date();
@@ -224,9 +318,6 @@ export default {
       this.value.article.created_at.slice(11, 19);
 
     this.date = this.setTime();
-    if (!this.value.article.thumbnail) {
-      this.value.article.thumbnail = "noimage.png";
-    }
   }
 };
 </script>

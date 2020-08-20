@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-footer fixed padless class="d-flex d-sm-none">
+    <v-footer fixed padless class="d-flex d-sm-none" v-if="getUserNum">
       <v-card flat tile width="100%" class="lighten-1 text-center">
         <v-card-text>
           <v-btn class="mx-4" icon @click="info">
@@ -132,11 +132,11 @@
         <v-app-bar-nav-icon class="mx-0">
           <v-img src="/icons8-around-the-globe-100.png" width="15px"></v-img>
         </v-app-bar-nav-icon>
-        
+
         <v-toolbar-title
           style="font-size: 56px; font-family: 'Poor Story'"
-          @click="$router.push('/')"
-          class="cursor teal--text"
+          class="cursor ml-10 teal--text"
+          @click="goMain"
         >TRIPLOG</v-toolbar-title>
         <v-spacer></v-spacer>
 
@@ -176,7 +176,9 @@
     <v-sheet height="50"></v-sheet>
     <v-main style="padding: 50px; margin:0 auto;">
       <v-container>
-        <router-view @update-profile="info"></router-view>
+        <div>
+          <router-view @update-profile="info"></router-view>
+        </div>
       </v-container>
     </v-main>
 
@@ -258,6 +260,16 @@ export default {
     Login
   },
   methods: {
+    goMain: function() {
+      var para = document.location.href.split("http://localhost:8081");
+      // 8081 뒤에 / 붙이면 안되요!
+
+      if (para[1] == "/") {
+        this.$router.go();
+      } else {
+        this.$router.push("/");
+      }
+    },
     goToMyBlog: function() {
       this.$router.push(`/${this.getUserNum}`);
     },

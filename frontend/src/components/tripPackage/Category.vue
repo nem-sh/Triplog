@@ -1,28 +1,25 @@
 <template>
   <v-app id="inspire" style="max-width: 900px">
     <v-card>
-      <GoogleMapLoader
-        class="travel-map"
-        :mapConfig="mapConfig"
-        apiKey="AIzaSyC3JEsAuKanTHq2XVnX2uWx9y-0bFEp9iY"
+      <GmapMap
+        :center="mapCenter"
+        :zoom="zoom"
+        map-type-id="terrain"
+        style="width: 100%; height: 400px"
       >
-        <template slot-scope="{ google, map }">
-          <GoogleMapMarker
-            v-for="marker in markers"
-            :key="marker.id"
-            :marker="marker"
-            :google="google"
-            :map="map"
-          />
-          <GoogleMapLine
-            v-for="line in lines"
-            :key="line.id"
-            :path.sync="line.path"
-            :google="google"
-            :map="map"
-          />
-        </template>
-      </GoogleMapLoader>
+        <GmapMarker
+          :key="m.id"
+          v-for="m in markers"
+          :position="m.position"
+          :clickable="true"
+          :draggable="true"
+          @click="center=m.position"
+        />
+        <GmapPolyline 
+          v-for="line in lines" 
+          :key="line.id" 
+          :path="line.path"/>
+      </GmapMap>
     </v-card>
     <v-container fluid>
       <v-row>
@@ -47,19 +44,11 @@
 <script>
 import http from "@/util/http-common";
 import ArticleListComp from "@/components/article/ArticleListComp.vue";
-import GoogleMapLoader from "@/components/GoogleMap/GoogleMapLoader.vue";
-import GoogleMapMarker from "@/components/GoogleMap/GoogleMapMarker.vue";
-import GoogleMapLine from "@/components/GoogleMap/GoogleMapLine.vue";
-
-import { mapSettings } from "@/constants/mapSettings";
 
 export default {
   name: "Category",
   components: {
-    ArticleListComp,
-    GoogleMapLoader,
-    GoogleMapMarker,
-    GoogleMapLine
+    ArticleListComp
   },
   props: {
     num: { type: Number },
@@ -94,7 +83,7 @@ export default {
         x[index] = this.items[index].lng;
       }
       this.markers = markers;
-      
+
       var lines = new Array(this.items.length - 1);
       for (let index = 0; index < this.markers.length - 1; index++) {
         lines[index] = {
@@ -112,16 +101,7 @@ export default {
       this.mapCenter.lng = parseInt(x1 + (x2 - x1) / 2);
       this.zoom = 4;
     });
-  },
-  computed: {
-    mapConfig() {
-      return {
-        ...mapSettings,
-        center: this.mapCenter,
-        zoom: this.zoom
-      };
-    }
-  },
+  }
 };
 </script>
 

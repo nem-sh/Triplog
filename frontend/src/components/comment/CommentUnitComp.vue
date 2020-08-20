@@ -42,7 +42,13 @@
           <br />
 
           <br />
-          <v-list-item-subtitle v-if="!update" v-html="item.comment.content" style="color:black"></v-list-item-subtitle>
+          <v-list-item-subtitle
+            v-if="!update && !isSecret"
+            v-html="item.comment.content"
+            style="color:black"
+          ></v-list-item-subtitle>
+
+          <v-list-item-subtitle v-if="!update && isSecret" style="color:black">비밀글입니다.</v-list-item-subtitle>
 
           <v-textarea
             @click.stop
@@ -126,32 +132,40 @@ export default {
       openComment: false,
       userimg: "profile_init.png",
       update: false,
-      updateContent: ""
+      updateContent: "",
+      isSecret: false,
+      isMySecret: false
     };
   },
   props: {
     item: Object,
-    index: Number
+    index: Number,
+    writerNum: Number
   },
   methods: {
     goToBlog: function() {
       this.$router.push(`/article/list/${this.item.comment.usernum}`);
     },
     onOffComment() {
-      if (this.openComment == true) {
-        this.openComment = false;
+      if (this.isSecret) {
+        alert("비밀 글 입니다!");
       } else {
-        this.openComment = true;
+        if (this.openComment == true) {
+          this.openComment = false;
+        } else {
+          this.openComment = true;
+        }
       }
     },
     deleteComment() {
       let removeContent = this.item.comment.content;
 
-      this.item.comment.content = "삭제되었습니다.";
       if (this.item.comment.num == undefined) {
         http
           .delete(`/comment/content/${removeContent}`)
           .then(() => {
+            this.$emit("delete-comment");
+            this.item.comment.content = "삭제되었습니다.";
           })
           .catch(e => {
             console.log(e);
@@ -160,6 +174,7 @@ export default {
         http
           .delete(`/comment/${this.item.comment.num}`)
           .then(() => {
+            this.item.comment.content = "삭제되었습니다.";
           })
           .catch(e => {
             console.log(e);
@@ -184,41 +199,47 @@ export default {
           usernickname: this.getProfile,
           useremail: this.getEmail
         })
-        .then(() => {
-        })
+        .then(() => {})
         .catch(e => {
           console.log(e);
         });
     },
     submit() {
-      let obj = {
-        articlenum: this.$route.params.articleNum,
-        usernickname: this.getProfile,
-        content: this.content,
-        createdat: new Date(),
-        useremail: this.getEmail,
-        userimg: this.getUserImg,
-        usernum: this.getUserNum
-      };
-      this.item.cocomments.unshift(obj);
-      http
-        .post(`/comment/${this.item.comment.content}`, {
-          content: this.content,
-          createdat: new Date(),
-          articlenum: this.$route.params.articleNum,
-          userimg: this.getUserImg,
-          usernum: this.getUserNum,
-          usernickname: this.getProfile,
-          useremail: this.getEmail
-        })
-        .then(() => {
-          this.content = "";
-        })
-        .catch(e => {
-          console.log(e);
-        });
-
-      this.content = "";
+      if (this.getUserNum == "") {
+        alert("먼저 로그인을 진행해주세요");
+      } else {
+        if (this.content == "") {
+          alert("글을 먼저 적어주세요");
+        } else {
+          http
+            .post(`/comment/${this.item.comment.content}`, {
+              content: this.content,
+              createdat: new Date(),
+              articlenum: this.$route.params.articleNum,
+              userimg: this.getUserImg,
+              usernum: this.getUserNum,
+              usernickname: this.getProfile,
+              useremail: this.getEmail
+            })
+            .then(() => {
+              let obj = {
+                articlenum: this.$route.params.articleNum,
+                usernickname: this.getProfile,
+                content: this.content,
+                createdat: new Date(),
+                useremail: this.getEmail,
+                userimg: this.getUserImg,
+                usernum: this.getUserNum
+              };
+              console.log(obj);
+              this.item.cocomments.unshift(obj);
+              this.content = "";
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
+      }
     },
     getFormatDate(regtime) {
       return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
@@ -289,6 +310,14 @@ export default {
     if (this.item.comment) {
       if (this.item.comment.userimg != "null") {
         this.userimg = this.item.comment.userimg;
+      }
+      if (this.item.comment.content.slice(0, 9) == "*secret* ") {
+        if (
+          this.writerNum != this.getUserNum &&
+          this.item.comment.usernum != this.getUserNum
+        ) {
+          this.isSecret = true;
+        }
       }
     }
   }
