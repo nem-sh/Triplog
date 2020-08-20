@@ -12,18 +12,16 @@
       <v-col cols="12" md="2" align-self="center">
         <div style="width:100%; text-align:center" :style="{fontFamily : 'Nanum Gothic'}">장소</div>
       </v-col>
-      <v-col
-        cols="12"
-        md="9">
+      <v-col cols="12" md="9">
         <v-dialog v-model="addressDialog" max-width="300">
-        <template v-slot:activator="{ on, attrs }">
-          <div>
-            <v-btn small v-bind="attrs" v-on="on" :style="{fontFamily : 'Nanum Gothic'}">장소 찾기</v-btn> {{ place.name }}
-          </div>
-        </template>
+          <template v-slot:activator="{ on, attrs }">
+            <div>
+              <v-btn small v-bind="attrs" v-on="on" :style="{fontFamily : 'Nanum Gothic'}">장소 찾기</v-btn>
+              {{ place.name }}
+            </div>
+          </template>
           <FindPlace @childs-event="getPlace" />
-       </v-dialog>
-
+        </v-dialog>
       </v-col>
     </v-row>
 
@@ -56,31 +54,23 @@
         <v-slide-group multiple show-arrows="mobile">
           <v-slide-item v-for="(item, index) in imgPool" :key="index">
             <v-card class="ma-4" width="200" :id="index">
-                <img
-                  :src="returnImageURL(item)"
-                  width="200"
-                  height="300"
-                  @dragend="dragEnd"
-                />
+              <img :src="returnImageURL(item)" width="200" height="300" @dragend="dragEnd" />
             </v-card>
           </v-slide-item>
         </v-slide-group>
       </v-sheet>
     </v-row>
-    <v-btn v-if="existChatbot && hidden" @click="useChatbot"><v-icon>fas fa-robot</v-icon></v-btn>
+    <v-btn v-if="existChatbot && hidden" @click="useChatbot">
+      <v-icon>fas fa-robot</v-icon>
+    </v-btn>
     <v-btn v-if="!hidden" @click="useChatbot">접기</v-btn>
     <v-row v-if="useChatbotImg">
       <v-sheet class="mx-auto" max-width="1000">
         <v-slide-group multiple show-arrows="mobile">
           <v-slide-item v-for="(item, index) in chatbotImg" :key="index">
             <v-card class="ma-4" width="200" :id="index">
-                <img
-                  :src="item.media"
-                  width="200"
-                  height="300"
-                  @dragend="dragEnd"
-                />
-                <p>{{item.comment}}</p>
+              <img :src="item.media" width="200" height="300" @dragend="dragEnd" />
+              <p>{{item.comment}}</p>
             </v-card>
           </v-slide-item>
         </v-slide-group>
@@ -93,32 +83,31 @@
     <br />
     <v-sheet elevation="3" class="pa-0">
       <v-toolbar dense color="elevation-0">
-
         <v-col>
           <v-select
-          :items="fontSizeItems"
-          v-model="fontSizeValue"
-          dense
-          menu-props="auto"
-          prepend-inner-icon="mdi-format-size"
-          class="mt-3 mr-2"
-          color="cyan darken-2"
+            :items="fontSizeItems"
+            v-model="fontSizeValue"
+            dense
+            menu-props="auto"
+            prepend-inner-icon="mdi-format-size"
+            class="mt-3 mr-2"
+            color="cyan darken-2"
           />
         </v-col>
 
         <v-col>
           <v-select
-          :items="fontItems"
-          v-model="fontValue"
-          dense
-          prepend-inner-icon="mdi-format-font"
-          class="mt-3 ml-2"
-          menu-props="auto"
-          :style="{fontFamily : fontValue}"
-          color="cyan darken-2"
+            :items="fontItems"
+            v-model="fontValue"
+            dense
+            prepend-inner-icon="mdi-format-font"
+            class="mt-3 ml-2"
+            menu-props="auto"
+            :style="{fontFamily : fontValue}"
+            color="cyan darken-2"
           />
         </v-col>
-        
+
         <v-tooltip bottom>
           <template v-slot:activator="{on, attrs}">
             <v-btn
@@ -205,17 +194,17 @@
         </v-tooltip>
 
         <v-menu open-on-hover offset-y>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            label
-            :style="{backgroundColor : HiliteColor, color : fontColor}"
-            v-on="on"
-            v-bind="attrs"
-            icon
-          > 
-            <v-icon>mdi-marker</v-icon>
-          </v-btn>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              label
+              :style="{backgroundColor : HiliteColor, color : fontColor}"
+              v-on="on"
+              v-bind="attrs"
+              icon
+            >
+              <v-icon>mdi-marker</v-icon>
+            </v-btn>
           </template>
 
           <v-list>
@@ -257,214 +246,236 @@
         </v-menu>
       </v-toolbar>
 
-    <v-toolbar dense color="elevation-0">
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('justifyLeft')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-format-align-left</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">왼쪽정렬</span>
-      </v-tooltip>
+      <v-toolbar dense color="elevation-0">
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('justifyLeft')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-align-left</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">왼쪽정렬</span>
+        </v-tooltip>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('justifyCenter')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-format-align-center</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">가운데정렬</span>
-      </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('justifyCenter')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-align-center</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">가운데정렬</span>
+        </v-tooltip>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('justifyRight')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-format-align-right</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">오른쪽정렬</span>
-      </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('justifyRight')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-align-right</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">오른쪽정렬</span>
+        </v-tooltip>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('justifyFull')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-format-align-justify</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">양쪽정렬</span>
-      </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('justifyFull')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-align-justify</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">양쪽정렬</span>
+        </v-tooltip>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('insertHorizontalRule')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-format-align-middle</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">구분선</span>
-      </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('insertHorizontalRule')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-align-middle</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">구분선</span>
+        </v-tooltip>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('insertOrderedList')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-format-list-numbered</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">순서목록</span>
-      </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('insertOrderedList')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-list-numbered</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">순서목록</span>
+        </v-tooltip>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('insertunorderedList')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-format-list-bulleted</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">목록</span>
-      </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('insertunorderedList')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-list-bulleted</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">목록</span>
+        </v-tooltip>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('insertParagraph')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-format-textdirection-l-to-r</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">문단삽입</span>
-      </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('insertParagraph')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-textdirection-l-to-r</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">문단삽입</span>
+        </v-tooltip>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('indent')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-format-indent-increase</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">들여쓰기</span>
-      </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('indent')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-indent-increase</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">들여쓰기</span>
+        </v-tooltip>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('outdent')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-format-indent-decrease</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">내어쓰기</span>
-      </v-tooltip>
-      <v-divider vertical></v-divider>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('outdent')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-format-indent-decrease</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">내어쓰기</span>
+        </v-tooltip>
+        <v-divider vertical></v-divider>
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{on, attrs}">
-          <v-btn
-            class="mr-1"
-            @click="exec('undo')"
-            label
-            icon
-            color="cyan darken-2"
-            v-on="on"
-            v-bind="attrs"
-          >
-            <v-icon>mdi-keyboard-return</v-icon>
-          </v-btn>
-        </template>
-        <span :style="{fontFamily : 'SunFlower'}">실행취소</span>
-      </v-tooltip>
-    </v-toolbar>
-    <br>
-    <v-divider></v-divider>
-    <v-sheet height="500">
-      <iframe
-        id="editor"
-        :src="editorSrc"
-        frameborder="0"
-        scrolling="auto"
-        style="width:100%; height:100%"
-      ></iframe>
-    </v-sheet>
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              class="mr-1"
+              @click="exec('undo')"
+              label
+              icon
+              color="cyan darken-2"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon>mdi-keyboard-return</v-icon>
+            </v-btn>
+          </template>
+          <span :style="{fontFamily : 'SunFlower'}">실행취소</span>
+        </v-tooltip>
+      </v-toolbar>
+      <br />
+      <v-divider></v-divider>
+      <v-sheet height="500">
+        <iframe
+          v-if="!$route.params.articleNum"
+          id="editor"
+          :src="editorSrc"
+          frameborder="0"
+          scrolling="auto"
+          style="width:100%; height:100%"
+        ></iframe>
+        <iframe
+          v-if="realContent"
+          id="editor"
+          :srcdoc="realContent"
+          frameborder="0"
+          scrolling="auto"
+          style="width:100%; height:100%"
+        ></iframe>
+      </v-sheet>
     </v-sheet>
 
     <v-row>
       <v-col>
-        <v-btn tile outlined @click="temp" :style="{fontFamily : 'Nanum Gothic'}">임시 저장</v-btn>
+        <v-btn
+          v-if="!$route.params.articleNum"
+          tile
+          outlined
+          @click="temp"
+          :style="{fontFamily : 'Nanum Gothic'}"
+        >임시 저장</v-btn>
       </v-col>
       <v-col align="right">
-        <v-btn tile outlined @click="regist" :style="{fontFamily : 'Nanum Gothic'}">등록</v-btn>
+        <v-btn
+          v-if="!$route.params.articleNum"
+          tile
+          outlined
+          @click="regist"
+          :style="{fontFamily : 'Nanum Gothic'}"
+        >등록</v-btn>
+        <v-btn v-else tile outlined @click="regist" :style="{fontFamily : 'Nanum Gothic'}">수정</v-btn>
       </v-col>
     </v-row>
     <br />
@@ -625,6 +636,8 @@ export default {
       existChatbot: false,
       useChatbotImg:false,
       hidden:true,
+      realContent: "",
+      article: {},
     };
   },
   created() {
@@ -634,6 +647,20 @@ export default {
       this.chatbotImg = data;
       this.existChatbot = true;
     })
+    if(this.$route.params.articleNum){
+      http
+        .get(`/article/update/${this.$route.params.articleNum}`)
+        .then(({ data }) => {
+          this.articleTitle = data.title;
+          this.articleContent = data.content;
+          this.place.name = data.place;
+          this.place.lat = data.lat;
+          this.place.lng = data.lng;  
+          this.article = data;
+          console.log(this.article);
+          this.openContentFile();
+        });
+    }
   },
   mounted() {
     if (window.localStorage.getItem("isSaved") == "true") {
@@ -785,7 +812,7 @@ export default {
       this.alert = true;
     }
     else {
-      this.registHandler();
+      this.$route.params.articleNum == null ? this.registHandler() : this.updateHandler();
     }
    },
    registHandler: async function() {
@@ -840,6 +867,80 @@ export default {
           }
           console.log(e.request.status);
         });
+    },
+    updateHandler: async function() {
+      var imgFiles = await this.createFileByInnerEditorTextAndReturnImgFileArr();
+      var formData = new FormData();
+      formData.append('files', this.editorHtmlFile);
+      for (const key in imgFiles) {
+        formData.append('files', imgFiles[key]);
+      }
+      http3
+      .post(`/article/files`, formData).then(({ data }) => {
+        http
+          .put(`/article/${this.article.num}`, {
+            num: this.article.num,
+            user_num: this.article.user_num,
+            trippackage_num: this.article.trippackage_num,
+            title: this.articleTitle,
+            place: this.place.name,
+            content: data[0],
+            thumbnail: data[1],
+            temp: this.article.temp,
+            created_at: this.article.created_at,
+            date_start: this.article.date_start,
+            date_end: this.article.date_end,
+            likeCount: this.article.likeCount,
+            views: this.article.views,
+            userNickname: this.article.userNickname,
+            lat: this.place.lat,
+            lng: this.place.lng,
+          })
+          .then(({ data }) => {
+            let msg = "수정 처리시 문제가 발생했습니다.";
+            if (data === "success") {
+              this.registSuccess = true;
+              msg = "수정이 완료되었습니다.";
+            }
+            this.alertMsg = msg;
+            this.alert = true;
+            this.registSuccess = true;
+            this.storeClean();
+            this.$router.push(`/article/list/${this.getUserNum}`);
+          })
+          .catch(() => {
+            this.alertMsg = "수정 처리시 에러가 발생했습니다.";
+            this.alert = true;
+            });
+          })
+        .catch(e => {
+          if (e.request.status === 404) {
+            this.alertMsg = "등록 처리시 에러가 발생했습니다.";
+            this.alert = true;
+          } else {
+            this.$router.push(`/apierror/${e.request.status}/`);
+          }
+          console.log(e.request.status);
+        });
+    },
+    openContentFile: function() {
+      var url = "../../content/registered/" + this.articleContent;
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = "text";
+
+      var setRealContent = val => {
+        var body = val.split('<body>');
+        var content = this.tempPrefix + this.tempPrefix2 + body[1];
+        this.realContent = (content);
+      };
+      
+      xhr.onload = function(e) {
+        var resp = xhr.responseText || e.target.responseText;
+        setRealContent(resp);
+      };
+
+      xhr.open("GET", url);
+      xhr.send();
     },
     onChangeMultipleImages() {
       this.multFlag = true;
