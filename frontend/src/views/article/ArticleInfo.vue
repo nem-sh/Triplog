@@ -33,6 +33,7 @@
       @write-comment="commentNum = commentNum +1"
       @delete-comment="commentNum = commentNum -1"
       v-if="commentLoaded && isOpenComment"
+      :writerNum="item.user_num"
     />
   </v-container>
 </template>

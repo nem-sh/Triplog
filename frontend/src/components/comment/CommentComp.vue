@@ -31,7 +31,12 @@
         v-for="(item, index) in items"
         :key="item.comment.content + item.comment.usernickname + index"
       >
-        <CommentUnitComp :item="item" :index="index" @delete-comment="$emit('delete-comment')" />
+        <CommentUnitComp
+          :writerNum="writerNum"
+          :item="item"
+          :index="index"
+          @delete-comment="$emit('delete-comment')"
+        />
         <CommentAsistUnitComp :item="{ divider: true, inset: true }" />
       </div>
     </v-list>
@@ -58,17 +63,26 @@ export default {
     };
   },
   props: {
-    items: Array
+    items: Array,
+    writerNum: Number
   },
   methods: {
     writeComment() {
+      let submitContent = this.content;
       if (this.getUserNum == "") {
         alert("로그인 먼저 진행해주세요");
       } else {
-        if (this.content != "") {
+        if (this.content == "") {
+          alert("글을 먼적 작성해주세요");
+        } else {
+          if (this.content != "") {
+            if (this.secret) {
+              submitContent = "*secret* " + this.content;
+            }
+          }
           http
             .post(`/comment/`, {
-              content: this.content,
+              content: submitContent,
               createdat: new Date(),
               articlenum: this.$route.params.articleNum,
               userimg: this.getUserImg,
@@ -81,7 +95,7 @@ export default {
                 avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
                 usernickname: this.getProfile,
                 useremail: this.getEmail,
-                content: this.content,
+                content: submitContent,
                 createdat: String(new Date()),
                 userimg: this.getUserImg,
                 usernum: this.getUserNum
