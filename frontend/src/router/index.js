@@ -96,11 +96,6 @@ const routes = [{
         component: temp
     },
     {
-        path: "/:hostNum",
-        name: "PersonalMain",
-        component: PersonalMain
-    },
-    {
         path: "/userSetting/:hostNum",
         name: "UserSetting",
         component: UserSetting
