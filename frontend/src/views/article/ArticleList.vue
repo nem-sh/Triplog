@@ -14,76 +14,78 @@
     <div>
       <v-container>
         <v-container>
-          <v-tabs centered grow color="cyan darken-2">
-            <v-tab>
-              <v-icon left>mdi-format-list-bulleted</v-icon>All Posts
-            </v-tab>
-            <v-tab v-for="(tripTitle,i) in tripList" :key="i">
-              <v-icon left>mdi-airplane-takeoff</v-icon>
-              {{tripTitle.name}}
-            </v-tab>
-            <v-tab v-if="isMyBlog">
-              <v-icon left>mdi-cogs</v-icon>TripPackage
-            </v-tab>
-            <v-tab-item>
-              <v-app id="inspire" style="max-width: 900px">
-                <v-card>
-                  <GoogleMapLoader
-                    class="travel-map"
-                    :mapConfig="mapConfig"
-                    apiKey="AIzaSyC3JEsAuKanTHq2XVnX2uWx9y-0bFEp9iY"
-                  >
-                    <template slot-scope="{ google, map }">
-                      <GoogleMapMarker
-                        v-for="marker in markers"
-                        :key="marker.id"
-                        :marker="marker"
-                        :google="google"
-                        :map="map"
+          
+            <v-tabs centered grow color="cyan darken-2" v-model="tab">
+              <v-tab :href="`#All`">
+                <v-icon left>mdi-format-list-bulleted</v-icon>All Posts
+              </v-tab>
+              <v-tab v-for="(tripTitle,i) in tripList" :key="i" :href="`#${tripTitle.name}`">
+                <v-icon left>mdi-airplane-takeoff</v-icon>
+                {{tripTitle.name}}
+              </v-tab>
+              <v-tab v-if="isMyBlog">
+                <v-icon left>mdi-cogs</v-icon>TripPackage
+              </v-tab>
+            </v-tabs>
+        
+            <v-tabs-items v-model="tab">
+              <v-tab-item :id="`All`">
+                <v-app id="inspire" style="max-width: 900px">
+                  <v-card>
+                    <GmapMap
+                      :center="mapCenter"
+                      :zoom="zoom"
+                      style="width: 100%; height: 400px"
+                    >
+                      <GmapMarker
+                        :key="m.id"
+                        v-for="m in markers"
+                        :position="m.position"
+                        :clickable="true"
+                        :draggable="true"
+                        @click="moveCategory(m.id)"
                       />
-                    </template>
-                  </GoogleMapLoader>
-                </v-card>
-                <v-container fluid>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-row align="stretch" justify="space-around">
-                        <ArticleListComp
-                          v-for="(item, index) in items"
-                          :key="index"
-                          :num="item.num"
-                          :user_num="item.user_num"
-                          :title="item.title"
-                          :thumbnail="item.thumbnail"
-                          :created_at="item.created_at"
-                        />
-                      </v-row>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-app>
-              <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
-            </v-tab-item>
-
-            <v-tab-item v-for="(tripItem,i) in tripList" :key="i">
-              <Category :num="tripItem.num" :userNum="tripItem.userNum" :name="tripItem.name" />
-              <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
-            </v-tab-item>
-
-            <v-tab-item v-if="isMyBlog">
-              <v-app id="inspire" style="max-width: 900px">
-                <v-container fluid>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-row align="stretch" justify="space-around">
-                        <TripPackageComp @childs-event="reTripList" />
-                      </v-row>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-app>
-            </v-tab-item>
-          </v-tabs>
+                    </GmapMap>
+                  </v-card>
+                  <v-container fluid>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-row align="stretch" justify="space-around">
+                          <ArticleListComp
+                            v-for="(item, index) in items"
+                            :key="index"
+                            :num="item.num"
+                            :user_num="item.user_num"
+                            :title="item.title"
+                            :thumbnail="item.thumbnail"
+                            :created_at="item.created_at"
+                          />
+                        </v-row>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-app>
+                <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
+              </v-tab-item>
+        
+              <v-tab-item v-for="(tripItem,i) in tripList" :key="i" :id="`${tripItem.name}`">
+                <Category :num="tripItem.num" :userNum="tripItem.userNum" :name="tripItem.name" />
+              </v-tab-item>
+        
+              <v-tab-item v-if="isMyBlog">
+                <v-app id="inspire" style="max-width: 900px">
+                  <v-container fluid>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-row align="stretch" justify="space-around">
+                          <TripPackageComp @childs-event="reTripList" />
+                        </v-row>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-app>
+              </v-tab-item>
+            </v-tabs-items>
         </v-container>
       </v-container>
     </div>
@@ -98,9 +100,6 @@ import { mapGetters, mapState } from "vuex";
 import PersonalMainComp from "@/components/personal/PersonalMainComp.vue";
 import TripPackageComp from "@/components/tripPackage/TripPackageComp.vue";
 import Category from "@/components/tripPackage/Category.vue";
-import GoogleMapLoader from "@/components/GoogleMap/GoogleMapLoader.vue";
-import GoogleMapMarker from "@/components/GoogleMap/GoogleMapMarker.vue";
-import { mapSettings } from "@/constants/mapSettings";
 // import Axios from 'axios';
 
 export default {
@@ -111,8 +110,6 @@ export default {
     PersonalMainComp,
     TripPackageComp,
     Category,
-    GoogleMapLoader,
-    GoogleMapMarker
   },
   data: function() {
     return {
@@ -123,8 +120,9 @@ export default {
       tripList: [],
       visitCount: 0,
       markers: [],
-      mapCenter: { lat: 0, lng: 0 },
-      zoom: 0
+      mapCenter: { lat: 0, lng: 180 },
+      zoom: 1,
+      tab: "All",
     };
   },
   created() {
@@ -180,7 +178,6 @@ export default {
             this.markers.push(marker);
           });
       }
-      this.zoom = 0;
     });
   },
   methods: {
@@ -217,6 +214,9 @@ export default {
         .then(({ data }) => {
           this.tripList = data;
         });
+    },
+    moveCategory(tab) {
+      this.tab = tab;
     }
   },
   computed: {
@@ -224,13 +224,6 @@ export default {
     ...mapState({
       userNum: state => `${state.user.getUserNum}`
     }),
-    mapConfig() {
-      return {
-        ...mapSettings,
-        center: this.mapCenter,
-        zoom: this.zoom
-      };
-    }
   },
   watch: {
     getUserNum: function() {

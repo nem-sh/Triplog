@@ -11,7 +11,7 @@ import ArticleSearch from "../views/article/ArticleSearch.vue";
 import ArticleInfo from "../views/article/ArticleInfo.vue"
 
 import ArticleList from "../views/article/ArticleList.vue"
-import ArticleModify from "../views/article/ArticleModify.vue"
+// import ArticleModify from "../views/article/ArticleModify.vue"
 import Like from "../views/likey/Like.vue"
 
 
@@ -99,7 +99,11 @@ const routes = [
     name: "tempArticle",
     component: temp
   },
-
+  {
+        path: "/:hostNum",
+        name: "PersonalMain",
+        component: PersonalMain
+  },
   {
     path: "/userSetting/:hostNum",
     name: "UserSetting",
@@ -118,9 +122,9 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes
+    mode: "history",
+    base: process.env.BASE_URL,
+    routes
 });
 
 export default router;
