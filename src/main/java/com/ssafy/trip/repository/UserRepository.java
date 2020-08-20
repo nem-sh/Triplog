@@ -27,7 +27,10 @@ public interface UserRepository extends JpaRepository<MemberUser, Long> {
 
     Boolean existsByEmail(String email);
 
-    String findByPassword(String password);
+    MemberUser findByPassword(String password);
+    
+
+    Boolean existsByPassword(String password);
     
     Boolean existsByChatbotid(String chatbotId);
     

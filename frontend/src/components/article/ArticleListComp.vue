@@ -20,8 +20,25 @@
               </div>
             </div>
           </v-expand-transition>
+          <v-card-subtitle>{{title}}</v-card-subtitle>
         </v-img>
-        <v-card-subtitle>{{title}}</v-card-subtitle>
+        <v-img v-else :src="`../../articleImage/noimage.jpg`" class="thumb" @click="moveDetail">
+        <v-layout column align-center justify-center class="white--text" fill-height>
+          <h1 class="grey--text font-weight-bold text-center">No Image</h1>
+        </v-layout>
+          <v-expand-transition>
+            <div
+              v-if="hover"
+              class="d-flex transition-fast-in-fast-out teal v-card--reveal display-0 white--text"
+              style="height: 100%;"
+            >
+              <div align="center">
+                <h2>{{title}}</h2>
+                <p>{{getFormatDate(created_at)}}</p>
+              </div>
+            </div>
+          </v-expand-transition>
+        </v-img>
       </v-card>
     </v-hover>
     <br />

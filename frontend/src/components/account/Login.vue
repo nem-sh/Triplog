@@ -1,5 +1,5 @@
 <template>
-  <v-container id="main_wrap" class="pa-0" style="max-width:700px;">
+  <v-container id="main_wrap" class="pa-0" style="max-width:740px;">
     <v-container id="middle_wrap" class="pa-0">
       
       <v-container class="pa-0">
@@ -15,7 +15,7 @@
                 <v-card-text>
                   <v-form @submit.prevent="login" >
                     <v-row>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :</p></v-col>
                       <v-col cols="10">
                          <v-text-field v-model="email" label="E-mail" required
                         type="text"
@@ -24,7 +24,7 @@
                         placeholder="이메일을 입력하세요"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :</p></v-col>
                       <v-col cols="10">
                         <v-text-field  label="Password"
                         type="password"
@@ -81,7 +81,7 @@
                     name="frmForm"
                     @submit.prevent="registryMyself">
                     <v-row>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :</p></v-col>
                       <v-col cols="10">
                         <v-text-field v-model="customer.email" label="E-mail" required
                         placeholder="이메일을 입력하세요"
@@ -91,7 +91,7 @@
                         outlined
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 별명 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 별명 :</p></v-col>
                       <v-col cols="10">
                         <v-text-field v-model="customer.nickname"
                           :counter="5"
@@ -103,7 +103,7 @@
                           placeholder="별명을 입력하세요"
                           label="Nickname"></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이름 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이름 :</p></v-col>
                       <v-col cols="10">
                         <v-text-field v-model="customer.cname"
                         label="Name"
@@ -115,7 +115,7 @@
                         data-msg="이름"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :</p></v-col>
                       <v-col cols="10">
                         <v-text-field block v-model="customer.password"
                           type="password"
@@ -129,7 +129,7 @@
                         </v-text-field>
 
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 확인 :  </p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 확인 :</p></v-col>
                       <v-col cols="10">
                         <v-text-field
                         data-msg="패스워드 재확인"
@@ -155,6 +155,48 @@
               </v-card>
               <br>
                     <br>
+            </v-tab-item>
+            <v-tab-item>
+              <v-card class="px-4">
+                <v-card-text>
+                  <v-form @submit.prevent="authSearch" >
+                    <v-row>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :</p></v-col>
+                      <v-col cols="10">
+                         <v-text-field v-model="search.email" label="E-mail" required
+                        type="text"
+                        outlined
+                        value
+                        placeholder="이메일을 입력하세요"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이름 :</p></v-col>
+                      <v-col cols="10">
+                        <v-text-field  label="Name"
+                       v-model="search.name"
+                        value
+                        outlined
+                        id="_name"
+                        name="name"
+                        required
+                        placeholder="이름을 입력하세요"
+                        title="이름"></v-text-field>
+                      </v-col>
+
+                        <v-col class="d-flex" cols="12" align-center>
+                        <v-btn type="submit" x-large block color="teal"><p style="color:white; margin-bottom:0px;"> Find Account</p></v-btn>
+                      </v-col>
+                   
+                    </v-row>
+                 
+               
+                  
+               
+                 
+                  </v-form>
+                       
+                </v-card-text>
+              </v-card>
             </v-tab-item>
            
       </v-tabs>
@@ -200,7 +242,8 @@ export default {
       tab: 0,
       tabs: [
           {name:"Login", icon:"mdi-account"},
-          {name:"Signup", icon:"mdi-account-outline"}
+          {name:"Sign Up", icon:"mdi-account-plus"},
+          {name:"Find Account", icon:"mdi-account-question"}
        ],
        show1:false,
       nowlogin: false,
@@ -212,6 +255,10 @@ export default {
         cname: "",
         email: "",
         password: ""
+      },
+      search:{
+        email:"",
+        name:"",
       },
       submitted: false,
       alert: false,
@@ -328,6 +375,44 @@ export default {
             this.$router.push(`/apierror/${e.request.status}/`)
           }
           console.log(e.request.status)
+        });
+    },
+    authSearch() {
+      if (this.search.email == "") {
+        this.alertMsg = "이메일을 입력하세요.";
+        this.alert = true;
+        return;
+      }
+      if (this.search.name == "") {
+        this.alertMsg = "별명을 입력하세요.";
+        this.alert = true;
+        return;
+      }
+
+      http2
+        .post("/authsearch", {
+          name: this.search.name,
+          email: this.search.email,
+        })
+        .then(response => {
+          if (
+            response.data.success == true ||
+            response.data.success == "true"
+          ) {
+            this.alertMsg = "발송된 이메일을 확인해주세요";
+            this.alert = true;
+          } else {
+            this.alertMsg = response.data.message;
+            this.alert = true;
+          } 
+        }).catch((e) => {
+          if (e.request.status === 404){
+            this.alertMsg = "찾기를 실패했습니다.";
+            this.alert = true;
+          } else{
+
+            this.$router.push(`/apierror/${e.request.status}/`)
+          }
         });
     },
     newCustomer() {
