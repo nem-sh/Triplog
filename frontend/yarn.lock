@@ -3186,6 +3186,11 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
+es6-promise@^4.0.5:
+  version "4.2.8"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.8.tgz#4eb21594c972bc40553d276e510539143db53e0a"
+  integrity sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==
+
 escalade@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.0.1.tgz#52568a77443f6927cd0ab9c73129137533c965ed"
@@ -3974,6 +3979,13 @@ globby@^9.2.0:
     ignore "^4.0.3"
     pify "^4.0.1"
     slash "^2.0.0"
+
+google-maps-api-loader@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/google-maps-api-loader/-/google-maps-api-loader-1.1.1.tgz#b600602451300521ba1b5d7493e7071d7931ac00"
+  integrity sha512-+bxumYl6WCxKDjygLFF2FxrNyKIB0QgWKFb+EZ6F5wt/MoU2cm/8se9uQ0o1nY7389F2qe6ocdpSFn1bKQAD5w==
+  dependencies:
+    es6-promise "^4.0.5"
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.2:
   version "4.2.4"
@@ -4951,6 +4963,11 @@ lines-and-columns@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
+
+load-google-maps-api@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/load-google-maps-api/-/load-google-maps-api-0.0.2.tgz#e77f4189f087f6f9ae93b1026a9012791c909c31"
+  integrity sha1-539BifCH9vmuk7ECapASeRyQnDE=
 
 loader-fs-cache@^1.0.0:
   version "1.0.3"
@@ -8051,6 +8068,13 @@ vue-eslint-parser@^7.0.0:
     espree "^6.2.1"
     esquery "^1.0.1"
     lodash "^4.17.15"
+
+vue-gmaps@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/vue-gmaps/-/vue-gmaps-0.2.2.tgz#319944671417f1ecd573206685b4c8efbe472ca4"
+  integrity sha1-MZlEZxQX8ezVcyBmhbTI775HLKQ=
+  dependencies:
+    load-google-maps-api "0.0.2"
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
