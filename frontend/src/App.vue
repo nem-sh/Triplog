@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-footer fixed padless class="d-flex d-sm-none">
+    <v-footer fixed padless class="d-flex d-sm-none" v-if="getUserNum">
       <v-card flat tile width="100%" class="lighten-1 text-center">
         <v-card-text>
           <v-btn class="mx-4" icon @click="info">
@@ -261,10 +261,9 @@ export default {
   },
   methods: {
     goMain: function() {
-      var para = document.location.href.split("http://i3b207.p.ssafy.io");
+      var para = document.location.href.split("http://localhost:8081");
       // 8081 뒤에 / 붙이면 안되요!
 
-      console.log(para[1]);
       if (para[1] == "/") {
         this.$router.go();
       } else {

@@ -21,11 +21,14 @@
 
                 </template>
               </v-img>
-              <v-img v-else :src="`../../noimage.png`"
+              <v-img v-else :src="`../../noimage.jpg`"
                 height="200"
                 width="250"
                 lazy-src="https://picsum.photos/id/11/100/60"
               >
+              <v-layout column align-center justify-center class="white--text" fill-height>
+                <h1 class="grey--text font-weight-bold text-center">No Image</h1>
+                </v-layout>
             <template v-slot:placeholder>
                 <v-row
                     class="fill-height ma-0"
