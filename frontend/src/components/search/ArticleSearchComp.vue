@@ -1,6 +1,6 @@
 <template>
     <v-card width="300" class="ma-3" elevation="2">
-        <v-img v-if="thumbnail" :src="`../../res/articleImage/${thumbnail}`"
+        <v-img v-if="thumbnail" :src="`http://i3b207.p.ssafy.io/res/articleImage/${thumbnail}`"
         height="300" >
             <v-card-title style="font-family: 'Nanum Gothic'" class="title white--text">
                 <v-row class="fill-height flex-column" justify="space-between">
@@ -20,7 +20,7 @@
                 <v-btn color="teal" dark @click="clickTableRow()">READMORE</v-btn>
             </div>
         </v-img>
-        <v-img v-else :src="`../../res/articleImage/noimage.jpg`" height="300"
+        <v-img v-else :src="`http://i3b207.p.ssafy.io/res/articleImage/noimage.jpg`" height="300"
         >
         
             <v-card-title style="font-family: 'Nanum Gothic'" class="title black--text">

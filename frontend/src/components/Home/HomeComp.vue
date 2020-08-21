@@ -5,7 +5,7 @@
         style="max-width:1100px"
         v-for="(item,i) in items"
         :key="i"
-        :src="`../../res/mainImage/${item.src}`"
+        :src="`http://i3b207.p.ssafy.io/res/mainImage/${item.src}`"
       >
         <v-row class="fill-height" align="center" justify="center">
           <div style="text-align:center; width: 80%">
