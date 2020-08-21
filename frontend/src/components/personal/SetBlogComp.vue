@@ -89,8 +89,6 @@
                   <v-btn
                     label
                     :style="getColor"
-                    v-on="on"
-                    v-bind="attrs"
                     icon
                     @click="onOffDialog"
                   >

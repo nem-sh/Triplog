@@ -14,7 +14,7 @@
             <v-tabs-slider></v-tabs-slider>
             <v-tab v-for="i in tabs" :key="i.name">
               <v-icon large>{{i.icon}}</v-icon>
-              <v-container class="caption py-1">{{i.name}}</v-container>
+              <v-container style="font-family: 'Sunflower'" class="caption py-1">{{i.name}}</v-container>
             </v-tab>
 
             <v-tab-item>
@@ -25,7 +25,7 @@
                       <v-col cols="2" style="padding-right:0px;">
                         <p
                           align="center"
-                          style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
+                          style="font-family: 'Nanum Gothic'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
                         >비밀번호 :</p>
                       </v-col>
                       <v-col cols="10">
@@ -39,12 +39,14 @@
                           id="_password"
                           placeholder="패스워드를 입력하세요"
                           label="Password"
+                          color="teal"
+                          style="font-family: 'Nanum Gothic'"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="2" style="padding-right:0px;">
                         <p
                           align="center"
-                          style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
+                          style="font-family: 'Nanum Gothic'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
                         >비밀번호 확인 :</p>
                       </v-col>
                       <v-col cols="10">
@@ -58,12 +60,14 @@
                           v-model="password_confirm"
                           block
                           label="Confirm-password"
+                          color="teal"
+                          style="font-family: 'Nanum Gothic'"
                         ></v-text-field>
                       </v-col>
 
                       <v-col class="d-flex" cols="12" align-center>
                         <v-btn type="submit" x-large block color="teal">
-                          <p style="color:white; margin-bottom:0px;">Update Password</p>
+                          <p style="font-family: 'Nanum Gothic'; color:white; margin-bottom:0px;">Update Password</p>
                         </v-btn>
                       </v-col>
                     </v-row>
@@ -186,6 +190,7 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
 th {
   background-color: #eeeeee;
   color: #3e5fba;

@@ -8,28 +8,30 @@
           <v-tabs-slider></v-tabs-slider>
           <v-tab v-for="i in tabs" :key="i.name">
             <v-icon large>{{i.icon}}</v-icon>
-            <v-container class="caption py-1">{{i.name}}</v-container> 
+            <v-container style="font-family: 'Sunflower'" class="caption py-1">{{i.name}}</v-container> 
             </v-tab>
             <v-tab-item>
               <v-card class="px-4">
                 <v-card-text>
                   <v-form @submit.prevent="login" >
                     <v-row>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Nanum Gothic'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :</p></v-col>
                       <v-col cols="10">
                          <v-text-field v-model="email" label="E-mail" required
                         type="text"
                         outlined
                         value
+                        color="teal"
                         placeholder="이메일을 입력하세요"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Nanum Gothic'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :</p></v-col>
                       <v-col cols="10">
                         <v-text-field  label="Password"
                         type="password"
                        v-model="password"
                         value
+                        color="teal"
                         outlined
                         id="_pwd"
                         name="pwd"
@@ -472,6 +474,7 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
 th {
   background-color:#eeeeee; 
   color:#3e5fba;

@@ -173,7 +173,7 @@
       </v-app-bar>
     </div>
 
-    <v-main style="margin:0 auto;">
+    <v-main class="mx-auto">
       <v-container>
         <div>
           <router-view @update-profile="info"></router-view>

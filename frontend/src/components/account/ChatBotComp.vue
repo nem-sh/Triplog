@@ -165,7 +165,7 @@ export default {
     },
     props: {
         propChatBot: {type: Boolean},
-        propChatList: {type: Object}
+        propChatList: {type: Array}
     },
     data: function() {
         return {
