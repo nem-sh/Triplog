@@ -6,7 +6,7 @@
         <v-container class="pa-0">
           <v-tabs v-model="tab" show-arrows="mobile" background-color="teal" color="white" icons-and-text grow>
           <v-tabs-slider></v-tabs-slider>
-          <v-tab v-for="i in tabs" :key="i.name">
+          <v-tab style="font-family: 'Sunflower';" v-for="i in tabs" :key="i.name">
             <v-icon large>{{i.icon}}</v-icon>
             <v-container class="caption py-1">{{i.name}}</v-container> 
             </v-tab>
@@ -15,16 +15,18 @@
                 <v-card-text>
                   <v-form @submit.prevent="login" >
                     <v-row>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> Email(ID) :</p></v-col>
                       <v-col cols="10">
                          <v-text-field v-model="email" label="E-mail" required
                         type="text"
                         outlined
                         value
                         placeholder="이메일을 입력하세요"
+                        color="teal"
+                        style="font-family: 'Nanum Gothic';"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> Password :</p></v-col>
                       <v-col cols="10">
                         <v-text-field  label="Password"
                         type="password"
@@ -34,12 +36,14 @@
                         id="_pwd"
                         name="pwd"
                         required
+                        color="teal"
                         placeholder="패스워드를 입력하세요"
+                        style="font-family: 'Nanum Gothic';"
                         title="패스워드"></v-text-field>
                       </v-col>
 
                         <v-col class="d-flex" cols="12" align-center>
-                        <v-btn type="submit" x-large block color="teal"><p style="color:white; margin-bottom:0px;"> Login</p></v-btn>
+                        <v-btn type="submit" x-large block color="teal"><p style="font-family: 'Sunflower'; font-weight: bold; color:white; margin-bottom:0px;"> Login</p></v-btn>
                       </v-col>
                    
                     </v-row>
@@ -81,7 +85,7 @@
                     name="frmForm"
                     @submit.prevent="registryMyself">
                     <v-row>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> Email(ID) :</p></v-col>
                       <v-col cols="10">
                         <v-text-field v-model="customer.email" label="E-mail" required
                         placeholder="이메일을 입력하세요"
@@ -89,9 +93,11 @@
                         name="email"
                         type="email"
                         outlined
+                        color="teal"
+                        style="font-family: 'Nanum Gothic';"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 별명 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> Nickname :</p></v-col>
                       <v-col cols="10">
                         <v-text-field v-model="customer.nickname"
                           :counter="5"
@@ -100,10 +106,12 @@
                           outlined
                           name="nickname"
                           id="_nickname"
+                          color="teal"
+                          style="font-family: 'Nanum Gothic';"
                           placeholder="별명을 입력하세요"
                           label="Nickname"></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이름 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> Name :</p></v-col>
                       <v-col cols="10">
                         <v-text-field v-model="customer.cname"
                         label="Name"
@@ -111,16 +119,20 @@
                         placeholder="이름을 입력하세요"
                         id="_cname"
                         outlined
+                        color="teal"
+                        style="font-family: 'Nanum Gothic'"
                         name="cname"
                         data-msg="이름"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> Password :</p></v-col>
                       <v-col cols="10">
                         <v-text-field block v-model="customer.password"
                           type="password"
                           data-msg=" 패스워드"
                           outlined
+                          color="teal"
+                          style="font-family: 'Nanum Gothic';"
                           name="password"
                           id="_password"
                         placeholder="패스워드를 입력하세요"
@@ -129,12 +141,14 @@
                         </v-text-field>
 
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 비밀번호 확인 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> PW Confirm :</p></v-col>
                       <v-col cols="10">
                         <v-text-field
                         data-msg="패스워드 재확인"
                         type="password"
                         outlined
+                        color="teal"
+                        style="font-family: 'Nanum Gothic';"
                         name="password_confirm"
                         id="_password_confirm"
                         placeholder="패스워드를 다시 입력하세요"
@@ -146,7 +160,7 @@
                       </v-col>
                       <v-spacer></v-spacer>
                       <v-col class="d-flex ml-auto" cols="12">
-                          <v-btn :disabled="!mValid" type="submit" x-large block color="cyan darken-4"><p style="color:white; margin-bottom:0px;">SignUp</p> </v-btn>
+                          <v-btn :disabled="!mValid" type="submit" x-large block color="teal"><p style="font-family: 'Sunflower'; color:white; margin-bottom:0px;">SignUp</p> </v-btn>
                       </v-col>
                     </v-row>
 
@@ -161,16 +175,18 @@
                 <v-card-text>
                   <v-form @submit.prevent="authSearch" >
                     <v-row>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이메일 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> Email(ID) :</p></v-col>
                       <v-col cols="10">
                          <v-text-field v-model="search.email" label="E-mail" required
                         type="text"
                         outlined
                         value
+                        color="teal"
+                        style="font-family: 'Nanum Gothic';"
                         placeholder="이메일을 입력하세요"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> 이름 :</p></v-col>
+                      <v-col cols="2" style="padding-right:0px;"><p align="center" style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "> Name :</p></v-col>
                       <v-col cols="10">
                         <v-text-field  label="Name"
                        v-model="search.name"
@@ -179,12 +195,14 @@
                         id="_name"
                         name="name"
                         required
+                        color="teal"
+                        style="font-family: 'Nanum Gothic';"
                         placeholder="이름을 입력하세요"
                         title="이름"></v-text-field>
                       </v-col>
 
                         <v-col class="d-flex" cols="12" align-center>
-                        <v-btn type="submit" x-large block color="teal"><p style="color:white; margin-bottom:0px;"> Find Account</p></v-btn>
+                        <v-btn type="submit" x-large block color="teal"><p style="font-family: 'Sunflower'; color:white; margin-bottom:0px;"> Find Account</p></v-btn>
                       </v-col>
                    
                     </v-row>
@@ -202,15 +220,18 @@
       </v-tabs>
         </v-container>
         <v-snackbar
+        color="teal"
+        dark
+        shaped
         v-model="alert"
         timeout="5000"
       >
-        <v-icon color="deep-orange darken-3">mdi-home</v-icon>
+        <v-icon color="white">mdi-close</v-icon>
         {{ alertMsg }}
         
         <template v-slot:action="{ attrs }">
           <v-btn
-            color="red"
+            color="white"
             text
             v-bind="attrs"
             @click="alert = false"
@@ -472,6 +493,7 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
 th {
   background-color:#eeeeee; 
   color:#3e5fba;

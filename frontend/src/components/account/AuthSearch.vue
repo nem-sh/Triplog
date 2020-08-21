@@ -73,11 +73,11 @@
             </v-tab-item>
           </v-tabs>
         </v-container>
-        <v-snackbar v-model="alert" timeout="5000">
-          <v-icon color="deep-orange darken-3">mdi-home</v-icon>
+        <v-snackbar shaped color="teal" dark v-model="alert" timeout="3000">
+          <v-icon color="white">mdi-close</v-icon>
           {{ alertMsg }}
           <template v-slot:action="{ attrs }">
-            <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
+            <v-btn color="white" text v-bind="attrs" @click="alert = false">Close</v-btn>
           </template>
         </v-snackbar>
       </v-container>
