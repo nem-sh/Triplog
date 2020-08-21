@@ -42,7 +42,7 @@
       </v-card>
     </v-hover>
     <div class="aInfo">
-      <b>{{title}}</b>
+      <b>{{artTitle}}</b>
       <p>{{view}} views · {{date}}</p>
     </div>
   </div>
@@ -65,6 +65,7 @@ export default {
     return {
       view: "",
       date: "",
+      artTitle: "",
     };
   },
   created(){
@@ -75,7 +76,9 @@ export default {
     }
     this.date = this.setTime();
     if(this.title.length > 20){
-      this.title = this.title.substring(0,19)+"...";
+      this.artTitle = this.title.substring(0,19)+"...";
+    }else{
+      this.artTitle = this.title;
     }
   },
   methods: {

@@ -1,4 +1,5 @@
 <template>
+<v-app id="inspire" style="max-width: 1100px;">
   <div>
     <div>
       <PersonalMainComp
@@ -12,7 +13,7 @@
       />
     </div>
     <div>
-      <v-container>
+      <v-container fluid fill-width>
         <v-container>
           
             <v-tabs centered grow color="cyan darken-2" v-model="tab">
@@ -78,7 +79,7 @@
               </v-tab-item>
         
               <v-tab-item v-if="isMyBlog">
-                <v-app id="inspire" style="max-width: 900px">
+                <v-app id="inspire" style="max-width: 1100px">
                   <v-container fluid>
                     <v-row>
                       <v-col cols="12">
@@ -95,6 +96,7 @@
       </v-container>
     </div>
   </div>
+</v-app>
 </template>
 
 <script>
