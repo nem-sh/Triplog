@@ -26,7 +26,7 @@
                   </v-img>
                   <v-img
                     v-else
-                    :src="`../../res/articleImage/noimage.png`"
+                    :src="`../../res/articleImage/noimage.jpg`"
                     class="img"
                     width="150"
                     height="120"
@@ -48,7 +48,7 @@
                 </v-img>
                 <v-img
                   v-else
-                  :src="`../../res/articleImage/noimage.png`"
+                  :src="`../../res/articleImage/noimage.jpg`"
                   class="img"
                   width="150"
                   height="120"
