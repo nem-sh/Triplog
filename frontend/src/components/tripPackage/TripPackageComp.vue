@@ -51,7 +51,6 @@
         <v-btn style="font-family: 'Sunflower';" color="white" text v-bind="attrs" @click="alert=false">Close</v-btn>
       </template>
     </v-snackbar>
-    </v-container>
   </div>
 </template>
 
