@@ -36,7 +36,7 @@
       >
         <v-list-item class="px-2 mb-6" style="padding: 10px;">
           <v-list-item-avatar>
-            <v-img :src="`../../userImage/${userimg}`"></v-img>
+            <v-img :src="`../../res/userImage/${userimg}`"></v-img>
           </v-list-item-avatar>
 
           <v-list-item-title
@@ -402,7 +402,7 @@ export default {
     }
   },
   created() {
-    console.log(this.getUserImg)
+    
     if (this.getUserImg != "null" && this.getUserImg != null) {
       this.userimg = this.getUserImg;
     } else {

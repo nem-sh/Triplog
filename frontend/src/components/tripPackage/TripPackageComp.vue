@@ -1,24 +1,31 @@
 <template>
-  <div>
-    <v-container>
-      <v-card max-width="450" max-height="130" class="mx-auto">
-        <v-row class="mx-auto">
-          <v-list>
-            <v-list-item>
-              <v-list-item-icon>
-                <v-icon>mdi-airplane-takeoff</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-textarea auto-grow outlined rows="1" label="여행 묶음 이름을 입력하세요" v-model="TripName"></v-textarea>
-              </v-list-item-content>
-              <v-list-item-icon>
-                <v-btn @click="addTripPackage">여행 묶음 추가</v-btn>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list>
-        </v-row>
-      </v-card>
-      <v-app id="inspire" style="max-width: 900px">
+    <div>
+      <v-container>
+        <v-card width="1100px" height="130px">
+          <v-row class="mx-auto">
+            <v-list>
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>mdi-airplane-takeoff</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-textarea
+                    auto-grow
+                    outlined
+                    rows="1"
+                    cols="100"
+                    label="여행 묶음 이름을 입력하세요"
+                    v-model="TripName"
+                  ></v-textarea>
+                </v-list-item-content>
+                <v-list-item-icon>
+                  <v-btn @click="addTripPackage">여행 묶음 추가</v-btn>
+                </v-list-item-icon>
+              </v-list-item>
+            </v-list>
+          </v-row>
+        </v-card>
+
         <v-container fluid>
           <v-row>
             <v-col cols="12">
@@ -36,9 +43,7 @@
             </v-col>
           </v-row>
         </v-container>
-      </v-app>
-    </v-container>
-
+      </v-container>
     <v-snackbar style="font-family: 'Nanum Gothic';" shaped color="teal" v-model="alert" timeout="3000">
       <v-icon color="white">mdi-check-bold</v-icon>
       {{alertMsg}}
@@ -65,7 +70,7 @@ export default {
       userNum: 0,
       alert: false,
       alertMsg: "",
-      refresh: false,
+      refresh: false
     };
   },
   created() {

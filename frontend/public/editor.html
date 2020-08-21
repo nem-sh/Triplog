@@ -19,6 +19,68 @@
                 const callback = function(mutationsList, observer) {
                     // Use traditional 'for loops' for IE 11
                     for(let mutation of mutationsList) {
+                        if(document.getElementById("app") == null) {
+                            var newDiv = document.createElement("div");
+                            newDiv.setAttribute("id", "app");
+                            var newBr = document.createElement("br");
+                            newDiv.appendChild(newBr);
+                            document.body.appendChild(newDiv);
+                            var newScript1 = document.createElement("script");
+                            newScript1.setAttribute("src", "https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js");
+                            document.body.appendChild(newScript1);
+                            var newScript2 = document.createElement("script");
+                            newScript2.setAttribute("src", "https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js");
+                            document.body.appendChild(newScript2);
+                            var newScript3 = document.createElement("script");
+                            newScript3.innerText = "\
+            new Vue({\
+                el: '#app',\
+                vuetify: new Vuetify(),\
+                data: () => ({\
+                    rating: 3,\
+                    picker: new Date().toISOString().substr(0, 10),\
+                }),\
+            })\
+        ";
+                            document.body.appendChild(newScript3);
+                            var newStyle = document.createElement("style");
+                            newStyle.innerText = "\
+        .textDiv:empty:not(:focus):before{\
+            content: attr(data-text);\
+        }\
+\
+        .textH:empty:not(:focus):before{\
+            content: attr(data-text);\
+        }\
+\
+        .resizable {\
+            display: inline-block;\
+            background: red;\
+            resize: both;\
+            overflow: hidden;\
+            line-height: 0;\
+            width: 300px;\
+            height: 300px;\
+        }\
+\
+        blockquote {\
+            padding: 10px 20px;\
+            margin: 20px 30px 20px;\
+            font-size : 17.5px;\
+            border-left : 5px solid #eee;\
+        }\
+\
+        body {\
+            padding-left: 10px;\
+        }\
+\
+        ol, ul {\
+            padding: 10px;\
+            padding-left: 30px;\
+        }\
+    ";
+                            document.body.appendChild(newStyle);
+                        }
                         if (mutation.type === 'childList') {
                             if((mutation.addedNodes.length > 0) && (mutation.addedNodes[0].tagName == "IMG")) {
                                 var imgNode = mutation.addedNodes[0];
@@ -62,7 +124,17 @@
     </head>
     <body id="editorBody">
         <div id="app">
+            <div contenteditable="false"></div>
             <div class="textDiv" data-text="내용을 입력하세요."></div>
+            <div>
+                <br>
+            </div>
+            <div>
+                <br>
+            </div>
+            <div>
+                <br>
+            </div>
         </div>
         
         <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>

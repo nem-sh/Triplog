@@ -328,7 +328,7 @@
           <span :style="{fontFamily : 'SunFlower'}">포멧 제거</span>
         </v-tooltip>
 
-        <v-menu open-on-hover offset-y>
+        <v-menu open-on-hover>
           <template v-slot:activator="{on, attrs}">
             <v-btn
               class="mr-1"
@@ -354,7 +354,7 @@
           </v-list>
         </v-menu>
 
-        <v-menu open-on-hover offset-y>
+        <v-menu open-on-hover>
           <template v-slot:activator="{on, attrs}">
             <v-btn
               class="mr-1"
@@ -379,6 +379,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
+
       </v-toolbar>
 
     <v-toolbar dense color="elevation-0">
@@ -597,7 +598,7 @@
               v-on="on"
               v-bind="attrs"
             >
-              <v-icon>mdi-format-quote-open</v-icon>
+              <v-icon>mdi-timeline</v-icon>
             </v-btn>
             </v-chip>
           </template>
@@ -769,7 +770,7 @@ export default {
         rel="stylesheet">\
     </head>\
     <body id="editorBody">',
-      editorSrc: "../editor.html",
+      editorSrc: "../res/editor.html",
       addressDialog: false,
       place: {
         name: "",
@@ -851,7 +852,7 @@ export default {
           this.place.lat = data.lat;
           this.place.lng = data.lng;  
           this.article = data;
-          console.log(this.article);
+          
           this.openContentFile();
         });
     }
@@ -878,7 +879,10 @@ export default {
                     <div>내용을 입력하세요.</div>\
                     </div>\
                 </v-timeline-item>';
-      var timelineSuffix = '</v-timeline>';
+      var timelineSuffix = '</v-timeline>\
+      <div>\
+                <br>\
+            </div>';
       var timelineDiv = timelinePrefix;
       var count = this.timelineCount;
       for (let index = 0; index < count; index++) {
@@ -892,13 +896,14 @@ export default {
       document.getElementById('editor').src = newURL;
     },
     addHashtagIntoEditor: async function() {
-      var hashtagDiv = '<v-chip-group>\
-                      <v-chip\
+      var hashtagDiv = '<span>&nbsp</span><v-chip\
                         class="ma-2"\
                         color="teal"\
                         text-color="white"\
-                        >#Hashtag</v-chip>\
-                      </v-chip-group>';
+                        >#Hashtag</v-chip><span>&nbsp</span>\
+                      <div>\
+                        <br>\
+                      </div>';
       this.execValue("insertHTML", false, hashtagDiv);
       var newURL = await URL.createObjectURL(new Blob([this.editorDocument().documentElement.outerHTML], {
         type: 'text/html'
@@ -908,7 +913,10 @@ export default {
     addCalendarIntoEditor: async function() {
       var calendarDiv = '<v-row justify="center" text-align="center">\
                 <v-date-picker color="teal" v-model="picker" contenteditable="false" dark multiple></v-date-picker>\
-            </v-row>';
+            </v-row>\
+            <div>\
+                <br>\
+            </div>';
       this.execValue("insertHTML", false, calendarDiv);
       var newURL = await URL.createObjectURL(new Blob([this.editorDocument().documentElement.outerHTML], {
         type: 'text/html'
@@ -918,18 +926,25 @@ export default {
     addRatingIntoEditor: async function() {
       var ratingDiv = '<v-row justify="center" text-align="center">\
       <v-rating v-model="rating" contenteditable="false" color="teal"></v-rating>\
-      </v-row>';
+      </v-row>\
+      <div>\
+                <br>\
+            </div>';
       this.execValue("insertHTML", false, ratingDiv);
       var newURL = await URL.createObjectURL(new Blob([this.editorDocument().documentElement.outerHTML], {
         type: 'text/html'
       }));
       document.getElementById('editor').src = newURL;
     },
-    addQuoteIntoEditor: function() {
+    addQuoteIntoEditor: async function() {
+      let blob = await fetch("../../res/template/image/quote-open.png").then(r => r.blob());
+      var openQuoteSrc = URL.createObjectURL(blob);
+      blob = await fetch("../../res/template/image/quote-close.png").then(r => r.blob());
+      var closeQuoteSrc = URL.createObjectURL(blob);
       var quoteDiv = 
       '<div style = "width:100%; display:block;">\
         <div style = "width:100%; text-align:center;">\
-          <img src="../../template/image/quote-open.png" style="margin-bottom:20px">\
+          <img src="' + openQuoteSrc +'" style="margin-bottom:20px">\
         </div>\
         <div style = "width:100%; text-align:center;">\
           <h1 class="textH" data-text="내용을 입력하세요."></div>\
@@ -938,10 +953,12 @@ export default {
           <h5 class="textH" data-text="출처" style="color:gray;"></div>\
         </div>\
         <div style = "width:100%; text-align:center;">\
-          <img src="../../template/image/quote-close.png" style="margin-top:20px">\
+          <img src="' + closeQuoteSrc +'" style="margin-top:20px">\
         </div>\
       </div>\
-      <br>';
+      <div>\
+                <br>\
+            </div>';
       this.execValue("insertHTML", false, quoteDiv);
     },
     dragEnd: function(event) {
@@ -970,7 +987,7 @@ export default {
         var newFile = new File([blob], imgFileName, {
           type: blob.type,
         });
-        imgTags[key].src = "../../articleImage/" + newFile.name;
+        imgTags[key].src = "../../res/articleImage/" + newFile.name;
         imgFiles.push(newFile);
       }
 
@@ -1003,7 +1020,7 @@ export default {
         var newFile = new File([blob], imgFileName, {
           type: blob.type,
         });
-        imgTags[key].src = "../../articleImage/" + newFile.name;
+        imgTags[key].src = "../../res/articleImage/" + newFile.name;
         imgFiles.push(newFile);
       }
 
@@ -1036,7 +1053,7 @@ export default {
       window.localStorage.removeItem("tempHtmlFileName");
     },
     loadData() {
-      this.editorSrc = "../../content/temp/" + window.localStorage.getItem("tempHtmlFileName");
+      this.editorSrc = "../../res/content/temp/" + window.localStorage.getItem("tempHtmlFileName");
       this.dialog = false;
     },
     confirmLoadData() {
@@ -1200,13 +1217,13 @@ export default {
         });
     },
     openContentFile: function() {
-      var url = "../../content/registered/" + this.articleContent;
+      var url = "../../res/content/registered/" + this.articleContent;
       var xhr = new XMLHttpRequest();
       xhr.responseType = "text";
 
       var setRealContent = val => {
         var body = val.split('<body>');
-        console.log(body);
+        
         var content = this.tempPrefix + this.tempPrefix2 + body[1];
         this.realContent = (content);
       };
@@ -1245,8 +1262,7 @@ export default {
     useChatbot(){
       this.hidden = !this.hidden;
       this.useChatbotImg = !this.useChatbotImg;
-      console.log(this.hidden)
-      console.log(this.useChatbotImg)
+      
     }
  },
   computed: {

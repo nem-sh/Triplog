@@ -4,7 +4,7 @@
       <v-card :class="{ 'on-hover': hover }" width="310px" style="background: white;">
         <v-img
           v-if="thumbnail"
-          :src="`../../articleImage/${thumbnail}`"
+          :src="`../../res/articleImage/${thumbnail}`"
           class="thumb"
           @click="moveDetail"
         >
@@ -22,7 +22,7 @@
           </v-expand-transition>
           <!-- <v-card-subtitle>{{title}}</v-card-subtitle> -->
         </v-img>
-        <v-img v-else :src="`../../articleImage/noimage.jpg`" class="thumb" @click="moveDetail">
+        <v-img v-else :src="`../../res/articleImage/noimage.jpg`" class="thumb" @click="moveDetail">
         <v-layout column align-center justify-center class="white--text" fill-height>
           <h1 class="grey--text font-weight-bold text-center">No Image</h1>
         </v-layout>
@@ -42,7 +42,7 @@
       </v-card>
     </v-hover>
     <div class="aInfo">
-      <b>{{title}}</b>
+      <b>{{artTitle}}</b>
       <p>{{view}} views · {{date}}</p>
     </div>
   </div>
@@ -65,6 +65,7 @@ export default {
     return {
       view: "",
       date: "",
+      artTitle: "",
     };
   },
   created(){
@@ -75,7 +76,9 @@ export default {
     }
     this.date = this.setTime();
     if(this.title.length > 20){
-      this.title = this.title.substring(0,19)+"...";
+      this.artTitle = this.title.substring(0,19)+"...";
+    }else{
+      this.artTitle = this.title;
     }
   },
   methods: {

@@ -1,6 +1,6 @@
 <template>
-  <v-app id="inspire" style="max-width: 900px">
-    <v-card>
+  <v-app style="max-width: 1100px;">
+    <v-card width="1100px">
       <GmapMap
         :center="mapCenter"
         :zoom="zoom"
@@ -20,7 +20,7 @@
           :key="line.id" 
           :path="line.path"/>
       </GmapMap>
-    </v-card>
+    </v-card><br/>
     <v-container fluid>
       <v-row>
         <v-col cols="12">
