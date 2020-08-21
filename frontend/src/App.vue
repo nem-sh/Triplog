@@ -173,7 +173,7 @@
       </v-app-bar>
     </div>
 
-    <v-main style="margin:0 auto;">
+    <v-main style="margin:0 auto; padding:48px 60px;">
       <v-container>
         <div>
           <router-view @update-profile="info"></router-view>
@@ -181,7 +181,14 @@
       </v-container>
     </v-main>
 
-    <v-snackbar style="font-family: 'Nanum Gothic';" shaped color="teal" elevation="24" v-model="loginSuccess" timeout="3000">
+    <v-snackbar
+      style="font-family: 'Nanum Gothic';"
+      shaped
+      color="teal"
+      elevation="24"
+      v-model="loginSuccess"
+      timeout="3000"
+    >
       <v-icon color="white">mdi-emoticon-excited-outline</v-icon>
       {{ getProfile + "님 반갑습니다." }}
       <template v-slot:action="{ attrs }">
@@ -189,15 +196,28 @@
       </template>
     </v-snackbar>
 
-    <v-snackbar style="font-family: 'Nanum Gothic';" shaped color="teal" elevation="24" v-model="logoutSuccess" timeout="3000">
-      <v-icon color="white">mdi-check-bold</v-icon>
-      정상적으로 로그아웃 되었습니다.
+    <v-snackbar
+      style="font-family: 'Nanum Gothic';"
+      shaped
+      color="teal"
+      elevation="24"
+      v-model="logoutSuccess"
+      timeout="3000"
+    >
+      <v-icon color="white">mdi-check-bold</v-icon>정상적으로 로그아웃 되었습니다.
       <template v-slot:action="{ attrs }">
         <v-btn color="white" text v-bind="attrs" @click="logoutSuccess = false">Close</v-btn>
       </template>
     </v-snackbar>
 
-    <v-snackbar style="font-family: 'Nanum Gothic';" shaped color="teal" elevation="24" v-model="alert" timeout="3000">
+    <v-snackbar
+      style="font-family: 'Nanum Gothic';"
+      shaped
+      color="teal"
+      elevation="24"
+      v-model="alert"
+      timeout="3000"
+    >
       <v-icon color="white">mdi-home</v-icon>
       {{alertMsg}}
       <template v-slot:action="{ attrs }">
@@ -402,7 +422,7 @@ export default {
     }
   },
   created() {
-    console.log(this.getUserImg)
+    console.log(this.getUserImg);
     if (this.getUserImg != "null" && this.getUserImg != null) {
       this.userimg = this.getUserImg;
     } else {
