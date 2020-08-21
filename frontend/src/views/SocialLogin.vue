@@ -7,34 +7,38 @@
             <v-col cols="2" style="padding-right:0px;">
               <p
                 align="center"
-                style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
-              >이메일 :</p>
+                style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
+              >Email(ID) :</p>
             </v-col>
             <v-col cols="10" style="display:flex; align-items:center;">
-              <h3>{{customer.email}}</h3>
+              <h3 style="font-family: 'Sunflower';">{{customer.email}}</h3>
             </v-col>
             <v-col cols="2" style="padding-right:0px;">
               <p
                 align="center"
-                style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
-              >별명 :</p>
+                style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
+              >Nickname :</p>
             </v-col>
             <v-col cols="10">
               <v-text-field
                 v-model="customer.nickname"
                 data-msg="별명"
                 outlined
+                :counter="5"
+                :rules="nickNameRules"
                 name="nickname"
                 id="_nickname"
                 placeholder="별명을 입력하세요"
                 label="Nickname"
+                color="teal"
+                style="font-family: 'Nanum Gothic';"
               ></v-text-field>
             </v-col>
             <v-col cols="2" style="padding-right:0px;">
               <p
                 align="center"
-                style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
-              >이름 :</p>
+                style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
+              >Name :</p>
             </v-col>
             <v-col cols="10">
               <v-text-field
@@ -46,13 +50,15 @@
                 outlined
                 name="cname"
                 data-msg="이름"
+                style="font-family: 'Nanum Gothic';"
+                color="teal"
               ></v-text-field>
             </v-col>
             <v-col cols="2" style="padding-right:0px;">
               <p
                 align="center"
-                style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
-              >비밀번호 :</p>
+                style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
+              >Password :</p>
             </v-col>
             <v-col cols="10">
               <v-text-field
@@ -65,13 +71,14 @@
                 id="_password"
                 placeholder="패스워드를 입력하세요"
                 label="Password"
+                color="teal"
               ></v-text-field>
             </v-col>
             <v-col cols="2" style="padding-right:0px;">
               <p
                 align="center"
-                style="font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
-              >비밀번호 확인 :</p>
+                style="font-family: 'Sunflower'; font-size:16px; margin-top:16px;font-weight:bold; margin-right:0px; align-text:conter; "
+              >PW Confirm :</p>
             </v-col>
             <v-col cols="10">
               <v-text-field
@@ -112,7 +119,10 @@ export default {
         email: "",
         nickname: "",
         cname: "",
-        password: ""
+        password: "",
+        nickNameRules: [
+        v => (v && v.length <= 5) || "별명은 5글자 이내만 가능합니다."
+      ],
       },
       onSignupPage: false
     };
@@ -225,8 +235,6 @@ export default {
           this.onSignupPage = true;
           this.customer.nickname = data.nickname;
           this.customer.email = data.email;
-
-          alert("가입이 필요합니다!");
         }
       })
       .catch(error => {
@@ -237,4 +245,5 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
 </style>
