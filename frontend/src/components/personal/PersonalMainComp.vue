@@ -177,7 +177,7 @@ export default {
       title: "",
       titleColor: "#000000FF",
       visitcount: 0,
-      titleimg: "noimage.png",
+      titleimg: "noimage.jpg",
       isMyNeighbor: false,
       neighbors: [],
       alertMsg: "",
