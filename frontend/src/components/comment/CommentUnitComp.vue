@@ -6,7 +6,7 @@
 
     <v-list-item v-else :key="item.comment.num">
       <v-list-item-avatar @click="goToBlog" style="cursor:pointer">
-        <v-img :src="`../../res/userImage/${userimg}`"></v-img>
+        <v-img :src="`http://i3b207.p.ssafy.io/res/userImage/${userimg}`"></v-img>
       </v-list-item-avatar>
 
       <v-list-item-content class="pb-0">

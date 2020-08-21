@@ -13,7 +13,7 @@
                 <div v-if="firstImage">
                   <v-img
                     v-if="imagesrc"
-                    :src="`../../res/userImage/${imagesrc}`"
+                    :src="`http://i3b207.p.ssafy.io/res/userImage/${imagesrc}`"
                     class="img"
                     width="150"
                     height="120"
@@ -26,7 +26,7 @@
                   </v-img>
                   <v-img
                     v-else
-                    :src="`../../res/articleImage/noimage.png`"
+                    :src="`http://i3b207.p.ssafy.io/res/articleImage/noimage.jpg`"
                     class="img"
                     width="150"
                     height="120"
@@ -48,7 +48,7 @@
                 </v-img>
                 <v-img
                   v-else
-                  :src="`../../res/articleImage/noimage.png`"
+                  :src="`http://i3b207.p.ssafy.io/res/articleImage/noimage.jpg`"
                   class="img"
                   width="150"
                   height="120"

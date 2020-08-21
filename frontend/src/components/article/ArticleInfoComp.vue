@@ -228,7 +228,7 @@ export default {
       window.history.back();
     },
     openContentFile: function() {
-      var url = "../../res/content/registered/" + this.articleContent;
+      var url = "http://i3b207.p.ssafy.io/res/content/registered/" + this.articleContent;
       var xhr = new XMLHttpRequest();
       xhr.responseType = "text";
       var setRealContent = val => {

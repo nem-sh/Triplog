@@ -1,7 +1,7 @@
 <template>
   <v-container style=" margin-top:100px;">
     <div style="justify-content:center; display:flex; margin-bottom: 50px;">
-      <img :src="`../../res/mail.png`" alt />
+      <img :src="`http://i3b207.p.ssafy.io/res/mail.png`" alt />
       <h1 style="line-height:167px">회원가입 인증 메일을 확인해주세요.</h1>
     </div>
     <hr />
