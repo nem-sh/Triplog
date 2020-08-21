@@ -48,7 +48,7 @@
                         >
                             <h2 style=" font-family: 'Sunflower';">카카오톡 검색에서 "TRIPLOG"를 검색합니다</h2>  
                             <br>
-                            <v-img :src="`../../res/TRIPLOG검색.jpg`" max-height="500px"></v-img>
+                            <v-img :src="`../../TRIPLOG검색.jpg`" max-height="500px"></v-img>
                         </v-card>
                 
                         <v-btn
@@ -75,7 +75,7 @@
                         >
                             <h2 style=" font-family: 'Sunflower';">TRIPLOG에 가입된 E-mail을 적어줍니다.</h2>  
                             <br>
-                            <v-img :src="`../../res/emailvalid.jpg`"></v-img>
+                            <v-img :src="`../../emailvalid.jpg`"></v-img>
                         </v-card>
                         <h3 style=" font-family: 'Sunflower';">가입된 이메일이라면 확인 메세지가 나옵니다</h3>
                         <br>
@@ -103,7 +103,7 @@
                         >
                             <h2 style=" font-family: 'Sunflower';">기록하고싶은 사진과 코멘트를 하나씩 적어줍니다</h2>  
                             <br>
-                            <v-img :src="`../../res/media.jpg`" max-width="400"  max-height="500" class="mx-auto"></v-img>
+                            <v-img :src="`../../media.jpg`" max-width="400"  max-height="500" class="mx-auto"></v-img>
                             <br>
                         </v-card>
                 
@@ -130,7 +130,7 @@
                         >
                             <h2 style=" font-family: 'Sunflower';">My Account에서 올린 사진과 글을 보실수 있습니다</h2>  
                             <br>
-                            <v-img :src="`../../res/chatbotcomplete.jpg`" max-height="500" max-width="500" class="mx-auto"></v-img>
+                            <v-img :src="`../../chatbotcomplete.jpg`" max-height="500" max-width="500" class="mx-auto"></v-img>
                         </v-card>
                 
                         <v-btn

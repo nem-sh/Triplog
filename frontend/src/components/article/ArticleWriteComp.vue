@@ -770,7 +770,7 @@ export default {
         rel="stylesheet">\
     </head>\
     <body id="editorBody">',
-      editorSrc: "../res/editor.html",
+      editorSrc: "../editor.html",
       addressDialog: false,
       place: {
         name: "",
@@ -937,9 +937,9 @@ export default {
       document.getElementById('editor').src = newURL;
     },
     addQuoteIntoEditor: async function() {
-      let blob = await fetch("../../res/template/image/quote-open.png").then(r => r.blob());
+      let blob = await fetch("../../template/image/quote-open.png").then(r => r.blob());
       var openQuoteSrc = URL.createObjectURL(blob);
-      blob = await fetch("../../res/template/image/quote-close.png").then(r => r.blob());
+      blob = await fetch("../../template/image/quote-close.png").then(r => r.blob());
       var closeQuoteSrc = URL.createObjectURL(blob);
       var quoteDiv = 
       '<div style = "width:100%; display:block;">\
@@ -987,7 +987,7 @@ export default {
         var newFile = new File([blob], imgFileName, {
           type: blob.type,
         });
-        imgTags[key].src = "../../res/articleImage/" + newFile.name;
+        imgTags[key].src = "../../articleImage/" + newFile.name;
         imgFiles.push(newFile);
       }
 
@@ -1020,7 +1020,7 @@ export default {
         var newFile = new File([blob], imgFileName, {
           type: blob.type,
         });
-        imgTags[key].src = "../../res/articleImage/" + newFile.name;
+        imgTags[key].src = "../../articleImage/" + newFile.name;
         imgFiles.push(newFile);
       }
 
@@ -1053,7 +1053,7 @@ export default {
       window.localStorage.removeItem("tempHtmlFileName");
     },
     loadData() {
-      this.editorSrc = "../../res/content/temp/" + window.localStorage.getItem("tempHtmlFileName");
+      this.editorSrc = "../../content/temp/" + window.localStorage.getItem("tempHtmlFileName");
       this.dialog = false;
     },
     confirmLoadData() {
@@ -1217,7 +1217,7 @@ export default {
         });
     },
     openContentFile: function() {
-      var url = "../../res/content/registered/" + this.articleContent;
+      var url = "../../content/registered/" + this.articleContent;
       var xhr = new XMLHttpRequest();
       xhr.responseType = "text";
 

@@ -12,7 +12,7 @@
         href="#!"
       >
         <v-img v-if="value.article.thumbnail"
-          :src="`../../res/articleImage/${value.article.thumbnail}`"
+          :src="`../../articleImage/${value.article.thumbnail}`"
           height="100%"
           @click.stop="dialog = true"
         >
@@ -28,7 +28,7 @@
             <v-card @click="dialog = false" class="mx-auto" style="opacity: 1; ">
               <v-list-item>
                 <v-list-item-avatar color="grey">
-                  <v-img :src="`../../res/userImage/${value.writer.imageSrc}`"></v-img>
+                  <v-img :src="`../../userImage/${value.writer.imageSrc}`"></v-img>
                 </v-list-item-avatar>
                 <v-list-item-content>
                   <v-list-item-title class="headline">
@@ -39,7 +39,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-img :src="`../../res/articleImage/${value.article.thumbnail}`" height="388"></v-img>
+              <v-img :src="`../../articleImage/${value.article.thumbnail}`" height="388"></v-img>
               <br />
               <v-card-text class="skipText">{{value.article.place}}</v-card-text>
               <br />
@@ -116,7 +116,7 @@
         </v-img>
 
         <v-img v-else
-          :src="`../../res/articleImage/noimage.jpg`"
+          :src="`../../articleImage/noimage.jpg`"
           height="100%"
           @click.stop="dialog = true"
         >
@@ -125,7 +125,7 @@
             <v-card @click="dialog = false" class="mx-auto" style="opacity: 1; ">
               <v-list-item>
                 <v-list-item-avatar color="grey">
-                  <v-img :src="`../../res/userImage/${value.writer.imageSrc}`"></v-img>
+                  <v-img :src="`../../userImage/${value.writer.imageSrc}`"></v-img>
                 </v-list-item-avatar>
                 <v-list-item-content>
                   <v-list-item-title class="headline">
@@ -136,7 +136,7 @@
                 </v-list-item-content>
               </v-list-item>
 
-              <v-img :src="`../../res/articleImage/noimage.jpg`" height="388">
+              <v-img :src="`../../articleImage/noimage.jpg`" height="388">
                 <v-layout column align-center justify-center class="white--text" fill-height>
                   <h1 class="grey--text font-weight-bold text-center">No Image</h1>
                 </v-layout>
