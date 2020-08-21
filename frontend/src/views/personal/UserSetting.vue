@@ -49,14 +49,14 @@
 import http from "@/util/http-common";
 import UserInfoComp from "@/components/account/UserInfoComp.vue";
 import SetBlogComp from "@/components/personal/SetBlogComp.vue";
-import ChatBotComp from "@/components/account/ChatBotComp.vue";
+
 
 export default {
   name: "UsetSetting",
   components: {
     UserInfoComp,
     SetBlogComp,
-    ChatBotComp,
+    
   },
   data: function() {
     return {

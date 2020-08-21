@@ -852,7 +852,7 @@ export default {
           this.place.lat = data.lat;
           this.place.lng = data.lng;  
           this.article = data;
-          console.log(this.article);
+          
           this.openContentFile();
         });
     }
@@ -1223,7 +1223,7 @@ export default {
 
       var setRealContent = val => {
         var body = val.split('<body>');
-        console.log(body);
+        
         var content = this.tempPrefix + this.tempPrefix2 + body[1];
         this.realContent = (content);
       };
@@ -1262,8 +1262,7 @@ export default {
     useChatbot(){
       this.hidden = !this.hidden;
       this.useChatbotImg = !this.useChatbotImg;
-      console.log(this.hidden)
-      console.log(this.useChatbotImg)
+      
     }
  },
   computed: {
