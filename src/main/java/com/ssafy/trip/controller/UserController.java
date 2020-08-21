@@ -33,6 +33,8 @@ import com.ssafy.trip.repository.ArticleRepository;
 import com.ssafy.trip.repository.BlogInfoRepository;
 import com.ssafy.trip.repository.CommentRepository;
 import com.ssafy.trip.repository.NeighborRepository;
+import com.ssafy.trip.repository.PreArticleRepository;
+import com.ssafy.trip.repository.TripPackageRepository;
 import com.ssafy.trip.repository.UserRepository;
 
 @CrossOrigin(origins = "*")
@@ -54,6 +56,12 @@ public class UserController {
     
     @Autowired
     private NeighborRepository neighborRepository;
+    
+@Autowired
+private TripPackageRepository tripPackageRepository;
+
+@Autowired
+private PreArticleRepository preArticleRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -149,6 +157,8 @@ public class UserController {
     	  }
 
     	  blogInfoRepository.deleteByUsernum(num);
+    	  tripPackageRepository.deleteByUserNum(num);
+    	  preArticleRepository.deleteByUsernum(num);
     	  userRepository.delete(user);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       } catch (Exception e) {
