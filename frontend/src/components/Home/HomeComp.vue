@@ -15,7 +15,7 @@
         </v-row>
       </v-carousel-item>
     </v-carousel>
-    <v-sheet height="180" align="center" justify="center">
+    <v-sheet align="center" justify="center">
       <v-row class="fill-height" align="center" justify="center">
         <div style="text-align:center; font-family: 'Nanum Gothic'">
           <h1>TRIPLOG는 사용자 친화적인 블로그입니다.</h1>
@@ -25,21 +25,36 @@
         </div>
       </v-row>
     </v-sheet>
+    <br />
     <v-container align="center" justify="center" style="max-width:1096px">
-      <div><h2 style="font-family: 'Nanum Gothic'; left:0;" class="font-weight-bolder">Most Liked Articles <v-icon color="teal">fas fa-heart</v-icon></h2></div>
-      <br>
+      <div>
+        <h2 style="font-family: 'Nanum Gothic'; left:0;" class="font-weight-bolder">
+          Most Liked Articles
+          <v-icon color="teal">fas fa-heart</v-icon>
+        </h2>
+      </div>
+      <br />
       <like-sort-list-comp></like-sort-list-comp>
-      <br>
-      <h2 style="font-family: 'Nanum Gothic'">Most View <v-icon color="teal">fas fa-eye</v-icon></h2>
-      <br>
+      <br />
+      <h2 style="font-family: 'Nanum Gothic'">
+        Most View
+        <v-icon color="teal">fas fa-eye</v-icon>
+      </h2>
+      <br />
       <view-sort-list-comp></view-sort-list-comp>
-      <br>
-      <h2 style="font-family: 'Nanum Gothic'">Most Comment Num <v-icon color="teal">fas fa-comment-alt</v-icon></h2>
-      <br>
+      <br />
+      <h2 style="font-family: 'Nanum Gothic'">
+        Most Comment Num
+        <v-icon color="teal">fas fa-comment-alt</v-icon>
+      </h2>
+      <br />
       <comment-sort-list-comp></comment-sort-list-comp>
-      <br>
-      <h2 style="font-family: 'Nanum Gothic'">Recent Articles <v-icon color="teal">fas fa-pencil-alt</v-icon></h2>
-    <br>
+      <br />
+      <h2 style="font-family: 'Nanum Gothic'">
+        Recent Articles
+        <v-icon color="teal">fas fa-pencil-alt</v-icon>
+      </h2>
+      <br />
       <recent-sort-list-comp></recent-sort-list-comp>
     </v-container>
   </v-container>
@@ -79,11 +94,9 @@ export default {
           h2msg:
             "많은 조회수를 기록한 게시물들에서 TRIPLOGGER들의 발자취를 따라가보세요. 새로운 여행을 발견할 수도 있을 것입니다."
         }
-      ],
-      
-
+      ]
     };
-  },
+  }
 };
 </script>
 <style scoped>
