@@ -328,7 +328,7 @@
           <span :style="{fontFamily : 'SunFlower'}">포멧 제거</span>
         </v-tooltip>
 
-        <v-menu open-on-hover offset-y>
+        <v-menu open-on-hover>
           <template v-slot:activator="{on, attrs}">
             <v-btn
               class="mr-1"
@@ -354,7 +354,7 @@
           </v-list>
         </v-menu>
 
-        <v-menu open-on-hover offset-y>
+        <v-menu open-on-hover>
           <template v-slot:activator="{on, attrs}">
             <v-btn
               class="mr-1"
@@ -379,6 +379,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
+
       </v-toolbar>
 
     <v-toolbar dense color="elevation-0">
@@ -597,7 +598,7 @@
               v-on="on"
               v-bind="attrs"
             >
-              <v-icon>mdi-format-quote-open</v-icon>
+              <v-icon>mdi-timeline</v-icon>
             </v-btn>
             </v-chip>
           </template>
@@ -878,7 +879,10 @@ export default {
                     <div>내용을 입력하세요.</div>\
                     </div>\
                 </v-timeline-item>';
-      var timelineSuffix = '</v-timeline>';
+      var timelineSuffix = '</v-timeline>\
+      <div>\
+                <br>\
+            </div>';
       var timelineDiv = timelinePrefix;
       var count = this.timelineCount;
       for (let index = 0; index < count; index++) {
@@ -892,13 +896,14 @@ export default {
       document.getElementById('editor').src = newURL;
     },
     addHashtagIntoEditor: async function() {
-      var hashtagDiv = '<v-chip-group>\
-                      <v-chip\
+      var hashtagDiv = '<span>&nbsp</span><v-chip\
                         class="ma-2"\
                         color="teal"\
                         text-color="white"\
-                        >#Hashtag</v-chip>\
-                      </v-chip-group>';
+                        >#Hashtag</v-chip><span>&nbsp</span>\
+                      <div>\
+                        <br>\
+                      </div>';
       this.execValue("insertHTML", false, hashtagDiv);
       var newURL = await URL.createObjectURL(new Blob([this.editorDocument().documentElement.outerHTML], {
         type: 'text/html'
@@ -908,7 +913,10 @@ export default {
     addCalendarIntoEditor: async function() {
       var calendarDiv = '<v-row justify="center" text-align="center">\
                 <v-date-picker color="teal" v-model="picker" contenteditable="false" dark multiple></v-date-picker>\
-            </v-row>';
+            </v-row>\
+            <div>\
+                <br>\
+            </div>';
       this.execValue("insertHTML", false, calendarDiv);
       var newURL = await URL.createObjectURL(new Blob([this.editorDocument().documentElement.outerHTML], {
         type: 'text/html'
@@ -918,18 +926,25 @@ export default {
     addRatingIntoEditor: async function() {
       var ratingDiv = '<v-row justify="center" text-align="center">\
       <v-rating v-model="rating" contenteditable="false" color="teal"></v-rating>\
-      </v-row>';
+      </v-row>\
+      <div>\
+                <br>\
+            </div>';
       this.execValue("insertHTML", false, ratingDiv);
       var newURL = await URL.createObjectURL(new Blob([this.editorDocument().documentElement.outerHTML], {
         type: 'text/html'
       }));
       document.getElementById('editor').src = newURL;
     },
-    addQuoteIntoEditor: function() {
+    addQuoteIntoEditor: async function() {
+      let blob = await fetch("../../template/image/quote-open.png").then(r => r.blob());
+      var openQuoteSrc = URL.createObjectURL(blob);
+      blob = await fetch("../../template/image/quote-close.png").then(r => r.blob());
+      var closeQuoteSrc = URL.createObjectURL(blob);
       var quoteDiv = 
       '<div style = "width:100%; display:block;">\
         <div style = "width:100%; text-align:center;">\
-          <img src="../../template/image/quote-open.png" style="margin-bottom:20px">\
+          <img src="' + openQuoteSrc +'" style="margin-bottom:20px">\
         </div>\
         <div style = "width:100%; text-align:center;">\
           <h1 class="textH" data-text="내용을 입력하세요."></div>\
@@ -938,10 +953,12 @@ export default {
           <h5 class="textH" data-text="출처" style="color:gray;"></div>\
         </div>\
         <div style = "width:100%; text-align:center;">\
-          <img src="../../template/image/quote-close.png" style="margin-top:20px">\
+          <img src="' + closeQuoteSrc +'" style="margin-top:20px">\
         </div>\
       </div>\
-      <br>';
+      <div>\
+                <br>\
+            </div>';
       this.execValue("insertHTML", false, quoteDiv);
     },
     dragEnd: function(event) {
