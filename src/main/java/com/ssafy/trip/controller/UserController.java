@@ -157,8 +157,8 @@ private PreArticleRepository preArticleRepository;
     	  }
 
     	  blogInfoRepository.deleteByUsernum(num);
-    	  tripPackageRepository.deleteByUserNum(num);
-    	  preArticleRepository.deleteByUsernum(num);
+    	  tripPackageRepository.deleteAllByUserNum(num);
+    	  preArticleRepository.deleteAllByUsernum(num);
     	  userRepository.delete(user);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       } catch (Exception e) {

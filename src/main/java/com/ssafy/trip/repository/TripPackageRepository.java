@@ -20,5 +20,5 @@ public interface TripPackageRepository extends JpaRepository<TripPackage, Long>{
 	
 	@Transactional
     @Modifying
-	void deleteByUserNum(Long num);
+	void deleteAllByUserNum(Long num);
 }

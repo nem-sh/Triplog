@@ -18,5 +18,5 @@ public interface PreArticleRepository extends JpaRepository<PreArticle, Long> {
 	
 	@Transactional
     @Modifying
-	void deleteByUsernum(Long num);
+	void deleteAllByUsernum(Long num);
 }
