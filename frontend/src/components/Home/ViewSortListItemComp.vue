@@ -6,7 +6,7 @@
       <v-card :class="{ 'on-hover': hover } " style="background: white;">
         <v-img
           v-if="thumbnail"
-          :src="`../../articleImage/${thumbnail}`"
+          :src="`../../res/articleImage/${thumbnail}`"
           class="thumb"
           max-width="310"
           max-height="200"
@@ -27,7 +27,7 @@
           </v-expand-transition>
           
         </v-img>
-        <v-img v-else :src="`../../articleImage/noimage.jpg`" class="thumb" @click="moveDetail"  max-width="310"
+        <v-img v-else :src="`../../res/articleImage/noimage.jpg`" class="thumb" @click="moveDetail"  max-width="310"
           max-height="200">
         <v-layout column align-center justify-center class="white--text" fill-height>
           <h1 class="grey--text font-weight-bold text-center">No Image</h1>
@@ -54,7 +54,7 @@
       <h3 style="text-overflow:ellipsis;">{{title}}</h3>
       <v-row>
               <v-col cols="2" style="padding:0;">
-              <v-avatar style="margin-right:0;"><v-img :src="`../../userImage/${userimg}`" style="margin:0;" class="d-flex mr-0"></v-img></v-avatar>
+              <v-avatar style="margin-right:0;"><v-img :src="`../../res/userImage/${userimg}`" style="margin:0;" class="d-flex mr-0"></v-img></v-avatar>
               </v-col>
               <v-col style="padding:0;" cols="2">
                 <v-card-text class="d-flex" style="padding-right:0; padding-left:0;"><h4 class="pa-0">{{userNickname}}</h4></v-card-text>

@@ -3,7 +3,7 @@
     <v-container class="pa-0 d-none d-sm-block" style="min-width:300px ;   ">
       <v-container class="pb-0" style="display:flex; justify-content:flex-end;">
         <v-list-item-avatar>
-          <v-img :src="`../../userImage/${hostImg}`"></v-img>
+          <v-img :src="`../../res/userImage/${hostImg}`"></v-img>
         </v-list-item-avatar>
 
         <p
@@ -17,7 +17,7 @@
       <!-- <v-container class="border pa-0" style> -->
       <v-container style="height:350px">
         <v-img
-          :src="`../../blogImage/${titleimg}`"
+          :src="`../../res/blogImage/${titleimg}`"
           style="position: relative; z-index: 1; width: 100%; height: 100%; opacity:0.5;"
           alt
         />
@@ -83,7 +83,7 @@
     <v-container class="pa-0 d-block d-sm-none" :style="mobileSize">
       <v-container class="pb-0" style="display:flex; justify-content:flex-end;">
         <v-list-item-avatar>
-          <v-img :src="`../../userImage/${hostImg}`"></v-img>
+          <v-img :src="`../../res/userImage/${hostImg}`"></v-img>
         </v-list-item-avatar>
 
         <p
@@ -97,7 +97,7 @@
       <!-- <v-container class="border pa-0" style> -->
       <v-container class="pa-0" style="height:350px">
         <v-img
-          :src="`../../blogImage/${titleimg}`"
+          :src="`../../res/blogImage/${titleimg}`"
           style="position: relative; z-index: 1; width: 852px; height: 325px; opacity:0.5;"
           alt
         />
@@ -276,13 +276,13 @@ export default {
       return `width: ${size}px;`;
     },
     getImg: function() {
-      return `../../blogImage/${this.titleimg}`;
+      return `../../res/blogImage/${this.titleimg}`;
     },
     getUserImg: function() {
       if (this.hostImg == null) {
-        return `../../userImage/${this.titleimg}`;
+        return `../../res/userImage/${this.titleimg}`;
       } else {
-        return `../../userImage/${this.hostImg}`;
+        return `../../res/userImage/${this.hostImg}`;
       }
     },
     getColor: function() {

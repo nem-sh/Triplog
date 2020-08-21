@@ -4,7 +4,7 @@
       <v-card :class="{ 'on-hover': hover }" width="310px" style="background: white;">
         <v-img
           v-if="thumbnail"
-          :src="`../../articleImage/${thumbnail}`"
+          :src="`../../res/articleImage/${thumbnail}`"
           class="thumb"
           @click="moveDetail"
         >
@@ -22,7 +22,7 @@
           </v-expand-transition>
           <!-- <v-card-subtitle>{{title}}</v-card-subtitle> -->
         </v-img>
-        <v-img v-else :src="`../../articleImage/noimage.jpg`" class="thumb" @click="moveDetail">
+        <v-img v-else :src="`../../res/articleImage/noimage.jpg`" class="thumb" @click="moveDetail">
         <v-layout column align-center justify-center class="white--text" fill-height>
           <h1 class="grey--text font-weight-bold text-center">No Image</h1>
         </v-layout>

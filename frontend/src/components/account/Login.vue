@@ -54,14 +54,14 @@
                          <v-col cols="1"></v-col>
                       <v-col class="d-flex pa-0" cols="10" sm="5"  style="justify-content:center; ">
                         <a style="width:100%" :href="kakaoUrl">
-                            <v-img :src= "`../../kakao.png`"  />
+                            <v-img :src= "`../../res/kakao.png`"  />
                         </a>
                          </v-col>
                          <v-col cols="1" class="d-sm-none"></v-col>
                          <v-col cols="1" class="d-sm-none"></v-col>
                          <v-col class="d-flex pa-0"  cols="10" sm="5"  style="justify-content:center;">
                         <a  style="width:100%" :href="googleUrl"
-                        ><v-img :src="`../../google.png`"  />
+                        ><v-img :src="`../../res/google.png`"  />
                         </a>
                      
                          </v-col>
