@@ -199,4 +199,11 @@ public class UserController {
     	
     	return img;
     }
+    @GetMapping("/{num}/nickname")
+    public String getNickname(@PathVariable(value="num")Long usernum) {
+    	MemberUser user = userRepository.findByNum(usernum)
+    			.orElseThrow(() -> new ResourceNotFoundException("User", "email", usernum));
+    	String nickname = user.getNickname();
+    	return nickname;
+    }
 }

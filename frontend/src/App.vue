@@ -402,7 +402,7 @@ export default {
     }
   },
   created() {
-    console.log(this.getUserImg)
+    
     if (this.getUserImg != "null" && this.getUserImg != null) {
       this.userimg = this.getUserImg;
     } else {

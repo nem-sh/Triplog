@@ -231,7 +231,7 @@ export default {
                 userimg: this.getUserImg,
                 usernum: this.getUserNum
               };
-              console.log(obj);
+              
               this.item.cocomments.unshift(obj);
               this.content = "";
             })

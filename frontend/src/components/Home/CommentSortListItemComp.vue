@@ -51,13 +51,16 @@
     
     <div class="aInfo">
      
-      <h3 style="text-overflow:ellipsis;" class="my-1">{{title}}</h3>
+      <h3 style="text-overflow:ellipsis;">{{title}}</h3>
       <v-row>
-              <v-col cols="6">
-              <v-avatar class="d-flex mr-0 ml-2" style="margin:0;"><v-img :src="`../../userImage/${userimg}`" style="margin:0;" class="d-flex mr-0"></v-img></v-avatar>
+              <v-col cols="2" style="padding:0;">
+              <v-avatar style="margin-right:0;"><v-img :src="`../../userImage/${userimg}`" style="margin:0;" class="d-flex mr-0"></v-img></v-avatar>
               </v-col>
-              <v-col cols="6">
-              <v-card-text class="d-flex  pr-0"><h4 class="d-flex">{{commentNum}}개의 댓글</h4></v-card-text>
+              <v-col cols="2" style="padding:0;">
+                <v-card-text class="d-flex" style="padding-right:0;padding-left:0;"><h4 class="pa-0">{{userNickname}}</h4></v-card-text>
+              </v-col>
+              <v-col cols="8" style="padding:0;">
+              <v-card-text class="float-right"><h4 class="float-right">{{commentNum}}개의 댓글</h4></v-card-text>
               </v-col>
         </v-row>
       
@@ -74,7 +77,7 @@ export default {
     data: function() {
     return {
       userimg: "profile_init.png",
-      
+      userNickname:"",
     };
   },
     props:{
@@ -91,10 +94,13 @@ export default {
     .then(({data})=>{
       if (data != "null") {
       this.userimg = data; 
-      console.log(this.userimg)
       }
       
     })
+  http.get(`/${this.user_num}/nickname`)
+  .then(({data})=>{
+    this.userNickname = data;
+  })
     },
     methods: {
         moveDetail:function() {
