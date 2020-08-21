@@ -5,8 +5,8 @@
         <v-form ref="form" v-model="mValid">
           <v-row>
             <v-col>
-              <p class="teal--text">Email (ID)</p>
-              <p>{{email}}</p>
+              <p class="teal--text" style="font-family: 'Sunflower'; font-weight: bold;">Email (ID)</p>
+              <p style="font-family: 'Sunflower';">{{email}}</p>
             </v-col>
             <v-col class="teal--text">
               <div align="center">
@@ -15,8 +15,8 @@
                     v-if="imagesrc"
                     :src="`../../userImage/${imagesrc}`"
                     class="img"
-                    width="200"
-                    height="100"
+                    width="150"
+                    height="120"
                   >
                     <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
@@ -28,8 +28,8 @@
                     v-else
                     :src="`../../articleImage/noimage.png`"
                     class="img"
-                    width="200"
-                    height="100"
+                    width="150"
+                    height="120"
                   >
                     <template v-slot:placeholder>
                       <v-row class="fill-height ma-0" align="center" justify="center">
@@ -50,8 +50,8 @@
                   v-else
                   :src="`../../articleImage/noimage.png`"
                   class="img"
-                  width="200"
-                  height="100"
+                  width="150"
+                  height="120"
                 >
                   <template v-slot:placeholder>
                     <v-row class="fill-height ma-0" align="center" justify="center">
@@ -61,14 +61,14 @@
                 </v-img>
               </div>
               <input ref="imageInput" type="file" hidden @change="onChangeImages" />
-              <v-btn small type="button" @click="onClickImageUpload">프로필 이미지 변경</v-btn>
+              <v-btn class="mt-2" color="teal" dark style="font-family: 'Nanum Gothic';" small type="button" @click="onClickImageUpload">프로필 이미지 변경</v-btn>
             </div>
           </v-col>
         </v-row>
 
           <v-row>
             <v-col>
-              <p class="teal--text">Name</p>
+              <p style="font-family: 'Sunflower'; font-weight: bold;" class="teal--text">Name</p>
               <v-textarea
                 auto-grow
                 outlined
@@ -76,10 +76,12 @@
                 row-height="15"
                 label="이름을 입력하세요"
                 v-model="name"
+                color="teal"
+                style="font-family: 'Nanum Gothic';"
               ></v-textarea>
             </v-col>
             <v-col>
-              <p class="teal--text">NickName</p>
+              <p style="font-family: 'Sunflower'; font-weight: bold;" class="teal--text">NickName</p>
               <v-textarea
                 :counter="5"
                 :rules="nickNameRules"
@@ -89,72 +91,77 @@
                 row-height="15"
                 label="별명을 입력하세요"
                 v-model="nickName"
+                color="teal"
+                style="font-family: 'Nanum Gothic';"
               ></v-textarea>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <p class="teal--text">Self-introduction</p>
+              <p style="font-family: 'Sunflower'; font-weight: bold;" class="teal--text">Self-introduction</p>
               <v-textarea
-                :counter="44"
+                :counter="40"
                 :rules="introRules"
                 auto-grow
                 outlined
                 rows="2"
                 row-height="30"
-                label="자신을 소개하세요"
+                label="소개글을 입력하세요"
                 v-model="intro"
+                color="teal"
+                style="font-family: 'Nanum Gothic';"
               >></v-textarea>
             </v-col>
           </v-row>
 
         <v-row>
           <v-col>
-            <p class="teal--text">Authority</p>
-            <p v-if="!valid">
+            <p style="font-family: 'Sunflower'; font-weight: bold;" class="teal--text">Authority</p>
+            <p style="font-family: 'Nanum Gothic';" v-if="!valid">
               권한이 없습니다.
               이메일 인증을 통해 권한을 얻으세요!
             </p>
-            <p v-else>인증된 사용자입니다.</p>
+            <p style="font-family: 'Nanum Gothic';" v-else>인증된 사용자입니다.</p>
           </v-col>
           <v-col>
-            <p class="teal--text">Joined At</p>
-            <p>{{getFormatDate(joinedAt)}}</p>
+            <p style="font-family: 'Sunflower'; font-weight: bold;" class="teal--text">Joined At</p>
+            <p style="font-family: 'Sunflower';">{{getFormatDate(joinedAt)}}</p>
           </v-col>
         </v-row>
 
           <v-row>
             <v-col>
-              <v-btn :disabled="!mValid" @click="modify" class="cyan darken-3 white--text">수정</v-btn>
+              <v-btn @click="confirmSignOut" color="teal" dark style="font-family: 'Nanum Gothic';">탈퇴</v-btn>
             </v-col>
             <v-col class="text-right">
-              <v-btn @click="confirmSignOut" class="cyan darken-3 white--text">탈퇴</v-btn>
+              <v-btn :disabled="!mValid" @click="modify" color="teal" dark style="font-family: 'Nanum Gothic';">수정</v-btn>
             </v-col>
           </v-row>
         </v-form>
       </v-container>
     </div>
 
-    <v-snackbar v-model="alert" timeout="5000">
-      <v-icon color="deep-orange darken-3">mdi-home</v-icon>
+    <v-snackbar shaped color="teal" v-model="alert" timeout="5000">
+      <v-icon color="white">mdi-check-bold</v-icon>
       {{ alertMsg }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="red" text v-bind="attrs" @click="alert = false">Close</v-btn>
+        <v-btn color="white" text v-bind="attrs" @click="alert = false">Close</v-btn>
       </template>
     </v-snackbar>
 
-    <v-dialog v-model="dialog" max-width="350">
-      <v-card>
-        <v-card-title class="headline">정말 탈퇴하시겠습니까?</v-card-title>
+    <v-dialog color="teal" dark v-model="dialog" max-width="400">
+      <v-card class="pa-0">
+        <v-card-title style="font-family: 'Nanum Gothic';" class="headline">
+          <v-icon color="red" class="mr-2">mdi-information</v-icon>정말 탈퇴하시겠습니까?</v-card-title>
 
-        <v-card-text>탈퇴하면 계정 정보의 복구가 불가능합니다.</v-card-text>
+        <v-card-text style="font-family: 'Nanum Gothic';">탈퇴하면 계정 정보의 복구가 불가능합니다.</v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic';" color="white" text @click="dialog = false">취소</v-btn>
 
-          <v-btn color="blue darken-1" text @click="signOut">확인</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic'; font-weight: bold;" color="teal" text @click="signOut">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -203,7 +210,7 @@ export default {
         v => (v && v.length <= 5) || "별명은 5글자 이내만 가능합니다."
       ],
       introRules: [
-        v => (v && v.length <= 44) || "자기소개는 44글자 이내만 가능합니다."
+        v => (v && v.length <= 40) || "소개글은 40글자 이내만 가능합니다."
       ]
     };
   },
@@ -381,6 +388,7 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
 th {
   background-color: #eeeeee;
   color: #3e5fba;

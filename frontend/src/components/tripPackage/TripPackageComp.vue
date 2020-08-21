@@ -1,5 +1,4 @@
 <template>
-  <v-app id="inspire" style="">
     <div>
       <v-container>
         <v-card width="1100px" height="130px">
@@ -45,16 +44,15 @@
           </v-row>
         </v-container>
       </v-container>
-
-      <v-snackbar v-model="alert" timeout="5000">
-        <v-icon color="deep-orange darken-3">mdi-home</v-icon>
-        {{alertMsg}}
-        <template v-slot:action="{ attrs }">
-          <v-btn color="red" text v-bind="attrs" @click="alert=false">Close</v-btn>
-        </template>
-      </v-snackbar>
-    </div>
-  </v-app>
+    <v-snackbar style="font-family: 'Nanum Gothic';" shaped color="teal" v-model="alert" timeout="3000">
+      <v-icon color="white">mdi-check-bold</v-icon>
+      {{alertMsg}}
+      <template v-slot:action="{ attrs }">
+        <v-btn style="font-family: 'Sunflower';" color="white" text v-bind="attrs" @click="alert=false">Close</v-btn>
+      </template>
+    </v-snackbar>
+    </v-container>
+  </div>
 </template>
 
 <script>

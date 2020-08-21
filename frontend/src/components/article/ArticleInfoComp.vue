@@ -1,114 +1,22 @@
 <template>
   <v-container fluid style="width:1000px;">
     <div>
-      <h1>{{articleTitle}}</h1>
-      <h4 style="color:gray; cursor:pointer" @click="goToBlog">{{blogMasterName}}</h4>
-      <h4 style="color:gray">{{getFormatDate(articleCreatedAt)}}</h4>
+      <h1 class="text-center" style="font-family: 'Nanum Gothic';">{{articleTitle}}</h1>
+      <div style="width:100%; text-align:right;">
+        <h4 style="display: inline-block; font-family: 'Nanum Gothic'; cursor:pointer" @click="goToBlog">by {{blogMasterName}}
+        </h4>
+      </div>
+      <h4 v-if="articlePlace" class="text-right" style="font-family: 'Nanum Gothic';">장소 : {{ articlePlace }}</h4>
+      <h4 class="text-right" style="font-family: 'Nanum Gothic'; color:gray">{{getFormatDate(articleCreatedAt)}}</h4>
     </div>
     <br />
-    <v-divider />
-    <v-tabs>
-      <v-tab>장소</v-tab>
-      <v-tab>일정</v-tab>
-
-      <v-tab-item>
-        <v-card flat>
-          <v-card-text>{{ articlePlace }}</v-card-text>
-        </v-card>
-      </v-tab-item>
-
-      <!-- 여기부터 캘린더 -->
-      <v-tab-item>
-        <v-row class="fill-height">
-          <v-col>
-            <v-sheet height="64">
-              <v-toolbar flat color="white">
-                <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">Today</v-btn>
-                <v-btn fab text small color="grey darken-2" @click="prev">
-                  <v-icon small>mdi-chevron-left</v-icon>
-                </v-btn>
-                <v-btn fab text small color="grey darken-2" @click="next">
-                  <v-icon small>mdi-chevron-right</v-icon>
-                </v-btn>
-                <v-toolbar-title v-if="$refs.calendar">{{ $refs.calendar.title }}</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-menu bottom right>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn outlined color="grey darken-2" v-bind="attrs" v-on="on">
-                      <span>{{ typeToLabel[type] }}</span>
-                      <v-icon right>mdi-menu-down</v-icon>
-                    </v-btn>
-                  </template>
-                  <v-list>
-                    <v-list-item @click="type = 'day'">
-                      <v-list-item-title>Day</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item @click="type = 'week'">
-                      <v-list-item-title>Week</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item @click="type = 'month'">
-                      <v-list-item-title>Month</v-list-item-title>
-                    </v-list-item>
-                    <v-list-item @click="type = '4day'">
-                      <v-list-item-title>4 days</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-              </v-toolbar>
-            </v-sheet>
-            <v-sheet height="600">
-              <v-calendar
-                ref="calendar"
-                v-model="focus"
-                color="primary"
-                :events="events"
-                :event-color="getEventColor"
-                :type="type"
-                @click:event="showEvent"
-                @click:more="viewDay"
-                @click:date="viewDay"
-                @change="updateRange"
-              ></v-calendar>
-              <v-menu
-                v-model="selectedOpen"
-                :close-on-content-click="false"
-                :activator="selectedElement"
-                offset-x
-              >
-                <v-card color="grey lighten-4" min-width="350px" flat>
-                  <v-toolbar :color="selectedEvent.color" dark>
-                    <v-btn icon>
-                      <v-icon>mdi-pencil</v-icon>
-                    </v-btn>
-                    <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-                    <v-spacer></v-spacer>
-                    <v-btn icon>
-                      <v-icon>mdi-heart</v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                      <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
-                  </v-toolbar>
-                  <v-card-text>
-                    <span v-html="selectedEvent.details"></span>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-btn text color="secondary" @click="selectedOpen = false">Cancel</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-menu>
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </v-tab-item>
-      <!-- 여기까지 캘린더 -->
-    </v-tabs>
-    <v-divider />
-    <br />
-    <div @click="clickThis" @mouseover="hoverThis" @mouseout="nonHoverThis" :style="cursorStyle">
-      <article-content-comp :content="realContent" v-if="realContent" />
-    </div>
-    <v-divider />
+    <v-sheet class="pa-3" >
+      <div @click="clickThis" @mouseover="hoverThis" @mouseout="nonHoverThis" :style="cursorStyle">
+        <article-content-comp :content="realContent" v-if="realContent" />
+      </div>
+    </v-sheet>
+    <hr>
+    
     <v-row class="ma-1" align="center">
       <v-btn class="ml-6" icon :disabled="likeBtnFlag" :loading="likeBtnFlag">
         <v-chip @click="likeBtnClick" outlined color="pink">
@@ -157,18 +65,19 @@
 
     <br />
     <br />
-    <v-dialog v-model="dialog" max-width="350">
+    <v-dialog color="teal" dark v-model="dialog" max-width="400">
       <v-card>
-        <v-card-title class="headline">정말 삭제하시겠습니까?</v-card-title>
+        <v-card-title style="font-family: 'Nanum Gothic';" class="headline">
+          <v-icon class="mr-2" color="red">mdi-information</v-icon>정말 삭제하시겠습니까?</v-card-title>
 
-        <v-card-text>삭제하면 게시글 복구가 불가능합니다.</v-card-text>
+        <v-card-text style="font-family: 'Nanum Gothic';">삭제하면 게시글 복구가 불가능합니다.</v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="blue darken-1" text @click="dialog = false">취소</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic';" class="white--text" text @click="dialog = false">취소</v-btn>
 
-          <v-btn color="blue darken-1" text @click="deleteArticle">확인</v-btn>
+          <v-btn style="font-family: 'Nanum Gothic'; font-weight: bold;" class="teal--text" text @click="deleteArticle">확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -219,38 +128,6 @@ export default {
       realContent: "",
       btnToggle: false,
       likeBtnFlag: false,
-      //여기부터 캘린더 데이터
-      focus: "",
-      type: "month",
-      typeToLabel: {
-        month: "Month",
-        week: "Week",
-        day: "Day",
-        "4day": "4 Days"
-      },
-      selectedEvent: {},
-      selectedElement: null,
-      selectedOpen: false,
-      events: [],
-      colors: [
-        "blue",
-        "indigo",
-        "deep-purple",
-        "cyan",
-        "green",
-        "orange",
-        "grey darken-1"
-      ],
-      names: [
-        "Meeting",
-        "Holiday",
-        "PTO",
-        "Travel",
-        "Event",
-        "Birthday",
-        "Conference",
-        "Party"
-      ],
       views: 0
     };
   },
@@ -368,7 +245,7 @@ export default {
       this.dialog = true;
     },
     getFormatDate(regtime) {
-      return moment(new Date(regtime)).format("YYYY.MM.DD HH:mm:ss");
+      return moment(new Date(regtime)).format("YYYY년MM월DD일 HH시mm분ss초");
     },
     deleteArticle: function() {
       http
@@ -463,6 +340,8 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Gaegu&family=Hi+Melody&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Poor+Story&family=Sunflower:wght@300&family=Yeon+Sung&display=swap");
+
 .img {
   max-width: 500px;
 }

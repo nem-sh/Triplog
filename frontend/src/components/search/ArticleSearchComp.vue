@@ -4,12 +4,12 @@
         height="300" >
             <v-card-title style="font-family: 'Nanum Gothic'" class="title white--text">
                 <v-row class="fill-height flex-column" justify="space-between">
-                    <p class="text-left ma-2 subheading" style="font-family: 'Nanum Gothic'">{{this.title}}</p>
+                    <p class="text-left ma-2 subheading" style="font-family: 'Nanum Gothic'; text-shadow: 3px 3px 4px #383838;">{{this.title}}</p>
 
                     <div>
-                        <p class="ml-2 body-1 text-left" style="font-family: 'Nanum Gothic'">by {{this.userNickname}}</p>
+                        <p class="ml-2 body-1 text-left" style="font-family: 'Nanum Gothic'; text-shadow: 3px 3px 4px #383838;">by {{this.userNickname}}</p>
                         <br>
-                        <p class="ml-2 caption text-left">{{this.created_at | moment('YYYY-MM-DD')}}</p>
+                        <p class="ml-2 caption text-left" style="font-family: 'Nanum Gothic'; text-shadow: 3px 3px 4px #383838;">{{this.created_at | moment('YYYY-MM-DD')}}</p>
                     </div>
                 </v-row>
             </v-card-title>
@@ -25,14 +25,14 @@
         
             <v-card-title style="font-family: 'Nanum Gothic'" class="title black--text">
                 <v-row class="fill-height flex-column" justify="space-between">
-                    <p class="text-left ma-2 subheading black--text" style="font-family: 'Nanum Gothic'">{{this.title}}</p>
+                    <p class="text-left ma-2 subheading black--text" style="font-family: 'Nanum Gothic'; text-shadow: 3px 3px 4px #383838;">{{this.title}}</p>
 
                     <div>
-                        <p class="ml-2 body-1 text-left black--text" style="font-family: 'Nanum Gothic'">by {{this.userNickname}}</p>
+                        <p class="ml-2 body-1 text-left black--text" style="font-family: 'Nanum Gothic'; text-shadow: 3px 3px 4px #383838;">by {{this.userNickname}}</p>
                         <v-layout column align-center justify-center class="white--text">
                             <h1 class="grey--text font-weight-bold text-center">No Image</h1>
                         </v-layout>
-                        <p class="ml-2 caption text-left black--text">{{this.created_at | moment('YYYY-MM-DD')}}</p>
+                        <p class="ml-2 caption text-left black--text text-shadow: 3px 3px 4px #383838;">{{this.created_at | moment('YYYY-MM-DD')}}</p>
                     </div>
                 </v-row>
             </v-card-title>
